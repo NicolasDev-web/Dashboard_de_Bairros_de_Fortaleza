@@ -3,6 +3,7 @@
   "use strict";
 
   const D = window.DADOS;
+  const R = window.ROTAS || null; // rotas.js (scripts/07_rotas_strava.py); opcional
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -20,6 +21,8 @@
     desc: true,
     busca: "",
     evo: "var_indice_socio",
+    rota: "nenhuma",
+    rotaSel: null,
   };
 
   // ---------- formatação ----------
@@ -169,6 +172,130 @@
     pintar();
   });
 
+  // =====================================================================
+  // ROTAS MAIS FEITAS (estimadas do heatmap do Strava)
+  // =====================================================================
+  const NOME_ATIV = { run: "corrida", ride: "pedal" };
+  mapa.createPane("rotas").style.zIndex = 450; // acima dos bairros, abaixo das dicas
+  const grupoRotas = L.layerGroup().addTo(mapa);
+  let linhasRota = [];
+
+  function pontoMeio(f) {
+    // ponto no meio da parte mais longa da rota, para o número
+    const partes = f.geometry.type === "LineString" ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const maior = partes.reduce((a, b) => (b.length > a.length ? b : a));
+    const [lo, la] = maior[Math.floor(maior.length / 2)];
+    return [la, lo];
+  }
+
+  function estiloRota(ativo, nada) {
+    return {
+      halo: { color: COR.escuro, weight: ativo ? 9 : 7, opacity: nada || ativo ? 0.55 : 0.15, lineCap: "round", lineJoin: "round" },
+      traco: { color: COR.branco, weight: ativo ? 4.5 : 3, opacity: nada || ativo ? 1 : 0.35, lineCap: "round", lineJoin: "round" },
+    };
+  }
+
+  function desenharRotas() {
+    grupoRotas.clearLayers();
+    linhasRota = [];
+    const box = document.getElementById("rotas");
+    if (!R || estado.rota === "nenhuma") { box.hidden = true; return; }
+    for (const f of R[estado.rota].top.features) {
+      const pos = f.properties.posicao, est = estiloRota(false, true);
+      const halo = L.geoJSON(f, { pane: "rotas", interactive: false, style: est.halo });
+      const traco = L.geoJSON(f, { pane: "rotas", style: { ...est.traco, className: "rota-linha" } });
+      traco.bindTooltip(`<b>${pos}. ${f.properties.nome}</b><span>${nf1.format(f.properties.comp_km)} km</span>`,
+        { sticky: true, direction: "top", offset: [0, -8], className: "dica-mapa" });
+      traco.on({
+        mouseover: () => realcarRota(pos),
+        mouseout: () => realcarRota(estado.rotaSel),
+        click: (e) => { L.DomEvent.stopPropagation(e); escolherRota(pos, false); },
+      });
+      const num = L.marker(pontoMeio(f), {
+        pane: "rotas", keyboard: false,
+        icon: L.divIcon({ className: "rota-num", html: String(pos), iconSize: [22, 22] }),
+      }).on("click", () => escolherRota(pos, false));
+      grupoRotas.addLayer(halo).addLayer(traco).addLayer(num);
+      linhasRota.push({ pos, halo, traco, num });
+    }
+    if (!REDUZIR) animarTraco();
+    listaRotas();
+  }
+
+  function animarTraco() {
+    // desenha cada rota do início ao fim; depois limpa o tracejado (o Leaflet redesenha no zoom)
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".leaflet-rotas-pane path.rota-linha").forEach((p, i) => {
+        const n = p.getTotalLength();
+        p.style.strokeDasharray = n;
+        p.style.strokeDashoffset = n;
+        p.getBoundingClientRect();
+        p.style.transition = `stroke-dashoffset 1100ms cubic-bezier(.2,.7,.1,1) ${i * 70}ms`;
+        p.style.strokeDashoffset = 0;
+        p.addEventListener("transitionend", () => { p.style.strokeDasharray = ""; p.style.strokeDashoffset = ""; p.style.transition = ""; }, { once: true });
+      });
+    });
+  }
+
+  function realcarRota(pos) {
+    const nada = pos == null;
+    for (const l of linhasRota) {
+      const ativo = l.pos === pos, est = estiloRota(ativo, nada);
+      l.halo.setStyle(est.halo);
+      l.traco.setStyle(est.traco);
+      l.num.getElement()?.classList.toggle("ativa", ativo);
+    }
+    document.querySelectorAll("#rotas-lista button").forEach((b) => b.classList.toggle("ativa", +b.dataset.pos === pos));
+  }
+
+  function escolherRota(pos, centralizar) {
+    estado.rotaSel = estado.rotaSel === pos && !centralizar ? null : pos;
+    realcarRota(estado.rotaSel);
+    document.querySelectorAll("#rotas-lista button").forEach((b) => b.setAttribute("aria-current", String(+b.dataset.pos === estado.rotaSel)));
+    const l = linhasRota.find((x) => x.pos === pos);
+    if (centralizar && l) {
+      mostrarMapa();
+      mapa.flyToBounds(l.traco.getBounds(), { padding: [50, 50], maxZoom: 15, duration: REDUZIR ? 0 : 0.8 });
+    }
+  }
+
+  // no celular as listas ficam abaixo do mapa: ao escolher um item, volta a tela para o mapa
+  function mostrarMapa() {
+    if (innerWidth <= 1080) mapaEl.scrollIntoView({ behavior: REDUZIR ? "auto" : "smooth", block: "center" });
+  }
+
+  function listaRotas() {
+    const box = document.getElementById("rotas");
+    const a = estado.rota;
+    box.hidden = false;
+    const itens = R[a].top.features.map((f) => {
+      const p = f.properties;
+      const b = el("button", { type: "button", "data-pos": String(p.posicao), "aria-current": String(estado.rotaSel === p.posicao) }, [
+        el("span", { class: "rk-pos", texto: String(p.posicao) }),
+        el("span", { class: "rota-nome" }, [
+          el("span", { class: "rk-nome", texto: p.nome }),
+          el("small", { texto: p.bairros.slice(0, 3).join(", ") }),
+        ]),
+        el("span", { class: "rk-valor", texto: nf1.format(p.comp_km) + " km" }),
+      ]);
+      b.addEventListener("click", () => escolherRota(p.posicao, true));
+      b.addEventListener("mouseenter", () => realcarRota(p.posicao));
+      b.addEventListener("mouseleave", () => realcarRota(estado.rotaSel));
+      return el("li", {}, b);
+    });
+    box.replaceChildren(
+      el("div", { class: "ranking-cabeca" }, [el("h3", { texto: `Rotas de ${NOME_ATIV[a]} mais feitas` })]),
+      el("p", { class: "rotas-nota", texto: "Estimadas pelo mapa de calor público do Strava: trechos com mais extensão no nível máximo de uso." }),
+      el("ol", { class: "ranking-lista", id: "rotas-lista" }, itens),
+    );
+  }
+
+  if (R) {
+    segmentado("ctl-rotas", (v) => { estado.rota = v; estado.rotaSel = null; desenharRotas(); });
+  } else {
+    document.getElementById("ctl-rotas").hidden = true;
+  }
+
   // ---------- legenda ----------
   function legenda() {
     const box = document.getElementById("legenda");
@@ -234,6 +361,11 @@
         el("div", {}, [el("b", { class: vr < 0 ? "menos" : "", texto: sinal(vr, nf0.format) + "%" }), "renda real desde 2010"]),
         el("div", {}, [el("b", { class: vs < 0 ? "menos" : "", texto: sinal(vs, nf0.format) + " p.p." }), "esgoto em rede desde 2010"]),
       ]),
+      R && R.bairros[p.id] ? el("p", { class: "ficha-strava" }, [
+        "Movimento no Strava, de 0 a 100: ",
+        el("b", { texto: `corrida ${nf0.format(R.bairros[p.id][0])}` }), ", ",
+        el("b", { texto: `pedal ${nf0.format(R.bairros[p.id][1])}` }),
+      ]) : null,
     );
     box.classList.remove("entrando"); void box.offsetWidth; box.classList.add("entrando");
   }
@@ -268,7 +400,7 @@
     lista();
     if (centralizar) {
       const l = camadaSel();
-      if (l) mapa.flyToBounds(l.getBounds(), { padding: [60, 60], maxZoom: 14, duration: REDUZIR ? 0 : 0.8 });
+      if (l) { mostrarMapa(); mapa.flyToBounds(l.getBounds(), { padding: [60, 60], maxZoom: 14, duration: REDUZIR ? 0 : 0.8 }); }
     }
   }
 

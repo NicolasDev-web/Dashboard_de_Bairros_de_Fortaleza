@@ -1,0 +1,21 @@
+nome_osm,calor,comp_km,km_max,bairros,nome,posicao,atividade
+Avenida Beira Mar,0.9915443194649125,8.55362725097864,4.935672666050857,"Meireles, Mucuripe, Praia de Iracema",Av. Beira Mar,1,run
+Avenida Godofredo Maciel,0.9565281836774909,7.925023900920998,2.9981997908475617,"Maraponga, Mondubim, Parangaba, Jardim Cearense, Itaperi, Aracapé",Av. Godofredo Maciel,2,run
+Avenida Washington Soares,0.9462055969419934,11.104770577962805,3.0058445700395517,"Cambeba, Engenheiro Luciano Cavalcante, Coaçu, Messejana, Parque Manibura, Guajeru, Guararapes, José de Alencar",Av. Washington Soares,3,run
+Vila do Mar,0.9681748011850554,3.061503255093626,2.2231311504677915,"Barra do Ceará, Cristo Redentor",Vila do Mar,4,run
+,0.9784629228881552,2.612485217884049,2.116957522466241,Presidente Kennedy,Caminho em Presidente Kennedy,5,run
+Avenida Alberto Craveiro,0.9738524387158469,3.404076966395501,2.0470065969940827,"Boa Vista-Castelão, Dias Macêdo",Av. Alberto Craveiro,6,run
+Avenida Vicente de Castro,0.9710996991300149,2.5579519180094263,1.9156035441505388,Cais do Porto,Av. Vicente de Castro,7,run
+Avenida Santos Dumont,0.9464162920382638,5.705037410785918,1.7401989225550303,"Papicu, Aldeota, Manuel Dias Branco, Cocó, De Lourdes, Varjota",Av. Santos Dumont,8,run
+Avenida Benjamim Brasil,0.9747578399703787,2.101997446111998,1.6286581673833866,"Mondubim, Jardim Cearense",Av. Benjamim Brasil,9,run
+Avenida Sargento Hermínio Sampaio,0.9539316403481083,3.1795404340117575,1.6357031823492736,"Monte Castelo, São Gerardo, Presidente Kennedy, Ellery, Jacarecanga",Av. Sargento Hermínio Sampaio,10,run
+Avenida Washington Soares,0.9886520150365211,16.723864073868267,15.700945404722134,"Cambeba, Coaçu, Messejana, Engenheiro Luciano Cavalcante, Guararapes, Guajeru, Parque Manibura, José de Alencar, São Bento, Curió, Edson Queiroz, Salinas",Av. Washington Soares,1,ride
+Rodovia Santos Dumont,0.9623823488640867,19.085824856665322,8.320956938806859,"Cajazeiras, Barroso, Aeroporto, Parque Santa Maria, Aerolândia, Messejana, Jangurussu, Ancuri, Dias Macêdo, Fátima, Cidade dos Funcionários, Pedras, Alto da Balança",Rod. Santos Dumont,2,ride
+Avenida Godofredo Maciel,0.9790171045685668,8.202503437470066,7.669383127577644,"Mondubim, Maraponga, Parangaba, Jardim Cearense, Itaperi, Aracapé, Planalto Ayrton Senna",Av. Godofredo Maciel,3,ride
+Avenida General Osório de Paiva,0.9652526548514447,8.040520436759667,4.209069606685012,"Siqueira, Bom Jardim, Bonsucesso, Vila Peri, Parangaba",Av. General Osório de Paiva,4,ride
+Rodovia Deputado Joaquim Noronha Mota,0.9908036224624974,7.000233468826181,4.079668365284798,"Sabiaguaba, Edson Queiroz",Rod. Deputado Joaquim Noronha Mota,5,ride
+Avenida Governador Raul Barbosa,0.9687762865667936,4.860535692933637,4.0054021147283905,"Aerolândia, Alto da Balança, Tauape, Dias Macêdo, Aeroporto",Av. Governador Raul Barbosa,6,ride
+Ciclovia Compartilhada Mauro Feitosa,0.9758406967245031,5.358940255337619,3.7183434024345927,"Meireles, Mucuripe, Praia de Iracema",Ciclovia Compartilhada Mauro Feitosa,7,ride
+Avenida Mister Hull,0.991372598020139,5.116415308543704,3.575295519323936,"Antônio Bezerra, Padre Andrade, Presidente Kennedy, Quintino Cunha, Pici",Av. Mister Hull,8,ride
+Avenida Senador Carlos Jereissati,0.9633157541860535,6.2451814288331535,3.570801243123911,"Aeroporto, Dias Macêdo, Serrinha",Av. Senador Carlos Jereissati,9,ride
+Avenida Maestro Lisboa,0.9889325307721849,2.988696642327177,2.9769271381469036,"José de Alencar, Sapiranga-Coité",Av. Maestro Lisboa,10,ride

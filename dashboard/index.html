@@ -81,6 +81,12 @@
         <button type="button" data-v="2010" aria-pressed="false">2010</button>
         <button type="button" data-v="2022" aria-pressed="true">2022</button>
       </div>
+      <div class="segmentado" id="ctl-rotas" role="group" aria-label="Rotas mais feitas">
+        <span class="seg-rotulo" aria-hidden="true">Rotas</span>
+        <button type="button" data-v="nenhuma" aria-pressed="true">Nenhuma</button>
+        <button type="button" data-v="run" aria-pressed="false">Corrida</button>
+        <button type="button" data-v="ride" aria-pressed="false">Pedal</button>
+      </div>
       <label class="chave">
         <input type="checkbox" id="ctl-strava">
         <span class="chave-trilho" aria-hidden="true"></span>
@@ -105,6 +111,8 @@
 
       <aside class="painel">
         <article class="ficha" id="ficha" aria-live="polite"></article>
+
+        <div class="ranking rotas" id="rotas" hidden></div>
 
         <div class="ranking" id="ranking">
           <div class="ranking-cabeca">
@@ -167,6 +175,10 @@
         <p>Os setores censitários foram cruzados com os 121 bairros oficiais (Seuma, 2025) pela área de interseção. Os setores de 2010 seguem limites antigos e foram repartidos entre os bairros atuais.</p>
       </div>
       <div class="bloco">
+        <h3>Rotas mais feitas</h3>
+        <p>Estimadas a partir do mapa de calor público do Strava (corrida e pedal), cruzado com as ruas do OpenStreetMap. Trechos contínuos da mesma via viram uma rota, e vias paralelas (pista, calçadão, ciclovia) contam como uma só. A ordem é a extensão no nível máximo de uso. É intensidade relativa entre quem usa o Strava, não contagem de viagens, e usar o mapa de calor assim fica numa zona cinzenta dos termos do Strava.</p>
+      </div>
+      <div class="bloco">
         <h3>Limitações</h3>
         <p>A renda de 2022 é ponderada pelo total de responsáveis, porque o IBGE não informa quantos têm rendimento. Praia de Iracema não aparece na lista oficial de AIS e foi posta na AIS 08. A camada do Strava mostra onde as pessoas correm e pedalam; é contexto visual, não entra no índice.</p>
       </div>
@@ -188,6 +200,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="data.js"></script>
+  <script src="rotas.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

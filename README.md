@@ -16,6 +16,7 @@ python -m venv .venv
 .venv/Scripts/python scripts/04_join_bairros.py     # setor -> bairro -> data/processed/bairros_indicadores.csv
 .venv/Scripts/python scripts/05_indice.py           # notas 0-100 e índice -> data/processed/bairros_indice.csv
 .venv/Scripts/python scripts/06_dados_dashboard.py  # -> dashboard/data.js
+.venv/Scripts/python scripts/07_rotas_strava.py     # rotas de corrida e pedal (heatmap Strava + OSM) -> dashboard/rotas.js
 ```
 
 Os downloads brutos (~330 MB) ficam em `data/cache/`, fora do git; os scripts baixam de novo se faltarem.
@@ -27,6 +28,6 @@ Os downloads brutos (~330 MB) ficam em `data/cache/`, fora do git; os scripts ba
 | Limites dos bairros | Prefeitura de Fortaleza / Seuma, mai/2025 |
 | Renda e saneamento | IBGE, agregados por setor censitário, Censos 2010 e 2022 |
 | CVLI e CVP | SSPDS/Supesp, dados detalhados 2019–2025, por AIS |
-| Contexto visual | Strava Global Heatmap (tiles públicos até zoom 12) |
+| Contexto visual e rotas mais feitas | Strava Global Heatmap (tiles públicos até zoom 12), cruzado com ruas do OpenStreetMap |
 
 As decisões de método e as limitações estão na seção "De onde vêm os números" do próprio dashboard e no cabeçalho de cada script.
