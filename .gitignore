@@ -1,0 +1,4 @@
+.venv/
+__pycache__/
+data/cache/
+data/raw/bairros_2025.kml
