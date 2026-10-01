@@ -1,0 +1,32 @@
+{
+  "pesos": {
+    "renda": 0.3333333333333333,
+    "saneamento": 0.3333333333333333,
+    "seguranca": 0.3333333333333333
+  },
+  "pesos_seguranca": {
+    "cvli": 0.5,
+    "cvp": 0.5
+  },
+  "ipca": {
+    "indice_jul2010": 3111.05,
+    "indice_jul2022": 6411.95,
+    "fator": 2.061024,
+    "fonte": "IBGE/SIDRA tabela 1737, variável 2266"
+  },
+  "renda_log_min_max": [
+    7.075724,
+    9.717328
+  ],
+  "seguranca_min_max_ais": {
+    "cvli": [
+      14.91,
+      46.97
+    ],
+    "cvp": [
+      525.5,
+      1375.9
+    ]
+  },
+  "renda_real_em": "R$ de julho/2022"
+}
