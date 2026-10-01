@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bairros de Fortaleza</title>
+  <meta name="description" content="Índice de renda, saneamento e segurança dos 121 bairros de Fortaleza, com a evolução entre os Censos de 2010 e 2022.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='2' fill='%232f37c4'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%23fff'/%3E%3Crect x='9' y='3' width='4' height='4' fill='%23fff' opacity='.6'/%3E%3Crect x='3' y='9' width='4' height='4' fill='%23fff' opacity='.35'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#mapa">Pular para o mapa</a>
+
+  <header class="nav" id="topo">
+    <a class="marca" href="#topo" aria-label="Bairros de Fortaleza, início">
+      <span class="marca-nome">Bairros</span>
+      <span class="marca-sub">de Fortaleza</span>
+    </a>
+    <nav class="nav-links" aria-label="Seções">
+      <a href="#mapa">Mapa</a>
+      <a href="#evolucao">Evolução</a>
+      <a href="#metodo">Método</a>
+    </nav>
+    <a class="botao botao-contorno nav-cta" href="#ranking"><span class="botao-icone" aria-hidden="true">↳</span>Ver ranking</a>
+  </header>
+
+  <!-- Abertura: a cidade em pixels -->
+  <section class="hero" aria-labelledby="hero-titulo">
+    <div class="hero-texto">
+      <p class="rotulo"><span class="rotulo-marca" aria-hidden="true"></span>121 bairros, dois censos, três anos de segurança</p>
+      <h1 id="hero-titulo" class="hero-titulo">
+        <span class="linha"><span>Onde morar</span></span>
+        <span class="linha"><span>em Fortaleza</span></span>
+      </h1>
+      <div class="hero-pe">
+        <p class="hero-lede">Um índice que junta renda, saneamento e segurança de cada bairro da cidade, e mostra quanto cada um mudou entre 2010 e 2022.</p>
+        <div class="hero-acoes">
+          <a class="botao botao-claro" href="#mapa"><span class="botao-icone" aria-hidden="true">+</span>Explorar o mapa</a>
+          <a class="botao botao-contorno-claro" href="#evolucao"><span class="botao-icone" aria-hidden="true">↳</span>Ver a evolução</a>
+        </div>
+      </div>
+    </div>
+    <figure class="hero-cidade" aria-label="Fortaleza desenhada em pixels: quanto maior e mais claro o pixel, maior o índice do bairro">
+      <canvas id="cidade" role="img" aria-label="Mapa em pixels dos bairros de Fortaleza pelo índice"></canvas>
+      <div class="cidade-tag" id="cidade-tag" hidden></div>
+      <figcaption class="hero-legenda">
+        <span class="px px-p" aria-hidden="true"></span>índice baixo
+        <span class="px px-g" aria-hidden="true"></span>índice alto
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- Frase que se revela com a rolagem -->
+  <section class="frase" aria-label="Resumo">
+    <div class="frase-fixa">
+      <p class="frase-texto" id="frase-texto">Em doze anos, a rede de esgoto chegou a mais 13 de cada 100 casas da cidade. A renda real de quem sustenta a casa, porém, caiu em 73 dos 121 bairros.</p>
+      <dl class="numeros" id="numeros"></dl>
+    </div>
+  </section>
+
+  <!-- Explorador -->
+  <section class="explorar" id="mapa" aria-labelledby="mapa-titulo">
+    <div class="secao-cabeca">
+      <h2 id="mapa-titulo">Mapa dos bairros</h2>
+      <p class="secao-nota">Escolha o que pintar no mapa. Clique num bairro para ver os números dele.</p>
+    </div>
+
+    <div class="controles" role="toolbar" aria-label="Controles do mapa">
+      <div class="segmentado" id="ctl-indicador" role="group" aria-label="Indicador">
+        <button type="button" data-v="indice" aria-pressed="true">Índice</button>
+        <button type="button" data-v="renda" aria-pressed="false">Renda</button>
+        <button type="button" data-v="saneamento" aria-pressed="false">Saneamento</button>
+        <button type="button" data-v="seguranca" aria-pressed="false">Segurança</button>
+        <button type="button" data-v="evolucao" aria-pressed="false">Evolução</button>
+      </div>
+      <div class="segmentado" id="ctl-ano" role="group" aria-label="Ano do censo">
+        <button type="button" data-v="2010" aria-pressed="false">2010</button>
+        <button type="button" data-v="2022" aria-pressed="true">2022</button>
+      </div>
+      <label class="chave">
+        <input type="checkbox" id="ctl-strava">
+        <span class="chave-trilho" aria-hidden="true"></span>
+        Calor do Strava
+      </label>
+    </div>
+
+    <div class="pesos" id="pesos">
+      <p class="pesos-titulo">Peso de cada eixo no índice</p>
+      <label>Renda <input type="range" min="0" max="10" value="5" data-eixo="renda"><output>33%</output></label>
+      <label>Saneamento <input type="range" min="0" max="10" value="5" data-eixo="saneamento"><output>33%</output></label>
+      <label>Segurança <input type="range" min="0" max="10" value="5" data-eixo="seguranca"><output>33%</output></label>
+      <button type="button" class="link-botao" id="pesos-reset">Voltar aos pesos iguais</button>
+    </div>
+
+    <div class="explorar-grade">
+      <div class="mapa-caixa">
+        <div id="mapa-leaflet" class="mapa" aria-label="Mapa coroplético dos bairros"></div>
+        <div class="legenda" id="legenda" aria-live="polite"></div>
+        <p class="mapa-aviso" id="mapa-aviso" hidden></p>
+      </div>
+
+      <aside class="painel">
+        <article class="ficha" id="ficha" aria-live="polite"></article>
+
+        <div class="ranking" id="ranking">
+          <div class="ranking-cabeca">
+            <h3>Ranking</h3>
+            <button type="button" class="link-botao" id="ranking-ordem" aria-label="Inverter ordem do ranking">Melhores primeiro</button>
+          </div>
+          <label class="busca">
+            <span class="sr">Buscar bairro</span>
+            <input type="search" id="busca" placeholder="Buscar bairro" autocomplete="off">
+          </label>
+          <ol class="ranking-lista" id="ranking-lista"></ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Evolução 2010 → 2022 -->
+  <section class="evolucao" id="evolucao" aria-labelledby="evo-titulo">
+    <div class="secao-cabeca">
+      <h2 id="evo-titulo">Como cada bairro mudou de 2010 a 2022</h2>
+      <p class="secao-nota">Cada linha é um bairro, ordenado da maior perda ao maior ganho. A renda de 2010 está corrigida pela inflação.</p>
+    </div>
+    <div class="segmentado" id="ctl-evo" role="group" aria-label="Medida da evolução">
+      <button type="button" data-v="var_indice_socio" aria-pressed="true">Renda e saneamento</button>
+      <button type="button" data-v="var_renda_real_pct" aria-pressed="false">Renda real</button>
+      <button type="button" data-v="var_saneamento_pp" aria-pressed="false">Esgoto em rede</button>
+    </div>
+    <div class="linhas-caixa">
+      <svg id="linhas" class="linhas" role="img" aria-labelledby="evo-titulo"></svg>
+      <div class="dica" id="linhas-dica" hidden></div>
+    </div>
+    <div class="extremos" id="extremos"></div>
+  </section>
+
+  <!-- Método -->
+  <section class="metodo" id="metodo" aria-labelledby="metodo-titulo">
+    <div class="secao-cabeca">
+      <h2 id="metodo-titulo">De onde vêm os números</h2>
+      <p class="secao-nota">Tudo é dado público. Os scripts que montam cada tabela estão no repositório.</p>
+    </div>
+    <div class="metodo-grade">
+      <div class="bloco">
+        <h3>Renda</h3>
+        <p>Rendimento médio mensal da pessoa responsável pelo domicílio, nos Censos 2010 e 2022 do IBGE, por setor censitário. Os valores de 2010 foram corrigidos pelo IPCA até julho de 2022 (×2,06).</p>
+      </div>
+      <div class="bloco">
+        <h3>Saneamento</h3>
+        <p>Parte dos domicílios com esgoto ligado à rede geral ou pluvial. Em 2022 inclui a fossa séptica ligada à rede, categoria nova que em 2010 era respondida como rede geral.</p>
+      </div>
+      <div class="bloco">
+        <h3>Segurança</h3>
+        <p>Crimes violentos letais (CVLI) e roubos (CVP) por 100 mil habitantes, média de 2023 a 2025, da SSPDS do Ceará. O dado só existe por Área Integrada de Segurança: todos os bairros de uma mesma AIS recebem o mesmo valor.</p>
+      </div>
+      <div class="bloco">
+        <h3>Índice</h3>
+        <p>Cada eixo vira uma nota de 0 a 100: renda em escala logarítmica, saneamento pelo próprio percentual e segurança comparando as 10 AIS da cidade. O índice é a média ponderada das três notas; os pesos podem ser ajustados acima do mapa.</p>
+      </div>
+      <div class="bloco">
+        <h3>Do setor ao bairro</h3>
+        <p>Os setores censitários foram cruzados com os 121 bairros oficiais (Seuma, 2025) pela área de interseção. Os setores de 2010 seguem limites antigos e foram repartidos entre os bairros atuais.</p>
+      </div>
+      <div class="bloco">
+        <h3>Limitações</h3>
+        <p>A renda de 2022 é ponderada pelo total de responsáveis, porque o IBGE não informa quantos têm rendimento. Praia de Iracema não aparece na lista oficial de AIS e foi posta na AIS 08. A camada do Strava mostra onde as pessoas correm e pedalam; é contexto visual, não entra no índice.</p>
+      </div>
+    </div>
+    <ul class="fontes">
+      <li><a href="https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/" rel="noopener">IBGE, Censo 2022</a></li>
+      <li><a href="https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/" rel="noopener">IBGE, Censo 2010</a></li>
+      <li><a href="https://www.ce.gov.br/sspds/estatisticas/dados-detalhados/" rel="noopener">SSPDS, dados detalhados</a></li>
+      <li><a href="https://www.ce.gov.br/sspds/ais/" rel="noopener">SSPDS, composição das AIS</a></li>
+      <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">Prefeitura de Fortaleza, malha de bairros</a></li>
+      <li><a href="https://www.strava.com/maps/global-heatmap" rel="noopener">Strava Global Heatmap</a></li>
+    </ul>
+  </section>
+
+  <footer class="rodape">
+    <p>Bairros de Fortaleza. Dados de 2010 a 2025, consolidados em 2026.</p>
+    <a href="#topo">Voltar ao topo</a>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
