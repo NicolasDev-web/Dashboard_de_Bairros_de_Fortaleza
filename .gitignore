@@ -1,4 +1,27 @@
+# Ambientes virtuais do Python (qualquer nome comum: o README usa .venv, o PriceRadar usa venv)
 .venv/
+venv/
+env/
+ENV/
 __pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Node (Playwright, Leaflet local etc.)
+node_modules/
+
+# Downloads brutos e caches (~330 MB, os scripts baixam de novo)
 data/cache/
 data/raw/bairros_2025.kml
+
+# PriceRadar: se for clonado dentro desta pasta em vez de ao lado, não entra neste repositório
+priceradar/
+priceradar.db
+.env
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
