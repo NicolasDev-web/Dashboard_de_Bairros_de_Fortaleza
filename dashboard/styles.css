@@ -73,6 +73,8 @@ button, input { font: inherit; color: inherit; }
 }
 .nav-links a:hover { background: rgba(255, 255, 255, .16); }
 .nav.clara .nav-links a:hover { background: rgba(47, 55, 196, .1); }
+.nav-links a.nav-destaque { background: var(--branco); color: var(--cobalto); }
+.nav.clara .nav-links a.nav-destaque { background: var(--cobalto); color: var(--branco); }
 
 /* ---------- botões ---------- */
 .botao {

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Onde morar em Fortaleza</title>
+  <meta name="description" content="Responda o que importa para você e quanto pode pagar: o mapa mostra os bairros de Fortaleza que mais combinam.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='2' fill='%232f37c4'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%23fff'/%3E%3Crect x='9' y='3' width='4' height='4' fill='%23fff' opacity='.6'/%3E%3Crect x='3' y='9' width='4' height='4' fill='%23fff' opacity='.35'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="morar.css">
+</head>
+<body class="pagina-morar">
+  <a class="skip" href="#passos">Pular para o questionário</a>
+
+  <header class="nav" id="topo">
+    <a class="marca" href="index.html" aria-label="Bairros de Fortaleza, voltar ao painel">
+      <span class="marca-nome">Bairros</span>
+      <span class="marca-sub">de Fortaleza</span>
+    </a>
+    <nav class="nav-links" aria-label="Seções">
+      <a href="index.html">Painel</a>
+      <a href="morar.html" aria-current="page">Onde morar</a>
+    </nav>
+    <a class="botao botao-contorno nav-cta" href="index.html"><span class="botao-icone" aria-hidden="true">←</span>Voltar ao painel</a>
+  </header>
+
+  <!-- Questionário: uma pergunta por tela, a cidade em pixels responde ao fundo -->
+  <section class="quiz" id="quiz" aria-label="Questionário">
+    <div class="quiz-texto">
+      <ol class="progresso" id="progresso" aria-label="Progresso"></ol>
+      <div class="passos" id="passos" aria-live="polite"></div>
+      <div class="quiz-nav" id="quiz-nav">
+        <button type="button" class="botao botao-contorno-claro" id="voltar"><span class="botao-icone" aria-hidden="true">←</span>Voltar</button>
+        <button type="button" class="botao botao-claro" id="avancar"><span class="botao-icone" aria-hidden="true">→</span><span id="avancar-texto">Começar</span></button>
+        <span class="quiz-dica" id="quiz-dica" aria-hidden="true">teclas 1–4 escolhem · Enter avança</span>
+      </div>
+    </div>
+    <figure class="quiz-cidade" aria-label="Fortaleza em pixels: os bairros acendem conforme o que você responde">
+      <canvas id="cidade-quiz" role="img" aria-label="Mapa em pixels dos bairros de Fortaleza"></canvas>
+      <div class="cidade-tag" id="quiz-tag" hidden></div>
+      <figcaption class="quiz-legenda" id="quiz-legenda"></figcaption>
+    </figure>
+  </section>
+
+  <!-- Resultado -->
+  <section class="resultado" id="resultado" aria-labelledby="res-titulo" hidden>
+    <div class="res-cabeca">
+      <div>
+        <p class="rotulo res-rotulo"><span class="rotulo-marca" aria-hidden="true"></span>Seu resultado</p>
+        <h1 id="res-titulo" class="res-titulo"><span class="linha"><span>Os bairros que</span></span><span class="linha"><span>combinam com você</span></span></h1>
+      </div>
+      <div class="res-resumo" id="res-resumo"></div>
+    </div>
+
+    <div class="res-acoes" role="toolbar" aria-label="Ações do resultado">
+      <button type="button" class="botao botao-contorno" id="ajustar" aria-expanded="false" aria-controls="ajustes"><span class="botao-icone" aria-hidden="true">±</span>Ajustar respostas</button>
+      <button type="button" class="botao botao-contorno" id="refazer"><span class="botao-icone" aria-hidden="true">↺</span>Refazer</button>
+      <button type="button" class="botao botao-contorno" id="copiar"><span class="botao-icone" aria-hidden="true">⧉</span><span id="copiar-texto">Copiar link do resultado</span></button>
+      <label class="chave">
+        <input type="checkbox" id="ctl-fora">
+        <span class="chave-trilho" aria-hidden="true"></span>
+        Mostrar fora do orçamento
+      </label>
+    </div>
+
+    <div class="ajustes" id="ajustes" hidden></div>
+    <div class="res-aviso" id="res-aviso"></div>
+
+    <div class="res-grade">
+      <div class="mapa-caixa">
+        <div id="mapa-morar" class="mapa mapa-morar" aria-label="Mapa dos bairros pela compatibilidade"></div>
+        <div class="legenda" id="legenda-morar" aria-live="polite"></div>
+        <div class="camadas" id="camadas"></div>
+      </div>
+      <ol class="cards" id="cards" aria-label="Bairros mais compatíveis"></ol>
+    </div>
+
+    <div class="res-metodo">
+      <h2>Como a conta é feita</h2>
+      <div class="res-metodo-grade">
+        <div>
+          <h3>Orçamento</h3>
+          <p>A parcela cabe em 30% da renda familiar. Com financiamento de 30 anos a 10,5% ao ano (tabela Price), isso vira o valor que o banco empresta; somado à entrada, dá o teto do imóvel. O teto é comparado ao preço mediano dos anúncios do bairro coletados pelo PriceRadar, para o número de quartos escolhido. É uma estimativa: banco, prazo e juros reais mudam o número.</p>
+        </div>
+        <div>
+          <h3>Notas dos bairros</h3>
+          <p>Cada critério vira a posição do bairro entre os 121 (0 a 100). Segurança vem da SSPDS por AIS; infraestrutura junta esgoto em rede, água e coleta de lixo do Censo 2022; saúde, lazer, mobilidade, escolas e comércio contam o que o OpenStreetMap registra no bairro e num raio de 500 m em volta.</p>
+        </div>
+        <div>
+          <h3>Compatibilidade</h3>
+          <p>É a média das notas pesada pelas suas respostas: não importa 0, pouco 1, importa 2, essencial 4. Num critério essencial, bairro entre os 30% piores perde 30% da compatibilidade. Bairro no limite do orçamento perde 8%; fora dele, sai da lista.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <p>Bairros de Fortaleza. Uma ajuda para começar a procurar, não uma avaliação de imóvel.</p>
+    <a href="index.html">Ir para o painel</a>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="data.js"></script>
+  <script src="rotas.js"></script>
+  <script src="precos.js"></script>
+  <script src="equipamentos.js"></script>
+  <script src="pixels.js"></script>
+  <script src="morar.js"></script>
+</body>
+</html>

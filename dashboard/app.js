@@ -758,6 +758,12 @@
   atualizar();
   evolucao();
   rolagem();
+  // #b=ID abre o bairro direto (link vindo da página "Onde morar")
+  const doLink = /^#b=(\d+)$/.exec(location.hash);
+  if (doLink && POR_ID.has(+doLink[1])) {
+    selecionar(+doLink[1], { centralizar: true });
+    requestAnimationFrame(() => document.getElementById("mapa").scrollIntoView());
+  }
   montarCidade();
   inicio = performance.now();
   iniciarLaco();
