@@ -356,9 +356,74 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 
 .rodape { display: flex; justify-content: space-between; gap: 16px; padding: 22px var(--g); font-size: 13px; color: var(--tinta-2); }
 
+/* ---------- preços por regional ---------- */
+.precos { padding: 80px var(--g); border-top: 1px solid var(--linha); }
+.precos-grade { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 20px; align-items: start; }
+.mapa-precos { height: min(70vh, 640px); min-height: 420px; }
+.legenda-sem { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); }
+.legenda-sem i { width: 14px; height: 10px; border-radius: 1px; background: var(--neutro); }
+.reg-num {
+  display: grid !important; place-items: center;
+  background: var(--branco); color: var(--cobalto-escuro); border: 1.5px solid var(--cobalto-escuro); border-radius: 2px;
+  font-family: var(--mono); font-size: 11px; line-height: 1; cursor: pointer;
+  transition: transform var(--t-rapida) var(--curva);
+}
+.reg-num.ativa { transform: scale(1.2); background: var(--cobalto-escuro); color: var(--branco); }
+
+.regionais-lista { list-style: none; margin: 0; padding: 0; }
+.regionais-lista li button {
+  width: 100%; display: grid; grid-template-columns: 22px minmax(0, 1fr) 96px 92px; align-items: center; gap: 10px;
+  border: 0; background: none; text-align: left; cursor: pointer; padding: 8px 14px; font-size: 14px;
+}
+.regionais.sem-dados .regionais-lista li button { grid-template-columns: 22px minmax(0, 1fr) 92px; }
+.regionais-lista li button:hover, .regionais-lista li button.foco { background: rgba(47, 55, 196, .06); }
+.regionais-lista li button[aria-current="true"] { background: rgba(47, 55, 196, .12); }
+.faixa { position: relative; height: 14px; }
+.faixa::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: var(--papel); }
+.faixa-iqr { position: absolute; top: 3px; height: 8px; background: var(--s1); border-radius: 1px; }
+.faixa-valor { position: absolute; top: 0; width: 2px; height: 14px; margin-left: -1px; background: var(--cobalto-escuro); }
+.faixa-vazia::before { background: repeating-linear-gradient(90deg, var(--linha) 0 3px, transparent 3px 6px); }
+.reg-valor { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--tinta); }
+.reg-valor small { font-size: 10.5px; color: var(--tinta-3); white-space: nowrap; }
+.regionais-pe { padding: 10px 14px 8px; font-size: 12px; color: var(--tinta-3); border-top: 1px solid var(--linha); margin-top: 6px; }
+.regionais-pe b { color: var(--tinta); font-weight: 600; }
+.regionais-pe code { font-family: var(--mono); font-size: 11px; background: var(--branco); border: 1px solid var(--linha); border-radius: 2px; padding: 1px 4px; color: var(--cobalto-escuro); }
+
+.regional-detalhe { margin-top: 20px; background: var(--branco); border-radius: var(--raio); padding: 22px 22px 18px; box-shadow: 0 1px 0 var(--linha), 0 12px 30px -18px rgba(31, 37, 153, .35); }
+.regional-detalhe:empty { display: none; }
+.regional-detalhe.entrando { animation: ficha 380ms var(--curva); }
+.detalhe-cabeca { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; padding-bottom: 14px; border-bottom: 1px solid var(--linha); margin-bottom: 16px; }
+.detalhe-cabeca h3 { font-size: 28px; color: var(--cobalto); letter-spacing: -0.03em; }
+.detalhe-cabeca p { font-family: var(--mono); font-size: 12px; color: var(--tinta-3); }
+.detalhe-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.detalhe-numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; margin: 0 0 22px; }
+.detalhe-numeros div { display: flex; flex-direction: column-reverse; justify-content: flex-end; border-top: 1px solid var(--linha); padding-top: 10px; }
+.detalhe-numeros dt { font-size: 12px; color: var(--tinta-2); }
+.detalhe-numeros dd { margin: 0 0 4px; font-size: 22px; letter-spacing: -0.02em; color: var(--cobalto); font-variant-numeric: tabular-nums; }
+.detalhe-numeros div:first-child dd { font-size: 34px; }
+.detalhe-quartos h4, .detalhe-bairros h4 { font-size: 13px; font-weight: 600; margin: 0 0 8px; }
+.detalhe-quartos ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; background: var(--linha); border: 1px solid var(--linha); border-radius: var(--raio); overflow: hidden; }
+.detalhe-quartos li { background: var(--papel-claro); padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--tinta-2); }
+.detalhe-quartos li.atual { background: rgba(47, 55, 196, .08); }
+.detalhe-quartos b { font-family: var(--mono); font-weight: 500; font-size: 13px; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.detalhe-quartos small { font-size: 10.5px; color: var(--tinta-3); }
+.detalhe-bairros ol { list-style: none; margin: 0; padding: 0; max-height: 360px; overflow-y: auto; }
+.detalhe-bairros li button {
+  width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 80px 76px 56px; align-items: center; gap: 8px;
+  border: 0; border-bottom: 1px solid var(--linha); background: none; text-align: left; cursor: pointer; padding: 6px 4px; font-size: 14px;
+}
+.detalhe-bairros li button:hover { background: rgba(47, 55, 196, .06); }
+.detalhe-bairros li small { font-family: var(--mono); font-size: 10.5px; color: var(--tinta-3); text-align: right; white-space: nowrap; }
+.detalhe-bairros li.pouco .rk-barra i { background: var(--s1); }
+.detalhe-sem { margin-top: 10px; font-size: 12px; color: var(--tinta-3); line-height: 1.7; }
+.detalhe-sem button { border: 0; background: none; padding: 0; font: inherit; color: var(--tinta-2); text-decoration: underline; text-decoration-color: var(--linha); text-underline-offset: 3px; cursor: pointer; }
+.detalhe-sem button:hover { color: var(--cobalto); }
+
 /* ---------- responsivo ---------- */
 @media (max-width: 1080px) {
   .explorar-grade { grid-template-columns: 1fr; }
+  .precos-grade { grid-template-columns: 1fr; }
+  .detalhe-grade { grid-template-columns: 1fr; }
   .metodo-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ranking-lista { max-height: 360px; }
 }
@@ -371,6 +436,7 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
   .extremos { grid-template-columns: 1fr; }
   .metodo-grade { grid-template-columns: 1fr; }
   .mapa { height: 62vh; min-height: 380px; }
+  .mapa-precos { height: 52vh; min-height: 340px; }
   .pesos label { width: 100%; justify-content: space-between; }
   input[type="range"] { flex: 1; }
 }
@@ -379,6 +445,11 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
   .ranking-lista li button { grid-template-columns: 26px minmax(0, 1fr) 84px; }
   .rk-barra { display: none; }
   .legenda-escala span { width: 24px; }
+  .regionais-lista li button { grid-template-columns: 22px minmax(0, 1fr) 88px; }
+  .regionais-lista .faixa { display: none; }
+  .detalhe-numeros { grid-template-columns: 1fr; }
+  .detalhe-quartos ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .detalhe-bairros li button { grid-template-columns: minmax(0, 1fr) 76px 52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

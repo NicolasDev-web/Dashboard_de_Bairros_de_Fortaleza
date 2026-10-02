@@ -4,6 +4,7 @@
 
   const D = window.DADOS;
   const R = window.ROTAS || null; // rotas.js (scripts/07_rotas_strava.py); opcional
+  const P = window.PRECOS || null; // precos.js (scripts/09_precos_priceradar.py); opcional
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -345,8 +346,9 @@
       el("div", { class: "barra", role: "img", "aria-label": `${nome}: nota ${nf0.format(nota)} de 100` }, el("i", { style: `width:${Math.max(1, nota)}%` })),
     ]);
     const vr = p.var_renda_real_pct, vs = p.var_saneamento_pp;
-    box.replaceChildren(
-      el("p", { class: "ficha-ais", texto: `${p.ais.replace("AIS ", "AIS ")}, ${nf0.format(p.pop_2022)} moradores` }),
+    const preco = P && P.bairros[p.id] && P.bairros[p.id].todos;
+    box.replaceChildren(...[
+      el("p", { class: "ficha-ais", texto: `Regional ${p.regional} · ${p.ais}, ${nf0.format(p.pop_2022)} moradores` }),
       el("h3", { texto: p.nome }),
       el("div", { class: "ficha-topo" }, [
         el("p", { class: "ficha-indice", html: `${nf0.format(indice(p))}<small>de 100</small>` }),
@@ -366,7 +368,12 @@
         el("b", { texto: `corrida ${nf0.format(R.bairros[p.id][0])}` }), ", ",
         el("b", { texto: `pedal ${nf0.format(R.bairros[p.id][1])}` }),
       ]) : null,
-    );
+      preco ? el("p", { class: "ficha-strava" }, [
+        "Preço do m² nos anúncios: ",
+        el("b", { texto: `${reais(preco.mediana)} (mediana)` }),
+        `, ${nf0.format(preco.n)} anúncio${preco.n === 1 ? "" : "s"}${preco.pouco_confiavel ? ", amostra pequena" : ""}`,
+      ]) : null,
+    ].filter(Boolean));
     box.classList.remove("entrando"); void box.offsetWidth; box.classList.add("entrando");
   }
 
@@ -738,6 +745,12 @@
     revelar();
   }
   addEventListener("scroll", rolagem, { passive: true });
+
+  // a seção de preços (regionais.js) pede para abrir um bairro no mapa principal
+  document.addEventListener("selecionar-bairro", (e) => {
+    selecionar(e.detail, { centralizar: true });
+    document.getElementById("mapa").scrollIntoView();
+  });
 
   // =====================================================================
   // INÍCIO

@@ -1,0 +1,122 @@
+bairro_id,nome,bairro_slug,regional
+6,BARRA DO CEARÁ,barra do ceara,1
+9,CARLITO PAMPLONA,carlito pamplona,1
+12,CRISTO REDENTOR,cristo redentor,1
+17,FLORESTA,floresta,1
+18,JACARECANGA,jacarecanga,1
+20,JARDIM GUANABARA,jardim guanabara,1
+21,JARDIM IRACEMA,jardim iracema,1
+31,PIRAMBU,pirambu,1
+39,VILA VELHA,vila velha,1
+3,ÁLVARO WEYNE,alvaro weyne,1
+2,ALDEOTA,aldeota,2
+110,CAIS DO PORTO,cais do porto,2
+116,DE LOURDES,de lourdes,2
+14,DIONÍSIO TORRES,dionisio torres,2
+22,JOAQUIM TÁVORA,joaquim tavora,2
+24,MEIRELES,meireles,2
+26,MUCURIPE,mucuripe,2
+27,PAPICU,papicu,2
+35,TAUAPE,tauape,2
+36,VARJOTA,varjota,2
+37,VICENTE PINZÓN,vicente pinzon,2
+4,AMADEU FURTADO,amadeu furtado,3
+40,ANTÔNIO BEZERRA,antonio bezerra,3
+38,ELLERY,ellery,3
+15,FARIAS BRITO,farias brito,3
+25,MONTE CASTELO,monte castelo,3
+119,OLAVO OLIVEIRA,olavo oliveira,3
+47,PADRE ANDRADE,padre andrade,3
+28,PARQUE ARAXÁ,parque araxa,3
+29,PARQUELÂNDIA,parquelandia,3
+33,PRESIDENTE KENNEDY,presidente kennedy,3
+48,QUINTINO CUNHA,quintino cunha,3
+34,RODOLFO TEÓFILO,rodolfo teofilo,3
+1,SÃO GERARDO,sao gerardo,3
+92,AEROPORTO,aeroporto,4
+7,BENFICA,benfica,4
+8,BOM FUTURO,bom futuro,4
+13,DAMAS,damas,4
+16,FÁTIMA,fatima,4
+99,ITAOCA,itaoca,4
+19,JARDIM AMÉRICA,jardim america,4
+23,JOSÉ BONIFÁCIO,jose bonifacio,4
+103,MONTESE,montese,4
+105,PARANGABA,parangaba,4
+30,PARREÃO,parreao,4
+108,VILA PERI,vila peri,4
+109,VILA UNIÃO,vila uniao,4
+72,BOM JARDIM,bom jardim,5
+73,BONSUCESSO,bonsucesso,5
+78,GRANJA LISBOA,granja lisboa,5
+79,GRANJA PORTUGAL,granja portugal,5
+90,SIQUEIRA,siqueira,5
+91,AEROLÂNDIA,aerolandia,6
+93,ALTO DA BALANÇA,alto da balanca,6
+53,CAMBEBA,cambeba,6
+54,CIDADE DOS FUNCIONÁRIOS,cidade dos funcionarios,6
+55,COAÇU,coacu,6
+56,CURIÓ,curio,6
+59,GUAJERU,guajeru,6
+62,JARDIM DAS OLIVEIRAS,jardim das oliveiras,6
+49,JOSÉ DE ALENCAR,jose de alencar,6
+63,LAGOA REDONDA,lagoa redonda,6
+65,MESSEJANA,messejana,6
+66,PARQUE IRACEMA,parque iracema,6
+67,PARQUE MANIBURA,parque manibura,6
+68,PAUPINA,paupina,6
+118,SÃO BENTO,sao bento,6
+111,CIDADE 2000,cidade 2000,7
+11,COCÓ,coco,7
+57,EDSON QUEIROZ,edson queiroz,7
+58,ENGENHEIRO LUCIANO CAVALCANTE,engenheiro luciano cavalcante,7
+60,GUARARAPES,guararapes,7
+112,MANUEL DIAS BRANCO,manuel dias branco,7
+113,PRAIA DO FUTURO I,praia do futuro i,7
+114,PRAIA DO FUTURO II,praia do futuro ii,7
+70,SABIAGUABA,sabiaguaba,7
+71,SALINAS,salinas,7
+64,SAPIRANGA-COITÉ,sapiranga coite,7
+95,BOA VISTA-CASTELÃO,boa vista castelao,8
+98,DIAS MACÊDO,dias macedo,8
+100,ITAPERI,itaperi,8
+84,PARQUE DOIS IRMÃOS,parque dois irmaos,8
+88,PASSARÉ,passare,8
+115,PLANALTO AYRTON SENNA,planalto ayrton senna,8
+89,PREFEITO JOSÉ WALTER,prefeito jose walter,8
+77,RACHEL DE QUEIROZ,rachel de queiroz,8
+107,SERRINHA,serrinha,8
+50,ANCURI,ancuri,9
+51,BARROSO,barroso,9
+52,CAJAZEIRAS,cajazeiras,9
+117,CONJUNTO PALMEIRAS,conjunto palmeiras,9
+61,JANGURUSSU,jangurussu,9
+120,PARQUE SANTA MARIA,parque santa maria,9
+69,PEDRAS,pedras,9
+122,ARACAPÉ,aracape,10
+74,CANINDEZINHO,canindezinho,10
+76,CONJUNTO ESPERANÇA,conjunto esperanca,10
+80,JARDIM CEARENSE,jardim cearense,10
+81,MANOEL SÁTIRO,manoel satiro,10
+82,MARAPONGA,maraponga,10
+83,MONDUBIM,mondubim,10
+121,NOVO MONDUBIM,novo mondubim,10
+85,PARQUE PRESIDENTE VARGAS,parque presidente vargas,10
+87,PARQUE SANTA ROSA,parque santa rosa,10
+86,PARQUE SÃO JOSÉ,parque sao jose,10
+41,AUTRAN NUNES,autran nunes,11
+94,BELA VISTA,bela vista,11
+42,CONJUNTO CEARÁ I,conjunto ceara i,11
+75,CONJUNTO CEARÁ II,conjunto ceara ii,11
+96,COUTO FERNANDES,couto fernandes,11
+97,DEMÓCRITO ROCHA,democrito rocha,11
+43,DOM LUSTOSA,dom lustosa,11
+45,HENRIQUE JORGE,henrique jorge,11
+46,JOÃO XXIII,joao xxiii,11
+101,JÓQUEI CLUBE,joquei clube,11
+104,PAN-AMERICANO,pan americano,11
+44,PARQUE GENIBAÚ,parque genibau,11
+106,PICI,pici,11
+10,CENTRO,centro,12
+5,MOURA BRASIL,moura brasil,12
+32,PRAIA DE IRACEMA,praia de iracema,12

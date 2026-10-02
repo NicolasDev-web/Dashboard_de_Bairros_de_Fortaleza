@@ -23,6 +23,7 @@
     <nav class="nav-links" aria-label="Seções">
       <a href="#mapa">Mapa</a>
       <a href="#evolucao">Evolução</a>
+      <a href="#precos">Preços</a>
       <a href="#metodo">Método</a>
     </nav>
     <a class="botao botao-contorno nav-cta" href="#ranking"><span class="botao-icone" aria-hidden="true">↳</span>Ver ranking</a>
@@ -147,6 +148,42 @@
     <div class="extremos" id="extremos"></div>
   </section>
 
+  <!-- Preço do m² por regional (PriceRadar) -->
+  <section class="precos" id="precos" aria-labelledby="precos-titulo">
+    <div class="secao-cabeca">
+      <h2 id="precos-titulo">Quanto custa o m² em cada regional</h2>
+      <p class="secao-nota" id="precos-nota">Preço pedido nos anúncios de venda de apartamentos, coletados pelo PriceRadar e separados pelas 12 regionais da prefeitura.</p>
+    </div>
+    <div class="controles" role="toolbar" aria-label="Controles de preço">
+      <div class="segmentado" id="ctl-medida" role="group" aria-label="Medida">
+        <button type="button" data-v="mediana" aria-pressed="true">Mediana</button>
+        <button type="button" data-v="media" aria-pressed="false">Média</button>
+      </div>
+      <div class="segmentado" id="ctl-quartos" role="group" aria-label="Quartos">
+        <span class="seg-rotulo" aria-hidden="true">Quartos</span>
+        <button type="button" data-v="todos" aria-pressed="true">Todos</button>
+        <button type="button" data-v="1" aria-pressed="false">1</button>
+        <button type="button" data-v="2" aria-pressed="false">2</button>
+        <button type="button" data-v="3" aria-pressed="false">3</button>
+        <button type="button" data-v="4+" aria-pressed="false">4+</button>
+      </div>
+    </div>
+    <div class="precos-grade">
+      <div class="mapa-caixa">
+        <div id="mapa-precos" class="mapa mapa-precos" aria-label="Mapa das regionais pelo preço do m²"></div>
+        <div class="legenda" id="legenda-precos" aria-live="polite"></div>
+      </div>
+      <div class="ranking regionais" id="regionais">
+        <div class="ranking-cabeca">
+          <h3>Regionais, do m² mais caro ao mais barato</h3>
+        </div>
+        <ol class="regionais-lista" id="regionais-lista"></ol>
+        <p class="regionais-pe" id="regionais-pe"></p>
+      </div>
+    </div>
+    <div class="regional-detalhe" id="regional-detalhe" aria-live="polite"></div>
+  </section>
+
   <!-- Método -->
   <section class="metodo" id="metodo" aria-labelledby="metodo-titulo">
     <div class="secao-cabeca">
@@ -179,6 +216,10 @@
         <p>Estimadas a partir do mapa de calor público do Strava (corrida e pedal), cruzado com as ruas do OpenStreetMap. Trechos contínuos da mesma via viram uma rota, e vias paralelas (pista, calçadão, ciclovia) contam como uma só. A ordem é a extensão no nível máximo de uso. É intensidade relativa entre quem usa o Strava, não contagem de viagens, e usar o mapa de calor assim fica numa zona cinzenta dos termos do Strava.</p>
       </div>
       <div class="bloco">
+        <h3>Preço do m²</h3>
+        <p>Anúncios de venda de apartamentos coletados com o PriceRadar (VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX), que já descarta aluguel, faixa de área e valor implausível, junta o mesmo imóvel visto em mais de um portal e tira outliers. Cada anúncio vai para um bairro pela coordenada do portal ou, sem ela, pelo nome do bairro. A regional segue o Decreto nº 14.899/2020. É preço pedido, não preço de venda.</p>
+      </div>
+      <div class="bloco">
         <h3>Limitações</h3>
         <p>A renda de 2022 é ponderada pelo total de responsáveis, porque o IBGE não informa quantos têm rendimento. Praia de Iracema não aparece na lista oficial de AIS e foi posta na AIS 08. A camada do Strava mostra onde as pessoas correm e pedalam; é contexto visual, não entra no índice.</p>
       </div>
@@ -190,6 +231,7 @@
       <li><a href="https://www.ce.gov.br/sspds/ais/" rel="noopener">SSPDS, composição das AIS</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">Prefeitura de Fortaleza, malha de bairros</a></li>
       <li><a href="https://www.strava.com/maps/global-heatmap" rel="noopener">Strava Global Heatmap</a></li>
+      <li><a href="https://github.com/NicolasDev-web/priceradar" rel="noopener">PriceRadar</a></li>
     </ul>
   </section>
 
@@ -201,6 +243,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="data.js"></script>
   <script src="rotas.js"></script>
+  <script src="precos.js"></script>
   <script src="app.js"></script>
+  <script src="regionais.js"></script>
 </body>
 </html>

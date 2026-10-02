@@ -1,8 +1,8 @@
 """Etapa 6 — Exporta os dados do dashboard.
 
-Gera dashboard/data.js (window.DADOS = {...}) com a malha simplificada e os indicadores
-por bairro. É um .js, não .json, para o dashboard abrir direto do disco (file://) sem
-servidor — fetch() de arquivo local é bloqueado pelos navegadores.
+Gera dashboard/data.js (window.DADOS = {...}) com a malha simplificada, os indicadores
+por bairro e o contorno das 12 regionais (etapa 8). É um .js, não .json, para o dashboard
+abrir direto do disco (file://) sem servidor — fetch() de arquivo local é bloqueado pelos navegadores.
 """
 import json
 from pathlib import Path
@@ -48,10 +48,12 @@ def main() -> None:
     g = gpd.read_file(ROOT / "data/geo/bairros_fortaleza.geojson")[["bairro_id", "geometry"]]
     g["geometry"] = g.to_crs(31984).simplify(12, preserve_topology=True).to_crs(4326)  # 12 m
     g = g.merge(t, on="bairro_id")
+    reg = pd.read_csv(ROOT / "data/raw/bairro_regional.csv")
+    g = g.merge(reg[["bairro_id", "regional"]], on="bairro_id")
 
     feats = []
     for _, r in g.iterrows():
-        props = {"id": int(r.bairro_id), "nome": nome_bonito(r.bairro)}
+        props = {"id": int(r.bairro_id), "nome": nome_bonito(r.bairro), "regional": int(r.regional)}
         for c in CAMPOS:
             v = r[c]
             props[c] = v if isinstance(v, str) else (None if pd.isna(v) else round(float(v), 2))
@@ -59,6 +61,21 @@ def main() -> None:
         geom["coordinates"] = json.loads(json.dumps(geom["coordinates"]),
                                          parse_float=lambda x: round(float(x), 5))
         feats.append({"type": "Feature", "properties": props, "geometry": geom})
+
+    # Regionais: contorno dos bairros dissolvidos, simplificado como a malha
+    rg = gpd.read_file(ROOT / "data/geo/regionais_fortaleza.geojson")
+    rg["geometry"] = rg.to_crs(31984).simplify(12, preserve_topology=True).to_crs(4326)
+    regionais = []
+    rotulos = rg.to_crs(31984).representative_point().to_crs(4326)  # ponto garantido dentro, para o número
+    for (_, r), pt in zip(rg.iterrows(), rotulos):
+        geom = json.loads(gpd.GeoSeries([r.geometry]).to_json())["features"][0]["geometry"]
+        geom["coordinates"] = json.loads(json.dumps(geom["coordinates"]),
+                                         parse_float=lambda x: round(float(x), 5))
+        regionais.append({"type": "Feature", "geometry": geom, "properties": {
+            "regional": int(r.regional), "n_bairros": int(r.n_bairros), "area_km2": round(float(r.area_km2), 1),
+            "rotulo": [round(pt.y, 5), round(pt.x, 5)],
+            "pop_2022": int(t.merge(reg, on="bairro_id").query("regional == @r.regional").pop_2022.sum()),
+        }})
 
     # Totais da cidade (ponderados) para os números de abertura
     cidade = {
@@ -72,6 +89,7 @@ def main() -> None:
     }
     dados = {
         "geojson": {"type": "FeatureCollection", "features": feats},
+        "regionais": {"type": "FeatureCollection", "features": regionais},
         "meta": meta,
         "cidade": cidade,
         "ais": ais[["ais", "cvli_2025", "cvli_media_2023_2025", "cvp_2025", "cvp_media_2023_2025", "n_bairros"]]
