@@ -336,7 +336,7 @@
       });
     } else if (p50 != null) {
       const bairro = estado.d.startsWith("b");
-      const msg = !T.meta.rotas ? "As rotas detalhadas não foram geradas (o script rodou com --sem-rotas): aparece só o tempo."
+      const msg = !T.meta.rotas ? "O passo a passo das linhas ainda não foi calculado: por enquanto aparece só o tempo estimado."
         : bairro && !T.meta.rotas_entre_bairros ? "Entre bairros aparece só o tempo. O passo a passo das linhas está calculado até os polos: escolha um deles acima para ver como ir."
         : "As linhas desta viagem não foram encontradas no arquivo de rotas.";
       lista.append(el("p", { class: "tj-vazio", texto: msg }));

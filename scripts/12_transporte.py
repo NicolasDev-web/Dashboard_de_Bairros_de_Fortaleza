@@ -24,6 +24,7 @@ Uso:
   python scripts/12_transporte.py                  # baixa o que faltar, calcula tudo
   python scripts/12_transporte.py --sem-rotas      # só a matriz de tempos (rápido)
   python scripts/12_transporte.py --rotas-entre-bairros   # rotas também bairro a bairro (horas)
+  python scripts/12_transporte.py --da-tabela      # refaz transporte.js da última tabela, sem rotear
   python scripts/12_transporte.py --gtfs a.zip b.zip --osm ruas.osm.pbf
 
 Precisa de Java 21 (o r5py usa o R5, escrito em Java) e de `pip install r5py osmium`.
@@ -56,6 +57,7 @@ OUT_JS = ROOT / "dashboard/transporte.js"
 OUT_LINHAS = ROOT / "dashboard/transporte_linhas.js"
 OUT_ROTAS = ROOT / "dashboard/transporte"
 OUT_CSV = ROOT / "data/processed/transporte_tempos.csv"
+OUT_META = ROOT / "data/processed/transporte_meta.json"  # dia de referência e GTFS da tabela acima
 UTM = 31984
 
 GTFS_URLS = {
@@ -337,6 +339,67 @@ def compactar_rotas(it: pd.DataFrame, linhas: dict, paradas: dict) -> dict:
     return saida
 
 
+def tempos_por_origem(ttm: pd.DataFrame, ids_dest: list[str]) -> dict:
+    tempos = {}
+    for o, grp in ttm.groupby("from_id"):
+        g = grp.set_index("to_id").reindex(ids_dest)
+        tempos[o] = [[None if pd.isna(v) else int(v) for v in g[c]] for c in ("p25", "p50", "p75")]
+    return tempos
+
+
+def gravar(meta: dict, polos: gpd.GeoDataFrame, destinos: gpd.GeoDataFrame, tempos: dict,
+           linhas: dict, tracados: dict) -> None:
+    """Grava os dois arquivos que a página lê. Chamado logo depois da matriz (tempos já valem
+    sozinhos, mesmo se a fase das rotas cair) e de novo no fim, com as rotas."""
+    dados = {
+        "meta": meta,
+        "destinos": destinos.id.tolist(),
+        "polos": [{"id": r.id, "nome": r.nome, "bairro": int(r.bairro_id), "lat": round(r.geometry.y, 5),
+                   "lon": round(r.geometry.x, 5)} for r in polos.itertuples()],
+        "pontos": {r.id: [round(r.geometry.y, 5), round(r.geometry.x, 5)] for r in destinos.itertuples()},
+        "linhas": linhas,
+        "tempos": tempos,
+    }
+    OUT_JS.write_text("window.TRANSPORTE = " + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                      encoding="utf-8")
+    OUT_LINHAS.write_text("window.TRANSPORTE_LINHAS = " + json.dumps(tracados, separators=(",", ":")) + ";\n",
+                          encoding="utf-8")
+
+
+def meta_base(dia: dt.date, dia_rotulo: str, feeds: list[str]) -> dict:
+    return {"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "saida": f"{SAIDA_INICIO:%H:%M}",
+            "janela_min": int(JANELA.total_seconds() // 60), "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": feeds,
+            "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": False, "rotas_entre_bairros": False}
+
+
+def da_tabela(args) -> None:
+    """Refaz transporte.js a partir da última tabela de tempos, sem Java nem GTFS (sem rotas)."""
+    if not OUT_CSV.exists():
+        raise SystemExit(f"{OUT_CSV.relative_to(ROOT)} não existe: rode o script sem --da-tabela primeiro.")
+    if OUT_META.exists():
+        m = json.loads(OUT_META.read_text(encoding="utf-8"))
+        dia, dia_rotulo, feeds = dt.date.fromisoformat(m["dia"]), m["dia_rotulo"], m["feeds"]
+    elif args.dia:
+        dia = dt.date.fromisoformat(args.dia)
+        dia_rotulo, feeds = ("sábado" if dia.weekday() == 5 else "domingo" if dia.weekday() == 6 else "dia útil"), ["etufor", "metrofor"]
+    else:
+        raise SystemExit(f"Falta {OUT_META.relative_to(ROOT)}: diga o dia de referência da tabela com --dia AAAA-MM-DD.")
+    b = gpd.read_file(BAIRROS)[["bairro_id", "nome", "geometry"]]
+    polos = pontos_polos(b)
+    destinos = pd.concat([pontos_bairros(b), polos[["id", "geometry"]]], ignore_index=True)
+    ttm = pd.read_csv(OUT_CSV)
+    faltam = set(ttm.to_id) - set(destinos.id)
+    if faltam:
+        raise SystemExit(f"A tabela tem destinos que não existem mais (polos mudaram?): {sorted(faltam)[:5]}")
+    tempos = tempos_por_origem(ttm, destinos.id.tolist())
+    gravar(meta_base(dia, dia_rotulo, feeds), polos, destinos, tempos, {}, {})
+    if not OUT_META.exists():
+        OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": feeds,
+                                        "origens": len(tempos)}, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"{len(tempos)} bairros de saída, {len(ttm)} pares, dia {dia:%d/%m/%Y} ({dia_rotulo}), sem rotas detalhadas")
+    print(f"-> {OUT_JS.relative_to(ROOT)} ({OUT_JS.stat().st_size / 1024:.0f} KB)")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--gtfs", nargs="*", help="arquivos GTFS (.zip); padrão: baixa ETUFOR e Metrofor")
@@ -345,7 +408,12 @@ def main() -> None:
     ap.add_argument("--rotas-entre-bairros", action="store_true",
                     help="rotas detalhadas também entre bairros, não só até os polos (demora horas)")
     ap.add_argument("--origens", type=int, default=0, help="limita o número de bairros de saída (teste)")
+    ap.add_argument("--da-tabela", action="store_true",
+                    help="refaz transporte.js da última tabela de tempos (data/processed), sem rotear")
+    ap.add_argument("--dia", help="com --da-tabela, se faltar o transporte_meta.json: dia de referência AAAA-MM-DD")
     args = ap.parse_args()
+    if args.da_tabela:
+        return da_tabela(args)
 
     import r5py  # importa aqui: a JVM só sobe se for calcular
 
@@ -382,13 +450,15 @@ def main() -> None:
     ttm = ttm.rename(columns={col[25]: "p25", col[50]: "p50", col[75]: "p75"})
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     ttm[["from_id", "to_id", "p25", "p50", "p75"]].to_csv(OUT_CSV, index=False)
+    nomes_feeds = [g["nome"] for g in feeds]
+    OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": nomes_feeds,
+                                    "origens": len(origens)}, ensure_ascii=False, indent=1), encoding="utf-8")
 
     linhas, tracados, paradas = tabela_linhas(feeds)
-    ids_dest = destinos.id.tolist()
-    tempos = {}
-    for o, grp in ttm.groupby("from_id"):
-        g = grp.set_index("to_id").reindex(ids_dest)
-        tempos[o] = [[None if pd.isna(v) else int(v) for v in g[c]] for c in ("p25", "p50", "p75")]
+    tempos = tempos_por_origem(ttm, destinos.id.tolist())
+    meta = meta_base(dia, dia_rotulo, nomes_feeds)
+    # os tempos já valem sozinhos: grava agora, para não perder tudo se a fase das rotas cair
+    gravar(meta, polos, destinos, tempos, linhas, {k: v for k, v in tracados.items()})
     sem_rota = int(ttm.p50.isna().sum())
     print(f"  {len(ttm)} pares, {sem_rota} sem rota em até {int(MAX_TEMPO.total_seconds() // 60)} min")
 
@@ -418,23 +488,11 @@ def main() -> None:
                 f"(window.ROTAS_TP = window.ROTAS_TP || {{}})[{json.dumps(o)}] = {corpo};\n", encoding="utf-8")
         print(f"  rotas de {len(rotas)} bairros -> {OUT_ROTAS.relative_to(ROOT)}/")
 
-    usadas = usadas or set(linhas)
-    dados = {
-        "meta": {"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "saida": f"{SAIDA_INICIO:%H:%M}", "janela_min": int(JANELA.total_seconds() // 60),
-                 "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": [g["nome"] for g in feeds],
-                 "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": not args.sem_rotas,
-                 "rotas_entre_bairros": bool(args.rotas_entre_bairros and not args.sem_rotas)},
-        "destinos": ids_dest,
-        "polos": [{"id": r.id, "nome": r.nome, "bairro": int(r.bairro_id), "lat": round(r.geometry.y, 5),
-                   "lon": round(r.geometry.x, 5)} for r in polos.itertuples()],
-        "pontos": {r.id: [round(r.geometry.y, 5), round(r.geometry.x, 5)] for r in destinos.itertuples()},
-        "linhas": {k: v for k, v in linhas.items() if k in usadas},
-        "tempos": tempos,
-    }
-    OUT_JS.write_text("window.TRANSPORTE = " + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n",
-                      encoding="utf-8")
-    OUT_LINHAS.write_text("window.TRANSPORTE_LINHAS = " + json.dumps({k: v for k, v in tracados.items() if k in usadas},
-                          separators=(",", ":")) + ";\n", encoding="utf-8")
+    if not args.sem_rotas:
+        usadas = usadas or set(linhas)
+        meta.update(rotas=True, rotas_entre_bairros=bool(args.rotas_entre_bairros))
+        gravar(meta, polos, destinos, tempos, {k: v for k, v in linhas.items() if k in usadas},
+               {k: v for k, v in tracados.items() if k in usadas})
 
     med = ttm[ttm.to_id.str.startswith("p_")].groupby("to_id").p50.median()
     print("Tempo mediano de todos os bairros até cada polo (min):")
