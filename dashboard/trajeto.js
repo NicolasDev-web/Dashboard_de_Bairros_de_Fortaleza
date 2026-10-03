@@ -15,7 +15,9 @@
     const n = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) {
       if (v == null || v === false) continue;
-      if (k === "texto") n.textContent = v; else n.setAttribute(k, v === true ? "" : v);
+      if (k === "texto") n.textContent = v;
+      else if (k === "html") n.innerHTML = v;
+      else n.setAttribute(k, v === true ? "" : v);
     }
     for (const f of [].concat(filhos)) if (f != null && f !== false) n.append(f);
     return n;
@@ -117,18 +119,32 @@
 
   const pino = (txt, classe) => L.divIcon({ className: `tj-pin ${classe}`, html: `<span>${txt}</span>`, iconSize: [26, 26], iconAnchor: [13, 13] });
 
-  // trecho da linha entre a parada de subida e a de descida, no sentido certo
+  // trecho da linha entre a parada de subida e a de descida, no sentido certo: projeta as duas
+  // paradas no traçado e fica só com os vértices entre elas
   function trecho(chave, a, b) {
     const formas = (window.TRANSPORTE_LINHAS || {})[chave];
     if (!formas || !a || !b) return [a, b].filter(Boolean);
     const k = Math.cos((-3.75 * Math.PI) / 180);
-    const d2 = (p, q) => ((p[0] - q[0]) ** 2) + (((p[1] - q[1]) * k) ** 2);
+    const xy = (p) => [p[1] * k, p[0]];
+    function projetar(f, p) { // -> { pos: índice + fração, d: distância² }
+      const [px, py] = xy(p);
+      let melhor = { pos: 0, d: Infinity };
+      for (let i = 0; i < f.length - 1; i++) {
+        const [x1, y1] = xy(f[i]), [x2, y2] = xy(f[i + 1]);
+        const dx = x2 - x1, dy = y2 - y1, l2 = dx * dx + dy * dy || 1e-12;
+        const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / l2));
+        const d = (x1 + t * dx - px) ** 2 + (y1 + t * dy - py) ** 2;
+        if (d < melhor.d) melhor = { pos: i + t, d };
+      }
+      return melhor;
+    }
     let melhor = null;
     for (const f of formas) {
-      let ia = 0, ib = 0;
-      f.forEach((p, i) => { if (d2(p, a) < d2(f[ia], a)) ia = i; if (d2(p, b) < d2(f[ib], b)) ib = i; });
-      const custo = d2(f[ia], a) + d2(f[ib], b);
-      if (ia < ib && (!melhor || custo < melhor.custo)) melhor = { custo, pts: f.slice(ia, ib + 1) };
+      if (f.length < 2) continue;
+      const pa = projetar(f, a), pb = projetar(f, b);
+      if (pa.pos < pb.pos && (!melhor || pa.d + pb.d < melhor.custo)) {
+        melhor = { custo: pa.d + pb.d, pts: f.filter((_, i) => i > pa.pos && i < pb.pos) };
+      }
     }
     return melhor ? [a, ...melhor.pts, b] : [a, b];
   }
@@ -272,8 +288,19 @@
     if (meu !== pedido) return; // a pessoa já trocou de destino no meio do carregamento
     if (estado.opcao >= opcoes.length) estado.opcao = 0;
 
+    // baldeação na mesma parada vira "caminhe 0 min": não é um passo
+    opcoes = opcoes.map((op) => ({ ...op, p: op.p.filter((q) => q[0] !== "a" || q[1] >= 1) }));
     const cab = el("div", { class: "tj-cabeca" });
-    if (p50 == null) {
+    if (p50 == null && opcoes.length) {
+      // na maior parte da janela passa de 2h30, mas saindo às 7h há rota: mostra essa, com a ressalva
+      const num = el("p", { class: "tj-tempo" });
+      cab.append(
+        el("p", { class: "tj-rotulo-res", texto: `${NOME.get(estado.o)} → ${NOME.get(estado.d)}` }),
+        el("div", { class: "tj-tempo-linha" }, [el("span", { class: "tj-aprox", texto: "≈" }), num]),
+        el("p", { class: "tj-faixa", texto: `saindo às ${T.meta.saida_rotas}. Em boa parte da manhã a viagem passa de ${tempo(T.meta.max_min)}.` }),
+      );
+      rolar(num, opcoes[0].t);
+    } else if (p50 == null) {
       cab.append(el("p", { class: "tj-rotulo-res", texto: `${NOME.get(estado.o)} → ${NOME.get(estado.d)}` }),
         el("p", { class: "tj-vazio-titulo", texto: `Sem rota de transporte público em até ${tempo(T.meta.max_min)}.` }));
     } else {

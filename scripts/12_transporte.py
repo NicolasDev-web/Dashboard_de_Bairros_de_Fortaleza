@@ -288,6 +288,7 @@ def compactar_rotas(it: pd.DataFrame, linhas: dict, paradas: dict) -> dict:
             vistas.add(assinatura)
             for p in pernas:
                 p[1:] = [round(v) if isinstance(v, float) else v for v in p[1:]]
+            pernas = [p for p in pernas if p[0] != "a" or p[1] >= 1]  # baldeação na mesma parada
             opcoes.append({"t": round(total), "p": pernas})
         opcoes.sort(key=lambda x: x["t"])
         saida.setdefault(o, {})[d] = opcoes[:MAX_OPCOES]

@@ -24,6 +24,7 @@ python -m venv .venv
 .venv/Scripts/python scripts/10_equipamentos_osm.py   # saúde, lazer, mobilidade, escolas e comércio (OpenStreetMap) -> dashboard/equipamentos.js
                                                        #   --das-contagens refaz só as notas, sem baixar
 .venv/Scripts/python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
+.venv/Scripts/python scripts/12_transporte.py         # tempo e rotas de ônibus/metrô -> dashboard/transporte*.js
 ```
 
 A etapa 6 lê a saída da 8: se mexer nas regionais, rode a 8 e depois a 6.
@@ -41,6 +42,20 @@ A etapa 9 usa o PriceRadar para coletar anúncios de venda de apartamentos em Fo
 .venv/Scripts/python scripts/09_precos_priceradar.py --fonte csv        # só reagrega a última coleta
 .venv/Scripts/python scripts/09_precos_priceradar.py --priceradar C:/outro/caminho/priceradar
 ```
+
+## Tempo e rotas de ônibus (etapa 12)
+
+Calcula, com o r5py (o motor R5, o mesmo do projeto Acesso a Oportunidades do IPEA), o tempo de porta a porta por transporte público de cada bairro até os outros 120 e até 12 polos (Centro, Beira-Mar, Aldeota, Papicu, Iguatemi, Unifor, Centro de Eventos, Parangaba, Messejana, UFC Benfica, UFC Pici, Aeroporto), num dia útil com saída entre 6h30 e 8h. Até os polos sai também o passo a passo: até 3 opções de linhas, onde subir e descer.
+
+```sh
+# precisa de Java 21 instalado (https://adoptium.net) e de:
+.venv/Scripts/python -m pip install r5py osmium
+.venv/Scripts/python scripts/12_transporte.py                 # baixa GTFS da ETUFOR e do Metrofor e as ruas; ~30–60 min
+.venv/Scripts/python scripts/12_transporte.py --sem-rotas     # só os tempos (poucos minutos)
+.venv/Scripts/python scripts/12_transporte.py --gtfs etufor.zip metrofor.zip   # GTFS baixados à mão
+```
+
+Se o link do GTFS do Metrofor mudar, baixe em https://www.metrofor.ce.gov.br/gtfs/ e passe com `--gtfs` (sem ele, só ônibus). As rotas passo a passo entre quaisquer dois bairros ficam atrás de `--rotas-entre-bairros`, porque levam horas. É tempo de tabela: o resultado não considera trânsito e tende a ser otimista no pico.
 
 ## Onde morar: o que cada arquivo alimenta
 
@@ -61,6 +76,7 @@ Os downloads brutos (~330 MB) ficam em `data/cache/`, fora do git; os scripts ba
 | Regionais | Prefeitura de Fortaleza, Decreto nº 14.899/2020 (12 Secretarias Regionais) |
 | Preço do m² | Anúncios de VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX, coletados e limpos pelo PriceRadar |
 | Hospitais, lazer, transporte, escolas e comércio | OpenStreetMap (Overpass, via osmnx), contados no bairro e num raio de 500 m |
+| Ônibus, metrô e VLT | GTFS da ETUFOR (dados abertos da Prefeitura) e do Metrofor, roteados com r5py sobre as ruas do OpenStreetMap |
 | Praças e espaços públicos | URBIFOR, cadastro de 2019 (484 polígonos), em `data/raw/pracas_urbifor_2019.geojson`; camada de contexto, fora do índice e da nota do "Onde morar" |
 
 As decisões de método e as limitações estão na seção "De onde vêm os números" do próprio dashboard e no cabeçalho de cada script.

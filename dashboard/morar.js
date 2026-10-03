@@ -362,7 +362,8 @@
 
   progressoEl.replaceChildren(...PASSOS.slice(1).map((id) => {
     const c = CRITERIOS.find((x) => x.id === id);
-    return el("li", { title: id === "renda" ? "Orçamento" : id === "ritmo" ? "Ritmo do bairro" : c.nome }, el("span", {}));
+    const titulo = { renda: "Orçamento", trajeto: "Trajeto", ritmo: "Ritmo do bairro" }[id] || c.nome;
+    return el("li", { title: titulo }, el("span", {}));
   }));
 
   const linhas = (txts) => txts.map((t, i) => el("span", { class: "linha", style: `--i:${i}` }, el("span", { texto: t })));
