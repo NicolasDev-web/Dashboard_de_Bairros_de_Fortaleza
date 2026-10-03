@@ -444,7 +444,7 @@
     const passo = construirOpcoes({
       n, nome: "Trajeto", ic: "pino",
       pergunta: "Para onde você vai quase todo dia?",
-      detalhe: "Trabalho, faculdade, escola dos filhos. O tempo de ônibus até lá entra na conta: estimativa de tabela, saindo de manhã num dia útil.",
+      detalhe: `Trabalho, faculdade, escola dos filhos. O tempo de ônibus até lá entra na conta: estimativa de tabela, saindo de manhã num ${(T && T.meta.dia_rotulo) || "dia útil"}.`,
       opcoes: NIVEIS.map((x, i) => (i === 0 ? { rotulo: "Não vou todo dia", nota: "o trajeto fica fora da conta" } : x)),
       atual: estado.deslocNivel, nivelPx: [0, 1, 2, 3], desligado: !T,
       escolher: (i) => { estado.deslocNivel = i; },

@@ -22,9 +22,13 @@
     for (const f of [].concat(filhos)) if (f != null && f !== false) n.append(f);
     return n;
   };
+  // "dia útil" ou "sábado": o script cai para o sábado quando o GTFS não tem viagem de dia útil
+  const DIA = (T && T.meta.dia_rotulo) || "dia útil";
   const tempo = (m) => (m < 60 ? `${nf0.format(m)} min` : `${Math.floor(m / 60)}h${String(Math.round(m % 60)).padStart(2, "0")}`);
 
   const secao = document.getElementById("trajeto");
+  const metodoDia = document.getElementById("metodo-dia");
+  if (metodoDia && T) metodoDia.textContent = DIA === "dia útil" ? "num dia útil" : `num ${DIA} (o GTFS da ETUFOR em uso não traz as viagens de dia útil)`;
   const box = document.getElementById("tj-resultado");
   const selO = document.getElementById("tj-origem");
   const selD = document.getElementById("tj-destino");
@@ -309,8 +313,8 @@
         el("p", { class: "tj-rotulo-res", texto: `${NOME.get(estado.o)} → ${NOME.get(estado.d)}` }),
         el("div", { class: "tj-tempo-linha" }, [el("span", { class: "tj-aprox", texto: "≈" }), num]),
         el("p", { class: "tj-faixa", texto: p25 != null && p75 != null && p75 > p25
-          ? `entre ${tempo(p25)} e ${tempo(p75)}, conforme o horário em que você sai (${T.meta.saida} às ${horaFim()}, dia útil)`
-          : `saindo entre ${T.meta.saida} e ${horaFim()}, num dia útil` }),
+          ? `entre ${tempo(p25)} e ${tempo(p75)}, conforme o horário em que você sai (${T.meta.saida} às ${horaFim()}, ${DIA})`
+          : `saindo entre ${T.meta.saida} e ${horaFim()}, num ${DIA}` }),
       );
       rolar(num, p50);
     }

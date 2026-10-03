@@ -9,7 +9,8 @@ Roteamento com r5py (R5, o mesmo motor do projeto Acesso a Oportunidades do IPEA
   - saída: um ponto por bairro, no centro ponderado pela população dos setores de 2022
     (onde as pessoas moram, não o meio geográfico do polígono)
   - chegada: os mesmos 121 bairros e os polos abaixo (pontos de trabalho, estudo e eventos)
-  - dia útil dentro da vigência do GTFS, saída entre 6h30 e 8h; o tempo é de porta a
+  - dia útil dentro da vigência do GTFS (sábado se o GTFS não tiver viagem de dia útil),
+    saída entre 6h30 e 8h; o tempo é de porta a
     porta (caminhada, espera, viagem, baldeação) e sai a mediana da janela, com o 25º e
     o 75º percentis como faixa ("entre 45 e 60 min, conforme o horário de saída")
   - rotas detalhadas (linhas, onde subir e descer) saindo às 7h, até 3 alternativas, de cada
@@ -59,26 +60,30 @@ UTM = 31984
 
 GTFS_URLS = {
     "etufor": "https://dados.fortaleza.ce.gov.br/dataset/d6f1e64c-aca3-4867-8f39-53b7c9c2d211/resource/"
-              "7058bfbe-5ba2-45f4-9a91-af1508a7c05b/download/arquivo_gtfs_03.10.2025.zip",
-    # O Metrofor publica o GTFS em https://www.metrofor.ce.gov.br/gtfs/ ; se o link mudar,
-    # baixe à mão e passe com --gtfs. Sem ele, metrô e VLT ficam de fora (só ônibus).
-    "metrofor": "https://www.metrofor.ce.gov.br/gtfs/gtfs.zip",
+              "7058bfbe-5ba2-45f4-9a91-af1508a7c05b/download/arquivo_google.zip",
+    # Link da página https://www.ce.gov.br/metrofor/gtfs/ (o endereço antigo, metrofor.ce.gov.br,
+    # redireciona para lá). Se mudar, baixe à mão e passe com --gtfs; sem ele, metrô e VLT
+    # ficam de fora (só ônibus).
+    "metrofor": "https://info.metrofor.ce.gov.br/gtfs_file",
 }
 OVERPASS = ["https://overpass-api.de/api/interpreter", "https://z.overpass-api.de/api/interpreter",
-            "https://overpass.kumi.systems/api/interpreter"]
+            "https://lz4.overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
+# O Overpass responde 406 ao User-Agent padrão do requests ("python-requests/x").
+CABECALHO = {"User-Agent": "Dashboard-de-Bairros-de-Fortaleza/1.0 (scripts/12_transporte.py)"}
 
 # Polos de trabalho, estudo e eventos. O ponto é o lugar em si; `bairro` confere que ele
-# caiu no bairro certo da malha de 2025 (se não cair, o script avisa e para).
+# caiu no bairro certo da malha de 2025 (se não cair, o script avisa e para). Terminais,
+# shopping e Centro de Eventos conferidos com o OpenStreetMap em 10/2026.
 POLOS = [
     ("centro", "Centro (Praça do Ferreira)", -3.72760, -38.52650, "CENTRO"),
     ("beira_mar", "Beira-Mar", -3.72540, -38.49700, "MEIRELES"),
     ("aldeota", "Aldeota (Av. Santos Dumont)", -3.73820, -38.50020, "ALDEOTA"),
-    ("papicu", "Papicu (terminal)", -3.73900, -38.47720, "PAPICU"),
-    ("iguatemi", "Iguatemi", -3.75650, -38.48850, None),
+    ("papicu", "Papicu (terminal)", -3.73830, -38.48518, "PAPICU"),
+    ("iguatemi", "Iguatemi", -3.75543, -38.48877, "EDSON QUEIROZ"),
     ("unifor", "Unifor", -3.76890, -38.47840, "EDSON QUEIROZ"),
-    ("centro_eventos", "Centro de Eventos", -3.77640, -38.48250, None),
+    ("centro_eventos", "Centro de Eventos", -3.76453, -38.48042, "EDSON QUEIROZ"),
     ("parangaba", "Parangaba (terminal)", -3.77630, -38.56330, "PARANGABA"),
-    ("messejana", "Messejana (terminal)", -3.83080, -38.49180, "MESSEJANA"),
+    ("messejana", "Messejana (terminal)", -3.83130, -38.50194, "MESSEJANA"),
     ("ufc_benfica", "UFC Benfica", -3.74210, -38.53860, "BENFICA"),
     ("ufc_pici", "UFC Pici", -3.74370, -38.57440, "PICI"),
     ("aeroporto", "Aeroporto", -3.77630, -38.53250, "AEROPORTO"),
@@ -99,7 +104,7 @@ def baixar(url: str, destino: Path) -> Path | None:
     if destino.exists():
         return destino
     try:
-        r = requests.get(url, timeout=180)
+        r = requests.get(url, timeout=180, headers=CABECALHO)
         r.raise_for_status()
         zipfile.ZipFile(io.BytesIO(r.content))  # confere que é um zip de verdade
     except Exception as e:
@@ -125,7 +130,7 @@ def ruas_pbf(bairros: gpd.GeoDataFrame) -> Path:
     for url in OVERPASS:
         try:
             print(f"  baixando ruas do OpenStreetMap ({url}) ...")
-            r = requests.post(url, data={"data": consulta}, timeout=900)
+            r = requests.post(url, data={"data": consulta}, timeout=900, headers=CABECALHO)
             r.raise_for_status()
             CACHE.mkdir(parents=True, exist_ok=True)
             xml.write_bytes(r.content)
@@ -150,26 +155,55 @@ def ler_gtfs(caminho: Path, nome: str) -> dict[str, pd.DataFrame]:
     return g
 
 
-def dia_util(feeds: list[dict]) -> dt.date:
-    """Uma terça-feira com serviço em todos os GTFS (sem feriado no calendar_dates)."""
-    inicios, fins, excecoes = [], [], set()
+DIAS_SEMANA = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+
+
+def viagens_no_dia(g: dict, d: dt.date) -> int:
+    """Quantas viagens do GTFS rodam na data (calendar + exceções do calendar_dates)."""
+    ativos = set()
+    cal = g["calendar"]
+    if cal is not None and len(cal):
+        dia = d.strftime("%Y%m%d")
+        ok = (cal[DIAS_SEMANA[d.weekday()]] == "1") & (cal.start_date <= dia) & (cal.end_date >= dia)
+        ativos |= set(cal[ok].service_id)
+    cd = g["calendar_dates"]
+    if cd is not None and len(cd):
+        no_dia = cd[cd.date == d.strftime("%Y%m%d")]
+        ativos |= set(no_dia[no_dia.exception_type == "1"].service_id)
+        ativos -= set(no_dia[no_dia.exception_type == "2"].service_id)
+    return int(g["trips"].service_id.isin(ativos).sum())
+
+
+def dia_referencia(feeds: list[dict]) -> tuple[dt.date, str]:
+    """Uma terça-feira com viagens em todos os GTFS. Se não houver, um sábado.
+
+    Conta viagens, não só o calendar: o GTFS da ETUFOR de 03/2026 declara o serviço de
+    dia útil no calendar.txt mas não traz nenhuma viagem dele, só as de sábado e domingo.
+    """
+    inicios, fins, feriados = [], [], set()
     for g in feeds:
+        cd = g["calendar_dates"]
+        if cd is not None and len(cd):  # data com serviço retirado = feriado (ex.: 21/04 roda tabela de domingo)
+            feriados |= set(pd.to_datetime(cd[cd.exception_type == "2"].date).dt.date)
+        datas = []
         if g["calendar"] is not None and len(g["calendar"]):
-            inicios.append(pd.to_datetime(g["calendar"].start_date).min())
-            fins.append(pd.to_datetime(g["calendar"].end_date).max())
-        if g["calendar_dates"] is not None:
-            cd = g["calendar_dates"]
-            excecoes |= set(pd.to_datetime(cd[cd.exception_type == "2"].date).dt.date)
-            if g["calendar"] is None or not len(g["calendar"]):
-                datas = pd.to_datetime(cd[cd.exception_type == "1"].date)
-                inicios.append(datas.min()); fins.append(datas.max())
-    ini, fim = max(inicios).date(), min(fins).date()
-    d = dt.date.today() if ini <= dt.date.today() <= fim else ini
-    while d <= fim:
-        if d.weekday() == 1 and d not in excecoes:
-            return d
-        d += dt.timedelta(days=1)
-    raise SystemExit(f"Nenhuma terça-feira útil na vigência comum dos GTFS ({ini} a {fim}).")
+            datas += [g["calendar"].start_date.min(), g["calendar"].end_date.max()]
+        if g["calendar_dates"] is not None and len(g["calendar_dates"]):
+            datas += [g["calendar_dates"].date.min(), g["calendar_dates"].date.max()]
+        inicios.append(min(datas)); fins.append(max(datas))
+    ini, fim = pd.to_datetime(max(inicios)).date(), pd.to_datetime(min(fins)).date()
+    hoje = dt.date.today()
+    for semana, rotulo in ((1, "dia útil"), (5, "sábado")):
+        d = hoje if ini <= hoje <= fim else ini
+        while d <= fim:
+            if d.weekday() == semana and d not in feriados and all(viagens_no_dia(g, d) for g in feeds):
+                if semana != 1:
+                    print("  AVISO: nenhuma terça-feira com viagens em todos os GTFS; usando a tabela de sábado.")
+                    for g in feeds:
+                        print(f"    {g['nome']}: {viagens_no_dia(g, d - dt.timedelta(days=4))} viagens na terça anterior")
+                return d, rotulo
+            d += dt.timedelta(days=1)
+    raise SystemExit(f"Nenhuma terça-feira nem sábado com viagens em todos os GTFS ({ini} a {fim}).")
 
 
 def pontos_bairros(b: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
@@ -221,8 +255,14 @@ def tabela_linhas(feeds: list[dict]) -> tuple[dict, dict, dict]:
         for _, r in g["routes"].iterrows():
             curto = (r.get("route_short_name") or "").strip() if isinstance(r.get("route_short_name"), str) else ""
             longo = (r.get("route_long_name") or "").strip() if isinstance(r.get("route_long_name"), str) else ""
-            linhas[f"{f}:{r.route_id}"] = [curto, longo.title() if longo.isupper() else longo,
-                                           modo_txt.get(str(r.get("route_type")), "onibus")]
+            longo = longo.title() if longo.isupper() else longo
+            if not curto and longo:
+                # O Metrofor não tem número de linha e marca tudo como VLT (route_type 0), até o
+                # metrô da Linha Sul: o selo fica com o nome ("Linha Sul") e o trajeto vai para o texto.
+                desc = (r.get("route_desc") or "").strip() if isinstance(r.get("route_desc"), str) else ""
+                curto = longo.replace("Vlt", "VLT")
+                longo = f"{curto} ({desc})" if desc else curto
+            linhas[f"{f}:{r.route_id}"] = [curto, longo, modo_txt.get(str(r.get("route_type")), "onibus")]
         for _, r in g["stops"].iterrows():
             paradas[f"{f}:{r.stop_id}"] = [r.get("stop_name") if isinstance(r.get("stop_name"), str) else "",
                                            round(float(r.stop_lat), 5), round(float(r.stop_lon), 5)]
@@ -236,9 +276,11 @@ def tabela_linhas(feeds: list[dict]) -> tuple[dict, dict, dict]:
         t = g["trips"]
         if "shape_id" not in t:
             continue
-        dirc = t.direction_id if "direction_id" in t else pd.Series("0", index=t.index)
-        mais = t.assign(direction_id=dirc).groupby(["route_id", "direction_id"]).shape_id.agg(lambda s: s.mode().iat[0])
-        for (rid, _), sid in mais.items():
+        # Até 2 traçados por linha (ida e volta), os mais usados. Agrupa pelo shape_id e não pelo
+        # direction_id: na ETUFOR ele vem em branco, e o groupby descartaria todas as viagens.
+        uso = t.dropna(subset=["shape_id"]).groupby(["route_id", "shape_id"]).size().sort_values(ascending=False)
+        mais = uso.groupby(level="route_id").head(2)
+        for (rid, sid), _ in mais.items():
             if sid in geo:
                 linha = gpd.GeoSeries([geo[sid]], crs=4326).to_crs(UTM).simplify(15).to_crs(4326).iloc[0]
                 tracados.setdefault(f"{f}:{rid}", []).append([[round(y, 5), round(x, 5)] for x, y in linha.coords])
@@ -319,8 +361,8 @@ def main() -> None:
     print("GTFS:", ", ".join(f"{g['nome']} ({len(g['routes'])} linhas)" for g in feeds))
     osm = Path(args.osm) if args.osm else ruas_pbf(b)
 
-    dia = dia_util(feeds)
-    print(f"Dia de referência: {dia:%d/%m/%Y} (terça-feira), saída {SAIDA_INICIO:%H:%M} + {int(JANELA.total_seconds() // 60)} min")
+    dia, dia_rotulo = dia_referencia(feeds)
+    print(f"Dia de referência: {dia:%d/%m/%Y} ({dia_rotulo}), saída {SAIDA_INICIO:%H:%M} + {int(JANELA.total_seconds() // 60)} min")
 
     origens = pontos_bairros(b)
     if args.origens:
@@ -378,7 +420,7 @@ def main() -> None:
 
     usadas = usadas or set(linhas)
     dados = {
-        "meta": {"dia": dia.isoformat(), "saida": f"{SAIDA_INICIO:%H:%M}", "janela_min": int(JANELA.total_seconds() // 60),
+        "meta": {"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "saida": f"{SAIDA_INICIO:%H:%M}", "janela_min": int(JANELA.total_seconds() // 60),
                  "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": [g["nome"] for g in feeds],
                  "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": not args.sem_rotas,
                  "rotas_entre_bairros": bool(args.rotas_entre_bairros and not args.sem_rotas)},

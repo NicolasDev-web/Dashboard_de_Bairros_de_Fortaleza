@@ -1,0 +1,1 @@
+window.TRANSPORTE_LINHAS = {};
