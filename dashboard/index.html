@@ -22,6 +22,7 @@
     </a>
     <nav class="nav-links" aria-label="Seções">
       <a href="#mapa">Mapa</a>
+      <a href="#trajeto">Ônibus</a>
       <a href="#evolucao">Evolução</a>
       <a href="#precos">Preços</a>
       <a href="#metodo">Método</a>
@@ -156,6 +157,33 @@
     </div>
   </section>
 
+  <!-- Como chegar de ônibus: tempo e rotas entre bairros e polos (scripts/12_transporte.py) -->
+  <section class="trajeto" id="trajeto" aria-labelledby="trajeto-titulo">
+    <div class="secao-cabeca">
+      <h2 id="trajeto-titulo">Quanto tempo de ônibus</h2>
+      <p class="secao-nota" id="trajeto-nota">Escolha de onde sai e para onde vai: o tempo estimado de porta a porta e as linhas para chegar lá.</p>
+    </div>
+    <div class="tj-form">
+      <label class="tj-campo">
+        <span class="tj-rotulo"><i class="tj-ponto tj-a" aria-hidden="true">A</i>Saindo de</span>
+        <select id="tj-origem" aria-label="Bairro de saída"></select>
+      </label>
+      <button type="button" class="tj-trocar" id="tj-trocar" aria-label="Inverter saída e chegada" title="Inverter">⇄</button>
+      <label class="tj-campo">
+        <span class="tj-rotulo"><i class="tj-ponto tj-b" aria-hidden="true">B</i>Indo para</span>
+        <select id="tj-destino" aria-label="Destino"></select>
+      </label>
+    </div>
+    <div class="tj-polos" id="tj-polos" role="group" aria-label="Polos da cidade"></div>
+    <div class="tj-grade">
+      <div class="tj-resultado" id="tj-resultado" aria-live="polite"></div>
+      <div class="mapa-caixa">
+        <div id="mapa-trajeto" class="mapa mapa-trajeto" aria-label="Mapa da rota"></div>
+        <div class="legenda tj-legenda" id="tj-legenda"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Evolução 2010 → 2022 -->
   <section class="evolucao" id="evolucao" aria-labelledby="evo-titulo">
     <div class="secao-cabeca">
@@ -246,6 +274,10 @@
         <p>Anúncios de venda de apartamentos coletados com o PriceRadar (VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX), que já descarta aluguel, faixa de área e valor implausível, junta o mesmo imóvel visto em mais de um portal e tira outliers. Cada anúncio vai para um bairro pela coordenada do portal ou, sem ela, pelo nome do bairro. A regional segue o Decreto nº 14.899/2020. É preço pedido, não preço de venda.</p>
       </div>
       <div class="bloco">
+        <h3>Ônibus</h3>
+        <p>Tempo de porta a porta pelo transporte público, calculado com o R5 (o mesmo motor do projeto Acesso a Oportunidades, do IPEA) sobre o GTFS da ETUFOR e do Metrofor e as ruas do OpenStreetMap. Sai do ponto onde mais gente mora em cada bairro, num dia útil, entre 6h30 e 8h; o número é a mediana dessa janela. É tempo de tabela: não considera trânsito nem atraso, então no pico tende a ser otimista.</p>
+      </div>
+      <div class="bloco">
         <h3>Praças</h3>
         <p>Cadastro de praças e espaços públicos da URBIFOR, de 2019: praças, largos, areninhas, calçadões e polos de lazer. Cada espaço foi posto no bairro atual pela posição no mapa, não pelo código antigo de bairro. É área de praças cadastradas, não área verde, e fica fora do índice. Quinze bairros não têm nenhum espaço no cadastro, o que pode ser falta de praça ou só de cadastro.</p>
       </div>
@@ -263,6 +295,8 @@
       <li><a href="https://www.strava.com/maps/global-heatmap" rel="noopener">Strava Global Heatmap</a></li>
       <li><a href="https://github.com/NicolasDev-web/priceradar" rel="noopener">PriceRadar</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">URBIFOR, praças (2019)</a></li>
+      <li><a href="https://dados.fortaleza.ce.gov.br/dataset/d6f1e64c-aca3-4867-8f39-53b7c9c2d211" rel="noopener">ETUFOR, GTFS</a></li>
+      <li><a href="https://www.metrofor.ce.gov.br/gtfs/" rel="noopener">Metrofor, GTFS</a></li>
     </ul>
   </section>
 
@@ -279,7 +313,9 @@
   <script src="pracas-camada.js"></script>
   <script src="equipamentos.js"></script>
   <script src="hospitais-camada.js"></script>
+  <script src="transporte.js"></script>
   <script src="app.js"></script>
+  <script src="trajeto.js"></script>
   <script src="regionais.js"></script>
 </body>
 </html>

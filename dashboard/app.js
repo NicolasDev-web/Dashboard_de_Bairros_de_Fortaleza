@@ -7,6 +7,7 @@
   const P = window.PRECOS || null; // precos.js (scripts/09_precos_priceradar.py); opcional
   const Q = window.PRACAS || null; // pracas.js (scripts/11_pracas.py); opcional
   const E = window.EQUIP || null; // equipamentos.js (scripts/10_equipamentos_osm.py); opcional
+  const T = window.TRANSPORTE || null; // transporte.js (scripts/12_transporte.py); opcional
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -415,6 +416,7 @@
         el("b", { texto: `corrida ${nf0.format(R.bairros[p.id][0])}` }), ", ",
         el("b", { texto: `pedal ${nf0.format(R.bairros[p.id][1])}` }),
       ]) : null,
+      fichaOnibus(p),
       fichaPracas(p),
       E && E.bairros[p.id] && E.bairros[p.id].dist_hospital_km != null ? el("p", { class: "ficha-strava" }, [
         "Hospital mais próximo: ", el("b", { texto: `${nf1.format(E.bairros[p.id].dist_hospital_km)} km` }), " do centro do bairro",
@@ -427,6 +429,24 @@
         `Preço do m²: só ${preco.n} anúncio${preco.n === 1 ? "" : "s"} no bairro, pouco para estimar (veja a regional em Preços).`) : null,
     ].filter(Boolean));
     box.classList.remove("entrando"); void box.offsetWidth; box.classList.add("entrando");
+  }
+
+  // tempo de ônibus até três polos de referência e atalho para a seção de rotas
+  function fichaOnibus(p) {
+    if (!T || !T.tempos[`b${p.id}`]) return null;
+    const p50 = T.tempos[`b${p.id}`][1];
+    const fmt = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)}h${String(m % 60).padStart(2, "0")}`);
+    const polos = ["p_centro", "p_aldeota", "p_beira_mar"].map((id) => T.polos.find((q) => q.id === id)).filter(Boolean);
+    const bt = el("button", { type: "button", class: "link-botao", texto: "Ver rotas de ônibus a partir daqui →" });
+    bt.addEventListener("click", () => document.dispatchEvent(new CustomEvent("trajeto-origem", { detail: p.id })));
+    return el("div", { class: "ficha-onibus" }, [
+      el("p", { texto: "De ônibus, saindo de manhã (estimativa):" }),
+      el("ul", {}, polos.map((q) => {
+        const m = p50[T.destinos.indexOf(q.id)];
+        return el("li", {}, [el("b", { texto: m == null ? "–" : fmt(m) }), q.nome.replace(/ \(.*\)$/, "")]);
+      })),
+      bt,
+    ]);
   }
 
   function fichaPracas(p) {

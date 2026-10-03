@@ -9,6 +9,7 @@
   const P = window.PRECOS || null;
   const E = window.EQUIP || null;
   const Q = window.PRACAS || null; // praças da URBIFOR (2019): contexto nos cards e no mapa, fora da nota
+  const T = window.TRANSPORTE || null; // tempo de ônibus entre bairros e polos (scripts/12_transporte.py)
   const REDUZIR = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const FEATS = D.geojson.features;
@@ -22,6 +23,7 @@
   const nf0 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
   const nf1 = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const reais = (v) => "R$ " + nf0.format(v);
+  const tempoTxt = (m) => (m < 60 ? `${Math.round(m)} min` : `${Math.floor(m / 60)}h${String(Math.round(m % 60)).padStart(2, "0")}`);
   const milhares = (v) => (v >= 1e6 ? "R$ " + nf1.format(v / 1e6) + " mi" : "R$ " + nf0.format(Math.round(v / 1e3)) + " mil");
   const el = (tag, attrs = {}, filhos = []) => {
     const n = document.createElement(tag);
@@ -76,6 +78,7 @@
     lua: ["..###..", ".##....", "##.....", "##.....", "##.....", ".##....", "..###.."],
     moeda: ["..###..", ".#...#.", "#..#..#", "#.###.#", "#..#..#", ".#...#.", "..###.."],
     casa: ["...#...", "..###..", ".#####.", "#######", ".##.##.", ".##.##.", ".#####."],
+    pino: ["..###..", ".#####.", "##...##", "##...##", ".#####.", "..###..", "...#..."],
   };
   function icone(nome, classe = "px-icone") {
     const s = svgEl("svg", { class: classe, viewBox: "0 0 7 7", "aria-hidden": "true" });
@@ -157,6 +160,23 @@
   ];
   CRITERIOS.forEach((c) => { c.pct = c.ok ? percentis(c.valor) : new Map(); if (c.ok && !c.pct.size) c.ok = false; });
   const DENS = percentis((p) => p.densidade_2022);
+
+  // ---------- trajeto: tempo de ônibus até onde a pessoa vai todo dia ----------
+  const NOME_DEST = new Map();
+  if (T) {
+    BAIRROS.forEach((p) => NOME_DEST.set(`b${p.id}`, p.nome));
+    T.polos.forEach((q) => NOME_DEST.set(q.id, q.nome.replace(/ \(.*\)$/, "")));
+  }
+  const DESLOC = { id: "desloc", nome: "Trajeto", icone: "pino", ok: !!T, pct: new Map() };
+  function minutos(p, destino) {
+    if (!T || !destino) return null;
+    const t = T.tempos[`b${p.id}`], i = T.destinos.indexOf(destino);
+    return t && i >= 0 ? t[1][i] : null;
+  }
+  function recalcularDesloc() {
+    // sem rota em até 2h30 conta como o pior tempo, não some da conta
+    DESLOC.pct = estado.destino ? percentis((p) => -(minutos(p, estado.destino) ?? 999)) : new Map();
+  }
   const INDICE = percentis((p) => p.indice);
 
   const NIVEIS = [
@@ -174,13 +194,16 @@
   // =====================================================================
   // ESTADO
   // =====================================================================
-  const PASSOS = ["intro", "renda", ...CRITERIOS.map((c) => c.id), "ritmo"];
+  const PASSOS = ["intro", "renda", "trajeto", ...CRITERIOS.map((c) => c.id), "ritmo"];
   const estado = {
     passo: 0, renda: 6000, entrada: 30000, quartos: "2",
     niveis: Object.fromEntries(CRITERIOS.map((c) => [c.id, null])),
     ritmo: null, fora: false, sel: null, noResultado: false,
+    destino: null, deslocNivel: null,
   };
-  const peso = (c) => (c.ok && estado.niveis[c.id] != null ? NIVEIS[estado.niveis[c.id]].peso : 0);
+  const nivelDe = (c) => (c === DESLOC ? estado.deslocNivel : estado.niveis[c.id]);
+  const peso = (c) => (c.ok && nivelDe(c) != null && (c !== DESLOC || estado.destino) ? NIVEIS[nivelDe(c)].peso : 0);
+  const criteriosAtivos = () => [DESLOC, ...CRITERIOS].filter((c) => peso(c) > 0);
 
   // ---------- preço do bairro (PriceRadar) e situação no orçamento ----------
   function precoBairro(p) {
@@ -217,7 +240,7 @@
   // ---------- compatibilidade ----------
   function pontuar() {
     const t = teto(estado.renda, estado.entrada).total;
-    const ativos = CRITERIOS.filter((c) => peso(c) > 0);
+    const ativos = criteriosAtivos();
     const disp = CRITERIOS.filter((c) => c.ok);
     const ritmo = estado.ritmo != null ? RITMO[estado.ritmo].v : 0;
     return BAIRROS.map((p) => {
@@ -227,7 +250,7 @@
         const v = c.pct.get(p.id) ?? 50, w = peso(c);
         soma += w * v; pesos += w;
         partes.push({ c, v, w });
-        if (estado.niveis[c.id] === 3 && v < 30) { pen *= 0.7; fracos.push(c); }
+        if (nivelDe(c) === 3 && v < 30) { pen *= 0.7; fracos.push(c); }
       }
       if (ritmo) {
         const v = ritmo > 0 ? DENS.get(p.id) : 100 - DENS.get(p.id);
@@ -257,6 +280,12 @@
       const t = teto(estado.renda, estado.entrada).total;
       const nivel = { cabe: 1, limite: 0.5, sem_preco: 0.4, fora: 0.04 };
       BAIRROS.forEach((p) => vals.set(p.id, nivel[orcamento(p, t).sit]));
+    } else if (id === "trajeto") {
+      if (!T || !estado.destino) BAIRROS.forEach((p) => vals.set(p.id, 0.22));
+      else {
+        const k = [0.15, 0.6, 0.9, 1][estado.deslocNivel ?? 2];
+        BAIRROS.forEach((p) => vals.set(p.id, (1 - k) * 0.3 + k * ((DESLOC.pct.get(p.id) ?? 0) / 100) ** 1.6));
+      }
     } else if (id === "ritmo") {
       const v = estado.ritmo == null ? 1 : RITMO[estado.ritmo].v;
       BAIRROS.forEach((p) => vals.set(p.id, v === 0 ? 0.42 : 0.08 + 0.92 * ((v > 0 ? DENS.get(p.id) : 100 - DENS.get(p.id)) / 100) ** 1.6));
@@ -281,6 +310,7 @@
     let txt;
     if (id === "intro") txt = "Fortaleza, 121 bairros · acesos: melhor índice de renda, saneamento e segurança";
     else if (id === "renda") txt = P ? "Acesos: bairros onde o preço mediano cabe no seu teto" : "Acesos: bairros ao alcance da sua renda (estimativa pela renda dos moradores)";
+    else if (id === "trajeto") txt = !T ? "Trajeto: tempos de ônibus ainda não calculados" : estado.destino ? `Acendem os bairros mais perto de ${NOME_DEST.get(estado.destino)} de ônibus` : "Escolha para onde você vai";
     else if (id === "ritmo") txt = estado.ritmo != null && RITMO[estado.ritmo].v === 0 ? "Tanto faz: a densidade não entra na conta" : "Acesos: " + (estado.ritmo != null && RITMO[estado.ritmo].v < 0 ? "os bairros mais tranquilos" : "os bairros mais movimentados");
     else {
       const c = CRITERIOS.find((x) => x.id === id);
@@ -298,6 +328,10 @@
       return (o.preco ? `≈ ${milhares(o.preco.valor)} · ` : "") + SIT[o.sit].rotulo.toLowerCase();
     }
     if (id === "ritmo") return `${nf0.format(p.densidade_2022)} moradores por km²`;
+    if (id === "trajeto") {
+      const m = minutos(p, estado.destino);
+      return estado.destino ? (m == null ? "sem rota em até 2h30" : `≈ ${tempoTxt(m)} de ônibus até ${NOME_DEST.get(estado.destino)}`) : `Regional ${p.regional}`;
+    }
     const c = CRITERIOS.find((x) => x.id === id);
     if (c && c.ok) return `${c.nome.toLowerCase()}: melhor que ${nf0.format(c.pct.get(p.id))}% dos bairros`;
     return `Regional ${p.regional}`;
@@ -347,6 +381,7 @@
       ]);
     }
     if (id === "renda") return construirRenda(n);
+    if (id === "trajeto") return construirTrajeto(n);
     if (id === "ritmo") {
       return construirOpcoes({
         n, nome: "Ritmo do bairro", ic: "lua",
@@ -401,6 +436,50 @@
       ]) : null,
       grupo,
     ]);
+  }
+
+  // ---------- passo do trajeto: destino + peso ----------
+  function construirTrajeto(n) {
+    const passo = construirOpcoes({
+      n, nome: "Trajeto", ic: "pino",
+      pergunta: "Para onde você vai quase todo dia?",
+      detalhe: "Trabalho, faculdade, escola dos filhos. O tempo de ônibus até lá entra na conta: estimativa de tabela, saindo de manhã num dia útil.",
+      opcoes: NIVEIS.map((x, i) => (i === 0 ? { rotulo: "Não vou todo dia", nota: "o trajeto fica fora da conta" } : x)),
+      atual: estado.deslocNivel, nivelPx: [0, 1, 2, 3], desligado: !T,
+      escolher: (i) => { estado.deslocNivel = i; },
+    });
+    if (!T) {
+      passo.querySelector(".passo-aviso")?.remove();
+      passo.querySelector(".opcoes").before(el("p", { class: "passo-aviso" }, [
+        el("b", { texto: "Ainda sem dados. " }), "Esta pergunta fica de fora até rodar ", el("code", { texto: "scripts/12_transporte.py" }), ".",
+      ]));
+      return passo;
+    }
+    const chips = el("div", { class: "destinos", role: "group", "aria-label": "Polos da cidade" });
+    const sel = el("select", { class: "destino-sel", "aria-label": "Ou escolha um bairro" }, [
+      el("option", { value: "", texto: "ou escolha um bairro…" }),
+      ...[...BAIRROS].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).map((p) => el("option", { value: `b${p.id}`, texto: p.nome })),
+    ]);
+    const escolherDestino = (id) => {
+      estado.destino = id || null;
+      recalcularDesloc();
+      chips.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.d === estado.destino)));
+      sel.value = estado.destino && estado.destino.startsWith("b") ? estado.destino : "";
+      cidade.alvo(brilho("trajeto"), { origem: [0.6, 0.4], espalhar: 650 });
+      legendaCidade("trajeto");
+      atualizarNav();
+      // destino escolhido depois do peso: avança como as outras perguntas
+      if (estado.deslocNivel != null && respondido("trajeto")) { clearTimeout(construirOpcoes.t); construirOpcoes.t = setTimeout(avancar, REDUZIR ? 150 : 560); }
+    };
+    chips.append(...T.polos.map((q) => {
+      const b = el("button", { type: "button", class: "destino", "data-d": q.id, "aria-pressed": String(estado.destino === q.id), texto: NOME_DEST.get(q.id) });
+      b.addEventListener("click", () => escolherDestino(q.id));
+      return b;
+    }));
+    sel.addEventListener("change", () => escolherDestino(sel.value));
+    if (estado.destino && estado.destino.startsWith("b")) sel.value = estado.destino;
+    passo.querySelector(".opcoes").before(el("div", { class: "destino-caixa" }, [chips, sel]));
+    return passo;
   }
 
   // ---------- passo da renda ----------
@@ -471,6 +550,7 @@
   function respondido(id) {
     if (id === "intro" || id === "renda") return true;
     if (id === "ritmo") return estado.ritmo != null;
+    if (id === "trajeto") return !T || estado.deslocNivel === 0 || (estado.deslocNivel != null && !!estado.destino);
     const c = CRITERIOS.find((x) => x.id === id);
     return !c.ok || estado.niveis[c.id] != null;
   }
@@ -700,7 +780,7 @@
     avisos();
 
     const lista = visiveis().slice(0, 10);
-    const ativos = CRITERIOS.filter((c) => peso(c) > 0).sort((a, b) => peso(b) - peso(a));
+    const ativos = criteriosAtivos().sort((a, b) => peso(b) - peso(a));
     cardsEl.replaceChildren(...lista.map((r, i) => card(r, i, ativos)));
     if (!lista.length) cardsEl.append(el("li", { class: "card-vazio" }, [el("b", { texto: "Nenhum bairro cabe nesse orçamento." }), " Ajuste a renda ou a entrada, ou ligue “Mostrar fora do orçamento”."]));
 
@@ -731,7 +811,7 @@
       const v = c.pct.get(p.id) ?? 50;
       const fraco = r.fracos.includes(c);
       return el("li", { class: fraco ? "fraco" : "" }, [
-        el("span", { class: "barra-nome" }, [c.nome, estado.niveis[c.id] === 3 ? el("i", { class: "essencial", title: "essencial", texto: "!" }) : null]),
+        el("span", { class: "barra-nome" }, [c.nome, nivelDe(c) === 3 ? el("i", { class: "essencial", title: "essencial", texto: "!" }) : null]),
         el("span", { class: "barra-trilho" }, el("i", { style: `--v:${v / 100};--k:${k}` })),
         el("span", { class: "barra-valor", texto: nf0.format(v) }),
       ]);
@@ -745,6 +825,7 @@
       ]),
       el("div", { class: "card-orc" }, [el("span", { class: `selo selo-${sit.classe}`, texto: sit.rotulo }), preco]),
       barras.length ? el("ul", { class: "card-barras" }, barras) : null,
+      linhaTrajeto(p),
       peso(CRITERIOS[0]) > 0 ? el("p", { class: "card-ais" }, `Segurança medida pela ${p.ais}, igual para os ${N_AIS.get(p.ais)} bairros dela`) : null,
       linhaPracas(p),
       el("div", { class: "card-pe" }, [el("p", { texto: leitura || "Equilibrado nos critérios escolhidos" }), abrir]),
@@ -754,6 +835,17 @@
     li.addEventListener("mouseenter", () => realcar(p.id));
     li.addEventListener("mouseleave", () => realcar(estado.sel));
     return li;
+  }
+
+  function linhaTrajeto(p) {
+    if (!T || !estado.destino) return null;
+    const m = minutos(p, estado.destino);
+    return el("p", { class: "card-trajeto" }, [
+      el("i", { "aria-hidden": "true" }),
+      m == null ? `Sem rota de ônibus até ${NOME_DEST.get(estado.destino)} em até 2h30`
+        : `≈ ${tempoTxt(m)} de ônibus até ${NOME_DEST.get(estado.destino)}`,
+      el("a", { class: "link-botao", href: `index.html#rota=${p.id}:${estado.destino}`, texto: "ver rota" }),
+    ]);
   }
 
   // praças do bairro (URBIFOR, 2019): só informação, não entra na compatibilidade
@@ -771,7 +863,7 @@
 
   function resumo() {
     const t = teto(estado.renda, estado.entrada);
-    const prioridades = CRITERIOS.filter((c) => peso(c) > 0).sort((a, b) => peso(b) - peso(a));
+    const prioridades = criteriosAtivos().sort((a, b) => peso(b) - peso(a));
     const cabem = ranking.filter((r) => r.orc.sit === "cabe").length;
     document.getElementById("res-resumo").replaceChildren(
       el("dl", { class: "resumo-numeros" }, [
@@ -779,7 +871,8 @@
         el("div", {}, [el("dt", { texto: `cabem no orçamento · renda de ${reais(estado.renda)}/mês, ${estado.quartos} quarto${estado.quartos === "1" ? "" : "s"}` }), el("dd", { texto: `${cabem} bairro${cabem === 1 ? "" : "s"}` })]),
       ]),
       el("ul", { class: "resumo-chips", "aria-label": "Suas prioridades" }, prioridades.length
-        ? prioridades.map((c) => el("li", { class: estado.niveis[c.id] === 3 ? "forte" : "" }, [icone(c.icone, "px-mini"), `${c.nome} · ${NIVEIS[estado.niveis[c.id]].rotulo.toLowerCase()}`]))
+        ? prioridades.map((c) => el("li", { class: nivelDe(c) === 3 ? "forte" : "" }, [icone(c.icone, "px-mini"),
+          `${c === DESLOC ? `Trajeto até ${NOME_DEST.get(estado.destino)}` : c.nome} · ${NIVEIS[nivelDe(c)].rotulo.toLowerCase()}`]))
         : [el("li", { texto: "Sem prioridades: todos os critérios com o mesmo peso" })]),
     );
   }
@@ -808,6 +901,7 @@
     if (!P) itens.push(el("p", {}, [el("b", { texto: "Preços dos imóveis ainda não coletados. " }), "O orçamento usa a renda média dos moradores de cada bairro como aproximação. Rode ", el("code", { texto: "scripts/09_precos_priceradar.py" }), " para comparar com o preço dos anúncios do PriceRadar."]));
     const semDado = CRITERIOS.filter((c) => !c.ok).map((c) => c.nome.toLowerCase());
     if (semDado.length) itens.push(el("p", {}, [el("b", { texto: `Fora da conta por falta de dados: ${semDado.join(", ")}. ` }), "Rode ", el("code", { texto: "scripts/10_equipamentos_osm.py" }), " para baixar hospitais, transporte, escolas e comércio do OpenStreetMap."]));
+    if (!T) itens.push(el("p", {}, [el("b", { texto: "Tempo de ônibus fora da conta. " }), "Rode ", el("code", { texto: "scripts/12_transporte.py" }), " para calcular o trajeto até onde você vai todo dia."]));
     document.getElementById("res-aviso").replaceChildren(...itens);
   }
 
@@ -840,7 +934,25 @@
         ...CRITERIOS.map((c) => seg({ nome: c.nome, icone: c.icone }, NIVEIS.map((n) => n.rotulo), estado.niveis[c.id], (i) => { estado.niveis[c.id] = i; }, !c.ok)),
         seg({ nome: "Ritmo", icone: "lua" }, RITMO.map((r) => r.rotulo), estado.ritmo, (i) => { estado.ritmo = i; }),
       ]),
+      T ? ajusteTrajeto(seg) : null,
     );
+  }
+  function ajusteTrajeto(seg) {
+    const sel = el("select", { class: "ajuste-campo ajuste-destino", "aria-label": "Para onde você vai todo dia" }, [
+      el("option", { value: "", texto: "não vou todo dia" }),
+      el("optgroup", { label: "Polos" }, T.polos.map((q) => el("option", { value: q.id, texto: NOME_DEST.get(q.id) }))),
+      el("optgroup", { label: "Bairros" }, [...BAIRROS].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).map((p) => el("option", { value: `b${p.id}`, texto: p.nome }))),
+    ]);
+    sel.value = estado.destino || "";
+    sel.addEventListener("change", () => {
+      estado.destino = sel.value || null;
+      if (estado.destino && !estado.deslocNivel) estado.deslocNivel = 2;
+      recalcularDesloc(); montarAjustes(); render(false);
+    });
+    return el("div", { class: "ajustes-trajeto" }, [
+      el("label", {}, [el("span", { class: "ajuste-nome" }, [icone("pino", "px-mini"), "Trajeto: para onde vai todo dia"]), sel]),
+      estado.destino ? seg({ nome: "Peso do trajeto", icone: "onibus" }, NIVEIS.map((n) => n.rotulo), estado.deslocNivel, (i) => { estado.deslocNivel = i; }) : null,
+    ]);
   }
   ajustarBt.addEventListener("click", () => {
     const abrir = ajustesEl.hidden;
@@ -871,7 +983,8 @@
   function gravarHash() {
     if (!estado.noResultado) return;
     const n = CRITERIOS.map((c) => (estado.niveis[c.id] == null ? "x" : estado.niveis[c.id])).join("");
-    const h = `#r=${estado.renda}&e=${estado.entrada}&q=${encodeURIComponent(estado.quartos)}&n=${n}&m=${estado.ritmo ?? "x"}`;
+    const h = `#r=${estado.renda}&e=${estado.entrada}&q=${encodeURIComponent(estado.quartos)}&n=${n}&m=${estado.ritmo ?? "x"}` +
+      (estado.destino ? `&d=${estado.destino}` : "") + (estado.deslocNivel != null ? `&dn=${estado.deslocNivel}` : "");
     if (location.hash !== h) history.replaceState(null, "", h);
   }
   function lerHash() {
@@ -882,6 +995,9 @@
     if (["1", "2", "3", "4+"].includes(h.get("q"))) estado.quartos = h.get("q");
     [...h.get("n")].forEach((ch, i) => { if (CRITERIOS[i] && /[0-3]/.test(ch)) estado.niveis[CRITERIOS[i].id] = +ch; });
     if (/^[0-2]$/.test(h.get("m") || "")) estado.ritmo = +h.get("m");
+    if (T && h.get("d") && (T.destinos.includes(h.get("d")))) estado.destino = h.get("d");
+    if (/^[0-3]$/.test(h.get("dn") || "")) estado.deslocNivel = +h.get("dn");
+    recalcularDesloc();
     return true;
   }
 

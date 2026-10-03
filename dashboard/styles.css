@@ -13,6 +13,7 @@
   --tinta-clara: #b9bce9;
   --perda: #e8631e;
   --praca: #138a5e;
+  --metro: #e09a1b;
   --neutro: #c9cad8;
 
   /* rampa sequencial (validada: monotônica, 1 matiz, ponta clara >= 2:1 sobre --papel-claro) */
@@ -484,10 +485,99 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 .detalhe-sem button { border: 0; background: none; padding: 0; font: inherit; color: var(--tinta-2); text-decoration: underline; text-decoration-color: var(--linha); text-underline-offset: 3px; cursor: pointer; }
 .detalhe-sem button:hover { color: var(--cobalto); }
 
+/* ---------- quanto tempo de ônibus ---------- */
+.trajeto { padding: 80px var(--g); border-top: 1px solid var(--linha); }
+.tj-form { display: flex; flex-wrap: wrap; align-items: end; gap: 10px 12px; margin-bottom: 12px; }
+.tj-campo { display: flex; flex-direction: column; gap: 6px; flex: 1 1 260px; max-width: 380px; }
+.tj-rotulo { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--tinta-2); }
+.tj-ponto { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 2px; font-style: normal; font-size: 10px; color: var(--branco); }
+.tj-a { background: var(--cobalto-escuro); }
+.tj-b { background: var(--branco); color: var(--cobalto-escuro); box-shadow: inset 0 0 0 1.5px var(--cobalto-escuro); }
+.tj-campo select {
+  appearance: none; -webkit-appearance: none; width: 100%; cursor: pointer;
+  font: inherit; font-size: 16px; color: var(--tinta); padding: 11px 38px 11px 12px;
+  background: var(--branco) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%232f37c4' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center / 10px 6px;
+  border: 1px solid var(--linha); border-radius: var(--raio); transition: border-color var(--t-rapida);
+}
+.tj-campo select:hover, .tj-campo select:focus { border-color: var(--cobalto); outline: none; }
+.tj-campo select:focus-visible { outline: 2px solid var(--cobalto); outline-offset: 2px; }
+.tj-trocar {
+  width: 44px; height: 44px; flex: none; cursor: pointer; font-size: 18px; color: var(--cobalto);
+  background: var(--papel-claro); border: 1px solid var(--linha); border-radius: var(--raio);
+  transition: transform 360ms var(--curva), border-color var(--t-rapida);
+}
+.tj-trocar:hover { border-color: var(--cobalto); transform: rotate(180deg); }
+.tj-polos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.tj-polos button {
+  font-family: var(--mono); font-size: 11.5px; padding: 6px 10px; cursor: pointer; color: var(--tinta-2);
+  background: var(--papel-claro); border: 1px solid var(--linha); border-radius: 2px;
+  transition: background var(--t-rapida), color var(--t-rapida), border-color var(--t-rapida);
+}
+.tj-polos button:hover { color: var(--cobalto); border-color: var(--cobalto); }
+.tj-polos button[aria-pressed="true"] { background: var(--cobalto); border-color: var(--cobalto); color: var(--branco); }
+.trajeto.sem-dados .tj-polos { display: none; }
+.tj-grade { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.mapa-trajeto { height: min(72vh, 640px); min-height: 440px; }
+.tj-resultado { background: var(--branco); border-radius: var(--raio); padding: 20px 20px 16px; box-shadow: 0 1px 0 var(--linha), 0 12px 30px -18px rgba(31, 37, 153, .35); }
+.tj-rotulo-res { font-family: var(--mono); font-size: 12px; color: var(--tinta-3); }
+.tj-tempo-linha { display: flex; align-items: baseline; gap: 6px; margin: 4px 0 2px; color: var(--cobalto); }
+.tj-aprox { font-size: 30px; opacity: .6; }
+.tj-tempo { font-size: clamp(48px, 5vw, 68px); line-height: 1; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+.tj-faixa { font-size: 13px; color: var(--tinta-2); max-width: 44ch; }
+.tj-cabeca { padding-bottom: 14px; border-bottom: 1px solid var(--linha); }
+.tj-sec { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-3); margin: 14px 0 8px; }
+.tj-opcoes { display: flex; flex-direction: column; gap: 8px; }
+.tj-opcao-caixa { border: 1px solid var(--linha); border-radius: var(--raio); overflow: hidden; transition: border-color var(--t-rapida); animation: tj-entra 420ms var(--curva) both; }
+.tj-opcao-caixa.aberta { border-color: var(--cobalto); }
+@keyframes tj-entra { from { opacity: 0; transform: translateY(8px); } }
+.tj-opcao { width: 100%; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; text-align: left; cursor: pointer; background: none; border: 0; font: inherit; }
+.tj-opcao:hover { background: rgba(47, 55, 196, .05); }
+.tj-opcao-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.tj-opcao-nome { font-size: 13px; font-weight: 600; color: var(--tinta); }
+.tj-opcao-tempo { font-family: var(--mono); font-size: 13px; color: var(--cobalto); font-variant-numeric: tabular-nums; }
+.tj-resumo { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.tj-seta { color: var(--tinta-3); font-size: 13px; }
+.tj-pe { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); }
+.tj-pe i { width: 7px; height: 9px; background: currentColor; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 9'%3E%3Cpath d='M3 0h2v2H3zM2 2h3v3H2zM1 3h1v2H1zM5 3h1v1H5zM2 5h1v4H2zM4 5h1v2H4zM5 7h1v2H5z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.tj-badge { display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 500; padding: 2px 6px; border-radius: 2px; color: var(--branco); white-space: nowrap; }
+.tj-onibus { background: var(--cobalto); }
+.tj-metro { background: var(--metro); color: #3a2400; }
+.tj-passos { list-style: none; margin: 0; padding: 4px 12px 12px; display: flex; flex-direction: column; gap: 0; }
+.tj-passos li { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: start; padding: 8px 0 8px; animation: tj-entra 420ms var(--curva) both; animation-delay: calc(var(--i) * 70ms); }
+.tj-passos li + li::before { content: ""; position: absolute; left: 21px; top: -6px; height: 12px; border-left: 2px dotted var(--linha); }
+.tj-passos b { display: block; font-size: 13.5px; font-weight: 550; color: var(--tinta); }
+.tj-passos span:not(.tj-badge):not(.tj-passo-icone) { display: block; font-size: 12px; color: var(--tinta-2); }
+.tj-passo-icone { display: grid; place-items: center; width: 26px; height: 26px; margin-left: 9px; }
+.tj-passo-icone svg { width: 10px; height: 13px; fill: var(--tinta-2); }
+.tj-passo-linha .tj-badge { justify-self: start; margin-top: 1px; }
+.tj-nota { margin-top: 14px; font-size: 11.5px; color: var(--tinta-3); }
+.tj-vazio-titulo { font-size: 16px; font-weight: 550; color: var(--tinta); margin: 6px 0 4px; }
+.tj-vazio { font-size: 13px; color: var(--tinta-2); }
+.tj-vazio code { font-family: var(--mono); font-size: 12px; background: var(--papel); padding: 1px 4px; border-radius: 2px; }
+.tj-pin { background: none; border: 0; }
+.tj-pin span {
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 3px;
+  font-family: var(--mono); font-size: 12px; box-shadow: 0 6px 14px -6px rgba(21, 24, 79, .6);
+  animation: pino-cai 640ms var(--curva) both;
+}
+.tj-pin-a span { background: var(--cobalto-escuro); color: var(--branco); border: 2px solid var(--branco); }
+.tj-pin-b span { background: var(--branco); color: var(--cobalto-escuro); border: 2px solid var(--cobalto-escuro); animation-delay: 260ms; }
+@keyframes pino-cai { 0% { opacity: 0; transform: translateY(-30px) scale(.6); } 60% { opacity: 1; transform: translateY(3px) scale(1.05); } 100% { transform: none; } }
+.tj-legenda .tj-leg { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); margin-top: 4px; }
+.tj-legenda i { width: 22px; height: 0; border-top: 4px solid var(--cobalto); border-radius: 2px; }
+.tj-legenda i.tj-leg-metro { border-top-color: var(--metro); }
+.tj-legenda i.tj-leg-pe { border-top: 3px dotted var(--tinta-3); }
+.ficha-onibus { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--linha); }
+.ficha-onibus p { font-size: 12px; color: var(--tinta-2); }
+.ficha-onibus ul { list-style: none; margin: 6px 0 8px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.ficha-onibus li { display: flex; flex-direction: column; font-size: 11px; color: var(--tinta-2); }
+.ficha-onibus li b { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--cobalto); font-variant-numeric: tabular-nums; }
+
 /* ---------- responsivo ---------- */
 @media (max-width: 1080px) {
   .explorar-grade { grid-template-columns: 1fr; }
   .precos-grade { grid-template-columns: 1fr; }
+  .tj-grade { grid-template-columns: 1fr; }
   .detalhe-grade { grid-template-columns: 1fr; }
   .metodo-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ranking-lista { max-height: 360px; }
@@ -502,6 +592,8 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
   .metodo-grade { grid-template-columns: 1fr; }
   .mapa { height: 62vh; min-height: 380px; }
   .mapa-precos { height: 52vh; min-height: 340px; }
+  .mapa-trajeto { height: 50vh; min-height: 320px; }
+  .tj-campo { max-width: none; }
   .pesos label { width: 100%; justify-content: space-between; }
   input[type="range"] { flex: 1; }
 }
