@@ -12,7 +12,9 @@ Roteamento com r5py (R5, o mesmo motor do projeto Acesso a Oportunidades do IPEA
   - dia útil dentro da vigência do GTFS, saída entre 6h30 e 8h; o tempo é de porta a
     porta (caminhada, espera, viagem, baldeação) e sai a mediana da janela, com o 25º e
     o 75º percentis como faixa ("entre 45 e 60 min, conforme o horário de saída")
-  - rotas detalhadas (linhas, onde subir e descer) saindo às 7h, até 3 alternativas
+  - rotas detalhadas (linhas, onde subir e descer) saindo às 7h, até 3 alternativas, de cada
+    bairro até os polos. Bairro a bairro sai só o tempo: o R5 devolve centenas de
+    alternativas por par e os 16 mil pares levariam horas (--rotas-entre-bairros liga isso)
 
 É tempo de TABELA: o GTFS diz quando o ônibus deveria passar, não quando passa. No
 pico, o resultado tende a ser otimista, e a página diz isso.
@@ -20,6 +22,7 @@ pico, o resultado tende a ser otimista, e a página diz isso.
 Uso:
   python scripts/12_transporte.py                  # baixa o que faltar, calcula tudo
   python scripts/12_transporte.py --sem-rotas      # só a matriz de tempos (rápido)
+  python scripts/12_transporte.py --rotas-entre-bairros   # rotas também bairro a bairro (horas)
   python scripts/12_transporte.py --gtfs a.zip b.zip --osm ruas.osm.pbf
 
 Precisa de Java 21 (o r5py usa o R5, escrito em Java) e de `pip install r5py osmium`.
@@ -296,6 +299,8 @@ def main() -> None:
     ap.add_argument("--gtfs", nargs="*", help="arquivos GTFS (.zip); padrão: baixa ETUFOR e Metrofor")
     ap.add_argument("--osm", help="ruas em .osm.pbf; padrão: baixa do Overpass")
     ap.add_argument("--sem-rotas", action="store_true", help="só a matriz de tempos, sem rotas detalhadas")
+    ap.add_argument("--rotas-entre-bairros", action="store_true",
+                    help="rotas detalhadas também entre bairros, não só até os polos (demora horas)")
     ap.add_argument("--origens", type=int, default=0, help="limita o número de bairros de saída (teste)")
     args = ap.parse_args()
 
@@ -346,8 +351,9 @@ def main() -> None:
 
     usadas: set = set()
     if not args.sem_rotas:
-        print(f"Rotas detalhadas saindo às {SAIDA_ROTAS:%H:%M} (demora: são {len(origens) * len(destinos)} pares) ...")
-        it = r5py.DetailedItineraries(rede, origins=origens, destinations=destinos, snap_to_network=True,
+        alvos = destinos if args.rotas_entre_bairros else polos[["id", "geometry"]]
+        print(f"Rotas detalhadas saindo às {SAIDA_ROTAS:%H:%M} ({len(origens) * len(alvos)} pares; demora) ...")
+        it = r5py.DetailedItineraries(rede, origins=origens, destinations=alvos, snap_to_network=True,
                                       departure=dt.datetime.combine(dia, SAIDA_ROTAS),
                                       departure_time_window=dt.timedelta(minutes=20),
                                       transport_modes=modos, max_time=MAX_TEMPO, force_all_to_all=True)
@@ -373,7 +379,8 @@ def main() -> None:
     dados = {
         "meta": {"dia": dia.isoformat(), "saida": f"{SAIDA_INICIO:%H:%M}", "janela_min": int(JANELA.total_seconds() // 60),
                  "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": [g["nome"] for g in feeds],
-                 "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": not args.sem_rotas},
+                 "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": not args.sem_rotas,
+                 "rotas_entre_bairros": bool(args.rotas_entre_bairros and not args.sem_rotas)},
         "destinos": ids_dest,
         "polos": [{"id": r.id, "nome": r.nome, "bairro": int(r.bairro_id), "lat": round(r.geometry.y, 5),
                    "lon": round(r.geometry.x, 5)} for r in polos.itertuples()],

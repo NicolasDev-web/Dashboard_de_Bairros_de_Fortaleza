@@ -260,7 +260,7 @@
     const p25 = t ? t[0][i] : null, p50 = t ? t[1][i] : null, p75 = t ? t[2][i] : null;
 
     let opcoes = [], paradas = null;
-    if (T.meta.rotas) {
+    if (T.meta.rotas && (!estado.d.startsWith("b") || T.meta.rotas_entre_bairros)) {
       try {
         await carregar(`transporte/o_${estado.o.slice(1)}.js`);
         const R = (window.ROTAS_TP || {})[estado.o];
@@ -304,7 +304,11 @@
         lista.append(el("div", { class: "tj-opcao-caixa" + (aberta ? " aberta" : "") }, [bt, aberta ? passos(op, paradas) : null]));
       });
     } else if (p50 != null) {
-      lista.append(el("p", { class: "tj-vazio", texto: T.meta.rotas ? "As linhas desta viagem não foram encontradas no arquivo de rotas." : "As rotas detalhadas não foram geradas (o script rodou com --sem-rotas): aparece só o tempo." }));
+      const bairro = estado.d.startsWith("b");
+      const msg = !T.meta.rotas ? "As rotas detalhadas não foram geradas (o script rodou com --sem-rotas): aparece só o tempo."
+        : bairro && !T.meta.rotas_entre_bairros ? "Entre bairros aparece só o tempo. O passo a passo das linhas está calculado até os polos: escolha um deles acima para ver como ir."
+        : "As linhas desta viagem não foram encontradas no arquivo de rotas.";
+      lista.append(el("p", { class: "tj-vazio", texto: msg }));
     }
     box.replaceChildren(cab, lista, el("p", { class: "tj-nota", texto: "Tempo de tabela da ETUFOR e do Metrofor: não considera trânsito nem atraso. No pico, conte com mais." }));
     desenhar(opcoes[estado.opcao] || null, paradas);
