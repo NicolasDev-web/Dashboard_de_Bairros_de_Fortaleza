@@ -22,6 +22,7 @@ python -m venv .venv
 .venv/Scripts/python scripts/08_regionais.py        # bairro -> regional (Decreto 14.899/2020) -> data/raw/bairro_regional.csv
 .venv/Scripts/python scripts/09_precos_priceradar.py  # preço do m² por regional com o PriceRadar -> dashboard/precos.js
 .venv/Scripts/python scripts/10_equipamentos_osm.py   # saúde, lazer, mobilidade, escolas e comércio (OpenStreetMap) -> dashboard/equipamentos.js
+                                                       #   --das-contagens refaz só as notas, sem baixar
 .venv/Scripts/python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
 ```
 
@@ -55,7 +56,7 @@ Os downloads brutos (~330 MB) ficam em `data/cache/`, fora do git; os scripts ba
 |---|---|
 | Limites dos bairros | Prefeitura de Fortaleza / Seuma, mai/2025 |
 | Renda e saneamento | IBGE, agregados por setor censitário, Censos 2010 e 2022 |
-| CVLI e CVP | SSPDS/Supesp, dados detalhados 2019–2025, por AIS |
+| CVLI e CVP | SSPDS/Supesp, dados detalhados 2019–2025, por AIS. A nota de segurança usa só mortes violentas (CVLI), média 2019–2025 com peso crescente; roubos (CVP) aparecem à parte, fora da nota |
 | Contexto visual e rotas mais feitas | Strava Global Heatmap (tiles públicos até zoom 12), cruzado com ruas do OpenStreetMap |
 | Regionais | Prefeitura de Fortaleza, Decreto nº 14.899/2020 (12 Secretarias Regionais) |
 | Preço do m² | Anúncios de VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX, coletados e limpos pelo PriceRadar |

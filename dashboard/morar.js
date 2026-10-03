@@ -89,11 +89,24 @@
     return s;
   }
 
+  // lazer: 60% OpenStreetMap, 20% m² de praça por morador (URBIFOR), 20% Strava. Bairro sem praça no
+  // cadastro fica sem essa parte (não leva zero: pode ser só falta de cadastro) e os pesos se redistribuem.
+  const PRACAS_PCT = Q ? percentis((p) => (Q.bairros[p.id] && Q.bairros[p.id].n ? Q.bairros[p.id].m2_hab : null)) : new Map();
+  function lazer(p) {
+    const partes = [];
+    if (eq(p, "lazer") != null) partes.push([eq(p, "lazer"), 0.6]);
+    if (PRACAS_PCT.has(p.id)) partes.push([PRACAS_PCT.get(p.id), 0.2]);
+    if (strava(p) != null) partes.push([strava(p), 0.2]);
+    if (!partes.length) return null;
+    return partes.reduce((s, [v, w]) => s + v * w, 0) / partes.reduce((s, [, w]) => s + w, 0);
+  }
+  const N_AIS = BAIRROS.reduce((m, p) => m.set(p.ais, (m.get(p.ais) || 0) + 1), new Map());
+
   const CRITERIOS = [
     {
       id: "seguranca", nome: "Segurança", icone: "escudo", ok: true,
       pergunta: "Quanto pesa a segurança na sua escolha?",
-      detalhe: "Mortes violentas e roubos por habitante na área de segurança do bairro (SSPDS, média de 2023 a 2025).",
+      detalhe: "Mortes violentas por habitante na área de segurança (AIS) do bairro, da SSPDS: 2019 a 2025, com peso maior nos anos recentes. O valor é o mesmo para todos os bairros de uma AIS.",
       legenda: "Acendem os bairros mais seguros",
       valor: (p) => p.score_seguranca,
     },
@@ -105,13 +118,13 @@
       valor: (p) => eq(p, "saude"),
     },
     {
-      id: "lazer", nome: "Lazer", icone: "arvore", ok: !!E || !!R,
+      id: "lazer", nome: "Lazer", icone: "arvore", ok: !!E || !!R || !!Q,
       pergunta: "Parques, praças, praia e cultura importam?",
       detalhe: E
-        ? "Parques, praças, quadras, academias, teatros, cinemas, shoppings e praia por perto (OpenStreetMap), mais o movimento de corrida e pedal do Strava."
+        ? "Parques, quadras, academias, teatros, cinemas, shoppings e praia por perto (OpenStreetMap), área de praças por morador (URBIFOR, 2019) e o movimento de corrida e pedal do Strava."
         : "Por enquanto, só o movimento de corrida e pedal nas ruas do bairro (Strava). Parques e cultura entram quando o OpenStreetMap for baixado.",
       legenda: "Acendem os bairros com mais lazer",
-      valor: (p) => (E ? (eq(p, "lazer") == null ? null : 0.8 * eq(p, "lazer") + 0.2 * (strava(p) ?? 50)) : strava(p)),
+      valor: (p) => lazer(p),
     },
     {
       id: "infra", nome: "Infraestrutura", icone: "gota", ok: true,
@@ -172,12 +185,15 @@
   // ---------- preço do bairro (PriceRadar) e situação no orçamento ----------
   function precoBairro(p) {
     if (!P) return null;
+    // amostra mínima do próprio precos.js (5 anúncios no bairro, 15 na regional); abaixo disso a mediana é ruído
     const q = estado.quartos, b = P.bairros[p.id], r = P.regionais[p.regional];
-    const bom = (x) => x && x.n >= 3;
-    if (b && bom(b[q])) return { valor: b[q].preco_mediano, fonte: `mediana do bairro, ${q} quarto${q === "1" ? "" : "s"}` };
-    if (r && bom(r[q])) return { valor: r[q].preco_mediano, fonte: `mediana da Regional ${p.regional}, ${q} quarto${q === "1" ? "" : "s"}` };
-    if (b && bom(b.todos)) return { valor: b.todos.preco_mediano, fonte: "mediana do bairro, todos os tamanhos" };
-    if (r && bom(r.todos)) return { valor: r.todos.preco_mediano, fonte: `mediana da Regional ${p.regional}` };
+    const minB = (P.min_amostra && P.min_amostra.bairro) || 5, minR = (P.min_amostra && P.min_amostra.regional) || 15;
+    const qt = `${q} quarto${q === "1" ? "" : "s"}`;
+    const de = (x) => `mediana de ${nf0.format(x.n)} anúncio${x.n === 1 ? "" : "s"}`;
+    if (b && b[q] && b[q].n >= minB) return { valor: b[q].preco_mediano, fonte: `${de(b[q])} do bairro, ${qt}` };
+    if (r && r[q] && r[q].n >= minR) return { valor: r[q].preco_mediano, fonte: `${de(r[q])} da Regional ${p.regional}, ${qt}` };
+    if (b && b.todos && b.todos.n >= minB) return { valor: b.todos.preco_mediano, fonte: `${de(b.todos)} do bairro, todos os tamanhos` };
+    if (r && r.todos && r.todos.n >= minR) return { valor: r.todos.preco_mediano, fonte: `${de(r.todos)} da Regional ${p.regional}, todos os tamanhos` };
     return null;
   }
   function orcamento(p, tetoTotal) {
@@ -574,10 +590,15 @@
       const grupo = (lista, classe, rot) => L.layerGroup(lista.map(([la, lo, nome]) =>
         L.circleMarker([la, lo], { radius: 4, weight: 1.5, color: COR.escuro, fillColor: classe === "hosp" ? COR.branco : COR.escuro, fillOpacity: 1, className: "ponto-" + classe })
           .bindTooltip(`<b>${nome || rot}</b>`, { direction: "top", className: "dica-mapa" })));
-      pontos = { hosp: grupo(E.hospitais, "hosp", "Hospital"), est: grupo(E.estacoes, "est", "Estação") };
+      const est = grupo(E.estacoes, "est", "Estação");
+      const hosp = window.CamadaHospitais ? window.CamadaHospitais(mapa, E.hospitais) : null;
+      pontos = {
+        hosp: (on) => (hosp ? hosp.ligar(on) : null),
+        est: (on) => (on ? est.addTo(mapa) : mapa.removeLayer(est)),
+      };
       const chave = (k, txt, n) => {
         const inp = el("input", { type: "checkbox" });
-        inp.addEventListener("change", () => (inp.checked ? pontos[k].addTo(mapa) : mapa.removeLayer(pontos[k])));
+        inp.addEventListener("change", () => pontos[k](inp.checked));
         return el("label", { class: "chave chave-mini" }, [inp, el("span", { class: "chave-trilho", "aria-hidden": "true" }), `${txt} (${n})`]);
       };
       chaves.push(chave("hosp", "Hospitais", E.hospitais.length), chave("est", "Metrô e VLT", E.estacoes.length));
@@ -724,6 +745,7 @@
       ]),
       el("div", { class: "card-orc" }, [el("span", { class: `selo selo-${sit.classe}`, texto: sit.rotulo }), preco]),
       barras.length ? el("ul", { class: "card-barras" }, barras) : null,
+      peso(CRITERIOS[0]) > 0 ? el("p", { class: "card-ais" }, `Segurança medida pela ${p.ais}, igual para os ${N_AIS.get(p.ais)} bairros dela`) : null,
       linhaPracas(p),
       el("div", { class: "card-pe" }, [el("p", { texto: leitura || "Equilibrado nos critérios escolhidos" }), abrir]),
     ]);

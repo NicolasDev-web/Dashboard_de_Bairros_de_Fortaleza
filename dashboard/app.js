@@ -6,6 +6,7 @@
   const R = window.ROTAS || null; // rotas.js (scripts/07_rotas_strava.py); opcional
   const P = window.PRECOS || null; // precos.js (scripts/09_precos_priceradar.py); opcional
   const Q = window.PRACAS || null; // pracas.js (scripts/11_pracas.py); opcional
+  const E = window.EQUIP || null; // equipamentos.js (scripts/10_equipamentos_osm.py); opcional
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -78,8 +79,8 @@
     seguranca: {
       nome: "Segurança", anual: false,
       nota: (p) => p.score_seguranca,
-      texto: (p) => nf1.format(p.cvli) + " CVLI",
-      legenda: "Segurança da AIS (CVLI e roubos por habitante)",
+      texto: (p) => nf1.format(p.cvli_pond) + " mortes",
+      legenda: "Segurança da AIS (mortes violentas por 100 mil, 2019–2025)",
     },
     evolucao: {
       nome: "Evolução", anual: false, divergente: true,
@@ -172,14 +173,48 @@
     aviso.hidden = !e.target.checked;
     aviso.textContent = "Linhas claras: ruas onde mais gente corre e pedala no Strava. Detalhe máximo no zoom da cidade inteira.";
     pintar();
+    contarCamadas();
   });
 
   // ---------- praças (URBIFOR, 2019): camada de contexto, fora do índice ----------
   const pracas = Q && window.CamadaPracas ? window.CamadaPracas(mapa, Q, { nomeBairro: (id) => POR_ID.get(id)?.nome || "" }) : null;
   if (pracas) {
-    document.getElementById("ctl-pracas").addEventListener("change", (e) => { pracas.ligar(e.target.checked); legenda(); });
+    document.getElementById("ctl-pracas").addEventListener("change", (e) => { pracas.ligar(e.target.checked); legenda(); contarCamadas(); });
+    document.getElementById("pracas-sub").textContent = `${Q.cidade.n} espaços · URBIFOR, ${Q.ano}`;
   } else {
     document.getElementById("chave-pracas").hidden = true;
+  }
+  // ---------- hospitais (OpenStreetMap) ----------
+  const hospitais = E && E.hospitais && window.CamadaHospitais ? window.CamadaHospitais(mapa, E.hospitais) : null;
+  if (hospitais) {
+    document.getElementById("ctl-hospitais").addEventListener("change", (e) => { hospitais.ligar(e.target.checked); legenda(); contarCamadas(); });
+    document.getElementById("hospitais-sub").textContent = `${hospitais.total} · OpenStreetMap`;
+  } else {
+    document.getElementById("chave-hospitais").hidden = true;
+  }
+
+  // ---------- painel "Camadas": fechado por padrão, abre sobre o mapa ----------
+  const camadasBt = document.getElementById("camadas-botao");
+  const camadasPainel = document.getElementById("camadas-painel");
+  function abrirCamadas(abrir) {
+    camadasPainel.hidden = !abrir;
+    camadasBt.setAttribute("aria-expanded", String(abrir));
+    if (abrir && !REDUZIR) camadasPainel.animate(
+      [{ opacity: 0, transform: "translateY(-6px) scale(.98)" }, { opacity: 1, transform: "none" }],
+      { duration: 240, easing: "cubic-bezier(.2,.7,.1,1)" });
+  }
+  camadasBt.addEventListener("click", () => abrirCamadas(camadasPainel.hidden));
+  document.addEventListener("click", (e) => { if (!camadasPainel.hidden && !e.target.closest("#camadas-mapa")) abrirCamadas(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !camadasPainel.hidden) { abrirCamadas(false); camadasBt.focus(); } });
+  L.DomEvent.disableClickPropagation(document.getElementById("camadas-mapa"));
+  L.DomEvent.disableScrollPropagation(document.getElementById("camadas-mapa"));
+  // quantas camadas estão ligadas aparece no botão, para não esquecer nada aceso com o painel fechado
+  function contarCamadas() {
+    const n = ["ctl-pracas", "ctl-hospitais", "ctl-strava"].filter((id) => document.getElementById(id).checked).length
+      + (estado.rota !== "nenhuma" ? 1 : 0);
+    const c = document.getElementById("camadas-conta");
+    c.hidden = !n; c.textContent = String(n);
+    camadasBt.classList.toggle("ativo", n > 0);
   }
 
   // =====================================================================
@@ -301,9 +336,9 @@
   }
 
   if (R) {
-    segmentado("ctl-rotas", (v) => { estado.rota = v; estado.rotaSel = null; desenharRotas(); });
+    segmentado("ctl-rotas", (v) => { estado.rota = v; estado.rotaSel = null; desenharRotas(); contarCamadas(); });
   } else {
-    document.getElementById("ctl-rotas").hidden = true;
+    document.getElementById("camadas-rotas").hidden = true;
   }
 
   // ---------- legenda ----------
@@ -328,6 +363,7 @@
       el("div", { class: "legenda-escala", "aria-hidden": "true" }, cores.map((c) => el("span", { style: `background:${c}` }))),
       el("div", { class: "legenda-rotulos" }, rotulos.map((r) => el("span", { texto: r }))),
       pracas && pracas.ligada ? el("p", { class: "legenda-praca" }, [el("i", { "aria-hidden": "true" }), `praça ou espaço público (URBIFOR, ${Q.ano})`]) : null,
+      hospitais && hospitais.ligada ? el("p", { class: "legenda-praca" }, [el("i", { class: "hosp", "aria-hidden": "true" }), "hospital (OpenStreetMap)"]) : null,
     ].filter(Boolean));
   }
 
@@ -367,8 +403,9 @@
       el("ul", { class: "eixos" }, [
         eixo("Renda", reais(p.renda_real_2022) + " por mês", p.score_renda_2022),
         eixo("Saneamento", nf0.format(p.saneamento_2022) + "% com esgoto em rede", p.score_saneamento_2022),
-        eixo("Segurança", `${nf1.format(p.cvli)} CVLI e ${nf0.format(p.cvp)} roubos por 100 mil`, p.score_seguranca),
+        eixo("Segurança", `${nf1.format(p.cvli_pond)} mortes violentas por 100 mil`, p.score_seguranca),
       ]),
+      el("p", { class: "ficha-nota" }, `Segurança medida pela ${p.ais}: o mesmo valor para os ${p.n_bairros_ais} bairros dela. Roubos registrados: ${nf0.format(p.cvp)} por 100 mil, fora da nota.`),
       el("div", { class: "ficha-mudanca" }, [
         el("div", {}, [el("b", { class: vr < 0 ? "menos" : "", texto: sinal(vr, nf0.format) + "%" }), "renda real desde 2010"]),
         el("div", {}, [el("b", { class: vs < 0 ? "menos" : "", texto: sinal(vs, nf0.format) + " p.p." }), "esgoto em rede desde 2010"]),
@@ -379,11 +416,15 @@
         el("b", { texto: `pedal ${nf0.format(R.bairros[p.id][1])}` }),
       ]) : null,
       fichaPracas(p),
-      preco ? el("p", { class: "ficha-strava" }, [
+      E && E.bairros[p.id] && E.bairros[p.id].dist_hospital_km != null ? el("p", { class: "ficha-strava" }, [
+        "Hospital mais próximo: ", el("b", { texto: `${nf1.format(E.bairros[p.id].dist_hospital_km)} km` }), " do centro do bairro",
+      ]) : null,
+      preco && preco.n >= ((P.min_amostra && P.min_amostra.bairro) || 5) ? el("p", { class: "ficha-strava" }, [
         "Preço do m² nos anúncios: ",
         el("b", { texto: `${reais(preco.mediana)} (mediana)` }),
-        `, ${nf0.format(preco.n)} anúncio${preco.n === 1 ? "" : "s"}${preco.pouco_confiavel ? ", amostra pequena" : ""}`,
-      ]) : null,
+        `, ${nf0.format(preco.n)} anúncios`,
+      ]) : preco ? el("p", { class: "ficha-strava" },
+        `Preço do m²: só ${preco.n} anúncio${preco.n === 1 ? "" : "s"} no bairro, pouco para estimar (veja a regional em Preços).`) : null,
     ].filter(Boolean));
     box.classList.remove("entrando"); void box.offsetWidth; box.classList.add("entrando");
   }

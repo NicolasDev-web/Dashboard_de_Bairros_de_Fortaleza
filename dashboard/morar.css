@@ -242,6 +242,7 @@ input.renda-slider { -webkit-appearance: none; appearance: none; width: 100%; ma
 .card-barras li.fraco .barra-trilho i { background: var(--perda); }
 @keyframes barra-cresce { from { transform: scaleX(0); } }
 .barra-valor { font-family: var(--mono); font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; }
+.card-ais { margin: 8px 0 0 40px; font-family: var(--mono); font-size: 10.5px; color: var(--tinta-3); }
 .card-pracas { display: flex; align-items: center; gap: 7px; margin: 10px 0 0 40px; font-size: 12px; color: var(--tinta-2); }
 .card-pracas i { width: 8px; height: 8px; border-radius: 50%; background: var(--praca); flex: none; }
 .card-pracas.sem { color: var(--tinta-3); }
@@ -278,7 +279,7 @@ input.renda-slider { -webkit-appearance: none; appearance: none; width: 100%; ma
   .quiz-dica { display: none; }
   .entrada { grid-template-columns: 1fr auto; }
   .entrada span:first-child { grid-column: 1 / -1; }
-  .card-orc, .card-barras, .card-pracas, .card-pe { margin-left: 0; }
+  .card-orc, .card-barras, .card-ais, .card-pracas, .card-pe { margin-left: 0; }
   .card-barras li { grid-template-columns: 92px minmax(0, 1fr) 24px; }
   .resumo-numeros dd { font-size: 24px; }
   .ajustes-grade { grid-template-columns: 1fr; }

@@ -19,7 +19,7 @@ CAMPOS = [
     "ais", "pop_2010", "pop_2022", "area_km2", "densidade_2022",
     "renda_real_2010", "renda_real_2022", "renda_2010", "renda_2022",
     "saneamento_2010", "saneamento_2022", "agua_2010", "agua_2022", "lixo_2010", "lixo_2022",
-    "cvli", "cvp", "cvli_2025", "cvp_2025",
+    "cvli", "cvp", "cvli_2025", "cvp_2025", "cvli_pond", "n_bairros_ais",
     "score_renda_2010", "score_renda_2022", "score_saneamento_2010", "score_saneamento_2022",
     "score_cvli", "score_cvp", "score_seguranca",
     "indice", "indice_socio_2010", "indice_socio_2022",

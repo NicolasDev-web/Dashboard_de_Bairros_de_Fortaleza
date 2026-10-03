@@ -5,9 +5,10 @@
     "seguranca": 0.3333333333333333
   },
   "pesos_seguranca": {
-    "cvli": 0.5,
-    "cvp": 0.5
+    "cvli": 1.0,
+    "cvp": 0.0
   },
+  "cvli_janela": "2019–2025, peso = ano − 2018",
   "ipca": {
     "indice_jul2010": 3111.05,
     "indice_jul2022": 6411.95,
@@ -20,8 +21,8 @@
   ],
   "seguranca_min_max_ais": {
     "cvli": [
-      14.91,
-      46.97
+      18.36,
+      49.19
     ],
     "cvp": [
       525.5,
