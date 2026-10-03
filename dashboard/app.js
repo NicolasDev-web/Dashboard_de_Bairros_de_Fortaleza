@@ -5,6 +5,7 @@
   const D = window.DADOS;
   const R = window.ROTAS || null; // rotas.js (scripts/07_rotas_strava.py); opcional
   const P = window.PRECOS || null; // precos.js (scripts/09_precos_priceradar.py); opcional
+  const Q = window.PRACAS || null; // pracas.js (scripts/11_pracas.py); opcional
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -173,6 +174,14 @@
     pintar();
   });
 
+  // ---------- praças (URBIFOR, 2019): camada de contexto, fora do índice ----------
+  const pracas = Q && window.CamadaPracas ? window.CamadaPracas(mapa, Q, { nomeBairro: (id) => POR_ID.get(id)?.nome || "" }) : null;
+  if (pracas) {
+    document.getElementById("ctl-pracas").addEventListener("change", (e) => { pracas.ligar(e.target.checked); legenda(); });
+  } else {
+    document.getElementById("chave-pracas").hidden = true;
+  }
+
   // =====================================================================
   // ROTAS MAIS FEITAS (estimadas do heatmap do Strava)
   // =====================================================================
@@ -314,11 +323,12 @@
         : (s) => nf0.format(s);
       rotulos = [fmt(DOM[0]), fmt(DOM[1])];
     }
-    box.replaceChildren(
+    box.replaceChildren(...[
       el("p", { class: "legenda-titulo", texto: titulo }),
       el("div", { class: "legenda-escala", "aria-hidden": "true" }, cores.map((c) => el("span", { style: `background:${c}` }))),
       el("div", { class: "legenda-rotulos" }, rotulos.map((r) => el("span", { texto: r }))),
-    );
+      pracas && pracas.ligada ? el("p", { class: "legenda-praca" }, [el("i", { "aria-hidden": "true" }), `praça ou espaço público (URBIFOR, ${Q.ano})`]) : null,
+    ].filter(Boolean));
   }
 
   // =====================================================================
@@ -368,6 +378,7 @@
         el("b", { texto: `corrida ${nf0.format(R.bairros[p.id][0])}` }), ", ",
         el("b", { texto: `pedal ${nf0.format(R.bairros[p.id][1])}` }),
       ]) : null,
+      fichaPracas(p),
       preco ? el("p", { class: "ficha-strava" }, [
         "Preço do m² nos anúncios: ",
         el("b", { texto: `${reais(preco.mediana)} (mediana)` }),
@@ -375,6 +386,19 @@
       ]) : null,
     ].filter(Boolean));
     box.classList.remove("entrando"); void box.offsetWidth; box.classList.add("entrando");
+  }
+
+  function fichaPracas(p) {
+    const q = Q && Q.bairros[p.id];
+    if (!q) return null;
+    if (!q.n) return el("p", { class: "ficha-strava" }, `Nenhuma praça no cadastro da URBIFOR (${Q.ano}): pode faltar praça ou só o cadastro.`);
+    const area = q.area_m2 >= 10000 ? nf1.format(q.area_m2 / 10000) + " ha" : nf0.format(q.area_m2) + " m²";
+    const m2 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
+    return el("p", { class: "ficha-strava" }, [
+      "Praças cadastradas: ",
+      el("b", { texto: `${q.n} ${q.n === 1 ? "espaço" : "espaços"}, ${area}` }),
+      ` · ${m2.format(q.m2_hab)} m² por morador (cidade: ${m2.format(Q.cidade.m2_por_morador)})`,
+    ]);
   }
 
   function lista() {

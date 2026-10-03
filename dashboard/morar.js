@@ -8,6 +8,7 @@
   const R = window.ROTAS || null;
   const P = window.PRECOS || null;
   const E = window.EQUIP || null;
+  const Q = window.PRACAS || null; // praças da URBIFOR (2019): contexto nos cards e no mapa, fora da nota
   const REDUZIR = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const FEATS = D.geojson.features;
@@ -560,8 +561,15 @@
     mapa.fitBounds(camada.getBounds(), { padding: [12, 12] });
     pinos.addTo(mapa);
 
-    // hospitais e estações (OpenStreetMap), discretos e desligáveis
+    // hospitais e estações (OpenStreetMap) e praças (URBIFOR), discretos e desligáveis
     const camadasEl = document.getElementById("camadas");
+    const chaves = [];
+    if (Q && window.CamadaPracas) {
+      const pracas = window.CamadaPracas(mapa, Q, { nomeBairro: (id) => POR_ID.get(id)?.nome || "" });
+      const inp = el("input", { type: "checkbox" });
+      inp.addEventListener("change", () => pracas.ligar(inp.checked));
+      chaves.push(el("label", { class: "chave chave-mini" }, [inp, el("span", { class: "chave-trilho chave-praca", "aria-hidden": "true" }), `Praças (${Q.cidade.n})`]));
+    }
     if (E) {
       const grupo = (lista, classe, rot) => L.layerGroup(lista.map(([la, lo, nome]) =>
         L.circleMarker([la, lo], { radius: 4, weight: 1.5, color: COR.escuro, fillColor: classe === "hosp" ? COR.branco : COR.escuro, fillOpacity: 1, className: "ponto-" + classe })
@@ -572,8 +580,9 @@
         inp.addEventListener("change", () => (inp.checked ? pontos[k].addTo(mapa) : mapa.removeLayer(pontos[k])));
         return el("label", { class: "chave chave-mini" }, [inp, el("span", { class: "chave-trilho", "aria-hidden": "true" }), `${txt} (${n})`]);
       };
-      camadasEl.replaceChildren(chave("hosp", "Hospitais", E.hospitais.length), chave("est", "Metrô e VLT", E.estacoes.length));
-    } else camadasEl.remove();
+      chaves.push(chave("hosp", "Hospitais", E.hospitais.length), chave("est", "Metrô e VLT", E.estacoes.length));
+    }
+    if (chaves.length) camadasEl.replaceChildren(...chaves); else camadasEl.remove();
   }
 
   const visiveis = () => ranking.filter((r) => estado.fora || r.orc.sit !== "fora");
@@ -715,6 +724,7 @@
       ]),
       el("div", { class: "card-orc" }, [el("span", { class: `selo selo-${sit.classe}`, texto: sit.rotulo }), preco]),
       barras.length ? el("ul", { class: "card-barras" }, barras) : null,
+      linhaPracas(p),
       el("div", { class: "card-pe" }, [el("p", { texto: leitura || "Equilibrado nos critérios escolhidos" }), abrir]),
     ]);
     li.addEventListener("click", (e) => { if (!e.target.closest("a")) selecionar(p.id, true); });
@@ -722,6 +732,19 @@
     li.addEventListener("mouseenter", () => realcar(p.id));
     li.addEventListener("mouseleave", () => realcar(estado.sel));
     return li;
+  }
+
+  // praças do bairro (URBIFOR, 2019): só informação, não entra na compatibilidade
+  function linhaPracas(p) {
+    const q = Q && Q.bairros[p.id];
+    if (!q) return null;
+    const m2 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
+    const area = q.area_m2 >= 10000 ? nf1.format(q.area_m2 / 10000) + " ha" : nf0.format(q.area_m2) + " m²";
+    return el("p", { class: "card-pracas" + (q.n ? "" : " sem") }, [
+      el("i", { "aria-hidden": "true" }),
+      q.n ? `${q.n} praça${q.n === 1 ? "" : "s"} cadastrada${q.n === 1 ? "" : "s"} · ${area} · ${m2.format(q.m2_hab)} m² por morador`
+        : `Nenhuma praça no cadastro de ${Q.ano}`,
+    ]);
   }
 
   function resumo() {

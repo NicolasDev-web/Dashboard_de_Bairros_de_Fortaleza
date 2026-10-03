@@ -12,6 +12,7 @@
   --linha: #d3d4e6;
   --tinta-clara: #b9bce9;
   --perda: #e8631e;
+  --praca: #138a5e;
   --neutro: #c9cad8;
 
   /* rampa sequencial (validada: monotônica, 1 matiz, ponta clara >= 2:1 sobre --papel-claro) */
@@ -181,6 +182,16 @@ button, input { font: inherit; color: inherit; }
 .segmentado button[aria-pressed="true"] { background: var(--cobalto); color: var(--branco); }
 .segmentado button:disabled { opacity: .35; cursor: not-allowed; background: none; color: var(--tinta-2); }
 
+.camadas-grupo { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 4px 12px 4px 4px; border: 1px dashed var(--linha); border-radius: var(--raio); }
+.camadas-titulo { font-family: var(--mono); font-size: 11px; color: var(--tinta-3); padding-left: 8px; text-transform: uppercase; letter-spacing: .08em; }
+.chave[hidden] { display: none; }
+.chave input:checked + .chave-trilho.chave-praca { background: var(--praca); }
+.leaflet-tooltip.dica-praca { display: flex; flex-direction: column; gap: 1px; max-width: 260px; white-space: normal; }
+.dica-praca span { margin-left: 0 !important; }
+.dica-praca em { font-size: 12px; color: var(--tinta-2); }
+.dica-praca small { font-family: var(--mono); font-size: 10px; color: var(--tinta-3); }
+.praca-forma, .praca-ponto { transition: fill-opacity var(--t-rapida); }
+.praca-forma:hover, .praca-ponto:hover { fill-opacity: 1; }
 .seg-rotulo { align-self: center; font-family: var(--mono); font-size: 12px; color: var(--tinta-3); padding: 0 6px 0 8px; }
 .chave { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--tinta-2); cursor: pointer; }
 .chave input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -237,6 +248,8 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 .legenda-titulo { font-weight: 600; font-size: 13px; margin-bottom: 8px; }
 .legenda-escala { display: flex; gap: 2px; }
 .legenda-escala span { width: 34px; height: 10px; border-radius: 1px; }
+.legenda-praca { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); }
+.legenda-praca i { width: 10px; height: 10px; border-radius: 50%; background: var(--praca); border: 1px solid var(--branco); box-shadow: 0 0 0 1px var(--praca); }
 .legenda-rotulos { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); margin-top: 5px; gap: 12px; }
 .mapa-aviso {
   position: absolute; right: 12px; top: 12px; z-index: 500; max-width: 260px;

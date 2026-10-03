@@ -22,6 +22,7 @@ python -m venv .venv
 .venv/Scripts/python scripts/08_regionais.py        # bairro -> regional (Decreto 14.899/2020) -> data/raw/bairro_regional.csv
 .venv/Scripts/python scripts/09_precos_priceradar.py  # preço do m² por regional com o PriceRadar -> dashboard/precos.js
 .venv/Scripts/python scripts/10_equipamentos_osm.py   # saúde, lazer, mobilidade, escolas e comércio (OpenStreetMap) -> dashboard/equipamentos.js
+.venv/Scripts/python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
 ```
 
 A etapa 6 lê a saída da 8: se mexer nas regionais, rode a 8 e depois a 6.
@@ -59,5 +60,6 @@ Os downloads brutos (~330 MB) ficam em `data/cache/`, fora do git; os scripts ba
 | Regionais | Prefeitura de Fortaleza, Decreto nº 14.899/2020 (12 Secretarias Regionais) |
 | Preço do m² | Anúncios de VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX, coletados e limpos pelo PriceRadar |
 | Hospitais, lazer, transporte, escolas e comércio | OpenStreetMap (Overpass, via osmnx), contados no bairro e num raio de 500 m |
+| Praças e espaços públicos | URBIFOR, cadastro de 2019 (484 polígonos), em `data/raw/pracas_urbifor_2019.geojson`; camada de contexto, fora do índice e da nota do "Onde morar" |
 
 As decisões de método e as limitações estão na seção "De onde vêm os números" do próprio dashboard e no cabeçalho de cada script.

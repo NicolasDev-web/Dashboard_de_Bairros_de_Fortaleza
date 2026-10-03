@@ -242,6 +242,10 @@ input.renda-slider { -webkit-appearance: none; appearance: none; width: 100%; ma
 .card-barras li.fraco .barra-trilho i { background: var(--perda); }
 @keyframes barra-cresce { from { transform: scaleX(0); } }
 .barra-valor { font-family: var(--mono); font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; }
+.card-pracas { display: flex; align-items: center; gap: 7px; margin: 10px 0 0 40px; font-size: 12px; color: var(--tinta-2); }
+.card-pracas i { width: 8px; height: 8px; border-radius: 50%; background: var(--praca); flex: none; }
+.card-pracas.sem { color: var(--tinta-3); }
+.card-pracas.sem i { background: none; border: 1px dashed var(--tinta-3); }
 .card-pe { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 12px; margin: 12px 0 0 40px; padding-top: 9px; border-top: 1px solid var(--linha); font-size: 12px; color: var(--tinta-2); }
 .card-vazio { padding: 18px; font-size: 14px; color: var(--tinta-2); background: var(--papel-claro); border: 1px dashed var(--linha); border-radius: var(--raio); }
 .card-vazio b { color: var(--tinta); }
@@ -274,7 +278,7 @@ input.renda-slider { -webkit-appearance: none; appearance: none; width: 100%; ma
   .quiz-dica { display: none; }
   .entrada { grid-template-columns: 1fr auto; }
   .entrada span:first-child { grid-column: 1 / -1; }
-  .card-orc, .card-barras, .card-pe { margin-left: 0; }
+  .card-orc, .card-barras, .card-pracas, .card-pe { margin-left: 0; }
   .card-barras li { grid-template-columns: 92px minmax(0, 1fr) 24px; }
   .resumo-numeros dd { font-size: 24px; }
   .ajustes-grade { grid-template-columns: 1fr; }

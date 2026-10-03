@@ -84,17 +84,25 @@
         <button type="button" data-v="2010" aria-pressed="false">2010</button>
         <button type="button" data-v="2022" aria-pressed="true">2022</button>
       </div>
-      <div class="segmentado" id="ctl-rotas" role="group" aria-label="Rotas mais feitas">
-        <span class="seg-rotulo" aria-hidden="true">Rotas</span>
-        <button type="button" data-v="nenhuma" aria-pressed="true">Nenhuma</button>
-        <button type="button" data-v="run" aria-pressed="false">Corrida</button>
-        <button type="button" data-v="ride" aria-pressed="false">Pedal</button>
+      <div class="camadas-grupo" role="group" aria-label="Camadas do mapa">
+        <span class="camadas-titulo" aria-hidden="true">Camadas</span>
+        <div class="segmentado" id="ctl-rotas" role="group" aria-label="Rotas mais feitas">
+          <span class="seg-rotulo" aria-hidden="true">Rotas</span>
+          <button type="button" data-v="nenhuma" aria-pressed="true">Nenhuma</button>
+          <button type="button" data-v="run" aria-pressed="false">Corrida</button>
+          <button type="button" data-v="ride" aria-pressed="false">Pedal</button>
+        </div>
+        <label class="chave" id="chave-pracas">
+          <input type="checkbox" id="ctl-pracas">
+          <span class="chave-trilho chave-praca" aria-hidden="true"></span>
+          Praças
+        </label>
+        <label class="chave">
+          <input type="checkbox" id="ctl-strava">
+          <span class="chave-trilho" aria-hidden="true"></span>
+          Calor do Strava
+        </label>
       </div>
-      <label class="chave">
-        <input type="checkbox" id="ctl-strava">
-        <span class="chave-trilho" aria-hidden="true"></span>
-        Calor do Strava
-      </label>
     </div>
 
     <div class="pesos" id="pesos">
@@ -222,6 +230,10 @@
         <p>Anúncios de venda de apartamentos coletados com o PriceRadar (VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX), que já descarta aluguel, faixa de área e valor implausível, junta o mesmo imóvel visto em mais de um portal e tira outliers. Cada anúncio vai para um bairro pela coordenada do portal ou, sem ela, pelo nome do bairro. A regional segue o Decreto nº 14.899/2020. É preço pedido, não preço de venda.</p>
       </div>
       <div class="bloco">
+        <h3>Praças</h3>
+        <p>Cadastro de praças e espaços públicos da URBIFOR, de 2019: praças, largos, areninhas, calçadões e polos de lazer. Cada espaço foi posto no bairro atual pela posição no mapa, não pelo código antigo de bairro. É área de praças cadastradas, não área verde, e fica fora do índice. Quinze bairros não têm nenhum espaço no cadastro, o que pode ser falta de praça ou só de cadastro.</p>
+      </div>
+      <div class="bloco">
         <h3>Limitações</h3>
         <p>A renda de 2022 é ponderada pelo total de responsáveis, porque o IBGE não informa quantos têm rendimento. Praia de Iracema não aparece na lista oficial de AIS e foi posta na AIS 08. A camada do Strava mostra onde as pessoas correm e pedalam; é contexto visual, não entra no índice.</p>
       </div>
@@ -234,6 +246,7 @@
       <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">Prefeitura de Fortaleza, malha de bairros</a></li>
       <li><a href="https://www.strava.com/maps/global-heatmap" rel="noopener">Strava Global Heatmap</a></li>
       <li><a href="https://github.com/NicolasDev-web/priceradar" rel="noopener">PriceRadar</a></li>
+      <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">URBIFOR, praças (2019)</a></li>
     </ul>
   </section>
 
@@ -246,6 +259,8 @@
   <script src="data.js"></script>
   <script src="rotas.js"></script>
   <script src="precos.js"></script>
+  <script src="pracas.js"></script>
+  <script src="pracas-camada.js"></script>
   <script src="app.js"></script>
   <script src="regionais.js"></script>
 </body>
