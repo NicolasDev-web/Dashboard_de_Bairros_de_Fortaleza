@@ -66,6 +66,11 @@ MIN_AMOSTRA_BAIRRO = 5
 MIN_AMOSTRA_REGIONAL = 15
 QUARTOS = ["1", "2", "3", "4+"]
 
+# Preço do m² acima disso vezes a mediana da regional = anúncio com o bairro errado no
+# portal (ex.: o Pier 430, do Mucuripe, cadastrado como Siqueira, a R$ 17 mil/m² numa
+# regional de R$ 3 mil). O PriceRadar só compara com a cidade inteira, então não pega.
+TETO_REGIONAL = 3.0
+
 # Só a coordenada publicada pelo portal localiza o anúncio melhor que o nome do bairro.
 ORIGEM_EXATA = {"exata"}
 
@@ -309,6 +314,18 @@ def atribuir(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     df = df[~sem].copy()
     df["regional"] = df.regional.astype(int)
     df["bairro_id"] = df.bairro_id.astype("Int64")
+
+    # Repete porque o anúncio fora do lugar também puxa a mediana da regional para cima.
+    fora_curva = df.iloc[:0]
+    while True:
+        teto = df.groupby("regional").preco_m2.transform("median") * TETO_REGIONAL
+        acima = df.preco_m2 > teto
+        if not acima.any():
+            break
+        fora_curva = pd.concat([fora_curva, df[acima]])
+        df = df[~acima]
+    diag["acima_do_teto_regional"] = int(len(fora_curva))
+    diag["acima_do_teto_por_regional"] = {str(k): int(v) for k, v in fora_curva.regional.value_counts().sort_index().items()}
     diag["usados"] = len(df)
     return df, diag
 
@@ -402,6 +419,9 @@ def exportar(df: pd.DataFrame, diag: dict) -> None:
     print(f"\n{len(df)} anúncios usados de {diag['coletados']} coletados; método: {diag['metodo']}")
     if diag["sem_bairro"]:
         print(f"sem bairro: {diag['sem_bairro']} — nomes mais comuns: {diag['sem_bairro_nomes']}")
+    if diag["acima_do_teto_regional"]:
+        print(f"acima de {TETO_REGIONAL:g}x a mediana da regional (bairro errado no portal): "
+              f"{diag['acima_do_teto_regional']} — por regional: {diag['acima_do_teto_por_regional']}")
     print("\nPreço por m² por regional (R$):")
     print(t[["regional", "n", "mediana", "media", "p25", "p75", "preco_mediano"]].to_string(index=False))
     print(f"\n-> {OUT_BAIRROS.relative_to(ROOT)}, {OUT_REGIONAIS.relative_to(ROOT)}, {OUT_JS.relative_to(ROOT)}")

@@ -77,8 +77,11 @@ def percentil(s: pd.Series) -> pd.Series:
 
 def main() -> None:
     b = gpd.read_file(BAIRROS)[["bairro_id", "nome", "geometry"]]
-    area = b.union_all()
     bu = b.to_crs(UTM)
+    # Área do download: a cidade mais a faixa de alcance (o bairro da divisa também usa o
+    # que fica do outro lado do limite), simplificada. O contorno exato tem ~10 mil vértices,
+    # e a consulta com ele estoura o tempo do Overpass nas camadas grandes (paradas de ônibus).
+    area = gpd.GeoSeries([bu.union_all().buffer(BUFFER_M).simplify(100)], crs=UTM).to_crs(4326).iloc[0]
     alcance = bu.copy()
     alcance["geometry"] = bu.buffer(BUFFER_M)
     alcance["km2"] = alcance.area / 1e6
