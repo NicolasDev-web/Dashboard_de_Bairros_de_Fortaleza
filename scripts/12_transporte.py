@@ -1,8 +1,10 @@
 """Etapa 12 — Tempo e rotas de ônibus (e metrô/VLT) entre os bairros e os polos de Fortaleza.
 
 Fontes:
-  - GTFS da ETUFOR (ônibus municipais), portal de dados abertos da Prefeitura
-  - GTFS do Metrofor (metrô e VLT), se disponível
+  - GTFS da ETUFOR (ônibus municipais), cópia de 11/2023 do Mobility Database: o do portal de
+    dados abertos da Prefeitura (03/2026) não traz as viagens de dia útil
+  - GTFS do Metrofor (metrô e VLT), se disponível, com o calendário movido para a vigência
+    da ETUFOR (os horários continuam os dele; ver --deslocar-calendario)
   - ruas do OpenStreetMap (caminhada até a parada), baixadas do Overpass e gravadas em .osm.pbf
 
 Roteamento com r5py (R5, o mesmo motor do projeto Acesso a Oportunidades do IPEA):
@@ -13,7 +15,7 @@ Roteamento com r5py (R5, o mesmo motor do projeto Acesso a Oportunidades do IPEA
     saída entre 6h30 e 8h; o tempo é de porta a
     porta (caminhada, espera, viagem, baldeação) e sai a mediana da janela, com o 25º e
     o 75º percentis como faixa ("entre 45 e 60 min, conforme o horário de saída")
-  - rotas detalhadas (linhas, onde subir e descer) saindo às 7h, até 3 alternativas, de cada
+  - rotas detalhadas (linhas, onde subir e descer) saindo entre 7h e 7h05, até 3 alternativas, de cada
     bairro até os polos. Bairro a bairro sai só o tempo: o R5 devolve centenas de
     alternativas por par e os 16 mil pares levariam horas (--rotas-entre-bairros liga isso)
 
@@ -26,6 +28,9 @@ Uso:
   python scripts/12_transporte.py --rotas-entre-bairros   # rotas também bairro a bairro (horas)
   python scripts/12_transporte.py --da-tabela      # refaz transporte.js da última tabela, sem rotear
   python scripts/12_transporte.py --gtfs a.zip b.zip --osm ruas.osm.pbf
+  python scripts/12_transporte.py --gtfs etufor_2023.zip metrofor.zip --deslocar-calendario metrofor
+      # vigências que não se cruzam: move as datas do Metrofor para a vigência da ETUFOR
+      # (sem --gtfs isso já é o padrão; com --gtfs, só se pedir)
 
 Precisa de Java 21 (o r5py usa o R5, escrito em Java) e de `pip install r5py osmium`.
 
@@ -39,6 +44,7 @@ import argparse
 import datetime as dt
 import io
 import json
+import sys
 import zipfile
 from pathlib import Path
 
@@ -61,13 +67,20 @@ OUT_META = ROOT / "data/processed/transporte_meta.json"  # dia de referência e 
 UTM = 31984
 
 GTFS_URLS = {
-    "etufor": "https://dados.fortaleza.ce.gov.br/dataset/d6f1e64c-aca3-4867-8f39-53b7c9c2d211/resource/"
-              "7058bfbe-5ba2-45f4-9a91-af1508a7c05b/download/arquivo_google.zip",
+    # Cópia do Mobility Database (vigência 10/11/2023 a 10/02/2024, 27.340 viagens de dia útil). O
+    # GTFS do portal da Prefeitura (03/2026, .../resource/7058bfbe-5ba2-45f4-9a91-af1508a7c05b/download/
+    # arquivo_google.zip) declara o dia útil no calendar.txt mas não traz nenhuma viagem dele, e o
+    # recurso é sobrescrito a cada mês (as versões antigas somem). A rede mudou pouco de 2023 para
+    # 2026: 312 linhas em comum de 318/325, 93% das paradas a até 30 m, sábado com -2,6% de viagens.
+    "etufor": "https://storage.googleapis.com/mdb-latest/br-ceara-etufor-gtfs-2011.zip",
     # Link da página https://www.ce.gov.br/metrofor/gtfs/ (o endereço antigo, metrofor.ce.gov.br,
     # redireciona para lá). Se mudar, baixe à mão e passe com --gtfs; sem ele, metrô e VLT
     # ficam de fora (só ônibus).
     "metrofor": "https://info.metrofor.ce.gov.br/gtfs_file",
 }
+# Sem --gtfs, o calendário deste feed vai para a vigência da ETUFOR quando as duas não se cruzam
+# (o Metrofor vale 2026-27; a ETUFOR acima, 2023-24).
+DESLOCAR_PADRAO = "metrofor"
 OVERPASS = ["https://overpass-api.de/api/interpreter", "https://z.overpass-api.de/api/interpreter",
             "https://lz4.overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
 # O Overpass responde 406 ao User-Agent padrão do requests ("python-requests/x").
@@ -94,6 +107,10 @@ POLOS = [
 SAIDA_INICIO = dt.time(6, 30)
 JANELA = dt.timedelta(minutes=90)
 SAIDA_ROTAS = dt.time(7, 0)
+# O R5 gera alternativas para cada minuto da janela; 5 min bastam para as 3 opções mostradas
+# (com 20 min a memória passou de 4,5 GB sem terminar)
+JANELA_ROTAS = dt.timedelta(minutes=5)
+LOTE_ROTAS = 10  # bairros de saída por vez na fase das rotas
 MAX_TEMPO = dt.timedelta(minutes=150)
 MAX_OPCOES = 3
 MAX_A_PE = 30  # min: só mostra a opção "a pé" quando ela é curta
@@ -176,24 +193,65 @@ def viagens_no_dia(g: dict, d: dt.date) -> int:
     return int(g["trips"].service_id.isin(ativos).sum())
 
 
+def vigencia(g: dict) -> tuple[dt.date, dt.date]:
+    """Primeiro e último dia de serviço: o calendar.txt mais as datas com serviço acrescentado no
+    calendar_dates. As retiradas não contam: o Metrofor traz os feriados de 2025 num calendar de 2026-27."""
+    datas = []
+    cal, cd = g["calendar"], g["calendar_dates"]
+    if cal is not None and len(cal):
+        datas += [cal.start_date.min(), cal.end_date.max()]
+    if cd is not None and len(cd):
+        extra = cd[cd.exception_type == "1"].date
+        if len(extra):
+            datas += [extra.min(), extra.max()]
+    return pd.to_datetime(min(datas)).date(), pd.to_datetime(max(datas)).date()
+
+
+def deslocar_calendario(caminho: Path, g: dict, alvo: tuple[dt.date, dt.date]) -> tuple[Path, dict]:
+    """Copia o GTFS com as datas do calendar, calendar_dates e feed_info movidas para começar na
+    vigência `alvo`. Move em semanas inteiras, para o dia da semana não mudar; viagens e horários
+    continuam os do arquivo original. A cópia vai para o cache."""
+    ini, fim = vigencia(g)
+    dias = (alvo[0] - ini).days // 7 * 7
+    mover = lambda s: (pd.to_datetime(s, format="%Y%m%d") + pd.Timedelta(days=dias)).dt.strftime("%Y%m%d")  # noqa: E731
+    colunas = {"calendar.txt": ["start_date", "end_date"], "calendar_dates.txt": ["date"],
+               "feed_info.txt": ["feed_start_date", "feed_end_date"]}
+    destino = CACHE / f"{caminho.stem}_deslocado.zip"
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(caminho) as zin, zipfile.ZipFile(destino, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            cols = colunas.get(Path(item.filename).name)
+            if not cols:
+                zout.writestr(item, zin.read(item))
+                continue
+            df = pd.read_csv(zin.open(item), dtype=str, encoding="utf-8-sig")
+            for c in cols:
+                if c in df:
+                    ok = df[c].notna()  # as datas do feed_info são opcionais
+                    df.loc[ok, c] = mover(df.loc[ok, c])
+            zout.writestr(item.filename, df.to_csv(index=False))
+    desl = dt.timedelta(days=dias)
+    return destino, {"feed": g["nome"], "dias": dias, "vigencia_original": [ini.isoformat(), fim.isoformat()],
+                     "vigencia_deslocada": [(ini + desl).isoformat(), (fim + desl).isoformat()]}
+
+
 def dia_referencia(feeds: list[dict]) -> tuple[dt.date, str]:
     """Uma terça-feira com viagens em todos os GTFS. Se não houver, um sábado.
 
     Conta viagens, não só o calendar: o GTFS da ETUFOR de 03/2026 declara o serviço de
     dia útil no calendar.txt mas não traz nenhuma viagem dele, só as de sábado e domingo.
     """
-    inicios, fins, feriados = [], [], set()
+    feriados = set()
     for g in feeds:
         cd = g["calendar_dates"]
         if cd is not None and len(cd):  # data com serviço retirado = feriado (ex.: 21/04 roda tabela de domingo)
             feriados |= set(pd.to_datetime(cd[cd.exception_type == "2"].date).dt.date)
-        datas = []
-        if g["calendar"] is not None and len(g["calendar"]):
-            datas += [g["calendar"].start_date.min(), g["calendar"].end_date.max()]
-        if g["calendar_dates"] is not None and len(g["calendar_dates"]):
-            datas += [g["calendar_dates"].date.min(), g["calendar_dates"].date.max()]
-        inicios.append(min(datas)); fins.append(max(datas))
-    ini, fim = pd.to_datetime(max(inicios)).date(), pd.to_datetime(min(fins)).date()
+    vig = [vigencia(g) for g in feeds]
+    ini, fim = max(v[0] for v in vig), min(v[1] for v in vig)
+    if ini > fim:
+        raise SystemExit("As vigências dos GTFS não se cruzam: "
+                         + ", ".join(f"{g['nome']} {a:%d/%m/%Y} a {b:%d/%m/%Y}" for g, (a, b) in zip(feeds, vig))
+                         + ". Use --deslocar-calendario NOME para mover as datas de um deles.")
     hoje = dt.date.today()
     for semana, rotulo in ((1, "dia útil"), (5, "sábado")):
         d = hoje if ini <= hoje <= fim else ini
@@ -201,8 +259,8 @@ def dia_referencia(feeds: list[dict]) -> tuple[dt.date, str]:
             if d.weekday() == semana and d not in feriados and all(viagens_no_dia(g, d) for g in feeds):
                 if semana != 1:
                     print("  AVISO: nenhuma terça-feira com viagens em todos os GTFS; usando a tabela de sábado.")
-                    for g in feeds:
-                        print(f"    {g['nome']}: {viagens_no_dia(g, d - dt.timedelta(days=4))} viagens na terça anterior")
+                    for g in feeds:  # a terça seguinte: a anterior pode cair antes da vigência
+                        print(f"    {g['nome']}: {viagens_no_dia(g, d + dt.timedelta(days=3))} viagens na terça seguinte")
                 return d, rotulo
             d += dt.timedelta(days=1)
     raise SystemExit(f"Nenhuma terça-feira nem sábado com viagens em todos os GTFS ({ini} a {fim}).")
@@ -366,10 +424,13 @@ def gravar(meta: dict, polos: gpd.GeoDataFrame, destinos: gpd.GeoDataFrame, temp
                           encoding="utf-8")
 
 
-def meta_base(dia: dt.date, dia_rotulo: str, feeds: list[str]) -> dict:
-    return {"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "saida": f"{SAIDA_INICIO:%H:%M}",
-            "janela_min": int(JANELA.total_seconds() // 60), "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": feeds,
-            "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": False, "rotas_entre_bairros": False}
+def meta_base(dia: dt.date, dia_rotulo: str, feeds: list[str], deslocado: dict | None = None) -> dict:
+    m = {"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "saida": f"{SAIDA_INICIO:%H:%M}",
+         "janela_min": int(JANELA.total_seconds() // 60), "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": feeds,
+         "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": False, "rotas_entre_bairros": False}
+    if deslocado:
+        m["calendario_deslocado"] = deslocado
+    return m
 
 
 def da_tabela(args) -> None:
@@ -379,7 +440,9 @@ def da_tabela(args) -> None:
     if OUT_META.exists():
         m = json.loads(OUT_META.read_text(encoding="utf-8"))
         dia, dia_rotulo, feeds = dt.date.fromisoformat(m["dia"]), m["dia_rotulo"], m["feeds"]
+        deslocado = m.get("calendario_deslocado")
     elif args.dia:
+        deslocado = None
         dia = dt.date.fromisoformat(args.dia)
         dia_rotulo, feeds = ("sábado" if dia.weekday() == 5 else "domingo" if dia.weekday() == 6 else "dia útil"), ["etufor", "metrofor"]
     else:
@@ -392,7 +455,7 @@ def da_tabela(args) -> None:
     if faltam:
         raise SystemExit(f"A tabela tem destinos que não existem mais (polos mudaram?): {sorted(faltam)[:5]}")
     tempos = tempos_por_origem(ttm, destinos.id.tolist())
-    gravar(meta_base(dia, dia_rotulo, feeds), polos, destinos, tempos, {}, {})
+    gravar(meta_base(dia, dia_rotulo, feeds, deslocado), polos, destinos, tempos, {}, {})
     if not OUT_META.exists():
         OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": feeds,
                                         "origens": len(tempos)}, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -408,25 +471,54 @@ def main() -> None:
     ap.add_argument("--rotas-entre-bairros", action="store_true",
                     help="rotas detalhadas também entre bairros, não só até os polos (demora horas)")
     ap.add_argument("--origens", type=int, default=0, help="limita o número de bairros de saída (teste)")
+    ap.add_argument("--memoria", default="6G", help="memória máxima da JVM do R5 (padrão: 6G)")
     ap.add_argument("--da-tabela", action="store_true",
                     help="refaz transporte.js da última tabela de tempos (data/processed), sem rotear")
     ap.add_argument("--dia", help="com --da-tabela, se faltar o transporte_meta.json: dia de referência AAAA-MM-DD")
+    ap.add_argument("--deslocar-calendario", metavar="FEED",
+                    help="move as datas do GTFS FEED (ex.: metrofor) para a vigência dos outros, em semanas "
+                         "inteiras, quando as vigências não se cruzam; as viagens são as do arquivo original")
     args = ap.parse_args()
     if args.da_tabela:
         return da_tabela(args)
 
+    # O r5py lê --max-memory da linha de comando; sem isso, a JVM pode crescer até 80% da RAM
+    sys.argv += ["--max-memory", args.memoria]
     import r5py  # importa aqui: a JVM só sobe se for calcular
 
     b = gpd.read_file(BAIRROS)[["bairro_id", "nome", "geometry"]]
     if args.gtfs:
-        caminhos = [(Path(p), Path(p).stem.split("_")[0]) for p in args.gtfs]
+        caminhos = [(Path(p), Path(p).stem.removeprefix("gtfs_").split("_")[0]) for p in args.gtfs]
     else:
-        caminhos = [(baixar(u, CACHE / f"gtfs_{k}.zip"), k) for k, u in GTFS_URLS.items()]
+        # o nome do arquivo da URL entra no do cache: trocar o link não reaproveita o zip antigo
+        caminhos = [(baixar(u, CACHE / f"gtfs_{k}_{Path(u).stem}.zip"), k) for k, u in GTFS_URLS.items()]
         caminhos = [(c, k) for c, k in caminhos if c]
         if not any(k == "etufor" for _, k in caminhos):
             raise SystemExit("Sem o GTFS da ETUFOR não há o que calcular. Baixe à mão e passe com --gtfs.")
     feeds = [ler_gtfs(c, k) for c, k in caminhos]
     print("GTFS:", ", ".join(f"{g['nome']} ({len(g['routes'])} linhas)" for g in feeds))
+    deslocado = None
+    mover = args.deslocar_calendario or (None if args.gtfs else DESLOCAR_PADRAO)
+    i = next((i for i, g in enumerate(feeds) if g["nome"] == mover), None)
+    if args.deslocar_calendario and (i is None or len(feeds) < 2):
+        raise SystemExit(f"--deslocar-calendario: não há outro GTFS além de {mover!r} "
+                         f"para servir de referência (GTFS: {[g['nome'] for g in feeds]}).")
+    if i is not None and len(feeds) > 1:
+        outros = [vigencia(g) for j, g in enumerate(feeds) if j != i]
+        alvo = (max(v[0] for v in outros), min(v[1] for v in outros))
+        ini, fim = vigencia(feeds[i])
+        if ini <= alvo[1] and alvo[0] <= fim:
+            print(f"  --deslocar-calendario: a vigência de {feeds[i]['nome']} já cruza a dos outros; nada a mover.")
+        else:
+            novo, deslocado = deslocar_calendario(caminhos[i][0], feeds[i], alvo)
+            caminhos[i] = (novo, feeds[i]["nome"])
+            feeds[i] = ler_gtfs(novo, feeds[i]["nome"])
+            novo_ini, novo_fim = (dt.date.fromisoformat(x) for x in deslocado["vigencia_deslocada"])
+            print(f"  AVISO: calendário de {deslocado['feed']} deslocado "
+                  f"{deslocado['dias']:+d} dias ({deslocado['dias'] // 7:+d} semanas): {ini:%d/%m/%Y} a {fim:%d/%m/%Y} "
+                  f"-> {novo_ini:%d/%m/%Y} a {novo_fim:%d/%m/%Y}, "
+                  f"para cruzar com {alvo[0]:%d/%m/%Y} a {alvo[1]:%d/%m/%Y}. Os horários são os do arquivo "
+                  f"original; os feriados dele caem em outras datas.")
     osm = Path(args.osm) if args.osm else ruas_pbf(b)
 
     dia, dia_rotulo = dia_referencia(feeds)
@@ -452,11 +544,13 @@ def main() -> None:
     ttm[["from_id", "to_id", "p25", "p50", "p75"]].to_csv(OUT_CSV, index=False)
     nomes_feeds = [g["nome"] for g in feeds]
     OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": nomes_feeds,
-                                    "origens": len(origens)}, ensure_ascii=False, indent=1), encoding="utf-8")
+                                    "origens": len(origens),
+                                    **({"calendario_deslocado": deslocado} if deslocado else {})},
+                                   ensure_ascii=False, indent=1), encoding="utf-8")
 
     linhas, tracados, paradas = tabela_linhas(feeds)
     tempos = tempos_por_origem(ttm, destinos.id.tolist())
-    meta = meta_base(dia, dia_rotulo, nomes_feeds)
+    meta = meta_base(dia, dia_rotulo, nomes_feeds, deslocado)
     # os tempos já valem sozinhos: grava agora, para não perder tudo se a fase das rotas cair
     gravar(meta, polos, destinos, tempos, linhas, {k: v for k, v in tracados.items()})
     sem_rota = int(ttm.p50.isna().sum())
@@ -465,28 +559,38 @@ def main() -> None:
     usadas: set = set()
     if not args.sem_rotas:
         alvos = destinos if args.rotas_entre_bairros else polos[["id", "geometry"]]
-        print(f"Rotas detalhadas saindo às {SAIDA_ROTAS:%H:%M} ({len(origens) * len(alvos)} pares; demora) ...")
-        it = r5py.DetailedItineraries(rede, origins=origens, destinations=alvos, snap_to_network=True,
-                                      departure=dt.datetime.combine(dia, SAIDA_ROTAS),
-                                      departure_time_window=dt.timedelta(minutes=20),
-                                      transport_modes=modos, max_time=MAX_TEMPO, force_all_to_all=True)
-        it = pd.DataFrame(it)
-        it["feed"] = it.feed.map(nomes_dos_feeds(it, feeds))
-        rotas = compactar_rotas(it, linhas, paradas)
+        print(f"Rotas detalhadas saindo às {SAIDA_ROTAS:%H:%M} ({len(origens) * len(alvos)} pares, "
+              f"em lotes de {LOTE_ROTAS} bairros; demora) ...")
         OUT_ROTAS.mkdir(parents=True, exist_ok=True)
-        for o, dests in rotas.items():
-            nomes = {}
-            for opcoes in dests.values():
-                for op in opcoes:
-                    for p in op["p"]:
-                        if p[0] == "l":
-                            usadas.add(p[1])
-                            for k in (p[4], p[5]):
-                                nomes[k] = paradas.get(k, ["", None, None])
-            corpo = json.dumps({"rotas": dests, "paradas": nomes}, ensure_ascii=False, separators=(",", ":"))
-            (OUT_ROTAS / f"o_{o[1:]}.js").write_text(
-                f"(window.ROTAS_TP = window.ROTAS_TP || {{}})[{json.dumps(o)}] = {corpo};\n", encoding="utf-8")
-        print(f"  rotas de {len(rotas)} bairros -> {OUT_ROTAS.relative_to(ROOT)}/")
+        feitos = 0
+        # Em lotes: o R5 guarda todas as alternativas de todos os pares até o fim, e de uma vez só
+        # os 1.452 pares passaram de 4,5 GB. Cada lote já grava os seus arquivos.
+        for ini_lote in range(0, len(origens), LOTE_ROTAS):
+            lote = origens.iloc[ini_lote:ini_lote + LOTE_ROTAS]
+            it = r5py.DetailedItineraries(rede, origins=lote, destinations=alvos, snap_to_network=True,
+                                          departure=dt.datetime.combine(dia, SAIDA_ROTAS),
+                                          departure_time_window=JANELA_ROTAS,
+                                          transport_modes=modos, max_time=MAX_TEMPO, force_all_to_all=True)
+            it = pd.DataFrame(it)
+            it["feed"] = it.feed.map(nomes_dos_feeds(it, feeds))
+            rotas = compactar_rotas(it, linhas, paradas)
+            del it
+            for o, dests in rotas.items():
+                nomes = {}
+                for opcoes in dests.values():
+                    for op in opcoes:
+                        for p in op["p"]:
+                            if p[0] == "l":
+                                usadas.add(p[1])
+                                for k in (p[4], p[5]):
+                                    nomes[k] = paradas.get(k, ["", None, None])
+                corpo = json.dumps({"rotas": dests, "paradas": nomes}, ensure_ascii=False, separators=(",", ":"))
+                (OUT_ROTAS / f"o_{o[1:]}.js").write_text(
+                    f"(window.ROTAS_TP = window.ROTAS_TP || {{}})[{json.dumps(o)}] = {corpo};\n", encoding="utf-8")
+            feitos += len(rotas)
+            print(f"  {min(ini_lote + LOTE_ROTAS, len(origens))}/{len(origens)} bairros "
+                  f"({dt.datetime.now():%H:%M})", flush=True)
+        print(f"  rotas de {feitos} bairros -> {OUT_ROTAS.relative_to(ROOT)}/")
 
     if not args.sem_rotas:
         usadas = usadas or set(linhas)

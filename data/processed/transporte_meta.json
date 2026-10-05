@@ -1,9 +1,21 @@
 {
- "dia": "2026-04-04",
- "dia_rotulo": "sábado",
+ "dia": "2023-11-14",
+ "dia_rotulo": "dia útil",
  "feeds": [
   "etufor",
   "metrofor"
  ],
- "origens": 121
+ "origens": 121,
+ "calendario_deslocado": {
+  "feed": "metrofor",
+  "dias": -784,
+  "vigencia_original": [
+   "2026-01-01",
+   "2027-12-31"
+  ],
+  "vigencia_deslocada": [
+   "2023-11-09",
+   "2025-11-07"
+  ]
+ }
 }
