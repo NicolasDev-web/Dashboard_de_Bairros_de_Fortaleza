@@ -549,7 +549,7 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 .tj-passos span:not(.tj-badge):not(.tj-passo-icone) { display: block; font-size: 12px; color: var(--tinta-2); }
 .tj-passo-icone { display: grid; place-items: center; width: 26px; height: 26px; margin-left: 9px; }
 .tj-passo-icone svg { width: 10px; height: 13px; fill: var(--tinta-2); }
-.tj-passo-linha .tj-badge { justify-self: start; margin-top: 1px; }
+.tj-passo-linha .tj-badge { justify-self: start; margin-top: 1px; max-width: 44px; padding: 2px 4px; overflow: hidden; text-overflow: ellipsis; }
 .tj-nota { margin-top: 14px; font-size: 11.5px; color: var(--tinta-3); }
 .tj-vazio-titulo { font-size: 16px; font-weight: 550; color: var(--tinta); margin: 6px 0 4px; }
 .tj-vazio { font-size: 13px; color: var(--tinta-2); }

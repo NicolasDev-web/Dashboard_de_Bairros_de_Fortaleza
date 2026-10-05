@@ -24,11 +24,22 @@
   };
   // "dia útil" ou "sábado": o script cai para o sábado quando o GTFS não tem viagem de dia útil
   const DIA = (T && T.meta.dia_rotulo) || "dia útil";
+  // vigência da tabela da ETUFOR usada no cálculo ("nov/2023 a fev/2024"); vazio se o script não gravou
+  const MES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const mesAno = (iso) => `${MES[Number(iso.slice(5, 7)) - 1]}/${iso.slice(0, 4)}`;
+  const ETUFOR = T && (T.meta.gtfs || []).find((g) => g.nome === "etufor");
+  const TABELA = ETUFOR ? `${mesAno(ETUFOR.de)} a ${mesAno(ETUFOR.ate)}` : "";
+  // tabela vencida há mais de um ano: a rede pode ter mudado desde então
+  const TABELA_ANTIGA = ETUFOR && (Date.now() - Date.parse(ETUFOR.ate)) > 365 * 864e5;
   const tempo = (m) => (m < 60 ? `${nf0.format(m)} min` : `${Math.floor(m / 60)}h${String(Math.round(m % 60)).padStart(2, "0")}`);
 
   const secao = document.getElementById("trajeto");
   const metodoDia = document.getElementById("metodo-dia");
-  if (metodoDia && T) metodoDia.textContent = DIA === "dia útil" ? "num dia útil" : `num ${DIA} (o GTFS da ETUFOR em uso não traz as viagens de dia útil)`;
+  if (metodoDia && T) {
+    metodoDia.textContent = (DIA === "dia útil" ? "num dia útil" : `num ${DIA} (o GTFS da ETUFOR em uso não traz as viagens de dia útil)`)
+      + (TABELA ? `, com a tabela de horários da ETUFOR de ${TABELA}` : "")
+      + (TABELA_ANTIGA ? " (a mais recente publicada com as viagens de dia útil; linhas criadas ou alteradas depois dela não aparecem)" : "");
+  }
   const box = document.getElementById("tj-resultado");
   const selO = document.getElementById("tj-origem");
   const selD = document.getElementById("tj-destino");
@@ -229,9 +240,13 @@
     requestAnimationFrame(passo);
   }
 
-  function badge(chave) {
-    const [curto, , modo] = T.linhas[chave] || ["?", "", "onibus"];
-    return el("span", { class: `tj-badge tj-${modo === "onibus" ? "onibus" : "metro"}`, texto: curto || (modo === "onibus" ? "ônibus" : modo) });
+  // `curto`: no passo a passo o selo fica numa coluna estreita; metrô e VLT, que não têm número,
+  // aparecem como "Sul", "Oeste" e "VLT" (o nome inteiro vai no título do passo)
+  function badge(chave, curto = false) {
+    const [nome, , modo] = T.linhas[chave] || ["?", "", "onibus"];
+    let txt = nome || (modo === "onibus" ? "ônibus" : modo);
+    if (curto && modo !== "onibus") txt = /^VLT/i.test(txt) ? "VLT" : txt.replace(/^Linha\s+/i, "");
+    return el("span", { class: `tj-badge tj-${modo === "onibus" ? "onibus" : "metro"}`, texto: txt, title: nome || null });
   }
 
   function resumoOpcao(op) {
@@ -254,7 +269,7 @@
       }
       const [curto, longo] = T.linhas[p[1]] || ["", ""];
       return el("li", { class: "tj-passo-linha", style: `--i:${i}` }, [
-        badge(p[1]),
+        badge(p[1], true),
         el("div", {}, [
           el("b", { texto: longo || `Linha ${curto}` }),
           el("span", { texto: `Suba em ${nomeParada(p[4])}${p[3] ? ` · espera de ~${tempo(p[3])}` : ""}` }),
@@ -341,7 +356,7 @@
         : "As linhas desta viagem não foram encontradas no arquivo de rotas.";
       lista.append(el("p", { class: "tj-vazio", texto: msg }));
     }
-    box.replaceChildren(cab, lista, el("p", { class: "tj-nota", texto: "Tempo de tabela da ETUFOR e do Metrofor: não considera trânsito nem atraso. No pico, conte com mais." }));
+    box.replaceChildren(cab, lista, el("p", { class: "tj-nota", texto: `Tempo de tabela da ETUFOR${TABELA ? ` (${TABELA})` : ""} e do Metrofor: não considera trânsito nem atraso. No pico, conte com mais.` }));
     desenhar(opcoes[estado.opcao] || null, paradas);
     legenda(opcoes.length > 0);
   }
@@ -349,7 +364,7 @@
   function horaFim() {
     const [h, m] = T.meta.saida.split(":").map(Number);
     const t = h * 60 + m + T.meta.janela_min;
-    return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+    return `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
   }
 
   function legenda(comRota) {

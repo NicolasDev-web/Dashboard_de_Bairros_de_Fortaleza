@@ -7,7 +7,9 @@ Fontes:
 
 Roteamento com r5py (R5, o mesmo motor do projeto Acesso a Oportunidades do IPEA):
   - saída: um ponto por bairro, no centro ponderado pela população dos setores de 2022
-    (onde as pessoas moram, não o meio geográfico do polígono)
+    (onde as pessoas moram, não o meio geográfico do polígono), levado para a rua
+    residencial mais próxima
+  - caminhada de até 20 min até a parada (e da parada ao destino) e até 3 conduções
   - chegada: os mesmos 121 bairros e os polos abaixo (pontos de trabalho, estudo e eventos)
   - dia útil dentro da vigência do GTFS (sábado se o GTFS não tiver viagem de dia útil),
     saída entre 6h30 e 8h; o tempo é de porta a
@@ -25,6 +27,7 @@ Uso:
   python scripts/12_transporte.py --sem-rotas      # só a matriz de tempos (rápido)
   python scripts/12_transporte.py --rotas-entre-bairros   # rotas também bairro a bairro (horas)
   python scripts/12_transporte.py --da-tabela      # refaz transporte.js da última tabela, sem rotear
+  python scripts/12_transporte.py --continuar      # rotas: pula os bairros que já têm arquivo
   python scripts/12_transporte.py --gtfs a.zip b.zip --osm ruas.osm.pbf
 
 Precisa de Java 21 (o r5py usa o R5, escrito em Java) e de `pip install r5py osmium`.
@@ -34,11 +37,14 @@ Saídas:
   dashboard/transporte_linhas.js       traçado de cada linha (carregado só quando precisa)
   dashboard/transporte/o_<id>.js       rotas detalhadas saindo de cada bairro (sob demanda)
   data/processed/transporte_tempos.csv
+  data/processed/transporte_meta.json  dia de referência e vigência dos GTFS da tabela
+  data/processed/transporte_pontos.csv ponto de saída de cada bairro (para --da-tabela)
 """
 import argparse
 import datetime as dt
 import io
 import json
+import os
 import zipfile
 from pathlib import Path
 
@@ -58,6 +64,7 @@ OUT_LINHAS = ROOT / "dashboard/transporte_linhas.js"
 OUT_ROTAS = ROOT / "dashboard/transporte"
 OUT_CSV = ROOT / "data/processed/transporte_tempos.csv"
 OUT_META = ROOT / "data/processed/transporte_meta.json"  # dia de referência e GTFS da tabela acima
+OUT_PONTOS = ROOT / "data/processed/transporte_pontos.csv"  # ponto de saída de cada bairro usado na tabela
 UTM = 31984
 
 GTFS_URLS = {
@@ -95,6 +102,12 @@ SAIDA_INICIO = dt.time(6, 30)
 JANELA = dt.timedelta(minutes=90)
 SAIDA_ROTAS = dt.time(7, 0)
 MAX_TEMPO = dt.timedelta(minutes=150)
+# Limites da busca, os mesmos na matriz e nas rotas para os dois baterem. Sem eles o r5py deixa
+# caminhar até a parada pelo MAX_TEMPO inteiro (2h30) e, nas rotas detalhadas, o R5 passa a
+# considerar quase todas as paradas da cidade como embarque: estoura 12 GB num par só.
+MAX_CAMINHADA = dt.timedelta(minutes=20)  # até a parada e da parada ao destino (~1,2 km)
+MAX_CONDUCOES = 3  # ônibus/metrô na mesma viagem
+JANELA_ROTAS = dt.timedelta(minutes=10)  # saídas das 7h às 7h10 para as alternativas
 MAX_OPCOES = 3
 MAX_A_PE = 30  # min: só mostra a opção "a pé" quando ela é curta
 
@@ -176,6 +189,16 @@ def viagens_no_dia(g: dict, d: dt.date) -> int:
     return int(g["trips"].service_id.isin(ativos).sum())
 
 
+def vigencia(g: dict) -> tuple[dt.date, dt.date]:
+    """Primeira e última data do GTFS (calendar e calendar_dates)."""
+    datas = []
+    if g["calendar"] is not None and len(g["calendar"]):
+        datas += [g["calendar"].start_date.min(), g["calendar"].end_date.max()]
+    if g["calendar_dates"] is not None and len(g["calendar_dates"]):
+        datas += [g["calendar_dates"].date.min(), g["calendar_dates"].date.max()]
+    return pd.to_datetime(min(datas)).date(), pd.to_datetime(max(datas)).date()
+
+
 def dia_referencia(feeds: list[dict]) -> tuple[dt.date, str]:
     """Uma terça-feira com viagens em todos os GTFS. Se não houver, um sábado.
 
@@ -187,13 +210,9 @@ def dia_referencia(feeds: list[dict]) -> tuple[dt.date, str]:
         cd = g["calendar_dates"]
         if cd is not None and len(cd):  # data com serviço retirado = feriado (ex.: 21/04 roda tabela de domingo)
             feriados |= set(pd.to_datetime(cd[cd.exception_type == "2"].date).dt.date)
-        datas = []
-        if g["calendar"] is not None and len(g["calendar"]):
-            datas += [g["calendar"].start_date.min(), g["calendar"].end_date.max()]
-        if g["calendar_dates"] is not None and len(g["calendar_dates"]):
-            datas += [g["calendar_dates"].date.min(), g["calendar_dates"].date.max()]
-        inicios.append(min(datas)); fins.append(max(datas))
-    ini, fim = pd.to_datetime(max(inicios)).date(), pd.to_datetime(min(fins)).date()
+        de, ate = vigencia(g)
+        inicios.append(de); fins.append(ate)
+    ini, fim = max(inicios), min(fins)
     hoje = dt.date.today()
     for semana, rotulo in ((1, "dia útil"), (5, "sábado")):
         d = hoje if ini <= hoje <= fim else ini
@@ -230,6 +249,41 @@ def pontos_bairros(b: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
             p = r.geometry.representative_point()
         linhas.append({"id": f"b{int(r.bairro_id)}", "geometry": p})
     return gpd.GeoDataFrame(linhas, crs=UTM).to_crs(4326)
+
+
+# Vias onde fica a porta de casa. Fora: trilha de parque, ciclovia, calçada, beco e via expressa.
+RUAS_DE_CASA = {"residential", "living_street", "unclassified", "tertiary", "tertiary_link",
+                "secondary", "secondary_link", "primary", "primary_link"}
+
+
+def na_rua(pontos: gpd.GeoDataFrame, osm: Path) -> gpd.GeoDataFrame:
+    """Leva cada ponto para o nó de rua residencial (ou maior) mais próximo.
+
+    O centro ponderado pode cair num parque ou num conjunto, e o r5py prende o ponto na via mais
+    próxima, que pode ser um caminho isolado da malha. Em Canindezinho isso acontecia com o
+    caminho do parque do Rio Maranguapinho: nenhuma parada a até 30 min a pé, e o bairro saía
+    sem rota (ou, com caminhada livre, com ~1h a pé de volta à malha)."""
+    import osmium
+
+    class Nos(osmium.SimpleHandler):
+        def __init__(self):
+            super().__init__()
+            self.xy = set()
+
+        def way(self, w):
+            if w.tags.get("highway") in RUAS_DE_CASA and w.tags.get("access") not in ("private", "no"):
+                self.xy.update((n.lon, n.lat) for n in w.nodes)
+
+    h = Nos()
+    h.apply_file(str(osm), locations=True)
+    nos = gpd.GeoDataFrame(geometry=gpd.points_from_xy(*zip(*h.xy)), crs=4326).to_crs(UTM)
+    p = pontos.to_crs(UTM)
+    perto = gpd.sjoin_nearest(p, nos, distance_col="dist").drop_duplicates("id").set_index("id")
+    p["geometry"] = nos.geometry.loc[perto.loc[p.id, "index_right"]].values
+    longe = perto[perto.dist > 300]
+    if len(longe):
+        print(f"  AVISO: {len(longe)} ponto(s) a mais de 300 m de rua: {', '.join(longe.index)}")
+    return p.to_crs(4326)
 
 
 def pontos_polos(b: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
@@ -269,6 +323,7 @@ def tabela_linhas(feeds: list[dict]) -> tuple[dict, dict, dict]:
             paradas[f"{f}:{r.stop_id}"] = [r.get("stop_name") if isinstance(r.get("stop_name"), str) else "",
                                            round(float(r.stop_lat), 5), round(float(r.stop_lon), 5)]
         if g["shapes"] is None:
+            tracados.update(tracados_pelas_paradas(g))
             continue
         sh = g["shapes"].copy()
         sh["seq"] = sh.shape_pt_sequence.astype(int)
@@ -287,6 +342,25 @@ def tabela_linhas(feeds: list[dict]) -> tuple[dict, dict, dict]:
                 linha = gpd.GeoSeries([geo[sid]], crs=4326).to_crs(UTM).simplify(15).to_crs(4326).iloc[0]
                 tracados.setdefault(f"{f}:{rid}", []).append([[round(y, 5), round(x, 5)] for x, y in linha.coords])
     return linhas, tracados, paradas
+
+
+def tracados_pelas_paradas(g: dict) -> dict:
+    """Traçado pela sequência de paradas, para GTFS sem shapes.txt (o do Metrofor): sem isso o
+    mapa liga a estação de subida à de descida em linha reta. Usa a viagem com mais paradas em
+    cada sentido."""
+    st = g["stop_times"][["trip_id", "stop_id", "stop_sequence"]].copy()
+    st["seq"] = st.stop_sequence.astype(int)
+    xy = g["stops"].set_index("stop_id")[["stop_lat", "stop_lon"]].astype(float)
+    t = g["trips"].assign(direction_id=g["trips"].get("direction_id", pd.Series("0", index=g["trips"].index)).fillna("0"))
+    n = st.groupby("trip_id").size().rename("n")
+    t = t.join(n, on="trip_id").sort_values("n", ascending=False).drop_duplicates(["route_id", "direction_id"])
+    saida = {}
+    for r in t.itertuples():
+        seq = st[st.trip_id == r.trip_id].sort_values("seq").stop_id
+        pts = [[round(float(xy.at[s, "stop_lat"]), 5), round(float(xy.at[s, "stop_lon"]), 5)] for s in seq if s in xy.index]
+        if len(pts) > 1:
+            saida.setdefault(f"{g['nome']}:{r.route_id}", []).append(pts)
+    return saida
 
 
 # ---------------------------------------------------------------------------
@@ -339,6 +413,26 @@ def compactar_rotas(it: pd.DataFrame, linhas: dict, paradas: dict) -> dict:
     return saida
 
 
+def sem_suboptimas(r5py) -> None:
+    """Rotas detalhadas só com caminhos ótimos (suboptimalMinutes = 0).
+
+    O R5 guarda, por padrão, toda combinação até 5 min pior que a melhor. Com as dezenas de linhas
+    que dividem as mesmas avenidas em Fortaleza isso explode (estoura a memória em pares da
+    periferia). As alternativas continuam aparecendo: cada minuto de saída na JANELA_ROTAS dá a
+    sua melhor rota, e compactar_rotas fica com as diferentes. O r5py não expõe a opção, então
+    ela é ligada no objeto Java de cada pedido."""
+    from r5py.r5.regional_task import RegionalTask
+    if getattr(RegionalTask, "_sem_suboptimas", False):
+        return
+    criar = RegionalTask.__init__
+
+    def __init__(self, *a, **k):
+        criar(self, *a, **k)
+        self._regional_task.suboptimalMinutes = 0
+    RegionalTask.__init__ = __init__
+    RegionalTask._sem_suboptimas = True
+
+
 def tempos_por_origem(ttm: pd.DataFrame, ids_dest: list[str]) -> dict:
     tempos = {}
     for o, grp in ttm.groupby("from_id"):
@@ -366,10 +460,11 @@ def gravar(meta: dict, polos: gpd.GeoDataFrame, destinos: gpd.GeoDataFrame, temp
                           encoding="utf-8")
 
 
-def meta_base(dia: dt.date, dia_rotulo: str, feeds: list[str]) -> dict:
+def meta_base(dia: dt.date, dia_rotulo: str, feeds: list[str], gtfs: list[dict]) -> dict:
+    """`gtfs`: vigência de cada GTFS ({nome, de, ate}), para a página dizer de quando é a tabela."""
     return {"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "saida": f"{SAIDA_INICIO:%H:%M}",
             "janela_min": int(JANELA.total_seconds() // 60), "saida_rotas": f"{SAIDA_ROTAS:%H:%M}", "feeds": feeds,
-            "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": False, "rotas_entre_bairros": False}
+            "gtfs": gtfs, "max_min": int(MAX_TEMPO.total_seconds() // 60), "rotas": False, "rotas_entre_bairros": False}
 
 
 def da_tabela(args) -> None:
@@ -378,21 +473,28 @@ def da_tabela(args) -> None:
         raise SystemExit(f"{OUT_CSV.relative_to(ROOT)} não existe: rode o script sem --da-tabela primeiro.")
     if OUT_META.exists():
         m = json.loads(OUT_META.read_text(encoding="utf-8"))
-        dia, dia_rotulo, feeds = dt.date.fromisoformat(m["dia"]), m["dia_rotulo"], m["feeds"]
+        dia, dia_rotulo, feeds, gtfs = dt.date.fromisoformat(m["dia"]), m["dia_rotulo"], m["feeds"], m.get("gtfs", [])
     elif args.dia:
         dia = dt.date.fromisoformat(args.dia)
         dia_rotulo, feeds = ("sábado" if dia.weekday() == 5 else "domingo" if dia.weekday() == 6 else "dia útil"), ["etufor", "metrofor"]
+        gtfs = []
     else:
         raise SystemExit(f"Falta {OUT_META.relative_to(ROOT)}: diga o dia de referência da tabela com --dia AAAA-MM-DD.")
     b = gpd.read_file(BAIRROS)[["bairro_id", "nome", "geometry"]]
     polos = pontos_polos(b)
-    destinos = pd.concat([pontos_bairros(b), polos[["id", "geometry"]]], ignore_index=True)
+    if OUT_PONTOS.exists():  # os mesmos pontos da tabela
+        pt = pd.read_csv(OUT_PONTOS)
+        pts = gpd.GeoDataFrame(pt[["id"]], geometry=gpd.points_from_xy(pt.lon, pt.lat), crs=4326)
+    else:
+        print(f"  AVISO: sem {OUT_PONTOS.relative_to(ROOT)}; os pontos no mapa podem diferir dos da tabela")
+        pts = pontos_bairros(b)
+    destinos = pd.concat([pts, polos[["id", "geometry"]]], ignore_index=True)
     ttm = pd.read_csv(OUT_CSV)
     faltam = set(ttm.to_id) - set(destinos.id)
     if faltam:
         raise SystemExit(f"A tabela tem destinos que não existem mais (polos mudaram?): {sorted(faltam)[:5]}")
     tempos = tempos_por_origem(ttm, destinos.id.tolist())
-    gravar(meta_base(dia, dia_rotulo, feeds), polos, destinos, tempos, {}, {})
+    gravar(meta_base(dia, dia_rotulo, feeds, gtfs), polos, destinos, tempos, {}, {})
     if not OUT_META.exists():
         OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": feeds,
                                         "origens": len(tempos)}, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -408,6 +510,8 @@ def main() -> None:
     ap.add_argument("--rotas-entre-bairros", action="store_true",
                     help="rotas detalhadas também entre bairros, não só até os polos (demora horas)")
     ap.add_argument("--origens", type=int, default=0, help="limita o número de bairros de saída (teste)")
+    ap.add_argument("--continuar", action="store_true",
+                    help="nas rotas, pula os bairros que já têm dashboard/transporte/o_<id>.js (rodada que parou)")
     ap.add_argument("--da-tabela", action="store_true",
                     help="refaz transporte.js da última tabela de tempos (data/processed), sem rotear")
     ap.add_argument("--dia", help="com --da-tabela, se faltar o transporte_meta.json: dia de referência AAAA-MM-DD")
@@ -432,33 +536,37 @@ def main() -> None:
     dia, dia_rotulo = dia_referencia(feeds)
     print(f"Dia de referência: {dia:%d/%m/%Y} ({dia_rotulo}), saída {SAIDA_INICIO:%H:%M} + {int(JANELA.total_seconds() // 60)} min")
 
-    origens = pontos_bairros(b)
-    if args.origens:
-        origens = origens.head(args.origens)
+    pts = na_rua(pontos_bairros(b), osm)
+    pd.DataFrame({"id": pts.id, "lat": pts.geometry.y, "lon": pts.geometry.x}).to_csv(OUT_PONTOS, index=False)
+    origens = pts.head(args.origens) if args.origens else pts
     polos = pontos_polos(b)
-    destinos = pd.concat([pontos_bairros(b), polos[["id", "geometry"]]], ignore_index=True)
+    destinos = pd.concat([pts, polos[["id", "geometry"]]], ignore_index=True)
 
     rede = r5py.TransportNetwork(str(osm), [str(c) for c, _ in caminhos])
     modos = [r5py.TransportMode.TRANSIT, r5py.TransportMode.WALK]
 
     print("Matriz de tempos ...")
+    limites = dict(transport_modes=modos, max_time=MAX_TEMPO, max_time_walking=MAX_CAMINHADA,
+                   max_public_transport_rides=MAX_CONDUCOES)
     ttm = r5py.TravelTimeMatrix(rede, origins=origens, destinations=destinos, snap_to_network=True,
                                 departure=dt.datetime.combine(dia, SAIDA_INICIO), departure_time_window=JANELA,
-                                transport_modes=modos, percentiles=[25, 50, 75], max_time=MAX_TEMPO)
+                                percentiles=[25, 50, 75], **limites)
     ttm = pd.DataFrame(ttm)
     col = {p: next(c for c in ttm.columns if c.endswith(f"p{p}") or c == f"travel_time_p{p}") for p in (25, 50, 75)}
     ttm = ttm.rename(columns={col[25]: "p25", col[50]: "p50", col[75]: "p75"})
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     ttm[["from_id", "to_id", "p25", "p50", "p75"]].to_csv(OUT_CSV, index=False)
     nomes_feeds = [g["nome"] for g in feeds]
-    OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": nomes_feeds,
+    gtfs = [{"nome": g["nome"], "de": de.isoformat(), "ate": ate.isoformat()} for g in feeds for de, ate in [vigencia(g)]]
+    OUT_META.write_text(json.dumps({"dia": dia.isoformat(), "dia_rotulo": dia_rotulo, "feeds": nomes_feeds, "gtfs": gtfs,
                                     "origens": len(origens)}, ensure_ascii=False, indent=1), encoding="utf-8")
 
     linhas, tracados, paradas = tabela_linhas(feeds)
     tempos = tempos_por_origem(ttm, destinos.id.tolist())
-    meta = meta_base(dia, dia_rotulo, nomes_feeds)
-    # os tempos já valem sozinhos: grava agora, para não perder tudo se a fase das rotas cair
-    gravar(meta, polos, destinos, tempos, linhas, {k: v for k, v in tracados.items()})
+    meta = meta_base(dia, dia_rotulo, nomes_feeds, gtfs)
+    # os tempos já valem sozinhos: grava agora, para não perder tudo se a fase das rotas cair.
+    # Sem linhas nem traçados: só a fase das rotas sabe quais linhas a página vai usar.
+    gravar(meta, polos, destinos, tempos, {}, {})
     sem_rota = int(ttm.p50.isna().sum())
     print(f"  {len(ttm)} pares, {sem_rota} sem rota em até {int(MAX_TEMPO.total_seconds() // 60)} min")
 
@@ -466,15 +574,24 @@ def main() -> None:
     if not args.sem_rotas:
         alvos = destinos if args.rotas_entre_bairros else polos[["id", "geometry"]]
         print(f"Rotas detalhadas saindo às {SAIDA_ROTAS:%H:%M} ({len(origens) * len(alvos)} pares; demora) ...")
-        it = r5py.DetailedItineraries(rede, origins=origens, destinations=alvos, snap_to_network=True,
-                                      departure=dt.datetime.combine(dia, SAIDA_ROTAS),
-                                      departure_time_window=dt.timedelta(minutes=20),
-                                      transport_modes=modos, max_time=MAX_TEMPO, force_all_to_all=True)
-        it = pd.DataFrame(it)
-        it["feed"] = it.feed.map(nomes_dos_feeds(it, feeds))
-        rotas = compactar_rotas(it, linhas, paradas)
+        sem_suboptimas(r5py)
+        r5py.DetailedItineraries.NUM_THREADS = os.cpu_count() or 2  # o padrão do r5py usa metade
         OUT_ROTAS.mkdir(parents=True, exist_ok=True)
-        for o, dests in rotas.items():
+        inicio = dt.datetime.now()
+        # um bairro de saída por vez: cada arquivo é gravado assim que fica pronto
+        for i in range(len(origens)):
+            o = origens.id.iat[i]
+            arq = OUT_ROTAS / f"o_{o[1:]}.js"
+            if args.continuar and arq.exists():  # já calculado numa rodada que parou no meio
+                corpo = json.loads(arq.read_text(encoding="utf-8").split("] = ", 1)[1].rstrip().rstrip(";"))
+                usadas.update(p[1] for ops in corpo["rotas"].values() for op in ops for p in op["p"] if p[0] == "l")
+                continue
+            it = r5py.DetailedItineraries(rede, origins=origens.iloc[[i]], destinations=alvos, snap_to_network=True,
+                                          departure=dt.datetime.combine(dia, SAIDA_ROTAS),
+                                          departure_time_window=JANELA_ROTAS, force_all_to_all=True, **limites)
+            it = pd.DataFrame(it)
+            it["feed"] = it.feed.map(nomes_dos_feeds(it, feeds))
+            dests = compactar_rotas(it, linhas, paradas).get(o, {}) if len(it) else {}
             nomes = {}
             for opcoes in dests.values():
                 for op in opcoes:
@@ -484,9 +601,12 @@ def main() -> None:
                             for k in (p[4], p[5]):
                                 nomes[k] = paradas.get(k, ["", None, None])
             corpo = json.dumps({"rotas": dests, "paradas": nomes}, ensure_ascii=False, separators=(",", ":"))
-            (OUT_ROTAS / f"o_{o[1:]}.js").write_text(
+            arq.write_text(
                 f"(window.ROTAS_TP = window.ROTAS_TP || {{}})[{json.dumps(o)}] = {corpo};\n", encoding="utf-8")
-        print(f"  rotas de {len(rotas)} bairros -> {OUT_ROTAS.relative_to(ROOT)}/")
+            passou = (dt.datetime.now() - inicio).total_seconds() / 60
+            print(f"  {i + 1}/{len(origens)} {o}: {sum(map(len, dests.values()))} opções, {passou:.0f} min "
+                  f"(faltam ~{passou / (i + 1) * (len(origens) - i - 1):.0f})", flush=True)
+        print(f"  rotas de {len(origens)} bairros -> {OUT_ROTAS.relative_to(ROOT)}/")
 
     if not args.sem_rotas:
         usadas = usadas or set(linhas)
