@@ -3,8 +3,9 @@ import { interpolate, random, useCurrentFrame } from "remotion";
 import cidade from "../../public/dados/cidade.json";
 import { clamp, EASE } from "../tema";
 
-type Celula = [number, number, number, number]; // i, j, nota normalizada (0–1), distância ao Centro
-const CELULAS = cidade.celulas as Celula[];
+type Celula = [number, number, number, number, number]; // i, j, nota (0–1), distância ao Centro, bairro
+export const CELULAS = cidade.celulas as Celula[];
+export const LADO = cidade.lado;
 export const CIDADE_LARG = cidade.cols * cidade.lado;
 export const CIDADE_ALT = cidade.lins * cidade.lado;
 
@@ -14,18 +15,24 @@ export const CIDADE_ALT = cidade.lins * cidade.lado;
  *
  * montagem: 0 = pixels espalhados pela tela; 1 = cidade formada (ordem: do Centro para fora)
  * varredura: posição (0–1) da faixa de luz que atravessa a cidade (-1 desliga)
+ * nota: troca a nota do índice por outra (0–1) por pixel, ex.: o tempo de ônibus do bairro;
+ *       null apaga o pixel (fica só o ponto mínimo)
  */
 export const CidadePixels: React.FC<{
   montagem: number;
   varredura?: number;
   cor?: string;
   espalhar?: number;
-}> = ({ montagem, varredura = -1, cor = "#ffffff", espalhar = 1 }) => {
+  nota?: (bairro: number, k: number) => number | null;
+  apagado?: number; // opacidade dos pixels com nota null
+}> = ({ montagem, varredura = -1, cor = "#ffffff", espalhar = 1, nota, apagado = 0.12 }) => {
   const frame = useCurrentFrame();
   const lado = cidade.lado;
   return (
     <svg width={CIDADE_LARG} height={CIDADE_ALT} viewBox={`0 0 ${CIDADE_LARG} ${CIDADE_ALT}`} style={{ overflow: "visible" }}>
-      {CELULAS.map(([i, j, t, d], k) => {
+      {CELULAS.map(([i, j, t0, d, b], k) => {
+        const n = nota ? nota(b, k) : t0;
+        const t = n ?? 0;
         // cada pixel chega no seu tempo: do Centro para fora, com um pouco de acaso
         const ordem = d * 0.75 + random(`o${k}`) * 0.25;
         const p = interpolate(montagem, [ordem * 0.7, ordem * 0.7 + 0.3], [0, 1], { ...clamp, easing: EASE.entrada });
@@ -36,7 +43,7 @@ export const CidadePixels: React.FC<{
         const y = interpolate(p, [0, 1], [CIDADE_ALT / 2 + oy, j * lado]);
         const onda = varredura < 0 ? 0 : Math.exp(-(((i / cidade.cols - varredura) / 0.06) ** 2));
         const tam = lado * interpolate(p, [0, 1], [0.18, 0.2 + 0.62 * t + 0.25 * onda]);
-        const alfa = interpolate(p, [0, 1], [0.18 + 0.2 * random(`a${k}`), Math.min(1, 0.3 + 0.62 * t + 0.35 * onda)]);
+        const alfa = interpolate(p, [0, 1], [0.18 + 0.2 * random(`a${k}`), n === null ? apagado : Math.min(1, 0.3 + 0.62 * t + 0.35 * onda)]);
         return <rect key={k} x={x + (lado - tam) / 2} y={y + (lado - tam) / 2} width={tam} height={tam} fill={cor} opacity={alfa} />;
       })}
     </svg>

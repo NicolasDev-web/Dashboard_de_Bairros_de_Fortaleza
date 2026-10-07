@@ -1,16 +1,13 @@
-import { Easing } from "remotion";
-import { loadFont as carregarGeist } from "@remotion/google-fonts/Geist";
-import { loadFont as carregarGeistMono } from "@remotion/google-fonts/GeistMono";
+import { Easing, staticFile } from "remotion";
+import { loadFont } from "@remotion/fonts";
 
-// Mesmas famílias do dashboard (dashboard/styles.css)
-export const { fontFamily: SANS } = carregarGeist("normal", {
-  weights: ["300", "400", "500", "600"],
-  subsets: ["latin", "latin-ext"],
-});
-export const { fontFamily: MONO } = carregarGeistMono("normal", {
-  weights: ["400", "500"],
-  subsets: ["latin", "latin-ext"],
-});
+// Mesmas famílias do dashboard (dashboard/styles.css), em arquivos locais (public/fontes, do
+// pacote "geist", licença OFL): o render não depende do Google Fonts. As variáveis aceitam
+// qualquer peso entre 100 e 900, inclusive os 420 dos títulos.
+export const SANS = "Geist";
+export const MONO = "Geist Mono";
+loadFont({ family: SANS, url: staticFile("fontes/Geist-Variable.woff2"), weight: "100 900" });
+loadFont({ family: MONO, url: staticFile("fontes/GeistMono-Variable.woff2"), weight: "100 900" });
 
 // Tokens do dashboard
 export const COR = {
@@ -38,18 +35,22 @@ export const EASE = {
 export const FPS = 30;
 export const BATIDA = 18; // 100 BPM a 30 fps
 
-// Linha do tempo (frames). A trilha (public/audio/trilha.wav) foi composta sobre estes marcos.
+// Linha do tempo (frames). A trilha (public/audio/trilha.wav) foi composta sobre estes marcos
+// (MARCOS em scripts/gerar_assets.py = de / 30). Do Índice em diante, tudo cai na batida (18 frames).
 export const CENAS = {
-  abertura: { de: 0, dur: 300 }, // 0–10 s  atmosfera + tensão (drone, vento)
-  revelacao: { de: 300, dur: 150 }, // 10–15 s impacto, pulso começa
-  mergulho: { de: 450, dur: 150 }, // 15–20 s whoosh, entra na interface
-  indice: { de: 600, dur: 180 }, // 20–26 s arpejo começa
-  tempo: { de: 780, dur: 180 }, // 26–32 s
-  evolucao: { de: 960, dur: 150 }, // 32–37 s chimbal
-  rotas: { de: 1110, dur: 180 }, // 37–43 s baixo
-  montagem: { de: 1290, dur: 150 }, // 43–48 s palmas, intensidade máxima
-  encerramento: { de: 1440, dur: 210 }, // 48–55 s acorde final
+  abertura: { de: 0, dur: 300 }, // 0–10 s     atmosfera + tensão (drone, vento)
+  revelacao: { de: 300, dur: 150 }, // 10–15 s   impacto, pulso começa
+  mergulho: { de: 450, dur: 150 }, // 15–20 s    whoosh, entra na interface
+  indice: { de: 600, dur: 156 }, // 20–25,2 s     arpejo começa
+  onibus: { de: 756, dur: 324 }, // 25,2–36 s     respiro, relógio
+  morar: { de: 1080, dur: 270 }, // 36–45 s       chimbal
+  tempo: { de: 1350, dur: 144 }, // 45–49,8 s
+  evolucao: { de: 1494, dur: 144 }, // 49,8–54,6 s
+  camadas: { de: 1638, dur: 144 }, // 54,6–59,4 s baixo
+  rotas: { de: 1782, dur: 180 }, // 59,4–65,4 s
+  montagem: { de: 1962, dur: 162 }, // 65,4–70,8 s palmas, intensidade máxima
+  encerramento: { de: 2124, dur: 216 }, // 70,8–78 s acorde final
 };
-export const DURACAO = 1650;
+export const DURACAO = 2340;
 
 export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;

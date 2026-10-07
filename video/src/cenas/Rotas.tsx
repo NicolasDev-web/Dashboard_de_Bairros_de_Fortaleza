@@ -4,7 +4,7 @@ import { Camera, Tela, Veu } from "../componentes/Tela";
 import { Apoio, Rotulo, Titulo } from "../componentes/Texto";
 import { clamp } from "../tema";
 
-// 37–43 s. As 10 rotas de corrida aparecem sobre o mapa; a câmera mergulha na orla e
+// 59,4–65,4 s. As 10 rotas de corrida sobre o mapa; a câmera mergulha na orla e
 // atravessa para o calor do Strava em volta da Av. Beira-Mar, a 1ª da lista.
 export const Rotas: React.FC = () => {
   const frame = useCurrentFrame();
@@ -21,8 +21,7 @@ export const Rotas: React.FC = () => {
   ];
   return (
     <AbsoluteFill style={{ background: "#0d1033" }}>
-      <Tela src="telas/03_mapa_indice.png" chaves={visao} />
-      <Tela src="telas/11b_rotas_corrida_indice.png" chaves={visao} opacidade={interpolate(frame, [8, 30], [0, 1], clamp)} />
+      <Tela src="telas/11b_rotas_corrida_indice.png" chaves={visao} opacidade={interpolate(frame, [0, 10], [0, 1], clamp)} />
       <Tela src="telas/12_rota_beiramar.png" chaves={orla} opacidade={interpolate(frame, [104, 122], [0, 1], clamp)} />
 
       <AbsoluteFill style={{ opacity: interpolate(frame, [4, 22, 84, 100], [0, 1, 1, 0], clamp) }}>

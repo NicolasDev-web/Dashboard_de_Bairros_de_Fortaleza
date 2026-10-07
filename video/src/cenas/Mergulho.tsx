@@ -1,11 +1,12 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { CidadePixels, CIDADE_ALT, CIDADE_LARG } from "../componentes/CidadePixels";
+import medidas from "../../public/dados/medidas.json";
 import { clamp, COR, EASE } from "../tema";
 import { CIDADE_REVELADA, MARCA_NAV, TITULO_REAL } from "./Revelacao";
 import { Marca, Titulo } from "../componentes/Texto";
 
-const ROLAGEM_MAPA = 3218; // scrollY do mapa no dashboard (medido com o Playwright)
+const ROLAGEM_MAPA = medidas.mapa.rolagem; // scrollY do mapa no dashboard (scripts/capturar_telas.mjs)
 
 // 15–20 s. A cidade desenhada vira a cidade da interface real (mesma posição),
 // a câmera recua e revela o produto, e a página rola até o mapa.
@@ -57,7 +58,7 @@ export const Mergulho: React.FC = () => {
               <Marca />
             </div>
             <div style={{ position: "absolute", left: TITULO_REAL.x, top: TITULO_REAL.y, width: 900 }}>
-              <Titulo linhas={["Onde morar", "em Fortaleza"]} entra={-60} tamanho={TITULO_REAL.tamanho} entrelinha={0.92} espacamento="-0.045em" />
+              <Titulo linhas={["Onde morar", "em Fortaleza"]} entra={-60} tamanho={TITULO_REAL.tamanho} entrelinha={TITULO_REAL.entrelinha} espacamento="-0.045em" />
             </div>
           </div>
         </div>
