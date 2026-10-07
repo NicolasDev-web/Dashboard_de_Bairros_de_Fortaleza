@@ -167,7 +167,9 @@ def main() -> None:
     OUT_TRACADOS.write_text("window.LINHAS_TRACADOS = " + json.dumps({str(k): v for k, v in tracados.items()}, separators=(",", ":")) + ";\n",
                             encoding="utf-8")
     pll = paradas.to_crs(4326)
-    lista = [[round(g.y, 5), round(g.x, 5), n, l] for g, n, l in zip(pll.geometry, pll.nome, pll.linhas)]
+    # paradas sem nome no GTFS (a ARCE tem "Stop 86099") ganham o nome da parada mais próxima
+    nomes = T.nomear_paradas({k: [n, g.y, g.x] for k, (n, g) in enumerate(zip(pll.nome, pll.geometry))})
+    lista = [[round(g.y, 5), round(g.x, 5), nomes[k][0], l] for k, (g, l) in enumerate(zip(pll.geometry, pll.linhas))]
     OUT_PARADAS.write_text("window.PARADAS = " + json.dumps(lista, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
 
     nome = dict(zip(b.bairro_id, b.nome))
