@@ -24,7 +24,7 @@ const Botao: React.FC<{ entra: number }> = ({ entra }) => {
   );
 };
 
-// 48–55 s. A cidade se forma de novo, agora inteira em cobalto. A síntese, a marca e o convite.
+// 70,8–78 s. A cidade se forma de novo, agora inteira em cobalto. A síntese, a marca e o convite.
 // O último frame é a peça de campanha: marca, frase, botão e a cidade.
 export const Encerramento: React.FC = () => {
   const frame = useCurrentFrame();
@@ -57,7 +57,7 @@ export const Encerramento: React.FC = () => {
       </div>
       <AbsoluteFill style={{ justifyContent: "center", paddingLeft: 120 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 44, marginTop: 60 }}>
-          <Rotulo texto="121 bairros, de 2010 a 2022" entra={30} />
+          <Rotulo texto="121 bairros · 16 mil trajetos de ônibus" entra={30} />
           <Titulo linhas={["Escolha", "seu bairro", "com dados."]} entra={22} tamanho={128} />
           <div>
             <Botao entra={118} />

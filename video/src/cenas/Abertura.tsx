@@ -1,11 +1,13 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CidadePixels, CIDADE_ALT, CIDADE_LARG } from "../componentes/CidadePixels";
+import { LuzVarre, Palco3D, Particulas } from "../componentes/Cinema";
 import { Titulo } from "../componentes/Texto";
 import { clamp, COR, EASE } from "../tema";
 
-// 0–10 s. Noite. Pixels soltos derivam; duas frases colocam a pergunta; os pixels se juntam
-// e formam Fortaleza, bairro a bairro.
+// 0–10 s. Noite. Pixels soltos derivam sobre um plano deitado; duas frases colocam a pergunta;
+// os pixels se juntam e formam Fortaleza, e o plano se levanta até ficar de frente (a Revelação
+// começa exatamente nesse enquadramento: centro do quadro, escala 0,96, sem rotação).
 export const Abertura: React.FC = () => {
   const frame = useCurrentFrame();
   const montagem = interpolate(frame, [150, 292], [0, 1], { ...clamp, easing: EASE.suave });
@@ -17,17 +19,19 @@ export const Abertura: React.FC = () => {
           background: `radial-gradient(48% 55% at 50% 52%, rgba(47,55,196,${interpolate(frame, [0, 300], [0.12, 0.42], clamp)}) 0%, transparent 70%)`,
         }}
       />
-      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{
-            width: CIDADE_LARG, height: CIDADE_ALT,
-            scale: `${interpolate(frame, [0, 300], [1.1, 0.96], { ...clamp, easing: EASE.camera })}`,
-            opacity: interpolate(frame, [0, 30], [0, 1], clamp),
-          }}
-        >
-          <CidadePixels montagem={montagem} varredura={-1} />
+      <Particulas semente="abertura" n={40} deriva={[-frame * 0.9, frame * 0.15]} opacidade={interpolate(frame, [0, 40, 250, 300], [0, 1, 1, 0.5], clamp)} />
+      <Palco3D
+        largura={CIDADE_LARG} altura={CIDADE_ALT} perspectiva={1500}
+        inclinar={interpolate(frame, [0, 160, 296], [64, 54, 0], { ...clamp, easing: EASE.camera })}
+        girar={interpolate(frame, [0, 296], [-16, 0], { ...clamp, easing: EASE.camera })}
+        zoom={interpolate(frame, [0, 300], [1.25, 0.96], { ...clamp, easing: EASE.camera })}
+        profundidade={interpolate(frame, [0, 296], [-260, 0], { ...clamp, easing: EASE.camera })}
+      >
+        <div style={{ position: "absolute", inset: 0, opacity: interpolate(frame, [0, 30], [0, 1], clamp) }}>
+          <CidadePixels montagem={montagem} varredura={interpolate(frame, [250, 300], [-0.15, 0.5], clamp)} />
         </div>
-      </AbsoluteFill>
+      </Palco3D>
+      <LuzVarre de={262} ate={300} forca={0.18} />
 
       {/* leitura: escurece o centro enquanto há texto */}
       <AbsoluteFill
