@@ -31,6 +31,10 @@
   const TABELA = ETUFOR ? `${mesAno(ETUFOR.de)} a ${mesAno(ETUFOR.ate)}` : "";
   // tabela vencida há mais de um ano: a rede pode ter mudado desde então
   const TABELA_ANTIGA = ETUFOR && (Date.now() - Date.parse(ETUFOR.ate)) > 365 * 864e5;
+  // "otimista no pico" só vale para a tabela de dia útil: a de sábado tem menos viagens
+  const RESSALVA = DIA === "dia útil"
+    ? "não considera trânsito nem atraso. No pico, conte com mais."
+    : `não considera trânsito nem atraso, e é a tabela de ${DIA}, com menos viagens: num dia útil a espera costuma ser menor, mas o trânsito do pico pesa no sentido contrário.`;
   const tempo = (m) => (m < 60 ? `${nf0.format(m)} min` : `${Math.floor(m / 60)}h${String(Math.round(m % 60)).padStart(2, "0")}`);
 
   const secao = document.getElementById("trajeto");
@@ -38,7 +42,11 @@
   if (metodoDia && T) {
     metodoDia.textContent = (DIA === "dia útil" ? "num dia útil" : `num ${DIA} (o GTFS da ETUFOR em uso não traz as viagens de dia útil)`)
       + (TABELA ? `, com a tabela de horários da ETUFOR de ${TABELA}` : "")
-      + (TABELA_ANTIGA ? " (a mais recente publicada com as viagens de dia útil; linhas criadas ou alteradas depois dela não aparecem)" : "");
+      + (!TABELA_ANTIGA ? "" : DIA === "dia útil"
+        ? " (a mais recente publicada com as viagens de dia útil; linhas criadas ou alteradas depois dela não aparecem)"
+        : " (linhas criadas ou alteradas depois dela não aparecem)");
+    const pico = document.getElementById("metodo-pico");
+    if (pico && DIA !== "dia útil") pico.textContent = `É tempo de tabela: ${RESSALVA}`;
   }
   const box = document.getElementById("tj-resultado");
   const selO = document.getElementById("tj-origem");
@@ -356,7 +364,7 @@
         : "As linhas desta viagem não foram encontradas no arquivo de rotas.";
       lista.append(el("p", { class: "tj-vazio", texto: msg }));
     }
-    box.replaceChildren(cab, lista, el("p", { class: "tj-nota", texto: `Tempo de tabela da ETUFOR${TABELA ? ` (${TABELA})` : ""} e do Metrofor: não considera trânsito nem atraso. No pico, conte com mais.` }));
+    box.replaceChildren(cab, lista, el("p", { class: "tj-nota", texto: `Tempo de tabela da ETUFOR${TABELA ? ` (${TABELA})` : ""} e do Metrofor: ${RESSALVA}` }));
     desenhar(opcoes[estado.opcao] || null, paradas);
     legenda(opcoes.length > 0);
   }
