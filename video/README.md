@@ -10,6 +10,10 @@ Filme de 55 s (1920×1080, 30 fps) feito em Remotion, com telas reais do dashboa
 
 **Proposta de valor:** comparar os 121 bairros de Fortaleza por renda, saneamento e segurança, ver como mudaram entre os Censos de 2010 e 2022 e saber onde mais se corre e pedala. Tudo com dados públicos.
 
+## Onde está o filme
+
+O vídeo renderizado não fica no git: `video/out/` está no `.gitignore`, porque cada versão tem uns 60 MB e o git guardaria todas. O filme pronto vai como anexo nas [Releases do repositório](https://github.com/NicolasDev-web/Dashboard_de_Bairros_de_Fortaleza/releases). Para gerar de novo, use os comandos abaixo.
+
 ## Abrir e renderizar
 
 ```sh
