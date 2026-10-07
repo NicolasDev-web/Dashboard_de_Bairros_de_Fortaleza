@@ -50,6 +50,7 @@ import datetime as dt
 import io
 import json
 import os
+import re
 import sys
 import zipfile
 from pathlib import Path
@@ -221,7 +222,11 @@ def deslocar_calendario(caminho: Path, g: dict, alvo: tuple[dt.date, dt.date]) -
     vigência `alvo`. Move em semanas inteiras, para o dia da semana não mudar; viagens e horários
     continuam os do arquivo original. A cópia vai para o cache."""
     ini, fim = vigencia(g)
-    dias = (alvo[0] - ini).days // 7 * 7
+    # alinha pelo início do calendar.txt (o serviço regular), não por uma data avulsa do
+    # calendar_dates: a ARCE acrescenta serviço em 01/01/2025, sete meses antes do calendário
+    cal = g["calendar"]
+    base = pd.to_datetime(cal.start_date.min()).date() if cal is not None and len(cal) else ini
+    dias = (alvo[0] - base).days // 7 * 7
     mover = lambda s: (pd.to_datetime(s, format="%Y%m%d") + pd.Timedelta(days=dias)).dt.strftime("%Y%m%d")  # noqa: E731
     colunas = {"calendar.txt": ["start_date", "end_date"], "calendar_dates.txt": ["date"],
                "feed_info.txt": ["feed_start_date", "feed_end_date"]}
@@ -366,7 +371,8 @@ def tabela_linhas(feeds: list[dict]) -> tuple[dict, dict, dict]:
                 desc = (r.get("route_desc") or "").strip() if isinstance(r.get("route_desc"), str) else ""
                 curto = longo.replace("Vlt", "VLT")
                 longo = f"{curto} ({desc})" if desc else curto
-            linhas[f"{f}:{r.route_id}"] = [curto, longo, modo_txt.get(str(r.get("route_type")), "onibus")]
+            # 4º campo: a operadora (etufor, arce = metropolitanas, metrofor), para a página marcar a linha
+            linhas[f"{f}:{r.route_id}"] = [curto, longo, modo_txt.get(str(r.get("route_type")), "onibus"), f]
         for _, r in g["stops"].iterrows():
             paradas[f"{f}:{r.stop_id}"] = [r.get("stop_name") if isinstance(r.get("stop_name"), str) else "",
                                            round(float(r.stop_lat), 5), round(float(r.stop_lon), 5)]
@@ -389,7 +395,26 @@ def tabela_linhas(feeds: list[dict]) -> tuple[dict, dict, dict]:
             if sid in geo:
                 linha = gpd.GeoSeries([geo[sid]], crs=4326).to_crs(UTM).simplify(15).to_crs(4326).iloc[0]
                 tracados.setdefault(f"{f}:{rid}", []).append([[round(y, 5), round(x, 5)] for x, y in linha.coords])
-    return linhas, tracados, paradas
+    return linhas, tracados, nomear_paradas(paradas)
+
+
+SEM_NOME = re.compile(r"^\s*(stop\s*\d+)?\s*$", re.I)  # a ARCE tem paradas chamadas só "Stop 86099"
+
+
+def nomear_paradas(paradas: dict, raio_m: float = 100) -> dict:
+    """Parada sem nome no GTFS ganha o nome da parada com nome mais próxima (a até raio_m),
+    ou "parada sem nome". paradas: {chave: [nome, lat, lon]}; altera e devolve o mesmo dicionário."""
+    com = [(k, v) for k, v in paradas.items() if v[0] and not SEM_NOME.match(v[0])]
+    sem = [k for k, v in paradas.items() if not v[0] or SEM_NOME.match(v[0])]
+    if not sem or not com:
+        return paradas
+    xy = np.array([[v[1], v[2]] for _, v in com], dtype=float)
+    escala = np.array([110570.0, 111320.0 * np.cos(np.radians(-3.75))])
+    for k in sem:
+        d = np.hypot(*((xy - [paradas[k][1], paradas[k][2]]) * escala).T)
+        i = int(d.argmin())
+        paradas[k][0] = com[i][1][0] if d[i] <= raio_m else "parada sem nome"
+    return paradas
 
 
 def tracados_pelas_paradas(g: dict) -> dict:

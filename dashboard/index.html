@@ -105,6 +105,12 @@
           </button>
           <div class="camadas-painel" id="camadas-painel" hidden>
             <p class="camadas-sec">Sobre o mapa</p>
+            <label class="camada-item" id="chave-paradas">
+              <span class="camada-amostra amostra-parada" aria-hidden="true"></span>
+              <span class="camada-nome">Paradas de ônibus<small id="paradas-sub">ETUFOR, metropolitanas e metrô</small></span>
+              <input type="checkbox" id="ctl-paradas">
+              <span class="chave-trilho" aria-hidden="true"></span>
+            </label>
             <label class="camada-item" id="chave-pracas">
               <span class="camada-amostra amostra-praca" aria-hidden="true"></span>
               <span class="camada-nome">Praças<small id="pracas-sub">URBIFOR, 2019</small></span>
@@ -275,7 +281,7 @@
       </div>
       <div class="bloco">
         <h3>Ônibus</h3>
-        <p>Tempo de porta a porta pelo transporte público, calculado com o R5 (o mesmo motor do projeto Acesso a Oportunidades, do IPEA) sobre o GTFS da ETUFOR e do Metrofor e as ruas do OpenStreetMap. Sai do ponto onde mais gente mora em cada bairro, <span id="metodo-dia">num dia útil</span>, entre 6h30 e 8h; o número é a mediana dessa janela. <span id="metodo-pico">É tempo de tabela: não considera trânsito nem atraso, então no pico tende a ser otimista.</span></p>
+        <p>Tempo de porta a porta pelo transporte público, calculado com o R5 (o mesmo motor do projeto Acesso a Oportunidades, do IPEA) sobre o GTFS da ETUFOR e do Metrofor e as ruas do OpenStreetMap. Sai do ponto onde mais gente mora em cada bairro, <span id="metodo-dia">num dia útil</span>, entre 6h30 e 8h; o número é a mediana dessa janela. <span id="metodo-pico">É tempo de tabela: não considera trânsito nem atraso, então no pico tende a ser otimista.</span> Os ônibus metropolitanos (ARCE) entram no cálculo. As linhas que passam em cada bairro, as linhas diretas entre saída e destino e as paradas do mapa vêm da rede mais atual (ETUFOR de 2026, ARCE de 2025 e Metrofor), que não tem horário de dia útil: mostram por onde a linha passa, não quanto tempo leva.</p>
       </div>
       <div class="bloco">
         <h3>Praças</h3>
@@ -314,6 +320,8 @@
   <script src="equipamentos.js"></script>
   <script src="hospitais-camada.js"></script>
   <script src="transporte.js"></script>
+  <script src="linhas.js"></script>
+  <script src="linhas-camada.js"></script>
   <script src="app.js"></script>
   <script src="trajeto.js"></script>
   <script src="regionais.js"></script>

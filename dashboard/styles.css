@@ -14,6 +14,7 @@
   --perda: #e8631e;
   --praca: #138a5e;
   --metro: #e09a1b;
+  --metropolitana: #7a3fb8; /* ônibus metropolitanos (ARCE) */
   --neutro: #c9cad8;
 
   /* rampa sequencial (validada: monotônica, 1 matiz, ponta clara >= 2:1 sobre --papel-claro) */
@@ -542,6 +543,21 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 .tj-badge { display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 500; padding: 2px 6px; border-radius: 2px; color: var(--branco); white-space: nowrap; }
 .tj-onibus { background: var(--cobalto); }
 .tj-metro { background: var(--metro); color: #3a2400; }
+.tj-metropolitana { background: var(--metropolitana); }
+button.tj-badge { border: 0; cursor: pointer; font: inherit; font-family: var(--mono); font-size: 11px; }
+button.tj-badge:hover, button.tj-badge[aria-pressed="true"] { outline: 2px solid var(--tinta); outline-offset: 1px; }
+.selos { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 8px; }
+.selos-mais { font-family: var(--mono); font-size: 11px; color: var(--tinta-2); align-self: center; }
+.ficha-linhas { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--linha); }
+.ficha-linhas p { font-size: 12px; color: var(--tinta-2); }
+.ficha-linhas p b { font-weight: 500; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.amostra-parada { background: var(--cobalto); border: 1.5px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px var(--cobalto); }
+.legenda-praca i.parada { background: var(--cobalto); border-radius: 50%; }
+.popup-parada b { display: block; font-size: 13px; }
+.popup-parada small { display: block; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); margin-bottom: 4px; }
+.tj-diretas { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--linha); }
+.tj-diretas p { font-size: 12px; color: var(--tinta-2); }
+.tj-diretas .tj-sec { margin-bottom: 4px; }
 .tj-passos { list-style: none; margin: 0; padding: 4px 12px 12px; display: flex; flex-direction: column; gap: 0; }
 .tj-passos li { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: start; padding: 8px 0 8px; animation: tj-entra 420ms var(--curva) both; animation-delay: calc(var(--i) * 70ms); }
 .tj-passos li + li::before { content: ""; position: absolute; left: 21px; top: -6px; height: 12px; border-left: 2px dotted var(--linha); }
@@ -566,6 +582,7 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 .tj-legenda .tj-leg { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); margin-top: 4px; }
 .tj-legenda i { width: 22px; height: 0; border-top: 4px solid var(--cobalto); border-radius: 2px; }
 .tj-legenda i.tj-leg-metro { border-top-color: var(--metro); }
+.tj-legenda i.tj-leg-metropolitana { border-top-color: var(--metropolitana); }
 .tj-legenda i.tj-leg-pe { border-top: 3px dotted var(--tinta-3); }
 .ficha-onibus { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--linha); }
 .ficha-onibus p { font-size: 12px; color: var(--tinta-2); }

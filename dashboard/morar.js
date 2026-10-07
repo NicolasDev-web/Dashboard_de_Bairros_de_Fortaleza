@@ -827,6 +827,7 @@
       el("div", { class: "card-orc" }, [el("span", { class: `selo selo-${sit.classe}`, texto: sit.rotulo }), preco]),
       barras.length ? el("ul", { class: "card-barras" }, barras) : null,
       linhaTrajeto(p),
+      linhaLinhas(p),
       peso(CRITERIOS[0]) > 0 ? el("p", { class: "card-ais" }, `Segurança medida pela ${p.ais}, igual para os ${N_AIS.get(p.ais)} bairros dela`) : null,
       linhaPracas(p),
       el("div", { class: "card-pe" }, [el("p", { texto: leitura || "Equilibrado nos critérios escolhidos" }), abrir]),
@@ -836,6 +837,22 @@
     li.addEventListener("mouseenter", () => realcar(p.id));
     li.addEventListener("mouseleave", () => realcar(estado.sel));
     return li;
+  }
+
+  // quantas linhas de ônibus e metrô passam no bairro (rede atual, scripts/13_linhas_bairros.py)
+  function linhaLinhas(p) {
+    const LN = window.Linhas;
+    if (!LN) return null;
+    const idxs = LN.doBairro(p.id);
+    if (!idxs.length) return null;
+    const c = LN.contar(idxs);
+    const extra = [c.arce && `${c.arce} metropolitana${c.arce === 1 ? "" : "s"}`, c.metro && `${c.metro} de metrô/VLT`].filter(Boolean);
+    const comuns = estado.destino ? LN.emComum(idxs, LN.doDestino(estado.destino)).length : 0;
+    return el("p", { class: "card-trajeto card-linhas" }, [
+      el("i", { "aria-hidden": "true" }),
+      `${idxs.length} linhas passam no bairro${extra.length ? ` (${extra.join(", ")})` : ""}`
+        + (estado.destino ? (comuns ? ` · ${comuns} vão até ${NOME_DEST.get(estado.destino)} sem baldeação` : ` · nenhuma vai direto até ${NOME_DEST.get(estado.destino)}`) : ""),
+    ]);
   }
 
   function linhaTrajeto(p) {

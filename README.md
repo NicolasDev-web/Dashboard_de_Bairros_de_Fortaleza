@@ -25,6 +25,7 @@ python -m venv .venv
                                                        #   --das-contagens refaz só as notas, sem baixar
 .venv/Scripts/python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
 .venv/Scripts/python scripts/12_transporte.py         # tempo e rotas de ônibus/metrô -> dashboard/transporte*.js
+.venv/Scripts/python scripts/13_linhas_bairros.py     # linhas por bairro e paradas (rede atual) -> dashboard/linhas*.js, paradas.js
 ```
 
 A etapa 6 lê a saída da 8: se mexer nas regionais, rode a 8 e depois a 6.
@@ -53,10 +54,12 @@ Calcula, com o r5py (o motor R5, o mesmo do projeto Acesso a Oportunidades do IP
 # precisa de Java 21 instalado (https://adoptium.net) e de:
 .venv/Scripts/python -m pip install r5py osmium
 
-# a tabela publicada (GTFS com dia útil, do Mobility Database):
+# a tabela publicada (GTFS com dia útil, do Mobility Database, + os metropolitanos da ARCE):
 curl -L -o data/cache/transporte/etufor_2023.zip https://storage.googleapis.com/mdb-latest/br-ceara-etufor-gtfs-2011.zip
 curl -L -o data/cache/transporte/metrofor_2024.zip https://storage.googleapis.com/mobilitydata-datasets-prod/mdb-2010/latest.zip
-.venv/Scripts/python scripts/12_transporte.py --gtfs data/cache/transporte/etufor_2023.zip data/cache/transporte/metrofor_2024.zip   # ~1h20
+# data/cache/transporte/arce_2025.zip: GTFS da ARCE (GTFS_Arce_01082025.zip, ônibus metropolitanos)
+.venv/Scripts/python scripts/12_transporte.py --gtfs data/cache/transporte/etufor_2023.zip data/cache/transporte/metrofor_2024.zip \
+    data/cache/transporte/arce_2025.zip --deslocar-calendario arce   # ~2h
 
 .venv/Scripts/python scripts/12_transporte.py                 # padrão: ETUFOR 2023/24 (Mobility Database) + Metrofor atual, com o
                                                               #   calendário do Metrofor movido para 2023 (--deslocar-calendario)
@@ -66,6 +69,17 @@ curl -L -o data/cache/transporte/metrofor_2024.zip https://storage.googleapis.co
 ```
 
 O nome de cada arquivo passado em `--gtfs` precisa começar por `etufor_` ou `metrofor_`. Sem `--gtfs`, o Metrofor baixado (vigência 2026-27) não cruza com a ETUFOR de 2023/24, e o script move as datas dele em semanas inteiras para a vigência da ETUFOR (os horários continuam os do arquivo; o deslocamento fica em `transporte_meta.json`). A tabela publicada usa o Metrofor de 2024, que já cruza com a ETUFOR, sem deslocar nada. Se o link do Metrofor mudar, baixe em https://www.ce.gov.br/metrofor/gtfs/ e passe com `--gtfs` (sem ele, só ônibus). As ruas vêm do Overpass e ficam em `data/cache/transporte/fortaleza_ruas.osm.pbf`; se o Overpass não responder, passe outro `.osm.pbf` com `--osm`. Se o cálculo das rotas parar no meio, `--continuar` pula os bairros que já têm arquivo em `dashboard/transporte/`. As rotas passo a passo entre quaisquer dois bairros ficam atrás de `--rotas-entre-bairros`, porque levam horas. Para conferir a ordem de grandeza, `data/processed/transporte_validacao.csv` tem 12 trajetos com o tempo calculado e o link do Google Maps em modo transporte público, com colunas em branco para anotar o tempo de lá. É tempo de tabela: o resultado não considera trânsito e tende a ser otimista no pico.
+
+## Linhas por bairro e paradas (etapa 13)
+
+O tempo e a rota da etapa 12 precisam de horário de dia útil, e o GTFS de dia útil mais recente da ETUFOR é de 2023/24. Já "quais linhas param aqui" não depende de horário, então a etapa 13 usa a rede mais atual: o GTFS da ETUFOR de 03/2026 (Mobility Database, `mdb-2934`), o da ARCE (ônibus metropolitanos, 08/2025) e o do Metrofor. As 40 linhas da ETUFOR que estão no GTFS de 2026 sem nenhuma viagem (as que só rodam em dia útil) entram com as paradas e o traçado de 2023/24.
+
+Para cada bairro, saem as linhas com parada dentro dele ou a até 300 m da divisa; para cada polo, as linhas a até 800 m. A ficha do bairro mostra essas linhas e as desenha no mapa; o "Quanto tempo de ônibus" mostra as linhas que passam perto da saída e do destino (dá para ir sem baldeação); a camada "Paradas de ônibus" mostra as 7.407 paradas, com as linhas de cada uma; e os cards do "Onde morar" dizem quantas linhas passam no bairro.
+
+```sh
+# em data/cache/transporte/: etufor_2026.zip (mdb-2934), arce_2025.zip, metrofor_2025.zip e etufor_2023.zip (complemento)
+.venv/Scripts/python scripts/13_linhas_bairros.py
+```
 
 ## Onde morar: o que cada arquivo alimenta
 
@@ -86,7 +100,8 @@ Os downloads brutos (~330 MB) ficam em `data/cache/`, fora do git; os scripts ba
 | Regionais | Prefeitura de Fortaleza, Decreto nº 14.899/2020 (12 Secretarias Regionais) |
 | Preço do m² | Anúncios de VivaReal, Zap, ImovelWeb, ChavesNaMão e OLX, coletados e limpos pelo PriceRadar |
 | Hospitais, lazer, transporte, escolas e comércio | OpenStreetMap (Overpass, via osmnx), contados no bairro e num raio de 500 m |
-| Ônibus, metrô e VLT | GTFS da ETUFOR (nov/2023 a fev/2024) e do Metrofor (2024), cópias do Mobility Database, roteados com r5py sobre as ruas do OpenStreetMap |
+| Ônibus, metrô e VLT | GTFS da ETUFOR (nov/2023 a fev/2024) e do Metrofor (2024), cópias do Mobility Database, e da ARCE (ônibus metropolitanos, 2025), roteados com r5py sobre as ruas do OpenStreetMap |
+| Linhas por bairro e paradas | GTFS da ETUFOR de 03/2026 (Mobility Database), da ARCE (08/2025) e do Metrofor: a rede atual, sem horário |
 | Praças e espaços públicos | URBIFOR, cadastro de 2019 (484 polígonos), em `data/raw/pracas_urbifor_2019.geojson`; camada de contexto, fora do índice e da nota do "Onde morar" |
 
 As decisões de método e as limitações estão na seção "De onde vêm os números" do próprio dashboard e no cabeçalho de cada script.

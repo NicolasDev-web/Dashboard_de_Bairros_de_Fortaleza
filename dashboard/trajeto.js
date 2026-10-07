@@ -9,7 +9,7 @@
   const T = window.TRANSPORTE || null;
   const REDUZIR = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-  const COR = { onibus: css("--cobalto"), metro: css("--metro") || "#e09a1b", pe: css("--tinta-3"), escuro: css("--cobalto-escuro"), branco: "#ffffff", papel: css("--papel-claro"), linha: css("--linha"), s1: css("--s1") };
+  const COR = { onibus: css("--cobalto"), metro: css("--metro") || "#e09a1b", arce: css("--metropolitana") || "#7a3fb8", pe: css("--tinta-3"), escuro: css("--cobalto-escuro"), branco: "#ffffff", papel: css("--papel-claro"), linha: css("--linha"), s1: css("--s1") };
   const nf0 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
   const el = (tag, attrs = {}, filhos = []) => {
     const n = document.createElement(tag);
@@ -128,6 +128,7 @@
   mapa.fitBounds(fundo.getBounds(), { padding: [12, 12] });
   mapa.createPane("rota").style.zIndex = 450;
   const camadaRota = L.layerGroup().addTo(mapa);
+  const camadaDiretas = L.layerGroup().addTo(mapa); // linha que passa perto das duas pontas, a pedido
 
   function pintarFundo() {
     const bo = +estado.o.slice(1);
@@ -188,8 +189,8 @@
         } else {
           const a = coord(p[4]) || cursor, b = coord(p[5]) || pD;
           if (Math.abs(a[0] - cursor[0]) + Math.abs(a[1] - cursor[1]) > 1e-4) segs.push({ tipo: "pe", pts: [cursor, a] });
-          const modo = (T.linhas[p[1]] || [])[2] || "onibus";
-          segs.push({ tipo: modo === "onibus" ? "onibus" : "metro", pts: trecho(p[1], a, b), parada: b });
+          const [, , modo = "onibus", opr] = T.linhas[p[1]] || [];
+          segs.push({ tipo: modo !== "onibus" ? "metro" : opr === "arce" ? "arce" : "onibus", pts: trecho(p[1], a, b), parada: b });
           cursor = b;
         }
       });
@@ -202,7 +203,7 @@
         L.polyline(s.pts, { pane: "rota", color: COR.pe, weight: 3, dashArray: s.fantasma ? "1 8" : "2 7", lineCap: "round", className: "tj-linha" }).addTo(camadaRota);
       } else {
         L.polyline(s.pts, { pane: "rota", color: COR.branco, weight: 9, opacity: 0.9, lineCap: "round", lineJoin: "round", interactive: false }).addTo(camadaRota);
-        L.polyline(s.pts, { pane: "rota", color: s.tipo === "metro" ? COR.metro : COR.onibus, weight: 4.5, lineCap: "round", lineJoin: "round", className: "tj-linha" }).addTo(camadaRota);
+        L.polyline(s.pts, { pane: "rota", color: COR[s.tipo] || COR.onibus, weight: 4.5, lineCap: "round", lineJoin: "round", className: "tj-linha" }).addTo(camadaRota);
       }
     });
     // baldeações: onde desce de uma linha para pegar outra
@@ -251,10 +252,42 @@
   // `curto`: no passo a passo o selo fica numa coluna estreita; metrô e VLT, que não têm número,
   // aparecem como "Sul", "Oeste" e "VLT" (o nome inteiro vai no título do passo)
   function badge(chave, curto = false) {
-    const [nome, , modo] = T.linhas[chave] || ["?", "", "onibus"];
+    const [nome, , modo, opr] = T.linhas[chave] || ["?", "", "onibus"];
     let txt = nome || (modo === "onibus" ? "ônibus" : modo);
     if (curto && modo !== "onibus") txt = /^VLT/i.test(txt) ? "VLT" : txt.replace(/^Linha\s+/i, "");
-    return el("span", { class: `tj-badge tj-${modo === "onibus" ? "onibus" : "metro"}`, texto: txt, title: nome || null });
+    const tipo = modo !== "onibus" ? "metro" : opr === "arce" ? "metropolitana" : "onibus";
+    return el("span", { class: `tj-badge tj-${tipo}`, texto: txt, title: opr === "arce" ? `${nome} · metropolitana (ARCE)` : nome || null });
+  }
+
+  // linhas da rede atual que param perto da saída e do destino: dá para ir sem baldeação
+  // (scripts/13_linhas_bairros.py; sem horário, por isso fica à parte do tempo estimado)
+  function diretas() {
+    const LN = window.Linhas;
+    if (!LN || !estado.o || !estado.d) return null;
+    const daSaida = LN.doBairro(+estado.o.slice(1));
+    const doDestino = LN.doDestino(estado.d);
+    const comuns = LN.emComum(daSaida, doDestino);
+    const nomeD = NOME.get(estado.d).replace(/ \(.*\)$/, "");
+    const ondeD = estado.d.startsWith("p_") ? `a até ${LN.D.meta.raio_polo_m} m do polo ${nomeD}` : `em ${nomeD}`;
+    const lista = comuns.length ? comuns : doDestino;
+    const MOSTRA = 24;
+    let ativa = null;
+    const aoClicar = async (i, bt) => {
+      caixa.querySelectorAll("button.tj-badge").forEach((b) => b.setAttribute("aria-pressed", "false"));
+      if (ativa === i) { camadaDiretas.clearLayers(); ativa = null; return; }
+      ativa = i; bt.setAttribute("aria-pressed", "true");
+      await LN.tracar(camadaDiretas, [i], { pane: "rota" });
+    };
+    const caixa = el("div", { class: "tj-diretas" }, [
+      el("p", { class: "tj-sec", texto: comuns.length ? "Linhas que passam perto dos dois" : "Nenhuma linha passa perto dos dois" }),
+      el("p", { texto: comuns.length
+        ? `${comuns.length} linha${comuns.length === 1 ? " para" : "s param"} em ${NOME.get(estado.o)} e ${ondeD}: dá para ir sem baldeação. Clique numa linha para ver o trajeto.`
+        : `${doDestino.length} linhas param ${ondeD}, mas nenhuma delas passa em ${NOME.get(estado.o)}: combine uma delas com outra que passe lá. Clique numa linha para ver o trajeto.` }),
+      el("div", { class: "selos" }, [...lista.slice(0, MOSTRA).map((i) => LN.selo(i, aoClicar)),
+        lista.length > MOSTRA ? el("span", { class: "selos-mais", texto: `+${lista.length - MOSTRA}` }) : null]),
+      el("p", { class: "tj-nota", texto: "Rede atual (ETUFOR 2026, metropolitanas da ARCE e metrô), sem horário: a linha passa por lá, mas o tempo não está estimado." }),
+    ]);
+    return caixa;
   }
 
   function resumoOpcao(op) {
@@ -364,7 +397,9 @@
         : "As linhas desta viagem não foram encontradas no arquivo de rotas.";
       lista.append(el("p", { class: "tj-vazio", texto: msg }));
     }
-    box.replaceChildren(cab, lista, el("p", { class: "tj-nota", texto: `Tempo de tabela da ETUFOR${TABELA ? ` (${TABELA})` : ""} e do Metrofor: ${RESSALVA}` }));
+    camadaDiretas.clearLayers();
+    const comArce = (T.meta.feeds || []).includes("arce");
+    box.replaceChildren(...[cab, lista, el("p", { class: "tj-nota", texto: `Tempo de tabela da ETUFOR${TABELA ? ` (${TABELA})` : ""}${comArce ? ", dos ônibus metropolitanos (ARCE)" : ""} e do Metrofor: ${RESSALVA}` }), diretas()].filter(Boolean));
     desenhar(opcoes[estado.opcao] || null, paradas);
     legenda(opcoes.length > 0);
   }
@@ -381,6 +416,7 @@
       el("p", { class: "legenda-titulo", texto: "Rota" }),
       el("p", { class: "tj-leg" }, [el("i", { class: "tj-leg-onibus", "aria-hidden": "true" }), "ônibus"]),
       temMetro ? el("p", { class: "tj-leg" }, [el("i", { class: "tj-leg-metro", "aria-hidden": "true" }), "metrô / VLT"]) : null,
+      Object.values(T.linhas).some((l) => l[3] === "arce") ? el("p", { class: "tj-leg" }, [el("i", { class: "tj-leg-metropolitana", "aria-hidden": "true" }), "metropolitano"]) : null,
       el("p", { class: "tj-leg" }, [el("i", { class: "tj-leg-pe", "aria-hidden": "true" }), comRota ? "a pé" : "sem rota detalhada"]),
     ].filter(Boolean));
   }
