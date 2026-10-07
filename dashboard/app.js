@@ -8,6 +8,7 @@
   const Q = window.PRACAS || null; // pracas.js (scripts/11_pracas.py); opcional
   const E = window.EQUIP || null; // equipamentos.js (scripts/10_equipamentos_osm.py); opcional
   const T = window.TRANSPORTE || null; // transporte.js (scripts/12_transporte.py); opcional
+  const LN = window.Linhas || null; // linhas.js + linhas-camada.js (scripts/13_linhas_bairros.py); opcional
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -194,6 +195,19 @@
     document.getElementById("chave-hospitais").hidden = true;
   }
 
+  // ---------- paradas de ônibus e metrô (rede atual, scripts/13_linhas_bairros.py) ----------
+  const paradas = LN ? LN.CamadaParadas(mapa) : null;
+  if (paradas) {
+    document.getElementById("ctl-paradas").addEventListener("change", async (e) => { await paradas.ligar(e.target.checked); legenda(); contarCamadas(); });
+    document.getElementById("paradas-sub").textContent = `${nf0.format(paradas.total)} · ETUFOR, metropolitanas e metrô`;
+  } else {
+    document.getElementById("chave-paradas").hidden = true;
+  }
+  // linhas do bairro selecionado, desenhadas a pedido da ficha
+  mapa.createPane("linhasBairro").style.zIndex = 440;
+  const camadaLinhas = L.layerGroup().addTo(mapa);
+  let linhasDe = null; // bairro cujas linhas estão no mapa
+
   // ---------- painel "Camadas": fechado por padrão, abre sobre o mapa ----------
   const camadasBt = document.getElementById("camadas-botao");
   const camadasPainel = document.getElementById("camadas-painel");
@@ -211,7 +225,7 @@
   L.DomEvent.disableScrollPropagation(document.getElementById("camadas-mapa"));
   // quantas camadas estão ligadas aparece no botão, para não esquecer nada aceso com o painel fechado
   function contarCamadas() {
-    const n = ["ctl-pracas", "ctl-hospitais", "ctl-strava"].filter((id) => document.getElementById(id).checked).length
+    const n = ["ctl-paradas", "ctl-pracas", "ctl-hospitais", "ctl-strava"].filter((id) => document.getElementById(id).checked).length
       + (estado.rota !== "nenhuma" ? 1 : 0);
     const c = document.getElementById("camadas-conta");
     c.hidden = !n; c.textContent = String(n);
@@ -365,6 +379,7 @@
       el("div", { class: "legenda-rotulos" }, rotulos.map((r) => el("span", { texto: r }))),
       pracas && pracas.ligada ? el("p", { class: "legenda-praca" }, [el("i", { "aria-hidden": "true" }), `praça ou espaço público (URBIFOR, ${Q.ano})`]) : null,
       hospitais && hospitais.ligada ? el("p", { class: "legenda-praca" }, [el("i", { class: "hosp", "aria-hidden": "true" }), "hospital (OpenStreetMap)"]) : null,
+      paradas && paradas.ligada ? el("p", { class: "legenda-praca" }, [el("i", { class: "parada", "aria-hidden": "true" }), "parada de ônibus (clique para ver as linhas)"]) : null,
     ].filter(Boolean));
   }
 
@@ -417,6 +432,7 @@
         el("b", { texto: `pedal ${nf0.format(R.bairros[p.id][1])}` }),
       ]) : null,
       fichaOnibus(p),
+      fichaLinhas(p),
       fichaPracas(p),
       E && E.bairros[p.id] && E.bairros[p.id].dist_hospital_km != null ? el("p", { class: "ficha-strava" }, [
         "Hospital mais próximo: ", el("b", { texto: `${nf1.format(E.bairros[p.id].dist_hospital_km)} km` }), " do centro do bairro",
@@ -445,6 +461,30 @@
         const m = p50[T.destinos.indexOf(q.id)];
         return el("li", {}, [el("b", { texto: m == null ? "–" : fmt(m) }), q.nome.replace(/ \(.*\)$/, "")]);
       })),
+      bt,
+    ]);
+  }
+
+  // linhas que passam no bairro (rede atual), com o botão para desenhá-las no mapa
+  function fichaLinhas(p) {
+    if (!LN) return null;
+    const idxs = LN.doBairro(p.id);
+    if (!idxs.length) return el("p", { class: "ficha-strava" }, "Nenhuma linha de ônibus com parada no bairro ou a até 300 m dele.");
+    const c = LN.contar(idxs);
+    const partes = [c.onibus && `${c.onibus} ETUFOR`, c.arce && `${c.arce} metropolitana${c.arce === 1 ? "" : "s"}`, c.metro && `${c.metro} de metrô/VLT`].filter(Boolean);
+    const MOSTRA = 16;
+    const nParadas = LN.paradasNoBairro(p.id);
+    const bt = el("button", { type: "button", class: "link-botao", texto: linhasDe === p.id ? "Tirar as linhas do mapa" : "Ver essas linhas no mapa →" });
+    bt.addEventListener("click", async () => {
+      if (linhasDe === p.id) { camadaLinhas.clearLayers(); linhasDe = null; }
+      else { await LN.tracar(camadaLinhas, idxs, { pane: "linhasBairro" }); linhasDe = p.id; }
+      bt.textContent = linhasDe === p.id ? "Tirar as linhas do mapa" : "Ver essas linhas no mapa →";
+    });
+    return el("div", { class: "ficha-linhas" }, [
+      el("p", {}, [el("b", { texto: `${idxs.length} linhas` }), ` passam no bairro ou a até ${LN.D.meta.raio_m} m dele (${partes.join(", ")})`,
+        nParadas ? `; ${nParadas} parada${nParadas === 1 ? "" : "s"} dentro do bairro.` : "."]),
+      el("div", { class: "selos" }, [...idxs.slice(0, MOSTRA).map((i) => LN.selo(i)),
+        idxs.length > MOSTRA ? el("span", { class: "selos-mais", texto: `+${idxs.length - MOSTRA}` }) : null]),
       bt,
     ]);
   }
@@ -487,6 +527,7 @@
 
   function selecionar(id, { centralizar }) {
     estado.sel = id;
+    if (linhasDe !== null && linhasDe !== id) { camadaLinhas.clearLayers(); linhasDe = null; }
     pintar();
     ficha();
     lista();
