@@ -3,7 +3,8 @@
  "dia_rotulo": "dia útil",
  "feeds": [
   "etufor",
-  "metrofor"
+  "metrofor",
+  "arce"
  ],
  "gtfs": [
   {
@@ -15,7 +16,24 @@
    "nome": "metrofor",
    "de": "2023-12-29",
    "ate": "2024-12-31"
+  },
+  {
+   "nome": "arce",
+   "de": "2023-05-31",
+   "ate": "2024-05-30"
   }
  ],
- "origens": 121
+ "origens": 121,
+ "calendario_deslocado": {
+  "feed": "arce",
+  "dias": -581,
+  "vigencia_original": [
+   "2025-01-01",
+   "2026-01-01"
+  ],
+  "vigencia_deslocada": [
+   "2023-05-31",
+   "2024-05-30"
+  ]
+ }
 }
