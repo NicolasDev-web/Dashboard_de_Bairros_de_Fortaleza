@@ -1,0 +1,406 @@
+[
+  {
+    "label": "desktop",
+    "index": {
+      "title": "Bairros de Fortaleza",
+      "lang": "pt-BR",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "scrollWidth": 1440,
+        "scrollHeight": 8682
+      },
+      "horizontalOverflow": false,
+      "overflowElements": [
+        {
+          "tag": "a",
+          "id": null,
+          "cls": "skip",
+          "left": -999,
+          "right": -843,
+          "width": 156
+        }
+      ],
+      "domNodes": 1889,
+      "resourceCount": 15,
+      "transferredBytes": 877930,
+      "domContentLoadedMs": 382,
+      "loadMs": 382,
+      "externalResources": [
+        "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      ],
+      "interactiveWithoutName": [
+        {
+          "selector": "input",
+          "index": 0,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 1,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 2,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 6,
+          "id": "busca"
+        }
+      ],
+      "wallLoadMs": 1918,
+      "rankingCount": 121,
+      "mapRendered": false
+    },
+    "indexInteraction": {
+      "searchResults": [
+        "4\nMeireles\nR$ 11.843"
+      ],
+      "selectedCardText": "Regional 2 · AIS 08, 38.347 moradores\n\nMeireles\n\n95de 100\n\n1º de 121 no índice\n\nRenda\nR$ 11.843 por mês\nSaneamento\n99% com esgoto em rede\nSegurança\n18,4 mortes violentas por 100 mil\n\nSegurança medida pela AIS 08: o mesmo valor para os 7 bairros dela. Roubos registrados: 1.029 por 100 mil, fora da nota.\n\n−19%\nrenda real desde 2010\n0 p.p.\nesgoto em rede desde 2010\n\nMovimento no Strava, de 0 a 100: corrida 100, pedal 100\n\nDe ônibus, saindo de manhã (estimativa):\n\n27 min\nCentro\n28 min\nAldeota\n14 min\nBeira-Mar\nVer rotas de ônibus a partir daqui →\n\nPraças cadastradas: 7 espaços, 1,5 ha · 0,4 m² por morador (cidade: 0,79)\n\nHospital mais próximo: 0,4 km do centro do bairro\n\nPreço do m² nos anúncios:",
+      "indicatorPressed": "Renda",
+      "layersPanelVisible": true,
+      "evolutionPressed": "Renda real"
+    },
+    "morar": {
+      "title": "Onde morar em Fortaleza",
+      "lang": "pt-BR",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "scrollWidth": 1440,
+        "scrollHeight": 1573
+      },
+      "horizontalOverflow": false,
+      "overflowElements": [
+        {
+          "tag": "a",
+          "id": null,
+          "cls": "skip",
+          "left": -999,
+          "right": -796,
+          "width": 203
+        }
+      ],
+      "domNodes": 949,
+      "resourceCount": 15,
+      "transferredBytes": 90416,
+      "domContentLoadedMs": 243,
+      "loadMs": 244,
+      "externalResources": [
+        "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      ],
+      "interactiveWithoutName": [
+        {
+          "selector": "input",
+          "index": 0,
+          "id": "ctl-fora"
+        },
+        {
+          "selector": "input",
+          "index": 1,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 2,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 3,
+          "id": null
+        }
+      ],
+      "wallLoadMs": 1831,
+      "stepTitles": [
+        "Quanto entra por mês na sua casa?",
+        "Para onde você vai quase todo dia?",
+        "Quanto pesa a segurança na sua escolha?",
+        "E ter hospital e posto de saúde por perto?",
+        "Parques, praças, praia e cultura importam?",
+        "Saneamento e serviços básicos são prioridade?",
+        "Quanto importa se locomover sem carro?",
+        "Escola, creche ou faculdade perto de casa?",
+        "E o comércio do dia a dia?",
+        "Você prefere um bairro tranquilo ou movimentado?"
+      ],
+      "resultVisible": true,
+      "resultCards": 60,
+      "shareHashLength": 52,
+      "mapRendered": false
+    },
+    "events": {
+      "console": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        }
+      ],
+      "pageErrors": [],
+      "requestFailures": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        }
+      ]
+    },
+    "eventsBeforeMorar": {
+      "console": 3,
+      "pageErrors": 0,
+      "requestFailures": 3
+    }
+  },
+  {
+    "label": "mobile",
+    "index": {
+      "title": "Bairros de Fortaleza",
+      "lang": "pt-BR",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "scrollWidth": 390,
+        "scrollHeight": 12743
+      },
+      "horizontalOverflow": false,
+      "overflowElements": [
+        {
+          "tag": "a",
+          "id": null,
+          "cls": "skip",
+          "left": -999,
+          "right": -843,
+          "width": 156
+        }
+      ],
+      "domNodes": 1889,
+      "resourceCount": 15,
+      "transferredBytes": 877930,
+      "domContentLoadedMs": 331,
+      "loadMs": 332,
+      "externalResources": [
+        "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      ],
+      "interactiveWithoutName": [
+        {
+          "selector": "input",
+          "index": 0,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 1,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 2,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 6,
+          "id": "busca"
+        }
+      ],
+      "wallLoadMs": 1933,
+      "rankingCount": 121,
+      "mapRendered": false
+    },
+    "indexInteraction": {
+      "searchResults": [
+        "4\nMeireles\nR$ 11.843"
+      ],
+      "selectedCardText": "Regional 2 · AIS 08, 38.347 moradores\n\nMeireles\n\n95de 100\n\n1º de 121 no índice\n\nRenda\nR$ 11.843 por mês\nSaneamento\n99% com esgoto em rede\nSegurança\n18,4 mortes violentas por 100 mil\n\nSegurança medida pela AIS 08: o mesmo valor para os 7 bairros dela. Roubos registrados: 1.029 por 100 mil, fora da nota.\n\n−19%\nrenda real desde 2010\n0 p.p.\nesgoto em rede desde 2010\n\nMovimento no Strava, de 0 a 100: corrida 100, pedal 100\n\nDe ônibus, saindo de manhã (estimativa):\n\n27 min\nCentro\n28 min\nAldeota\n14 min\nBeira-Mar\nVer rotas de ônibus a partir daqui →\n\nPraças cadastradas: 7 espaços, 1,5 ha · 0,4 m² por morador (cidade: 0,79)\n\nHospital mais próximo: 0,4 km do centro do bairro\n\nPreço do m² nos anúncios:",
+      "indicatorPressed": "Renda",
+      "layersPanelVisible": true,
+      "evolutionPressed": "Renda real"
+    },
+    "morar": {
+      "title": "Onde morar em Fortaleza",
+      "lang": "pt-BR",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "scrollWidth": 390,
+        "scrollHeight": 6424
+      },
+      "horizontalOverflow": false,
+      "overflowElements": [
+        {
+          "tag": "a",
+          "id": null,
+          "cls": "skip",
+          "left": -999,
+          "right": -796,
+          "width": 203
+        }
+      ],
+      "domNodes": 949,
+      "resourceCount": 15,
+      "transferredBytes": 90416,
+      "domContentLoadedMs": 160,
+      "loadMs": 160,
+      "externalResources": [
+        "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      ],
+      "interactiveWithoutName": [
+        {
+          "selector": "input",
+          "index": 0,
+          "id": "ctl-fora"
+        },
+        {
+          "selector": "input",
+          "index": 1,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 2,
+          "id": null
+        },
+        {
+          "selector": "input",
+          "index": 3,
+          "id": null
+        }
+      ],
+      "wallLoadMs": 1804,
+      "stepTitles": [
+        "Quanto entra por mês na sua casa?",
+        "Para onde você vai quase todo dia?",
+        "Quanto pesa a segurança na sua escolha?",
+        "E ter hospital e posto de saúde por perto?",
+        "Parques, praças, praia e cultura importam?",
+        "Saneamento e serviços básicos são prioridade?",
+        "Quanto importa se locomover sem carro?",
+        "Escola, creche ou faculdade perto de casa?",
+        "E o comércio do dia a dia?",
+        "Você prefere um bairro tranquilo ou movimentado?"
+      ],
+      "resultVisible": true,
+      "resultCards": 60,
+      "shareHashLength": 52,
+      "mapRendered": false
+    },
+    "events": {
+      "console": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+        }
+      ],
+      "pageErrors": [],
+      "requestFailures": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        },
+        {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
+          "error": "net::ERR_NETWORK_ACCESS_DENIED"
+        }
+      ]
+    },
+    "eventsBeforeMorar": {
+      "console": 3,
+      "pageErrors": 0,
+      "requestFailures": 3
+    }
+  }
+]

@@ -1,0 +1,427 @@
+{
+  "dashboard/app.js": {
+    "mtime": 1791036233.50212,
+    "ast_hash": "02e2ee9c8719f6dd07e96c98c372251d",
+    "semantic_hash": "02e2ee9c8719f6dd07e96c98c372251d"
+  },
+  "dashboard/data.js": {
+    "mtime": 1791036233.5086067,
+    "ast_hash": "0f3862fb6fe00747d25f3afdef52bc02",
+    "semantic_hash": "0f3862fb6fe00747d25f3afdef52bc02"
+  },
+  "dashboard/equipamentos.js": {
+    "mtime": 1791036233.511796,
+    "ast_hash": "ec84d680a8510bbc57969c82ca7e7b02",
+    "semantic_hash": "ec84d680a8510bbc57969c82ca7e7b02"
+  },
+  "dashboard/hospitais-camada.js": {
+    "mtime": 1791036233.5149946,
+    "ast_hash": "279961fdec239409e4ca7fbb983dabb2",
+    "semantic_hash": "279961fdec239409e4ca7fbb983dabb2"
+  },
+  "dashboard/morar.js": {
+    "mtime": 1791037409.0475857,
+    "ast_hash": "b32df8253a00df31c96c1e1036377451",
+    "semantic_hash": "b32df8253a00df31c96c1e1036377451"
+  },
+  "dashboard/pixels.js": {
+    "mtime": 1790949263.5155885,
+    "ast_hash": "ced6cf625e13cff4250b384d2e4f3499",
+    "semantic_hash": "ced6cf625e13cff4250b384d2e4f3499"
+  },
+  "dashboard/pracas-camada.js": {
+    "mtime": 1791036233.5399675,
+    "ast_hash": "5ac22d96f3801807714ca1c20f6c511e",
+    "semantic_hash": "5ac22d96f3801807714ca1c20f6c511e"
+  },
+  "dashboard/pracas.js": {
+    "mtime": 1791036233.5456364,
+    "ast_hash": "f5a1af860864c6809d15007c338bd53c",
+    "semantic_hash": "f5a1af860864c6809d15007c338bd53c"
+  },
+  "dashboard/precos.js": {
+    "mtime": 1790997741.5462708,
+    "ast_hash": "ff5e824293ab49061534ecea3e836ad0",
+    "semantic_hash": "ff5e824293ab49061534ecea3e836ad0"
+  },
+  "dashboard/regionais.js": {
+    "mtime": 1790948381.3368435,
+    "ast_hash": "7459a493f01fb51bdebd23f3ad07e3be",
+    "semantic_hash": "7459a493f01fb51bdebd23f3ad07e3be"
+  },
+  "dashboard/rotas.js": {
+    "mtime": 1790883244.6464455,
+    "ast_hash": "7685b4529cd183cea4433454092f490d",
+    "semantic_hash": "7685b4529cd183cea4433454092f490d"
+  },
+  "dashboard/trajeto.js": {
+    "mtime": 1791053508.3336036,
+    "ast_hash": "9e44c91dc24b2b6ed79c5a26c198f5fa",
+    "semantic_hash": "9e44c91dc24b2b6ed79c5a26c198f5fa"
+  },
+  "dashboard/transporte.js": {
+    "mtime": 1791125671.1737132,
+    "ast_hash": "a9a1abca4186fb5767dfc377546017a4",
+    "semantic_hash": "a9a1abca4186fb5767dfc377546017a4"
+  },
+  "dashboard/transporte_linhas.js": {
+    "mtime": 1791125671.2029805,
+    "ast_hash": "2c3c10ecd88a001576f71095ea91df89",
+    "semantic_hash": "2c3c10ecd88a001576f71095ea91df89"
+  },
+  "data/processed/indice_meta.json": {
+    "mtime": 1791036233.5776014,
+    "ast_hash": "887323ac8e82fa915536b47c882e28d9",
+    "semantic_hash": "887323ac8e82fa915536b47c882e28d9"
+  },
+  "data/processed/transporte_meta.json": {
+    "mtime": 1791125666.2334714,
+    "ast_hash": "fcff39d0656ab91b5bc8382daaed90f5",
+    "semantic_hash": "fcff39d0656ab91b5bc8382daaed90f5"
+  },
+  "scripts/01_malha_bairros.py": {
+    "mtime": 1790878708.5154927,
+    "ast_hash": "df35627d0e902d0af90a6a9cfb44f73a",
+    "semantic_hash": "df35627d0e902d0af90a6a9cfb44f73a"
+  },
+  "scripts/02_ibge.py": {
+    "mtime": 1790879081.2983327,
+    "ast_hash": "bed2e0bcff88bd1db8f729ca8693b14b",
+    "semantic_hash": "bed2e0bcff88bd1db8f729ca8693b14b"
+  },
+  "scripts/03_seguranca.py": {
+    "mtime": 1790879270.5433433,
+    "ast_hash": "e31662b945388e03406e63d02dc76f09",
+    "semantic_hash": "e31662b945388e03406e63d02dc76f09"
+  },
+  "scripts/04_join_bairros.py": {
+    "mtime": 1790879796.731711,
+    "ast_hash": "680885198ce87335139d29bc302c13f0",
+    "semantic_hash": "680885198ce87335139d29bc302c13f0"
+  },
+  "scripts/05_indice.py": {
+    "mtime": 1791036233.5968604,
+    "ast_hash": "b690504748e782e94f89d4d62e8c2f54",
+    "semantic_hash": "b690504748e782e94f89d4d62e8c2f54"
+  },
+  "scripts/06_dados_dashboard.py": {
+    "mtime": 1791036233.6041334,
+    "ast_hash": "aa1082f902ead7b415cb535fba98a713",
+    "semantic_hash": "aa1082f902ead7b415cb535fba98a713"
+  },
+  "scripts/07_rotas_strava.py": {
+    "mtime": 1790883436.0929866,
+    "ast_hash": "33d76d2de9be58b2a28ade93fb5b2c62",
+    "semantic_hash": "33d76d2de9be58b2a28ade93fb5b2c62"
+  },
+  "scripts/08_regionais.py": {
+    "mtime": 1790948381.3448305,
+    "ast_hash": "105d5dae5a72f8ee2cb32ca39984efa7",
+    "semantic_hash": "105d5dae5a72f8ee2cb32ca39984efa7"
+  },
+  "scripts/09_precos_priceradar.py": {
+    "mtime": 1790997741.55427,
+    "ast_hash": "776f69ae0aee20092d6de4a12bd8118a",
+    "semantic_hash": "776f69ae0aee20092d6de4a12bd8118a"
+  },
+  "scripts/10_equipamentos_osm.py": {
+    "mtime": 1791036233.61028,
+    "ast_hash": "2db7e0207b7ea20ff68a706911517864",
+    "semantic_hash": "2db7e0207b7ea20ff68a706911517864"
+  },
+  "scripts/11_pracas.py": {
+    "mtime": 1791036233.6132402,
+    "ast_hash": "bb9fc33f1846c4b1bf6432733fc37685",
+    "semantic_hash": "bb9fc33f1846c4b1bf6432733fc37685"
+  },
+  "scripts/12_transporte.py": {
+    "mtime": 1791125555.56172,
+    "ast_hash": "98452d45cedf5a4c0ae95081928a9b3f",
+    "semantic_hash": "98452d45cedf5a4c0ae95081928a9b3f"
+  },
+  "scripts/baixar_fotos_mrv.py": {
+    "mtime": 1791228059.3924162,
+    "ast_hash": "58f29336d6071cf69c909a10caaf1529",
+    "semantic_hash": "58f29336d6071cf69c909a10caaf1529"
+  },
+  "video/eslint.config.mjs": {
+    "mtime": 1791053925.3020918,
+    "ast_hash": "5b4b3b604653eee6840b152f3b9b4b53",
+    "semantic_hash": "5b4b3b604653eee6840b152f3b9b4b53"
+  },
+  "video/package.json": {
+    "mtime": 1791053925.305092,
+    "ast_hash": "1ab9f6f710aed84685f8fef8c9473663",
+    "semantic_hash": "1ab9f6f710aed84685f8fef8c9473663"
+  },
+  "video/public/dados/cidade.json": {
+    "mtime": 1791053925.4259746,
+    "ast_hash": "c45bd1ec02d04ef672bd63539fa9799e",
+    "semantic_hash": "c45bd1ec02d04ef672bd63539fa9799e"
+  },
+  "video/public/dados/evolucao.json": {
+    "mtime": 1791053925.4269762,
+    "ast_hash": "d2ff788b6190fb9add007821a447e4bd",
+    "semantic_hash": "d2ff788b6190fb9add007821a447e4bd"
+  },
+  "video/remotion.config.ts": {
+    "mtime": 1791053925.6227143,
+    "ast_hash": "fd8df98cd41d6962681252fe39989d07",
+    "semantic_hash": "fd8df98cd41d6962681252fe39989d07"
+  },
+  "video/scripts/gerar_assets.py": {
+    "mtime": 1791053925.6243446,
+    "ast_hash": "d56fb49b9adecb0719be13ba560faab3",
+    "semantic_hash": "d56fb49b9adecb0719be13ba560faab3"
+  },
+  "video/scripts/previa.mjs": {
+    "mtime": 1791053925.6259258,
+    "ast_hash": "972addead5d4a43a1cba7ddd07af5de8",
+    "semantic_hash": "972addead5d4a43a1cba7ddd07af5de8"
+  },
+  "video/src/Lancamento.tsx": {
+    "mtime": 1791053925.62689,
+    "ast_hash": "e827051adfd4da067270d1163d8d0f26",
+    "semantic_hash": "e827051adfd4da067270d1163d8d0f26"
+  },
+  "video/src/Root.tsx": {
+    "mtime": 1791053925.627888,
+    "ast_hash": "ac002256e81c0222387264922baa871c",
+    "semantic_hash": "ac002256e81c0222387264922baa871c"
+  },
+  "video/src/cenas/Abertura.tsx": {
+    "mtime": 1791053925.6288867,
+    "ast_hash": "741a9aa02bc52e7ea2e22a51b8cdfffd",
+    "semantic_hash": "741a9aa02bc52e7ea2e22a51b8cdfffd"
+  },
+  "video/src/cenas/Encerramento.tsx": {
+    "mtime": 1791053925.629889,
+    "ast_hash": "c02bbf3665ecf359e38ef297b46513a8",
+    "semantic_hash": "c02bbf3665ecf359e38ef297b46513a8"
+  },
+  "video/src/cenas/Evolucao.tsx": {
+    "mtime": 1791053925.630888,
+    "ast_hash": "c9ca5a4ad955575a697a4097011a70ed",
+    "semantic_hash": "c9ca5a4ad955575a697a4097011a70ed"
+  },
+  "video/src/cenas/Indice.tsx": {
+    "mtime": 1791053925.6318927,
+    "ast_hash": "4509831c1667b2dba9ca36b211f08280",
+    "semantic_hash": "4509831c1667b2dba9ca36b211f08280"
+  },
+  "video/src/cenas/Mergulho.tsx": {
+    "mtime": 1791053925.6328878,
+    "ast_hash": "dec285525cfc4810a680800f4f832628",
+    "semantic_hash": "dec285525cfc4810a680800f4f832628"
+  },
+  "video/src/cenas/Montagem.tsx": {
+    "mtime": 1791053925.633888,
+    "ast_hash": "7a5b7c75b2885a03b3037b1641e151df",
+    "semantic_hash": "7a5b7c75b2885a03b3037b1641e151df"
+  },
+  "video/src/cenas/Revelacao.tsx": {
+    "mtime": 1791053925.634742,
+    "ast_hash": "c266039faf49025266d88fdab0d87546",
+    "semantic_hash": "c266039faf49025266d88fdab0d87546"
+  },
+  "video/src/cenas/Rotas.tsx": {
+    "mtime": 1791053925.6355267,
+    "ast_hash": "a7984a9d2208dd38d771f984cd6e0526",
+    "semantic_hash": "a7984a9d2208dd38d771f984cd6e0526"
+  },
+  "video/src/cenas/Tempo.tsx": {
+    "mtime": 1791053925.6365378,
+    "ast_hash": "5e44c31720bab78acfac44f89bfe571f",
+    "semantic_hash": "5e44c31720bab78acfac44f89bfe571f"
+  },
+  "video/src/componentes/Atmosfera.tsx": {
+    "mtime": 1791053925.6375387,
+    "ast_hash": "e775a4bc833441b56435c8e6f916bcf5",
+    "semantic_hash": "e775a4bc833441b56435c8e6f916bcf5"
+  },
+  "video/src/componentes/CidadePixels.tsx": {
+    "mtime": 1791053925.6385376,
+    "ast_hash": "0cf67486c5c1fc7f82c890db83b30c6f",
+    "semantic_hash": "0cf67486c5c1fc7f82c890db83b30c6f"
+  },
+  "video/src/componentes/Tela.tsx": {
+    "mtime": 1791053925.6395943,
+    "ast_hash": "3cdc285b765145eb7562aa714997a432",
+    "semantic_hash": "3cdc285b765145eb7562aa714997a432"
+  },
+  "video/src/componentes/Texto.tsx": {
+    "mtime": 1791053925.6406133,
+    "ast_hash": "bc8bbca777c2a45eb76403c54c3738c3",
+    "semantic_hash": "bc8bbca777c2a45eb76403c54c3738c3"
+  },
+  "video/src/index.ts": {
+    "mtime": 1791053925.6416118,
+    "ast_hash": "6f06dd9bfce852b910b0e0ea56e3ca11",
+    "semantic_hash": "6f06dd9bfce852b910b0e0ea56e3ca11"
+  },
+  "video/src/tema.ts": {
+    "mtime": 1791053925.642614,
+    "ast_hash": "4c4ea5a9706692e503f091f6326b322f",
+    "semantic_hash": "4c4ea5a9706692e503f091f6326b322f"
+  },
+  "video/tsconfig.json": {
+    "mtime": 1791053925.6436126,
+    "ast_hash": "bc87e965e2f5fa01c6f7039b809543e4",
+    "semantic_hash": "bc87e965e2f5fa01c6f7039b809543e4"
+  },
+  "README.md": {
+    "mtime": 1791036233.500031,
+    "ast_hash": "f6e22ae18a705e32324f81f9dbb1a7cd",
+    "semantic_hash": "f6e22ae18a705e32324f81f9dbb1a7cd"
+  },
+  "dashboard/index.html": {
+    "mtime": 1791037409.0445862,
+    "ast_hash": "2dda837ae8d1011df186808b1236e90e",
+    "semantic_hash": "2dda837ae8d1011df186808b1236e90e"
+  },
+  "dashboard/morar.html": {
+    "mtime": 1791036233.5344193,
+    "ast_hash": "4c45386688c302875088dc1aa7c623b5",
+    "semantic_hash": "4c45386688c302875088dc1aa7c623b5"
+  },
+  "graphify-out/converted/dicionario_2022_fd72025c.md": {
+    "mtime": 1791234934.571635,
+    "ast_hash": "86ef7c2659bb1ed9b708d903f7d02a54",
+    "semantic_hash": "86ef7c2659bb1ed9b708d903f7d02a54"
+  },
+  "graphify-out/converted/dicionario_malha_2022_a889eec8.md": {
+    "mtime": 1791234934.604669,
+    "ast_hash": "9418143988c342329bbf38d0c710c88e",
+    "semantic_hash": "9418143988c342329bbf38d0c710c88e"
+  },
+  "graphify-out/converted/dicionario_renda_2022_2964bb29.md": {
+    "mtime": 1791234934.6191697,
+    "ast_hash": "cde1b47f72c0353a71a52711c884a0d4",
+    "semantic_hash": "cde1b47f72c0353a71a52711c884a0d4"
+  },
+  "requirements.txt": {
+    "mtime": 1790883426.0918155,
+    "ast_hash": "861eb4f1db74419129d55606c22a0b9d",
+    "semantic_hash": "861eb4f1db74419129d55606c22a0b9d"
+  },
+  "video/README.md": {
+    "mtime": 1791053925.3010924,
+    "ast_hash": "9bb4fc067736b43de9d5c785478e5eef",
+    "semantic_hash": "9bb4fc067736b43de9d5c785478e5eef"
+  },
+  "video/public/telas/01_hero.png": {
+    "mtime": 1791053925.4339745,
+    "ast_hash": "5b1e3af696cbaaa32446cd6655534172",
+    "semantic_hash": "5b1e3af696cbaaa32446cd6655534172"
+  },
+  "video/public/telas/02_frase.png": {
+    "mtime": 1791053925.4369733,
+    "ast_hash": "5bba6d5799fbfd3a4b4c6a5c52debf68",
+    "semantic_hash": "5bba6d5799fbfd3a4b4c6a5c52debf68"
+  },
+  "video/public/telas/03_mapa_indice.png": {
+    "mtime": 1791053925.4437995,
+    "ast_hash": "e1e1dc1c2be11cc8dfa7cb8a0739c44a",
+    "semantic_hash": "e1e1dc1c2be11cc8dfa7cb8a0739c44a"
+  },
+  "video/public/telas/04_mapa_meireles.png": {
+    "mtime": 1791053925.4509661,
+    "ast_hash": "55990e1e0d885f3adc2756ba7ad438a7",
+    "semantic_hash": "55990e1e0d885f3adc2756ba7ad438a7"
+  },
+  "video/public/telas/05_renda_2010.png": {
+    "mtime": 1791053925.458314,
+    "ast_hash": "6a3cea965123d3d2a7be7a0fb6de7603",
+    "semantic_hash": "6a3cea965123d3d2a7be7a0fb6de7603"
+  },
+  "video/public/telas/06_renda_2022.png": {
+    "mtime": 1791053925.466182,
+    "ast_hash": "9fa105e25ec25754a7e4f8af15771a4f",
+    "semantic_hash": "9fa105e25ec25754a7e4f8af15771a4f"
+  },
+  "video/public/telas/07_saneamento.png": {
+    "mtime": 1791053925.473023,
+    "ast_hash": "75eda350a0a74c2afc522c34ccd92106",
+    "semantic_hash": "75eda350a0a74c2afc522c34ccd92106"
+  },
+  "video/public/telas/08_seguranca.png": {
+    "mtime": 1791053925.480534,
+    "ast_hash": "35e7c7e945e0e551b9c0166bdc3531db",
+    "semantic_hash": "35e7c7e945e0e551b9c0166bdc3531db"
+  },
+  "video/public/telas/09_evolucao_mapa.png": {
+    "mtime": 1791053925.4880228,
+    "ast_hash": "9ad37dc4c7c9359f07e82e8e60bda775",
+    "semantic_hash": "9ad37dc4c7c9359f07e82e8e60bda775"
+  },
+  "video/public/telas/10_pesos.png": {
+    "mtime": 1791053925.4959857,
+    "ast_hash": "77f92c18334706d993c8035273705942",
+    "semantic_hash": "77f92c18334706d993c8035273705942"
+  },
+  "video/public/telas/11_rotas_corrida.png": {
+    "mtime": 1791053925.5370705,
+    "ast_hash": "ea4d23a35d5da0e8bd6b367495ea7a7b",
+    "semantic_hash": "ea4d23a35d5da0e8bd6b367495ea7a7b"
+  },
+  "video/public/telas/11b_rotas_corrida_indice.png": {
+    "mtime": 1791053925.5463052,
+    "ast_hash": "c3da5887a0b38a7cc228f381f993e65e",
+    "semantic_hash": "c3da5887a0b38a7cc228f381f993e65e"
+  },
+  "video/public/telas/12_rota_beiramar.png": {
+    "mtime": 1791053925.5744774,
+    "ast_hash": "b2a76260a1d6ad2164a051065383c297",
+    "semantic_hash": "b2a76260a1d6ad2164a051065383c297"
+  },
+  "video/public/telas/13_rotas_pedal.png": {
+    "mtime": 1791053925.6012545,
+    "ast_hash": "c64184ae698671aa2a241673e202b771",
+    "semantic_hash": "c64184ae698671aa2a241673e202b771"
+  },
+  "video/public/telas/14_evolucao.png": {
+    "mtime": 1791053925.6044576,
+    "ast_hash": "dddf497120d6d7c7757ebf0eeb12984d",
+    "semantic_hash": "dddf497120d6d7c7757ebf0eeb12984d"
+  },
+  "video/public/telas/15_metodo.png": {
+    "mtime": 1791053925.6078398,
+    "ast_hash": "74642a31c1fea6ac5ae952780142ad19",
+    "semantic_hash": "74642a31c1fea6ac5ae952780142ad19"
+  },
+  "video/public/telas/16_pagina_inteira.png": {
+    "mtime": 1791053925.6147125,
+    "ast_hash": "24d1eb9601c3f03c782c4be35cccc1e0",
+    "semantic_hash": "24d1eb9601c3f03c782c4be35cccc1e0"
+  },
+  "video/public/telas/17_celular_hero.png": {
+    "mtime": 1791053925.618715,
+    "ast_hash": "c1a5ff3e956ba191c4dad125c7ec5c48",
+    "semantic_hash": "c1a5ff3e956ba191c4dad125c7ec5c48"
+  },
+  "video/public/telas/18_celular_mapa.png": {
+    "mtime": 1791053925.6217153,
+    "ast_hash": "8d232e9f5308b2b77352ea9f88fb5d30",
+    "semantic_hash": "8d232e9f5308b2b77352ea9f88fb5d30"
+  },
+  "video/public/audio/clique.wav": {
+    "mtime": 1791053925.306092,
+    "ast_hash": "a85fffc51ed7fd115870fca70cc1f9d6",
+    "semantic_hash": "a85fffc51ed7fd115870fca70cc1f9d6"
+  },
+  "video/public/audio/impacto.wav": {
+    "mtime": 1791053925.3110921,
+    "ast_hash": "6442c7885e657d1616cdef608de873db",
+    "semantic_hash": "6442c7885e657d1616cdef608de873db"
+  },
+  "video/public/audio/riser.wav": {
+    "mtime": 1791053925.3157132,
+    "ast_hash": "6a770d37d5bd3d067b64eef3f7afe357",
+    "semantic_hash": "6a770d37d5bd3d067b64eef3f7afe357"
+  },
+  "video/public/audio/whoosh.wav": {
+    "mtime": 1791053925.4231257,
+    "ast_hash": "9146ad5a56bbc7f5d51b7dda8d7d41df",
+    "semantic_hash": "9146ad5a56bbc7f5d51b7dda8d7d41df"
+  }
+}
