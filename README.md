@@ -6,26 +6,34 @@ Dashboard que compara os 121 bairros de Fortaleza por renda, saneamento e segura
 
 **Onde morar:** `dashboard/morar.html` é uma página à parte com um questionário de 9 perguntas (renda, entrada e quartos, e o peso de segurança, saúde, lazer, infraestrutura, mobilidade, escolas, comércio e ritmo do bairro). A cidade em pixels acende conforme as respostas e, no fim, o mapa e a lista mostram os bairros mais compatíveis dentro do orçamento. O resultado fica no endereço da página, então dá para compartilhar o link.
 
+## Requisitos
+
+- **Python 3.12 ou mais novo** para o pipeline (`requirements.txt`).
+- **Java 21** só para a etapa 12, que usa o motor R5 ([Adoptium](https://adoptium.net); no Linux, `apt install openjdk-21-jre-headless`).
+- **Node 20 ou mais novo** só para os testes (`tests/`) e o vídeo (`video/`).
+- O painel em si não precisa de nada: é HTML estático, abre direto do disco ou de qualquer hospedagem (a Vercel publica a pasta `dashboard/`).
+
 ## Pipeline de dados
 
 ```sh
 python -m venv .venv
-.venv/Scripts/python -m pip install -r requirements.txt   # Windows; no Linux/macOS: .venv/bin/python
+# ative o ambiente: no Windows (PowerShell) .venv\Scripts\Activate.ps1; no Linux/macOS source .venv/bin/activate
+python -m pip install -r requirements.txt
 
-.venv/Scripts/python scripts/01_malha_bairros.py    # malha Seuma (KMZ) -> data/geo/bairros_fortaleza.geojson
-.venv/Scripts/python scripts/02_ibge.py             # Censos 2010/2022 por setor -> data/raw/ibge_*.csv
-.venv/Scripts/python scripts/03_seguranca.py        # SSPDS por AIS -> data/raw/seguranca_ais.csv, bairro_ais.csv
-.venv/Scripts/python scripts/04_join_bairros.py     # setor -> bairro -> data/processed/bairros_indicadores.csv
-.venv/Scripts/python scripts/05_indice.py           # notas 0-100 e índice -> data/processed/bairros_indice.csv
-.venv/Scripts/python scripts/06_dados_dashboard.py  # -> dashboard/data.js
-.venv/Scripts/python scripts/07_rotas_strava.py     # rotas de corrida e pedal (heatmap Strava + OSM) -> dashboard/rotas.js
-.venv/Scripts/python scripts/08_regionais.py        # bairro -> regional (Decreto 14.899/2020) -> data/raw/bairro_regional.csv
-.venv/Scripts/python scripts/09_precos_priceradar.py  # preço do m² por regional com o PriceRadar -> dashboard/precos.js
-.venv/Scripts/python scripts/10_equipamentos_osm.py   # saúde, lazer, mobilidade, escolas e comércio (OpenStreetMap) -> dashboard/equipamentos.js
+python scripts/01_malha_bairros.py    # malha Seuma (KMZ) -> data/geo/bairros_fortaleza.geojson
+python scripts/02_ibge.py             # Censos 2010/2022 por setor -> data/raw/ibge_*.csv
+python scripts/03_seguranca.py        # SSPDS por AIS -> data/raw/seguranca_ais.csv, bairro_ais.csv
+python scripts/04_join_bairros.py     # setor -> bairro -> data/processed/bairros_indicadores.csv
+python scripts/05_indice.py           # notas 0-100 e índice -> data/processed/bairros_indice.csv
+python scripts/06_dados_dashboard.py  # -> dashboard/data.js
+python scripts/07_rotas_strava.py     # rotas de corrida e pedal (heatmap Strava + OSM) -> dashboard/rotas.js
+python scripts/08_regionais.py        # bairro -> regional (Decreto 14.899/2020) -> data/raw/bairro_regional.csv
+python scripts/09_precos_priceradar.py  # preço do m² por regional com o PriceRadar -> dashboard/precos.js
+python scripts/10_equipamentos_osm.py   # saúde, lazer, mobilidade, escolas e comércio (OpenStreetMap) -> dashboard/equipamentos.js
                                                        #   --das-contagens refaz só as notas, sem baixar
-.venv/Scripts/python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
-.venv/Scripts/python scripts/12_transporte.py         # tempo e rotas de ônibus/metrô -> dashboard/transporte*.js
-.venv/Scripts/python scripts/13_linhas_bairros.py     # linhas por bairro e paradas (rede atual) -> dashboard/linhas*.js, paradas.js
+python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
+python scripts/12_transporte.py         # tempo e rotas de ônibus/metrô -> dashboard/transporte*.js
+python scripts/13_linhas_bairros.py     # linhas por bairro e paradas (rede atual) -> dashboard/linhas*.js, paradas.js
 ```
 
 A etapa 6 lê a saída da 8: se mexer nas regionais, rode a 8 e depois a 6.
@@ -36,12 +44,12 @@ A etapa 9 usa o PriceRadar para coletar anúncios de venda de apartamentos em Fo
 
 ```sh
 # o PriceRadar clonado ao lado deste repositório (../priceradar), com o venv dele ou estas dependências:
-.venv/Scripts/python -m pip install -r ../priceradar/priceradar/backend/requirements.txt
+python -m pip install -r ../priceradar/priceradar/backend/requirements.txt
 
-.venv/Scripts/python scripts/09_precos_priceradar.py                    # coleta nova (6 faixas de preço + reforço por bairro)
-.venv/Scripts/python scripts/09_precos_priceradar.py --fonte historico  # usa as buscas já gravadas no priceradar.db (90 dias)
-.venv/Scripts/python scripts/09_precos_priceradar.py --fonte csv        # só reagrega a última coleta
-.venv/Scripts/python scripts/09_precos_priceradar.py --priceradar C:/outro/caminho/priceradar
+python scripts/09_precos_priceradar.py                    # coleta nova (6 faixas de preço + reforço por bairro)
+python scripts/09_precos_priceradar.py --fonte historico  # usa as buscas já gravadas no priceradar.db (90 dias)
+python scripts/09_precos_priceradar.py --fonte csv        # só reagrega a última coleta
+python scripts/09_precos_priceradar.py --priceradar /outro/caminho/priceradar
 ```
 
 ## Tempo e rotas de ônibus (etapa 12)
@@ -51,21 +59,20 @@ Calcula, com o r5py (o motor R5, o mesmo do projeto Acesso a Oportunidades do IP
 **Qual GTFS.** O GTFS da ETUFOR publicado no portal da Prefeitura em 2026 traz só as viagens de sábado e domingo (o serviço de dia útil aparece no `calendar.txt`, sem viagens). A tabela publicada usa o GTFS da ETUFOR de 10/11/2023 a 10/02/2024 e o do Metrofor de 2024, os mais recentes com dia útil, guardados no [Mobility Database](https://mobilitydatabase.org). Com um GTFS sem viagens de dia útil o script cai sozinho para o sábado, e a página ajusta o texto. Comparando os 16 mil pares, a tabela publicada dá em média 2 min a mais que a de sábado de 2026 (80% dos pares entre −3 e +8 min), parte disso pelos limites de caminhada e de conduções acrescentados junto.
 
 ```sh
-# precisa de Java 21 instalado (https://adoptium.net) e de:
-.venv/Scripts/python -m pip install r5py osmium
+# precisa de Java 21 (veja Requisitos); o r5py e o osmium já vêm no requirements.txt
 
 # a tabela publicada (GTFS com dia útil, do Mobility Database, + os metropolitanos da ARCE):
 curl -L -o data/cache/transporte/etufor_2023.zip https://storage.googleapis.com/mdb-latest/br-ceara-etufor-gtfs-2011.zip
 curl -L -o data/cache/transporte/metrofor_2024.zip https://storage.googleapis.com/mobilitydata-datasets-prod/mdb-2010/latest.zip
 # data/cache/transporte/arce_2025.zip: GTFS da ARCE (GTFS_Arce_01082025.zip, ônibus metropolitanos)
-.venv/Scripts/python scripts/12_transporte.py --gtfs data/cache/transporte/etufor_2023.zip data/cache/transporte/metrofor_2024.zip \
+python scripts/12_transporte.py --gtfs data/cache/transporte/etufor_2023.zip data/cache/transporte/metrofor_2024.zip \
     data/cache/transporte/arce_2025.zip --deslocar-calendario arce   # ~2h
 
-.venv/Scripts/python scripts/12_transporte.py                 # padrão: ETUFOR 2023/24 (Mobility Database) + Metrofor atual, com o
+python scripts/12_transporte.py                 # padrão: ETUFOR 2023/24 (Mobility Database) + Metrofor atual, com o
                                                               #   calendário do Metrofor movido para 2023 (--deslocar-calendario)
-.venv/Scripts/python scripts/12_transporte.py --sem-rotas     # só os tempos (poucos minutos)
-.venv/Scripts/python scripts/12_transporte.py --da-tabela     # refaz transporte.js da última tabela, sem Java
-.venv/Scripts/python scripts/12_transporte.py --memoria 4G    # limita a memória da JVM do R5 (padrão 6G)
+python scripts/12_transporte.py --sem-rotas     # só os tempos (poucos minutos)
+python scripts/12_transporte.py --da-tabela     # refaz transporte.js da última tabela, sem Java
+python scripts/12_transporte.py --memoria 4G    # limita a memória da JVM do R5 (padrão 6G)
 ```
 
 O nome de cada arquivo passado em `--gtfs` precisa começar por `etufor_` ou `metrofor_`. Sem `--gtfs`, o Metrofor baixado (vigência 2026-27) não cruza com a ETUFOR de 2023/24, e o script move as datas dele em semanas inteiras para a vigência da ETUFOR (os horários continuam os do arquivo; o deslocamento fica em `transporte_meta.json`). A tabela publicada usa o Metrofor de 2024, que já cruza com a ETUFOR, sem deslocar nada. Se o link do Metrofor mudar, baixe em https://www.ce.gov.br/metrofor/gtfs/ e passe com `--gtfs` (sem ele, só ônibus). As ruas vêm do Overpass e ficam em `data/cache/transporte/fortaleza_ruas.osm.pbf`; se o Overpass não responder, passe outro `.osm.pbf` com `--osm`. Se o cálculo das rotas parar no meio, `--continuar` pula os bairros que já têm arquivo em `dashboard/transporte/`. As rotas passo a passo entre quaisquer dois bairros ficam atrás de `--rotas-entre-bairros`, porque levam horas. Para conferir a ordem de grandeza, `data/processed/transporte_validacao.csv` tem 12 trajetos com o tempo calculado e o link do Google Maps em modo transporte público, com colunas em branco para anotar o tempo de lá. É tempo de tabela: o resultado não considera trânsito e tende a ser otimista no pico.
@@ -78,7 +85,7 @@ Para cada bairro, saem as linhas com parada dentro dele ou a até 300 m da divis
 
 ```sh
 # em data/cache/transporte/: etufor_2026.zip (mdb-2934), arce_2025.zip, metrofor_2025.zip e etufor_2023.zip (complemento)
-.venv/Scripts/python scripts/13_linhas_bairros.py
+python scripts/13_linhas_bairros.py
 ```
 
 ## Onde morar: o que cada arquivo alimenta

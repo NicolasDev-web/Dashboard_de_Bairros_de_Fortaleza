@@ -1,11 +1,14 @@
+# Python 3.12 ou mais novo (networkx 3.7, numpy 2.5 e pyproj 3.8 não instalam no 3.11)
 geopandas==1.2.0
 networkx==3.7
 numpy==2.5.3
 openpyxl==3.1.5
+osmium==4.3.1
 osmnx==2.1.1
 pandas==3.0.6
 pillow==12.3.0
 pyogrio==0.13.0
 pyproj==3.8.0
+r5py==1.1.7
 requests==2.34.2
 shapely==2.1.2

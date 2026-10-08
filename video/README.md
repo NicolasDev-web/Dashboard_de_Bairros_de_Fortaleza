@@ -30,7 +30,7 @@ Se o Remotion não conseguir baixar o Chrome dele (rede restrita), use um Chrome
 Os assets são gerados a partir dos dados do repositório. Para refazer, rode na raiz:
 
 ```sh
-.venv/Scripts/python video/scripts/gerar_assets.py   # cidade em pixels, contornos, rota de ônibus, camadas, evolução e áudio
+python video/scripts/gerar_assets.py   # cidade em pixels, contornos, rota de ônibus, camadas, evolução e áudio
 cd video && node scripts/capturar_telas.mjs          # telas do dashboard e as posições medidas (public/dados/medidas.json)
 ```
 
