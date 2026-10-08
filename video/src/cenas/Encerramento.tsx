@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { CidadePixels, CIDADE_ALT, CIDADE_LARG } from "../componentes/CidadePixels";
-import { Marca, Rotulo, Titulo } from "../componentes/Texto";
+import { Apoio, Marca, Rotulo, Titulo } from "../componentes/Texto";
 import { clamp, COR, EASE, MONO } from "../tema";
 import { CIDADE_REVELADA } from "./Revelacao";
 
@@ -24,7 +24,7 @@ const Botao: React.FC<{ entra: number }> = ({ entra }) => {
   );
 };
 
-// 70,8–78 s. A cidade se forma de novo, agora inteira em cobalto. A síntese, a marca e o convite.
+// 63–70,2 s. A cidade se forma de novo, agora inteira em cobalto. A síntese, a marca e o convite.
 // O último frame é a peça de campanha: marca, frase, botão e a cidade.
 export const Encerramento: React.FC = () => {
   const frame = useCurrentFrame();
@@ -56,9 +56,10 @@ export const Encerramento: React.FC = () => {
         <Marca escala={0.62} />
       </div>
       <AbsoluteFill style={{ justifyContent: "center", paddingLeft: 120 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 44, marginTop: 60 }}>
-          <Rotulo texto="121 bairros · 16 mil trajetos de ônibus" entra={30} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 36, marginTop: 60 }}>
+          <Rotulo texto="121 bairros · 435 linhas · dados públicos" entra={30} />
           <Titulo linhas={["Escolha", "seu bairro", "com dados."]} entra={22} tamanho={128} />
+          <Apoio texto="O mapa, os ônibus e o seu próximo endereço. Tudo aberto, para você explorar." entra={92} largura={760} tamanho={40} />
           <div>
             <Botao entra={118} />
           </div>

@@ -8,12 +8,12 @@ import { Marca, Titulo } from "../componentes/Texto";
 
 const ROLAGEM_MAPA = medidas.mapa.rolagem; // scrollY do mapa no dashboard (scripts/capturar_telas.mjs)
 
-// 15–20 s. A cidade desenhada vira a cidade da interface real (mesma posição),
+// 13–17 s. A cidade desenhada vira a cidade da interface real (mesma posição),
 // a câmera recua e revela o produto, e a página rola até o mapa.
 export const Mergulho: React.FC = () => {
   const frame = useCurrentFrame();
-  const escala = interpolate(frame, [20, 58, 122, 150], [1, 0.8, 0.8, 1], { ...clamp, easing: EASE.camera });
-  const rolagem = interpolate(frame, [62, 122], [0, ROLAGEM_MAPA], { ...clamp, easing: EASE.camera });
+  const escala = interpolate(frame, [16, 46, 98, 120], [1, 0.8, 0.8, 1], { ...clamp, easing: EASE.camera });
+  const rolagem = interpolate(frame, [50, 98], [0, ROLAGEM_MAPA], { ...clamp, easing: EASE.camera });
   return (
     <AbsoluteFill style={{ background: `radial-gradient(70% 70% at 50% 40%, #1b2170 0%, ${COR.noite} 75%)` }}>
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
@@ -34,26 +34,26 @@ export const Mergulho: React.FC = () => {
           {/* chegada: a mesma vista do mapa, agora com a navegação fixa do dashboard */}
           <Img
             src={staticFile("telas/03_mapa_indice.png")}
-            style={{ position: "absolute", inset: 0, width: 1920, height: 1080, opacity: interpolate(frame, [124, 140], [0, 1], clamp) }}
+            style={{ position: "absolute", inset: 0, width: 1920, height: 1080, opacity: interpolate(frame, [99, 112], [0, 1], clamp) }}
           />
           {/* abertura real do dashboard, com a navegação, por cima até a rolagem começar */}
           <Img
             src={staticFile("telas/01_hero.png")}
-            style={{ position: "absolute", inset: 0, width: 1920, height: 1080, opacity: interpolate(frame, [4, 22, 60, 68], [0, 1, 1, 0], clamp) }}
+            style={{ position: "absolute", inset: 0, width: 1920, height: 1080, opacity: interpolate(frame, [3, 18, 48, 54], [0, 1, 1, 0], clamp) }}
           />
           {/* a cidade do filme cede lugar à cidade do produto */}
-          <AbsoluteFill style={{ background: COR.cobaltoFundo, opacity: interpolate(frame, [4, 22], [1, 0], clamp) }} />
+          <AbsoluteFill style={{ background: COR.cobaltoFundo, opacity: interpolate(frame, [3, 18], [1, 0], clamp) }} />
           <div
             style={{
               position: "absolute", left: CIDADE_REVELADA.x - CIDADE_LARG / 2, top: CIDADE_REVELADA.y - CIDADE_ALT / 2,
               width: CIDADE_LARG, height: CIDADE_ALT, scale: `${CIDADE_REVELADA.escala}`,
-              opacity: interpolate(frame, [0, 20], [1, 0], { ...clamp, easing: EASE.suave }),
+              opacity: interpolate(frame, [0, 16], [1, 0], { ...clamp, easing: EASE.suave }),
             }}
           >
             <CidadePixels montagem={1} varredura={-1} />
           </div>
           {/* título e marca do filme, parados onde estão os da interface: o corte não aparece */}
-          <div style={{ position: "absolute", inset: 0, opacity: interpolate(frame, [4, 22], [1, 0], clamp) }}>
+          <div style={{ position: "absolute", inset: 0, opacity: interpolate(frame, [3, 18], [1, 0], clamp) }}>
             <div style={{ position: "absolute", left: MARCA_NAV.x, top: MARCA_NAV.y, scale: `${MARCA_NAV.escala}`, transformOrigin: "0 0" }}>
               <Marca />
             </div>

@@ -10,7 +10,7 @@ import { Rotulo, Titulo } from "../componentes/Texto";
 import { clamp, COR, EASE, MONO, SANS } from "../tema";
 
 type Ponto = [number, number];
-type Perna = { tipo: "pe" | "onibus" | "metro"; linha?: string; nome?: string; min: number; espera?: number; sobe?: string; pts: Ponto[] };
+type Perna = { tipo: "pe" | "onibus" | "arce" | "metro"; linha?: string; nome?: string; min: number; espera?: number; sobe?: string; pts: Ponto[] };
 const PERNAS = onibus.pernas as Perna[];
 const MINUTOS = new Map(contornos.bairros.map((b) => [b.id, b.min as number | null]));
 const MAX = contornos.meta.max_centro;
@@ -19,9 +19,11 @@ const FIM = onibus.fim as Ponto;
 const ORIGEM_ID = contornos.bairros.find((b) => b.nome === onibus.origem)?.id;
 const CENTRO_ID = contornos.bairros.find((b) => b.nome === "Centro")?.id;
 
-const AZUL = "#8f96ff"; // ônibus sobre a noite (o cobalto do dashboard, clareado)
-const LARANJA = "#f0a02a"; // metrô e VLT, como no dashboard
-const corDe = (p: Perna) => (p.tipo === "metro" ? LARANJA : p.tipo === "onibus" ? AZUL : "#ffffff");
+export const AZUL = "#8f96ff"; // ônibus sobre a noite (o cobalto do dashboard, clareado)
+export const ROXO = "#c08cf2"; // metropolitanos (ARCE): o roxo do dashboard, clareado
+export const LARANJA = "#f0a02a"; // metrô e VLT, como no dashboard
+export const COR_TIPO = { onibus: AZUL, arce: ROXO, metro: LARANJA, pe: "#ffffff", pino: "#ffffff" } as const;
+const corDe = (p: Perna) => COR_TIPO[p.tipo];
 
 // ---------- geometria da rota ----------
 const dist = (a: Ponto, b: Ponto) => Math.hypot(b[0] - a[0], b[1] - a[1]);
@@ -154,7 +156,7 @@ export const Onibus: React.FC = () => {
         )}
       </svg>
       {/* pinos e selos em pé, sempre de frente para a câmera */}
-      <Selo x={INICIO[0]} y={INICIO[1]} inclinar={inclinar} girar={girar} zoom={zoom} entra={VOO[1] - 10} texto={onibus.origem} tipo="pino" haste={120} />
+      <Selo x={INICIO[0]} y={INICIO[1]} inclinar={inclinar} girar={girar} zoom={zoom} entra={VOO[1] - 10} texto={onibus.origem} tipo="pino" haste={175} />
       <Selo x={FIM[0]} y={FIM[1]} inclinar={inclinar} girar={girar} zoom={zoom} entra={VOO[1] - 10} texto="Centro" tipo="pino" />
       {PERNAS.map((p, i) => p.tipo === "pe" ? null : (
         <Selo key={i} x={p.pts[0][0]} y={p.pts[0][1]} inclinar={inclinar} girar={girar} zoom={zoom}
@@ -208,7 +210,7 @@ export const Onibus: React.FC = () => {
 };
 
 /** Pino ou selo de linha em pé no plano: desfaz a rotação e o zoom do palco. */
-const Selo: React.FC<{ x: number; y: number; inclinar: number; girar: number; zoom: number; entra: number; texto: string; tipo: "pino" | "onibus" | "metro" | "pe"; haste?: number }> = ({
+export const Selo: React.FC<{ x: number; y: number; inclinar: number; girar: number; zoom: number; entra: number; texto: string; tipo: "pino" | "onibus" | "arce" | "metro" | "pe"; haste?: number }> = ({
   x, y, inclinar, girar, zoom, entra, texto, tipo, haste,
 }) => {
   const frame = useCurrentFrame();
@@ -232,13 +234,13 @@ const Selo: React.FC<{ x: number; y: number; inclinar: number; girar: number; zo
           style={{
             fontFamily: pino ? SANS : MONO, fontWeight: pino ? 500 : 500, fontSize: pino ? 30 : 30, whiteSpace: "nowrap",
             padding: pino ? "6px 14px" : "5px 12px", borderRadius: 4,
-            background: pino ? "#fff" : tipo === "metro" ? LARANJA : AZUL, color: pino ? COR.tinta : tipo === "metro" ? "#2a1700" : "#0a0c2c",
+            background: COR_TIPO[tipo], color: pino ? COR.tinta : tipo === "metro" ? "#2a1700" : "#0a0c2c",
             boxShadow: "0 10px 30px rgba(0,0,0,.45)",
           }}
         >
           {texto}
         </div>
-        <div style={{ width: 2, height: haste ?? (pino ? 46 : 30), background: pino ? "#fff" : tipo === "metro" ? LARANJA : AZUL }} />
+        <div style={{ width: 2, height: haste ?? (pino ? 46 : 30), background: COR_TIPO[tipo] }} />
       </div>
     </div>
   );
@@ -266,7 +268,7 @@ const Passos: React.FC<{ u: number; sai: number }> = ({ u, sai }) => {
   const frame = useCurrentFrame();
   const op = interpolate(frame, [sai, sai + 10], [1, 0], clamp);
   return (
-    <div style={{ position: "absolute", left: 120, top: 720, display: "flex", flexDirection: "column", gap: 14, opacity: op }}>
+    <div style={{ position: "absolute", left: 120, top: 680, display: "flex", flexDirection: "column", gap: 10, opacity: op }}>
       {PERNAS.map((p, i) => {
         const a = interpolate(u, [LIMITES[i], LIMITES[i] + 0.04], [0, 1], clamp);
         if (a <= 0) return null;
@@ -277,7 +279,7 @@ const Passos: React.FC<{ u: number; sai: number }> = ({ u, sai }) => {
             ) : (
               <span style={{ fontFamily: MONO, fontSize: 24, padding: "3px 10px", borderRadius: 3, background: corDe(p), color: p.tipo === "metro" ? "#2a1700" : "#0a0c2c" }}>{p.linha}</span>
             )}
-            <span>{p.tipo === "pe" ? `${p.min} min` : p.tipo === "metro" ? `${p.min} min de metrô` : `${(p.nome ?? "").replace(/ \(.*$/, "")} · ${p.min} min`}</span>
+            <span>{p.tipo === "pe" ? `${p.min} min` : p.tipo === "metro" ? `${p.min} min de metrô` : `${(p.nome ?? "").replace(/ \(.*$/, "").replace(/ via .*$/, "")} · ${p.min} min`}</span>
           </div>
         );
       })}

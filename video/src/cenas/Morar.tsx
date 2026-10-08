@@ -5,16 +5,16 @@ import medidas from "../../public/dados/medidas.json";
 import { Clarao } from "../componentes/Cinema";
 import { Camera, Tela, Veu } from "../componentes/Tela";
 import { Rotulo, Titulo } from "../componentes/Texto";
-import { BATIDA, clamp, COR, EASE } from "../tema";
+import { clamp, COR, EASE } from "../tema";
 
 // As perguntas respondidas, uma a cada duas batidas. A captura vira duas camadas: a pergunta
 // (esquerda) e a cidade (direita), cada uma com a sua câmera, para dar paralaxe.
 const PERGUNTAS = ["telas/24b_morar_trajeto.png", "telas/25_morar_seguranca.png", "telas/26_morar_saude.png"];
-const DUR_P = 2 * BATIDA; // 36 frames por pergunta
+export const DUR_P = 30; // frames por pergunta
 const CORTE_X = 900; // a pergunta acaba antes daqui e a cidade começa depois (fundo liso no meio)
-const MERGULHO = 3 * DUR_P; // 108: a câmera entra nos pixels da cidade
-const RESULTADO = MERGULHO + 30; // 138
-const CARDS = 196;
+const MERGULHO = 3 * DUR_P; // 90: a câmera entra nos pixels da cidade
+const RESULTADO = MERGULHO + 28; // 118
+const CARDS = 162;
 
 const { card, card_onibus: linha } = medidas.morar;
 
@@ -49,14 +49,14 @@ export const Morar: React.FC = () => {
   const mergulho = interpolate(frame, [MERGULHO, RESULTADO], [0, 1], { ...clamp, easing: EASE.saida });
   const camResultado: [number, Camera][] = [
     [RESULTADO, { x: 740, y: 380, zoom: 1.3 }],
-    [RESULTADO + 26, { x: 760, y: 470, zoom: 1.08 }],
+    [RESULTADO + 22, { x: 760, y: 470, zoom: 1.08 }],
     [CARDS - 4, { x: 1000, y: 560, zoom: 1.04 }],
   ];
   const fx = card.x + card.w / 2, fy = linha.y + 8;
   const camCards: [number, Camera][] = [
     [CARDS, { x: 1300, y: 500, zoom: 1.15 }],
     [CARDS + 34, { x: fx, y: fy, zoom: 1.7 }],
-    [270, { x: fx, y: fy, zoom: 1.8 }],
+    [234, { x: fx, y: fy, zoom: 1.8 }],
   ];
   return (
     <AbsoluteFill style={{ background: COR.cobaltoFundo }}>

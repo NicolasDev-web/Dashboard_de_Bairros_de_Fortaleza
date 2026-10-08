@@ -3,11 +3,11 @@
   public/dados/cidade.json    Fortaleza em pixels (grade de células coloridas pelo índice)
   public/dados/evolucao.json  mudança 2010 -> 2022 por bairro (renda e saneamento)
   public/dados/contornos.json bairros no mesmo espaço da cidade em pixels, com o tempo de ônibus até o Centro
-  public/dados/onibus.json    a rota Bom Jardim -> Centro (ônibus + metrô), pronta para desenhar
-  public/dados/camadas.json   praças (URBIFOR) e hospitais (OpenStreetMap) no mesmo espaço
+  public/dados/onibus.json    a rota Bom Jardim -> Centro (ônibus, metropolitanos e metrô), pronta para desenhar
+  public/dados/rede.json      as linhas de ônibus e metrô (dashboard/linhas_tracados.js) no mesmo espaço
   public/audio/*.wav          trilha e efeitos, sintetizados aqui (sem material de terceiros)
 
-Rodar da raiz do repositório:  .venv/Scripts/python video/scripts/gerar_assets.py
+Rodar da raiz do repositório, com o venv ativado:  python video/scripts/gerar_assets.py
 """
 import json
 import re
@@ -26,7 +26,7 @@ PUB = RAIZ / "video/public"
 (PUB / "audio").mkdir(parents=True, exist_ok=True)
 
 FPS = 30
-DURACAO_S = 78.0
+DURACAO_S = 70.2
 SR = 48_000
 BPM = 100
 BEAT = 60 / BPM  # 0,6 s = 18 frames
@@ -123,7 +123,7 @@ def onibus(proj, origem="b72", destino="p_centro"):
             atual = alvo
             continue
         _, chave, viagem, espera, sobe, desce = perna
-        curto, longo, modo = T["linhas"][chave]
+        curto, longo, modo, op_linha = (T["linhas"][chave] + [None])[:4]
         a = Point(f(paradas[sobe][2], paradas[sobe][1]))
         b = Point(f(paradas[desce][2], paradas[desce][1]))
         melhor = None
@@ -134,7 +134,8 @@ def onibus(proj, origem="b72", destino="p_centro"):
             if pb > pa and (melhor is None or erro < melhor[0]):
                 melhor = (erro, substring(linha, pa, pb))
         geo = [list(map(lambda v: round(v, 1), c)) for c in melhor[1].coords] if melhor else [list(a.coords[0]), list(b.coords[0])]
-        pernas.append({"tipo": "onibus" if modo == "onibus" else "metro", "linha": curto, "nome": longo, "min": viagem,
+        tipo = "metro" if modo != "onibus" else "arce" if op_linha == "arce" else "onibus"
+        pernas.append({"tipo": tipo, "linha": curto, "nome": longo, "min": viagem,
                        "espera": espera, "sobe": paradas[sobe][0], "desce": paradas[desce][0], "pts": geo})
         atual = tuple(geo[-1])
     nome = {f"b{c['id']}": c["nome"] for c in json.loads((PUB / "dados/contornos.json").read_text(encoding="utf-8"))["bairros"]}
@@ -143,18 +144,37 @@ def onibus(proj, origem="b72", destino="p_centro"):
     print(f"ônibus: {out['origem']} -> {out['destino']}, {out['total']} min, " + " + ".join(p.get("linha", "a pé") for p in pernas))
 
 
-def camadas(proj):
+def rede(proj, destaque="26"):
+    """As linhas da rede atual (etapa 13) no espaço da cidade, recortadas numa margem em volta
+    dela, com a distância do meio de cada traçado ao Centro (para a rede crescer do Centro para
+    fora). destaque: a linha que a cena acende sozinha."""
     f = projetor(proj)
-    pr = gpd.read_file(RAIZ / "data/raw/pracas_urbifor_2019.geojson").to_crs(31984)
-    centro = gpd.read_file(RAIZ / "data/geo/bairros_fortaleza.geojson").to_crs(31984)
-    c0 = centro[centro.nome == "CENTRO"].geometry.iloc[0].centroid
-    xy = lambda x, y: [round((x - proj["x0"]) * proj["esc"], 1), round((proj["y1"] - y) * proj["esc"], 1)]  # noqa: E731
-    pracas = [xy(g.centroid.x, g.centroid.y) + [round(float(g.area)), round(float(g.centroid.distance(c0)))] for g in pr.geometry]
-    E = ler_js("equipamentos.js", "window.EQUIP")
-    hospitais = [list(f(lon, lat)) for lat, lon, *_ in E["hospitais"]]
-    out = {"pracas": pracas, "hospitais": hospitais, "centro": xy(c0.x, c0.y)}
-    (PUB / "dados/camadas.json").write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
-    print(f"camadas: {len(pracas)} praças, {len(hospitais)} hospitais")
+    L = ler_js("linhas.js", "window.LINHAS")
+    T = ler_js("linhas_tracados.js", "window.LINHAS_TRACADOS")
+    c = json.loads((PUB / "dados/cidade.json").read_text(encoding="utf-8"))
+    larg, alt = c["cols"] * c["lado"], c["lins"] * c["lado"]
+    caixa = LineString([(-80, -80), (larg + 80, -80), (larg + 80, alt + 80), (-80, alt + 80), (-80, -80)]).convex_hull
+    centro = next(x for x in json.loads((PUB / "dados/contornos.json").read_text(encoding="utf-8"))["bairros"] if x["nome"] == "Centro")["ponto"]
+    linhas = []
+    for i, formas in T.items():
+        chave, curto, longo, op, modo = L["linhas"][int(i)]
+        tipo = "metro" if modo != "onibus" else "arce" if op == "arce" else "onibus"
+        for forma in formas:
+            g = LineString([f(lon, lat) for lat, lon in forma]).simplify(1.2).intersection(caixa)
+            partes = [g] if g.geom_type == "LineString" else list(getattr(g, "geoms", []))
+            for parte in partes:
+                if parte.is_empty or parte.length < 20:
+                    continue
+                meio = parte.interpolate(0.5, normalized=True)
+                linhas.append({"t": tipo, "n": curto, "d": round(float(np.hypot(meio.x - centro[0], meio.y - centro[1]))),
+                               "c": round(parte.length), "p": " ".join(f"{x:.0f},{y:.0f}" for x, y in parte.coords)})
+    linhas.sort(key=lambda x: (["onibus", "arce", "metro"].index(x["t"]), x["d"]))
+    n_linhas = len({(x["t"], x["n"]) for x in linhas})
+    alvo = next(x for x in L["linhas"] if x[1] == destaque)
+    out = {"linhas": linhas, "destaque": {"n": destaque, "nome": alvo[2]}, "total": len(L["linhas"]), "paradas": L["meta"]["paradas"],
+           "por_tipo": {t: len({x["n"] for x in linhas if x["t"] == t}) for t in ("onibus", "arce", "metro")}}
+    (PUB / "dados/rede.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"rede: {len(linhas)} traçados de {n_linhas} linhas ({out['por_tipo']}), {(PUB / 'dados/rede.json').stat().st_size // 1024} KB")
 
 
 def evolucao():
@@ -315,8 +335,8 @@ def salvar(nome, x, estereo_larg=0.0):
 
 
 # Marcos da trilha (s), os mesmos de CENAS em src/tema.ts (frame / 30)
-MARCOS = {"revelacao": 10.0, "arpejo": 20.0, "onibus": 25.2, "morar": 36.0, "tempo": 45.0,
-          "camadas": 54.6, "rotas": 59.4, "montagem": 65.4, "final": 70.8}
+MARCOS = {"revelacao": 8.0, "arpejo": 17.0, "onibus": 22.2, "rede": 33.0, "diretas": 40.8, "morar": 45.0,
+          "evolucao": 52.8, "montagem": 57.6, "final": 63.0}
 
 
 def tique():
@@ -344,15 +364,16 @@ def trilha():
     raizes = [38, 34, 41, 36]
     fim_b = M["final"]
 
-    # A (0–10 s): drone + vento + pad abrindo
+    # A (0–8 s): drone + vento + pad abrindo
     drone = (np.sin(2 * np.pi * nota(26) * t) + 0.5 * np.sin(2 * np.pi * nota(38) * t)) * 0.22
     drone *= np.clip(t / 4, 0, 1) * np.where(t < fim_b, 1, 1.6 * np.exp(-(t - fim_b) * 0.22))
     vento = lp_rapido(rng.standard_normal(n), 500, 3) * 3.5
-    vento *= np.clip(t / 3, 0, 1) * np.clip((16 - t) / 6, 0.15, 1) * np.where(t < fim_b, 1, 0.1)
+    vento *= np.clip(t / 3, 0, 1) * np.clip((13 - t) / 5, 0.15, 1) * np.where(t < fim_b, 1, 0.1)
     mix += drone + vento * 0.25
-    colocar(mix, pad([50, 57, 64, 69], 10.5, 0.08) * env(int(10.5 * SR), 6, 0.6, 0.55), 0)
+    ab = M["revelacao"] + 0.5
+    colocar(mix, pad([50, 57, 64, 69], ab, 0.08) * env(int(ab * SR), 5, 0.6, 0.55), 0)
 
-    # B (10 s em diante): progressão em loop, pad sustentado
+    # B (8 s em diante): progressão em loop, pad sustentado
     inicio_b = M["revelacao"]
     k = 0
     while inicio_b + k * compasso < fim_b:
@@ -363,11 +384,11 @@ def trilha():
     # pulsação: bumbo leve na revelação, cheio no arpejo, mais forte na montagem
     tb = inicio_b
     while tb < fim_b:
-        g = 0.35 if tb < M["arpejo"] else (0.6 if tb < M["camadas"] else (0.72 if tb < M["montagem"] else 0.85))
+        g = 0.35 if tb < M["arpejo"] else (0.6 if tb < M["rede"] else (0.72 if tb < M["montagem"] else 0.85))
         colocar(mix, bumbo(), tb, g)
         tb += BEAT
 
-    # arpejo (20 s+): colcheias; abre um respiro no começo do ônibus
+    # arpejo (17 s+): colcheias; abre um respiro no começo do ônibus
     ta, i = M["arpejo"], 0
     while ta < fim_b:
         c = prog[int((ta - inicio_b) // compasso) % 4]
@@ -398,8 +419,8 @@ def trilha():
         colocar(mix, palma(), tp, 0.32)
         tp += 2 * BEAT
 
-    # baixo (camadas em diante)
-    tbx = M["camadas"]
+    # baixo (a rede de linhas em diante)
+    tbx = M["rede"]
     while tbx < fim_b:
         r = raizes[int((tbx - inicio_b) // compasso) % 4]
         colocar(mix, baixo(r, BEAT * 0.9), tbx, 0.42)
@@ -432,6 +453,6 @@ if __name__ == "__main__":
     evolucao()
     contornos(proj)
     onibus(proj)
-    camadas(proj)
+    rede(proj)
     efeitos()
     trilha()

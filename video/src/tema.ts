@@ -36,21 +36,20 @@ export const FPS = 30;
 export const BATIDA = 18; // 100 BPM a 30 fps
 
 // Linha do tempo (frames). A trilha (public/audio/trilha.wav) foi composta sobre estes marcos
-// (MARCOS em scripts/gerar_assets.py = de / 30). Do Índice em diante, tudo cai na batida (18 frames).
+// (MARCOS em scripts/gerar_assets.py = de / 30).
 export const CENAS = {
-  abertura: { de: 0, dur: 300 }, // 0–10 s     atmosfera + tensão (drone, vento)
-  revelacao: { de: 300, dur: 150 }, // 10–15 s   impacto, pulso começa
-  mergulho: { de: 450, dur: 150 }, // 15–20 s    whoosh, entra na interface
-  indice: { de: 600, dur: 156 }, // 20–25,2 s     arpejo começa
-  onibus: { de: 756, dur: 324 }, // 25,2–36 s     respiro, relógio
-  morar: { de: 1080, dur: 270 }, // 36–45 s       chimbal
-  tempo: { de: 1350, dur: 144 }, // 45–49,8 s
-  evolucao: { de: 1494, dur: 144 }, // 49,8–54,6 s
-  camadas: { de: 1638, dur: 144 }, // 54,6–59,4 s baixo
-  rotas: { de: 1782, dur: 180 }, // 59,4–65,4 s
-  montagem: { de: 1962, dur: 162 }, // 65,4–70,8 s palmas, intensidade máxima
-  encerramento: { de: 2124, dur: 216 }, // 70,8–78 s acorde final
+  abertura: { de: 0, dur: 240 }, // 0–8 s         atmosfera + tensão (drone, vento)
+  revelacao: { de: 240, dur: 150 }, // 8–13 s     impacto, pulso começa
+  mergulho: { de: 390, dur: 120 }, // 13–17 s     whoosh, entra na interface
+  indice: { de: 510, dur: 156 }, // 17–22,2 s      arpejo começa
+  onibus: { de: 666, dur: 324 }, // 22,2–33 s      respiro, relógio
+  rede: { de: 990, dur: 234 }, // 33–40,8 s        a rede de linhas; o baixo entra
+  diretas: { de: 1224, dur: 126 }, // 40,8–45 s    linhas diretas
+  morar: { de: 1350, dur: 234 }, // 45–52,8 s      chimbal
+  evolucao: { de: 1584, dur: 144 }, // 52,8–57,6 s
+  montagem: { de: 1728, dur: 162 }, // 57,6–63 s   palmas, intensidade máxima
+  encerramento: { de: 1890, dur: 216 }, // 63–70,2 s acorde final
 };
-export const DURACAO = 2340;
+export const DURACAO = 2106;
 
 export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
