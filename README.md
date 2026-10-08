@@ -6,6 +6,8 @@ Dashboard que compara os 121 bairros de Fortaleza por renda, saneamento e segura
 
 **Onde morar:** `dashboard/morar.html` é uma página à parte com um questionário de 9 perguntas (renda, entrada e quartos, e o peso de segurança, saúde, lazer, infraestrutura, mobilidade, escolas, comércio e ritmo do bairro). A cidade em pixels acende conforme as respostas e, no fim, o mapa e a lista mostram os bairros mais compatíveis dentro do orçamento. O resultado fica no endereço da página, então dá para compartilhar o link.
 
+**O que falta:** [PENDENCIAS.md](PENDENCIAS.md) lista o que ficou de fora, com o motivo e o passo a passo de cada item.
+
 ## Requisitos
 
 - **Python 3.12 ou mais novo** para o pipeline (`requirements.txt`).
