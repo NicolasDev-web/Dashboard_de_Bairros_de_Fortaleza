@@ -1,7 +1,7 @@
 /* Bairros de Fortaleza — linhas de ônibus e metrô que passam em cada bairro, e as paradas
    (scripts/13_linhas_bairros.py). linhas.js (window.LINHAS) é leve e vem com a página; os
    traçados (linhas_tracados.js) e as paradas (paradas.js) carregam só quando alguém pede.
-   Usado pelo painel (ficha do bairro, camada "Paradas" e "Quanto tempo de ônibus"). */
+   Usado pelo painel (ficha do bairro, camada "Linhas de ônibus" e "Quanto tempo de ônibus"). */
 window.Linhas = (function () {
   "use strict";
   const D = window.LINHAS;
@@ -83,9 +83,11 @@ window.Linhas = (function () {
     return grupo;
   }
 
-  /** camada de paradas (canvas, para as ~7 mil caberem): clique mostra as linhas da parada */
-  function CamadaParadas(mapa) {
-    const render = L.canvas({ padding: 0.3 });
+  /** camada de paradas (canvas, para as ~7 mil caberem): clique mostra as linhas da parada;
+      aoClicar(idxs) recebe as linhas da parada clicada; renderer: um canvas já existente (o da rede de
+      linhas: dois canvas empilhados fariam o de cima engolir os cliques do de baixo) */
+  function CamadaParadas(mapa, { aoClicar, renderer } = {}) {
+    const render = renderer || L.canvas({ padding: 0.3 });
     const grupo = L.layerGroup();
     let ligada = false, montada = false;
     const raio = () => (mapa.getZoom() >= 15 ? 4.5 : mapa.getZoom() >= 13.5 ? 3 : 1.8);
@@ -93,10 +95,12 @@ window.Linhas = (function () {
       await carregar("paradas.js");
       for (const [la, lo, nome, idxs] of window.PARADAS || []) {
         const metro = idxs.some((i) => info(i).tipo === "metro");
-        L.circleMarker([la, lo], {
+        const m = L.circleMarker([la, lo], {
           renderer: render, radius: raio(), weight: 1, color: "#ffffff", fillColor: metro ? COR.metro : COR.onibus, fillOpacity: 0.95,
+          bubblingMouseEvents: false,
         }).bindPopup(() => `<div class="popup-parada"><b>${esc(nome || "Parada")}</b><small>${idxs.length} linha${idxs.length === 1 ? "" : "s"}</small>`
           + `<div class="selos">${idxs.map(htmlSelo).join("")}</div></div>`, { maxWidth: 300 }).addTo(grupo);
+        if (aoClicar) m.on("click", () => aoClicar(idxs));
       }
       montada = true;
     }
@@ -104,12 +108,82 @@ window.Linhas = (function () {
     return {
       async ligar(sim) {
         ligada = sim;
-        if (sim) { if (!montada) await montar(); grupo.addTo(mapa); } else mapa.removeLayer(grupo);
+        if (sim) { if (!montada) await montar(); if (ligada) grupo.addTo(mapa); } else mapa.removeLayer(grupo);
       },
       get ligada() { return ligada; },
       total: D.meta.paradas,
     };
   }
 
-  return { D, info, selo, doBairro, doDestino, paradasNoBairro, emComum, contar, vaiDe, carregarSentido, tracar, CamadaParadas, carregar, OPERADORA };
+  /** rede inteira: os traçados de todas as linhas, coloridos pela operadora. Passar o mouse mostra a
+      linha; clicar destaca ela (ou as linhas da parada) e apaga as outras; clicar no mapa desfaz.
+      As paradas aparecem sozinhas a partir de ZOOM_PARADAS. aoMudar: avisa quando as paradas entram
+      ou saem (para a legenda). */
+  const ZOOM_PARADAS = 15;
+  function CamadaLinhas(mapa, { aoMudar } = {}) {
+    mapa.createPane("redeLinhas").style.zIndex = 420; // acima dos bairros, abaixo das linhas do bairro e das rotas
+    const render = L.canvas({ pane: "redeLinhas", padding: 0.3, tolerance: 4 });
+    const grupo = L.layerGroup();
+    const tracos = []; // [índice da linha, polyline, contorno branco (o mapa de bairros também é azul)]
+    let ligada = false, montada = false, destaque = null;
+    const peso = (l) => (l.tipo === "metro" ? 3.5 : 2);
+    const normal = (l) => ({ weight: peso(l), opacity: l.tipo === "metro" ? 0.95 : 0.75 });
+    const contorno = (l, o) => ({ weight: peso(l) + 2, opacity: o });
+
+    function destacar(idxs) {
+      const s = idxs && new Set(idxs);
+      destaque = s;
+      for (const [i, pl, ct] of tracos) {
+        const l = info(i);
+        if (!s) { pl.setStyle(normal(l)); ct.setStyle(contorno(l, 0.55)); }
+        else if (s.has(i)) { pl.setStyle({ weight: peso(l) + 2.5, opacity: 1 }); ct.setStyle({ weight: peso(l) + 5.5, opacity: 0.95 }); }
+        else { pl.setStyle({ weight: peso(l), opacity: 0.1 }); ct.setStyle(contorno(l, 0.05)); }
+      }
+    }
+    const paradas = CamadaParadas(mapa, { aoClicar: (idxs) => destacar(idxs), renderer: render });
+    async function zoom() {
+      const ver = ligada && mapa.getZoom() >= ZOOM_PARADAS;
+      if (ver !== paradas.ligada) { await paradas.ligar(ver); if (aoMudar) aoMudar(); }
+    }
+
+    async function montar() {
+      await carregar("linhas_tracados.js");
+      const T = window.LINHAS_TRACADOS || {};
+      // ônibus embaixo, metropolitanas no meio, metrô por cima
+      const ordem = Object.keys(T).map(Number).sort((a, b) => ["onibus", "arce", "metro"].indexOf(info(a).tipo) - ["onibus", "arce", "metro"].indexOf(info(b).tipo));
+      // os contornos todos primeiro, para nenhum cobrir a cor de outra linha
+      const contornos = new Map(ordem.map((i) => [i, T[i].map((forma) => L.polyline(forma, {
+        renderer: render, color: "#ffffff", ...contorno(info(i), 0.55), lineCap: "round", lineJoin: "round", interactive: false,
+      }).addTo(grupo))]));
+      for (const i of ordem) {
+        const l = info(i);
+        for (const [k, forma] of T[i].entries()) {
+          const pl = L.polyline(forma, {
+            renderer: render, color: COR[l.tipo], ...normal(l), lineCap: "round", lineJoin: "round", bubblingMouseEvents: false,
+          }).bindTooltip(`<b>${esc(l.curto)}</b> ${esc(l.longo)}<small>${esc(OPERADORA[l.op] || l.op)}</small>`, { sticky: true, className: "dica-mapa" })
+            .on("click", () => destacar(destaque && destaque.size === 1 && destaque.has(i) ? null : [i]))
+            .addTo(grupo);
+          tracos.push([i, pl, contornos.get(i)[k]]);
+        }
+      }
+      montada = true;
+    }
+    mapa.on("click", () => { if (destaque) destacar(null); });
+    mapa.on("zoomend", zoom);
+    return {
+      async ligar(sim) {
+        ligada = sim;
+        if (sim) { if (!montada) await montar(); if (ligada) grupo.addTo(mapa); }
+        else { mapa.removeLayer(grupo); destacar(null); }
+        await zoom();
+      },
+      get ligada() { return ligada; },
+      get paradasVisiveis() { return paradas.ligada; },
+      total: D.linhas.length,
+      totalParadas: D.meta.paradas,
+      ZOOM_PARADAS,
+    };
+  }
+
+  return { D, info, selo, doBairro, doDestino, paradasNoBairro, emComum, contar, vaiDe, carregarSentido, tracar, CamadaParadas, CamadaLinhas, carregar, OPERADORA };
 })();

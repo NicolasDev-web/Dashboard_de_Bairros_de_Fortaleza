@@ -195,13 +195,13 @@
     document.getElementById("chave-hospitais").hidden = true;
   }
 
-  // ---------- paradas de ônibus e metrô (rede atual, scripts/13_linhas_bairros.py) ----------
-  const paradas = LN ? LN.CamadaParadas(mapa) : null;
-  if (paradas) {
-    document.getElementById("ctl-paradas").addEventListener("change", async (e) => { await paradas.ligar(e.target.checked); legenda(); contarCamadas(); });
-    document.getElementById("paradas-sub").textContent = `${nf0.format(paradas.total)} · ETUFOR, metropolitanas e metrô`;
+  // ---------- linhas de ônibus e metrô, com as paradas no zoom (rede atual, scripts/13_linhas_bairros.py) ----------
+  const rede = LN ? LN.CamadaLinhas(mapa, { aoMudar: () => legenda() }) : null;
+  if (rede) {
+    document.getElementById("ctl-linhas").addEventListener("change", async (e) => { await rede.ligar(e.target.checked); legenda(); contarCamadas(); });
+    document.getElementById("linhas-sub").textContent = `${nf0.format(rede.total)} linhas · ${nf0.format(rede.totalParadas)} paradas ao aproximar`;
   } else {
-    document.getElementById("chave-paradas").hidden = true;
+    document.getElementById("chave-linhas").hidden = true;
   }
   // linhas do bairro selecionado, desenhadas a pedido da ficha
   mapa.createPane("linhasBairro").style.zIndex = 440;
@@ -225,7 +225,7 @@
   L.DomEvent.disableScrollPropagation(document.getElementById("camadas-mapa"));
   // quantas camadas estão ligadas aparece no botão, para não esquecer nada aceso com o painel fechado
   function contarCamadas() {
-    const n = ["ctl-paradas", "ctl-pracas", "ctl-hospitais", "ctl-strava"].filter((id) => document.getElementById(id).checked).length
+    const n = ["ctl-linhas", "ctl-pracas", "ctl-hospitais", "ctl-strava"].filter((id) => document.getElementById(id).checked).length
       + (estado.rota !== "nenhuma" ? 1 : 0);
     const c = document.getElementById("camadas-conta");
     c.hidden = !n; c.textContent = String(n);
@@ -379,7 +379,14 @@
       el("div", { class: "legenda-rotulos" }, rotulos.map((r) => el("span", { texto: r }))),
       pracas && pracas.ligada ? el("p", { class: "legenda-praca" }, [el("i", { "aria-hidden": "true" }), `praça ou espaço público (URBIFOR, ${Q.ano})`]) : null,
       hospitais && hospitais.ligada ? el("p", { class: "legenda-praca" }, [el("i", { class: "hosp", "aria-hidden": "true" }), "hospital (OpenStreetMap)"]) : null,
-      paradas && paradas.ligada ? el("p", { class: "legenda-praca" }, [el("i", { class: "parada", "aria-hidden": "true" }), "parada de ônibus (clique para ver as linhas)"]) : null,
+      ...(rede && rede.ligada ? [
+        el("p", { class: "legenda-praca" }, [el("i", { class: "traco onibus", "aria-hidden": "true" }), "ônibus (ETUFOR)"]),
+        el("p", { class: "legenda-praca" }, [el("i", { class: "traco arce", "aria-hidden": "true" }), "metropolitano (ARCE)"]),
+        el("p", { class: "legenda-praca" }, [el("i", { class: "traco metro", "aria-hidden": "true" }), "metrô e VLT"]),
+        rede.paradasVisiveis
+          ? el("p", { class: "legenda-praca" }, [el("i", { class: "parada", "aria-hidden": "true" }), "parada (clique para ver as linhas)"])
+          : el("p", { class: "legenda-praca legenda-dica", texto: "clique numa linha para destacá-la; aproxime para ver as paradas" }),
+      ] : []),
     ].filter(Boolean));
   }
 

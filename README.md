@@ -74,7 +74,7 @@ O nome de cada arquivo passado em `--gtfs` precisa começar por `etufor_` ou `me
 
 O tempo e a rota da etapa 12 precisam de horário de dia útil, e o GTFS de dia útil mais recente da ETUFOR é de 2023/24. Já "quais linhas param aqui" não depende de horário, então a etapa 13 usa a rede mais atual: o GTFS da ETUFOR de 03/2026 (Mobility Database, `mdb-2934`), o da ARCE (ônibus metropolitanos, 08/2025) e o do Metrofor. As 40 linhas da ETUFOR que estão no GTFS de 2026 sem nenhuma viagem (as que só rodam em dia útil) entram com as paradas e o traçado de 2023/24.
 
-Para cada bairro, saem as linhas com parada dentro dele ou a até 300 m da divisa; para cada polo, as linhas a até 800 m. A ficha do bairro mostra essas linhas e as desenha no mapa; o "Quanto tempo de ônibus" mostra as linhas que passam perto da saída e do destino (dá para ir sem baldeação); a camada "Paradas de ônibus" mostra as 7.407 paradas, com as linhas de cada uma; e os cards do "Onde morar" dizem quantas linhas passam no bairro.
+Para cada bairro, saem as linhas com parada dentro dele ou a até 300 m da divisa; para cada polo, as linhas a até 800 m. A ficha do bairro mostra essas linhas e as desenha no mapa; o "Quanto tempo de ônibus" mostra as linhas que passam perto da saída e depois do destino, no sentido da viagem (dá para ir sem baldeação; `linhas_sentido.js` guarda, para cada padrão de viagem, a primeira e a última parada em cada bairro e polo); a camada "Linhas de ônibus" desenha a rede inteira, com as 7.407 paradas a partir do zoom 15 e as linhas de cada uma; e os cards do "Onde morar" dizem quantas linhas passam no bairro.
 
 ```sh
 # em data/cache/transporte/: etufor_2026.zip (mdb-2934), arce_2025.zip, metrofor_2025.zip e etufor_2023.zip (complemento)

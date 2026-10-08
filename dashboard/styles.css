@@ -291,6 +291,7 @@ input[type="range"] { accent-color: var(--cobalto); width: 110px; }
 .leaflet-tooltip.dica-mapa::before { display: none; }
 .dica-mapa b { font-weight: 600; }
 .dica-mapa span { font-family: var(--mono); font-size: 12px; color: var(--cobalto); margin-left: 6px; }
+.dica-mapa small { display: block; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); }
 
 .legenda {
   position: absolute; left: 12px; bottom: 12px; z-index: 500;
@@ -551,7 +552,15 @@ button.tj-badge:hover, button.tj-badge[aria-pressed="true"] { outline: 2px solid
 .ficha-linhas { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--linha); }
 .ficha-linhas p { font-size: 12px; color: var(--tinta-2); }
 .ficha-linhas p b { font-weight: 500; color: var(--tinta); font-variant-numeric: tabular-nums; }
-.amostra-parada { background: var(--cobalto); border: 1.5px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px var(--cobalto); }
+.amostra-linhas { border-radius: 0; background:
+  linear-gradient(var(--cobalto), var(--cobalto)) 0 2px / 100% 2px no-repeat,
+  linear-gradient(var(--metropolitana), var(--metropolitana)) 0 6px / 100% 2px no-repeat,
+  linear-gradient(var(--metro), var(--metro)) 0 10px / 100% 2px no-repeat; }
+.legenda-praca i.traco { width: 14px; height: 3px; border: 0; border-radius: 2px; box-shadow: none; }
+.legenda-praca i.traco.onibus { background: var(--cobalto); }
+.legenda-praca i.traco.arce { background: var(--metropolitana); }
+.legenda-praca i.traco.metro { background: var(--metro); height: 4px; }
+.legenda-dica { color: var(--tinta-3); }
 .legenda-praca i.parada { background: var(--cobalto); border-radius: 50%; }
 .popup-parada b { display: block; font-size: 13px; }
 .popup-parada small { display: block; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); margin-bottom: 4px; }
