@@ -15,7 +15,9 @@ dia útil). Dessas, as que existem no GTFS de 2023/24 entram com as paradas e o 
 
 Para cada bairro: as linhas com parada dentro dele ou a até RAIO_M da divisa (uns 4 min a pé).
 Para cada polo da etapa 12: as linhas com parada a até RAIO_POLO_M. Duas pontas com a mesma
-linha = dá para ir sem baldeação (a página mostra isso no "Quanto tempo de ônibus").
+linha = dá para ir sem baldeação (a página mostra isso no "Quanto tempo de ônibus"), desde que
+a linha passe primeiro na saída e depois no destino: por isso cada linha leva também a ordem
+dos bairros e polos em cada padrão de viagem ("sentido").
 
 Uso:
   python scripts/13_linhas_bairros.py
@@ -23,6 +25,7 @@ Uso:
 
 Saídas:
   dashboard/linhas.js            linhas (número, nome, operadora), linhas por bairro e por polo
+  dashboard/linhas_sentido.js    ordem dos bairros e polos em cada padrão de viagem (sob demanda)
   dashboard/linhas_tracados.js   traçado de cada linha (sob demanda)
   dashboard/paradas.js           paradas com as linhas de cada uma (sob demanda)
   data/processed/linhas_bairros.csv
@@ -43,6 +46,7 @@ COMPLEMENTO = CACHE / "etufor_2023.zip"
 JUNTAR_M = 30
 OUT_JS = ROOT / "dashboard/linhas.js"
 OUT_TRACADOS = ROOT / "dashboard/linhas_tracados.js"
+OUT_SENTIDO = ROOT / "dashboard/linhas_sentido.js"
 OUT_PARADAS = ROOT / "dashboard/paradas.js"
 OUT_CSV = ROOT / "data/processed/linhas_bairros.csv"
 RAIO_M = 300
@@ -71,8 +75,40 @@ def main() -> None:
     cidade = box(*b.total_bounds).buffer(BORDA_M)
     polos = T.pontos_polos(b.to_crs(4326)).to_crs(UTM)
 
+    zonas_bairro = b.assign(geometry=b.buffer(RAIO_M))[["bairro_id", "geometry"]]
     linhas, tracados, fontes = [], {}, []
     sem_viagens: dict[str, list] = {}  # número da linha -> [route_id, nome] no GTFS atual
+    sentido: dict[int, dict] = {}  # índice da linha -> padrões de viagem: pares (A, B) -> primeira e última parada por zona
+
+    def zonas_das_paradas(s):
+        """stop_id -> zonas da parada: bairros a até RAIO_M (ids) e polos a até RAIO_POLO_M ("p_...")."""
+        j = gpd.sjoin(s[["stop_id", "geometry"]], zonas_bairro, predicate="within")
+        z = {k: sorted(int(x) for x in v) for k, v in j.groupby("stop_id").bairro_id}
+        for p in polos.itertuples():
+            for k in s.stop_id[s.distance(p.geometry) <= RAIO_POLO_M]:
+                z.setdefault(k, []).append(p.id)
+        return z
+
+    def sentidos(g, s, idx, so=None):
+        """Cada padrão de viagem da linha vira, para cada zona (bairro ou polo) por onde passa, a
+        primeira e a última parada nela. Dá para ir de A até B se a linha chega em A antes de sair
+        de B pela última vez: diz se a linha vai de A para B ou só de B para A."""
+        zonas = zonas_das_paradas(s)
+        st = g["stop_times"][["trip_id", "stop_id", "stop_sequence"]]
+        st = st[st.stop_id.isin(zonas)].assign(n=lambda d: d.stop_sequence.astype(int)).sort_values(["trip_id", "n"])
+        pad = st.groupby("trip_id", sort=False).stop_id.agg(tuple)
+        rota = g["trips"].set_index("trip_id").route_id
+        pad = pd.DataFrame({"route_id": rota.loc[pad.index].values, "p": pad.values}).drop_duplicates()
+        for rid, paradas in zip(pad.route_id, pad.p):
+            if rid not in idx or (so is not None and rid not in so):
+                continue
+            ini, fim = {}, {}
+            for k, parada in enumerate(paradas):
+                for z in zonas[parada]:
+                    ini.setdefault(z, k)
+                    fim[z] = k
+            pares = frozenset((o, d) for o in ini for d in ini if o != d and ini[o] < fim[d])
+            sentido.setdefault(idx[rid], {})[pares] = (ini, fim)
 
     def processar(g, op, so=None, chave_de=None, nome_de=None):
         """Linhas de g com parada na cidade; devolve as paradas (com os índices das linhas).
@@ -103,6 +139,7 @@ def main() -> None:
                         continue
                     ll = gpd.GeoSeries([parte.simplify(12)], crs=UTM).to_crs(4326).iloc[0]
                     tracados.setdefault(idx[rid], []).append([[round(y, 5), round(x, 5)] for x, y in ll.coords])
+        sentidos(g, s, idx, so)
         s = s.assign(linhas=s.stop_id.map(lambda k: sorted(idx[r] for r in por_parada[k])),
                      nome=s.stop_name.fillna("").astype(str).str.strip())
         return s[["nome", "linhas", "geometry"]], usadas, g
@@ -161,9 +198,23 @@ def main() -> None:
 
     linhas_saida = [[x["chave"], x["curto"], x["longo"], x["op"], x["modo"]] for x in linhas]
     bairros_saida = {str(k): {"linhas": v, "paradas": int(paradas_no_bairro.get(k, 0))} for k, v in por_bairro.items()}
+    # cada padrão vira [zona, primeira, última, zona, ...], com as posições renumeradas a partir de 0;
+    # um padrão cujos pares (A antes de B) já estão todos num outro da mesma linha não acrescenta nada
+    sentido_saida = {}
+    for i, pads in sorted(sentido.items()):
+        pares = sorted(pads, key=len, reverse=True)
+        fica = [a for k, a in enumerate(pares) if not any(a <= b for b in pares[:k])]
+        saida = []
+        for a in fica:
+            ini, fim = pads[a]
+            pos = {v: n for n, v in enumerate(sorted(set(ini.values()) | set(fim.values())))}
+            saida.append([x for z in sorted(ini, key=lambda z: (ini[z], str(z))) for x in (z, pos[ini[z]], pos[fim[z]])])
+        sentido_saida[str(i)] = saida
     dados = {"meta": {"fontes": fontes, "raio_m": RAIO_M, "raio_polo_m": RAIO_POLO_M, "paradas": len(paradas)},
              "linhas": linhas_saida, "bairros": bairros_saida, "polos": por_polo}
     OUT_JS.write_text("window.LINHAS = " + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    OUT_SENTIDO.write_text("window.LINHAS_SENTIDO = " + json.dumps(sentido_saida, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                           encoding="utf-8")
     OUT_TRACADOS.write_text("window.LINHAS_TRACADOS = " + json.dumps({str(k): v for k, v in tracados.items()}, separators=(",", ":")) + ";\n",
                             encoding="utf-8")
     pll = paradas.to_crs(4326)
@@ -183,7 +234,7 @@ def main() -> None:
     print(f"{len(linhas)} linhas, {len(paradas)} paradas; linhas por bairro: mediana {linhas_csv.linhas.median():.0f}, "
           f"mínimo {linhas_csv.linhas.min()} ({linhas_csv.loc[linhas_csv.linhas.idxmin(), 'bairro']})"
           + (f"; sem nenhuma linha: {[nome[k] for k in sem]}" if sem else ""))
-    for f in (OUT_JS, OUT_TRACADOS, OUT_PARADAS):
+    for f in (OUT_JS, OUT_SENTIDO, OUT_TRACADOS, OUT_PARADAS):
         print(f"-> {f.relative_to(ROOT)} ({f.stat().st_size / 1024:.0f} KB)")
 
 

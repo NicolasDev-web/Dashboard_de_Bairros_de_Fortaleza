@@ -48,6 +48,22 @@ window.Linhas = (function () {
   const paradasNoBairro = (id) => (D.bairros[String(id)] || { paradas: 0 }).paradas;
   const doDestino = (id) => (id.startsWith("p_") ? D.polos[id] || [] : doBairro(+id.slice(1)));
   const emComum = (a, b) => { const s = new Set(b); return a.filter((i) => s.has(i)); };
+  /** a linha passa primeiro na saída o (id numérico) e depois no destino d ("b12", "p_centro" ou id)?
+      linhas_sentido.js: por padrão de viagem, [zona, primeira parada, última parada, ...]; sem ele, null */
+  const carregarSentido = () => carregar("linhas_sentido.js");
+  function vaiDe(i, o, d) {
+    const S = window.LINHAS_SENTIDO;
+    if (!S) return null;
+    const alvo = typeof d === "string" ? (d.startsWith("p_") ? d : +d.slice(1)) : d;
+    return (S[i] || []).some((p) => {
+      let ini = -1, fim = -1;
+      for (let k = 0; k < p.length; k += 3) {
+        if (p[k] === o) ini = p[k + 1];
+        if (p[k] === alvo) fim = p[k + 2];
+      }
+      return ini >= 0 && fim >= 0 && ini < fim;
+    });
+  }
   const contar = (idxs) => idxs.reduce((c, i) => { c[info(i).tipo]++; return c; }, { onibus: 0, arce: 0, metro: 0 });
 
   /** desenha os traçados das linhas num grupo do mapa (troca o conteúdo do grupo) */
@@ -95,5 +111,5 @@ window.Linhas = (function () {
     };
   }
 
-  return { D, info, selo, doBairro, doDestino, paradasNoBairro, emComum, contar, tracar, CamadaParadas, carregar, OPERADORA };
+  return { D, info, selo, doBairro, doDestino, paradasNoBairro, emComum, contar, vaiDe, carregarSentido, tracar, CamadaParadas, carregar, OPERADORA };
 })();

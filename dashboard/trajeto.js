@@ -266,7 +266,11 @@
     if (!LN || !estado.o || !estado.d) return null;
     const daSaida = LN.doBairro(+estado.o.slice(1));
     const doDestino = LN.doDestino(estado.d);
-    const comuns = LN.emComum(daSaida, doDestino);
+    const o = +estado.o.slice(1);
+    // passa nos dois, mas só no sentido contrário (do destino para a saída): não serve para esta viagem
+    const nosDois = LN.emComum(daSaida, doDestino);
+    const comuns = nosDois.filter((i) => LN.vaiDe(i, o, estado.d) !== false);
+    const contrario = nosDois.length - comuns.length;
     const nomeD = NOME.get(estado.d).replace(/ \(.*\)$/, "");
     const ondeD = estado.d.startsWith("p_") ? `a até ${LN.D.meta.raio_polo_m} m do polo ${nomeD}` : `em ${nomeD}`;
     const lista = comuns.length ? comuns : doDestino;
@@ -281,8 +285,9 @@
     const caixa = el("div", { class: "tj-diretas" }, [
       el("p", { class: "tj-sec", texto: comuns.length ? "Linhas que passam perto dos dois" : "Nenhuma linha passa perto dos dois" }),
       el("p", { texto: comuns.length
-        ? `${comuns.length} linha${comuns.length === 1 ? " para" : "s param"} em ${NOME.get(estado.o)} e ${ondeD}: dá para ir sem baldeação. Clique numa linha para ver o trajeto.`
-        : `${doDestino.length} linhas param ${ondeD}, mas nenhuma delas passa em ${NOME.get(estado.o)}: combine uma delas com outra que passe lá. Clique numa linha para ver o trajeto.` }),
+        ? `${comuns.length} linha${comuns.length === 1 ? " para" : "s param"} em ${NOME.get(estado.o)} e depois ${ondeD}, no sentido da sua viagem: dá para ir sem baldeação. Clique numa linha para ver o trajeto.`
+        : `${doDestino.length} linhas param ${ondeD}, mas nenhuma delas vai de ${NOME.get(estado.o)} até lá: combine uma delas com outra que passe na saída. Clique numa linha para ver o trajeto.` }),
+      contrario ? el("p", { class: "tj-nota", texto: `${contrario} linha${contrario === 1 ? " passa" : "s passam"} nos dois, mas só no sentido contrário: na volta ela${contrario === 1 ? "" : "s"} não ${contrario === 1 ? "passa" : "passam"} pela saída.` }) : null,
       el("div", { class: "selos" }, [...lista.slice(0, MOSTRA).map((i) => LN.selo(i, aoClicar)),
         lista.length > MOSTRA ? el("span", { class: "selos-mais", texto: `+${lista.length - MOSTRA}` }) : null]),
       el("p", { class: "tj-nota", texto: "Rede atual (ETUFOR 2026, metropolitanas da ARCE e metrô), sem horário: a linha passa por lá, mas o tempo não está estimado." }),
@@ -345,6 +350,7 @@
       } catch { opcoes = []; }
       if (opcoes.length) await carregar("transporte_linhas.js").catch(() => null);
     }
+    if (window.Linhas) await window.Linhas.carregarSentido().catch(() => null); // sentido das linhas diretas
     if (meu !== pedido) return; // a pessoa já trocou de destino no meio do carregamento
     if (estado.opcao >= opcoes.length) estado.opcao = 0;
 
