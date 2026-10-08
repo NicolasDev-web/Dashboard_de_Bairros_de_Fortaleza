@@ -6,7 +6,8 @@ O que ficou de fora da revisão de outubro de 2026, com o motivo e o que fazer p
 - linhas diretas respeitando o sentido da viagem;
 - camada "Linhas de ônibus" no lugar dos pontos das paradas;
 - `requirements.txt` completo e README para qualquer sistema;
-- testes de navegador e GitHub Actions.
+- testes de navegador e GitHub Actions;
+- o vídeo de lançamento refeito, com as rotas e a rede de linhas (70 s).
 
 ## Transporte
 
@@ -67,27 +68,27 @@ O painel já mostra o passo a passo quando a tabela vem com `rotas_entre_bairros
 ## Publicação e repositório
 
 ### 6. Release com o vídeo e os dados brutos
-**Situação.** O link de Releases do README e do `video/README.md` aponta para uma página vazia. Não consigo criar Releases a partir da sessão.
-
-**O que publicar:**
-- o vídeo `bairros-de-fortaleza-web.mp4` (24 MB), que você já recebeu;
+**Situação.** O link de Releases do README e do `video/README.md` aponta para uma página vazia. Não consigo criar Releases a partir da sessão, mas o pacote está pronto (foi enviado na conversa):
+- o texto da Release, para colar (`NOTAS_DA_RELEASE.md`);
+- o filme de 70 s: `bairros-de-fortaleza-web.mp4` e a versão em qualidade máxima;
 - a capa `capa.png`;
-- os dados de entrada, que só existem no `data/cache/` (fora do git) e nas fontes, que mudam todo mês:
-  - `etufor_2023.zip`, `etufor_2026.zip`, `metrofor_2024.zip`, `metrofor_2025.zip` e `arce_2025.zip` (cerca de 30 MB);
-  - `fortaleza_ruas.osm.pbf` (3 MB).
-
-Com isso, qualquer pessoa reproduz os números publicados.
+- `dados-transporte-fortaleza.zip` (28 MB), com os GTFS e o `fortaleza_ruas.osm.pbf`. São os dados de entrada que só existem no `data/cache/` (fora do git) e nas fontes, que mudam todo mês. Com eles, qualquer pessoa reproduz os números publicados.
 
 **Como fazer:**
 1. No GitHub, abra o repositório, clique em **Releases** e depois em **Draft a new release**.
 2. Crie a tag `v1.0`, com o título "Bairros de Fortaleza: outubro de 2026".
-3. Arraste os arquivos.
+3. Cole o texto de `NOTAS_DA_RELEASE.md` e arraste os arquivos.
 4. Clique em **Publish**.
 
-O vídeo em qualidade máxima (109 MB) existia só no ambiente da sessão. Para refazer: `cd video && npx remotion render Lancamento out/bairros-de-fortaleza.mp4 --codec=h264 --crf=16` (veja `video/README.md`).
+Para refazer o filme: `cd video && npx remotion render Lancamento out/bairros-de-fortaleza.mp4 --codec=h264 --crf=17` (veja `video/README.md`).
 
-### 7. Vídeo com mais rotas
-Ficou para depois: mostrar mais o "Quanto tempo de ônibus", as linhas diretas e a camada nova de linhas. Os pontos de partida são a cena `video/src/cenas/Onibus.tsx` e as capturas de `video/scripts/capturar_telas.mjs`.
+### 7. Vídeo
+Refeito em outubro de 2026, com 70 s no lugar de 78 s:
+- a rota de ônibus agora usa as metropolitanas;
+- entraram duas cenas novas, a rede de linhas (com a parada clicada) e as linhas diretas no sentido da viagem;
+- a montagem ganhou a camada de linhas.
+
+Saíram as cenas do Strava (capturas antigas, de uma camada externa) e a do 2010 → 2022. Nada pendente.
 
 ### 8. Apagar as branches velhas
 O acesso da sessão ao GitHub só permite mexer na própria branch, então o push de exclusão foi recusado (HTTP 403).
