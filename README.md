@@ -88,6 +88,25 @@ Para cada bairro, saem as linhas com parada dentro dele ou a até 300 m da divis
 python scripts/13_linhas_bairros.py
 ```
 
+## Testes
+
+`tests/navegador.mjs` abre o painel e o "Onde morar" direto do disco com o Playwright e confere o que costuma quebrar quando os dados ou o JS mudam:
+- o painel abre sem erro de JS, também no celular;
+- a ficha do bairro mostra e desenha as linhas;
+- a camada de linhas liga, as paradas aparecem no zoom e o clique numa parada mostra as linhas;
+- Bom Jardim → Centro e Canindezinho → Centro têm passo a passo;
+- as linhas diretas respeitam o sentido da viagem;
+- o "Onde morar" monta os cards com o tempo de ônibus.
+
+```sh
+cd tests
+npm ci
+npx playwright install chromium   # só na primeira vez
+npm test                          # SAIDA=capturas npm test grava também as capturas de tela
+```
+
+O GitHub Actions (`.github/workflows/testes.yml`) roda isso, mais a checagem de sintaxe dos scripts e do JS, em cada PR e em cada push na main.
+
 ## Onde morar: o que cada arquivo alimenta
 
 A página funciona só com `data.js`. `precos.js` (etapa 9) troca a estimativa de orçamento pela comparação com o preço mediano dos anúncios; sem ele, o orçamento usa a renda dos moradores do bairro como aproximação. `equipamentos.js` (etapa 10) liga as perguntas de saúde, mobilidade, escolas e comércio e completa o lazer; sem ele, essas perguntas aparecem desligadas com o aviso. As constantes do financiamento (30% da renda, 360 meses, 10,5% ao ano) ficam no topo de `dashboard/morar.js`.

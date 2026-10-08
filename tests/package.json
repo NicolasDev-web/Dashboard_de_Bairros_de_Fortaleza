@@ -1,0 +1,13 @@
+{
+  "name": "bairros-fortaleza-testes",
+  "private": true,
+  "description": "Testes de navegador do dashboard (Playwright, sem servidor: abre os HTML direto do disco)",
+  "type": "module",
+  "scripts": {
+    "test": "node navegador.mjs"
+  },
+  "devDependencies": {
+    "leaflet": "1.9.4",
+    "playwright": "1.56.1"
+  }
+}

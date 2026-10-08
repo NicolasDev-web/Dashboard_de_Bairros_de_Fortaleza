@@ -1,0 +1,50 @@
+# Confere o painel a cada PR e a cada push na main, antes de a Vercel publicar.
+# Não roda o pipeline de dados (precisa dos GTFS e do OSM do cache local): só verifica que os
+# scripts compilam e que o painel abre e funciona com os dados que estão no repositório.
+name: Testes
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  painel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Scripts Python compilam
+        run: python -m py_compile scripts/*.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - name: JS do painel sem erro de sintaxe
+        run: for f in dashboard/*.js; do node --check "$f" || exit 1; done
+
+      - name: Dependências dos testes
+        working-directory: tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Testes de navegador
+        working-directory: tests
+        run: npm test
+        env:
+          SAIDA: capturas
+
+      - name: Capturas de tela
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas
+          path: tests/capturas
+          if-no-files-found: ignore

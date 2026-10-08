@@ -9,6 +9,7 @@ __pycache__/
 
 # Node (Playwright, Leaflet local etc.)
 node_modules/
+tests/capturas/
 
 # Downloads brutos e caches (~330 MB, os scripts baixam de novo)
 data/cache/
