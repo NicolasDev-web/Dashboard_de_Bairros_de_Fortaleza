@@ -34,6 +34,8 @@ Os assets são gerados a partir dos dados do repositório. Para refazer, rode na
 cd video && node scripts/capturar_telas.mjs          # telas do dashboard e as posições medidas (public/dados/medidas.json)
 ```
 
+A foto do celular no gramado (Montagem) é um mockup em `originais/celular_gramado.webp` (752×564). `scripts/preparar_celular.py` amplia a foto para 1920×1440, apaga a tela original e grava os quatro cantos da tela em `public/dados/celular.json`; o filme encaixa as capturas do celular nesses cantos com uma projeção em perspectiva (`src/componentes/CelularGramado.tsx`). Para trocar a foto, substitua o arquivo, meça os cantos da tela (`TELA` no script) e rode `python video/scripts/preparar_celular.py` (só precisa do Pillow). Uma versão da foto em resolução maior deixa o plano mais nítido.
+
 As telas em `public/telas/` são capturas do `dashboard/` feitas com Playwright em 1920×1080 com DPR 2 (o celular em 390×844 com DPR 3). O script também mede onde estão o mapa, a ficha, o Meireles, o card do "Onde morar" etc., e as cenas leem essas posições: se o layout do painel mudar, basta capturar de novo. As rotas do Strava (`11*`, `12`, `13`) dependem da camada externa do Strava e não são recapturadas pelo script.
 
 ## Storyboard
@@ -50,7 +52,7 @@ As telas em `public/telas/` são capturas do `dashboard/` feitas com Playwright 
 | 8 | 1494–1638 (49,8–54,6) | Evolução | "73 de 121 bairros perderam renda real entre 2010 e 2022." | Uma barra por bairro (dados reais); as perdas acendem em laranja e o número conta até 73 | |
 | 9 | 1638–1782 (54,6–59,4) | Praças e hospitais | "484 praças (URBIFOR)" / "87 hospitais (OSM)" | Uma onda circular sai do Centro e liga as camadas no mapa; a câmera desce até o Centro, onde as praças viram polígonos | baixo entra; **whoosh** |
 | 10 | 1782–1962 (59,4–65,4) | Rotas | "Rotas mais feitas" / "Av. Beira-Mar, 1ª rota de corrida" | As 10 rotas sobre o mapa; mergulho na orla até o calor do Strava | **whoosh** em 1878 |
-| 11 | 1962–2124 (65,4–70,8) | Montagem | "Ajuste os pesos." / "Compare os preços." / "Em qualquer tela." / "Com dados públicos." | 9 planos, um por batida (18 frames): pesos, saneamento, segurança, preços, evolução, celular ×3 (ônibus, questionário, mapa), método | palmas, intensidade máxima; riser a partir de 2052 |
+| 11 | 1962–2124 (65,4–70,8) | Montagem | "Ajuste os pesos." / "Compare os preços." / "Fortaleza inteira na palma da sua mão!" / "Com dados públicos." | Cortes na batida (18 frames): pesos, saneamento, preços, segurança; depois um plano de 3 batidas com a foto de um celular no gramado: a câmera sai de dentro da tela e recua até mostrar o aparelho, com o app rodando nele (abertura, mapa, ônibus) e a frase no céu; fecha com o método (2 batidas) | palmas, intensidade máxima; riser a partir de 2052 |
 | 12 | 2124–2340 (70,8–78) | Encerramento | "Escolha seu bairro com dados." + "Explore o mapa" | A cidade se forma de novo em cobalto; marca, rótulo, frase e botão. O último frame é a capa | **impacto** + acorde final em Ré maior; **clique** em 2242 |
 
 Todos os números vêm do repositório:
@@ -88,14 +90,16 @@ Os efeitos e seus frames estão em `src/Lancamento.tsx` (`EFEITOS`) e podem ser 
 video/
   src/Root.tsx, src/Lancamento.tsx   composição e linha do tempo (Sequences + áudio)
   src/tema.ts                         cores e fontes do dashboard (Geist / Geist Mono), curvas, marcos das cenas
-  src/componentes/                    CidadePixels, Tela (captura + câmera + cursor), Texto (título com máscara, rótulo, marca),
+  src/componentes/                    CidadePixels, Tela (captura + câmera + cursor), CelularGramado (foto + tela em perspectiva), Texto (título com máscara, rótulo, marca),
                                       Cinema (palco 3D, partículas em profundidade, luz que varre, clarão), Atmosfera (grão, vinheta)
   src/cenas/                          uma cena por arquivo
   public/telas/                       capturas reais do dashboard
+  public/fotos/, originais/           a foto do celular no gramado (pronta para o filme e a original)
   public/dados/                       cidade, contornos, rota de ônibus, camadas, evolução e medidas, derivados do projeto
   public/fontes/                      Geist e Geist Mono (OFL)
   public/audio/                       trilha e efeitos sintetizados
-  scripts/gerar_assets.py, scripts/capturar_telas.mjs, scripts/previa.mjs   assets, capturas e frames avulsos
+  scripts/gerar_assets.py, scripts/capturar_telas.mjs, scripts/preparar_celular.py, scripts/previa.mjs
+                                      assets, capturas, a foto do celular e frames avulsos
 ```
 
 **Versão vertical:** os textos ficam em contêineres flex alinhados às margens, e a câmera de cada tela é definida por um ponto de foco e um zoom (`Tela`). Para uma versão 1080×1920, basta registrar outra `Composition` e reposicionar os focos.
