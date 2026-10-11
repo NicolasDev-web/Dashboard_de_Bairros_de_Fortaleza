@@ -126,7 +126,10 @@ node scripts/demo/codificar.mjs                  # public/demo/<plano>.mp4 + src
 node --experimental-strip-types scripts/demo/secoes.mjs   # src/demo/secoes.json (cortes, para a trilha)
 python3 scripts/demo/trilha_demo.py              # public/audio/trilha_demo.wav (só numpy)
 npx remotion render Demo out/bairros-de-fortaleza-demo.mp4 --codec=h264 --crf=16 --audio-bitrate=320k
+npx remotion still DemoCapa out/bairros-de-fortaleza-demo-capa.png   # thumbnail 1920x1080
 ```
+
+A thumbnail (`src/demo/Capa.tsx`) junta a tela real do resultado do "Onde morar", inclinada como uma janela, sobre a cidade em pixels, com o título grande para ler em miniatura. Os quadros usados estão em `src/demo/capa.json`; `codificar.mjs` os copia da gravação para `public/demo/capa/`.
 
 Para refazer só alguns planos: `node scripts/demo/gravar.mjs camadas onibus` e `node scripts/demo/codificar.mjs camadas onibus` (os outros planos andam sem fotografar, para a página chegar no mesmo estado). `PREVIA=1` grava em 1920×1080 com JPEG leve em `out/demo/previa/`, para conferir o roteiro rápido.
 

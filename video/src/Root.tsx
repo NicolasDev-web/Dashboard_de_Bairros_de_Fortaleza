@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
 import { Lancamento } from "./Lancamento";
+import { Capa } from "./demo/Capa";
 import { Demo } from "./demo/Demo";
 import { DURACAO_DEMO } from "./demo/edicao";
 import { DURACAO, FPS } from "./tema";
@@ -11,5 +12,6 @@ export const RemotionRoot: React.FC = () => (
   <>
     <Composition id="Lancamento" component={Lancamento} durationInFrames={DURACAO} fps={FPS} width={1920} height={1080} />
     <Composition id="Demo" component={Demo} durationInFrames={DURACAO_DEMO} fps={60} width={1920} height={1080} />
+    <Composition id="DemoCapa" component={Capa} durationInFrames={1} fps={60} width={1920} height={1080} />
   </>
 );

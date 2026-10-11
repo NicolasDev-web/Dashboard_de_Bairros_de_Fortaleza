@@ -31,3 +31,13 @@ for (const nome of fs.readdirSync(ORIGEM).sort()) {
   console.log("ok", nome, marcas[nome].quadros, "quadros");
 }
 fs.writeFileSync(arqMarcas, JSON.stringify(marcas, null, 1));
+
+// os quadros da thumbnail (src/demo/capa.json), direto da gravação
+if (!PREVIA) {
+  const capa = JSON.parse(fs.readFileSync(path.join(VIDEO, "src/demo/capa.json"), "utf8"));
+  fs.mkdirSync(path.join(DESTINO, "capa"), { recursive: true });
+  for (const [nome, clip] of [["resultado", "resultado"], ["cidade", "encerramento"]]) {
+    const q = path.join(ORIGEM, clip, `${String(capa[nome] + 1).padStart(5, "0")}.jpg`);
+    if (fs.existsSync(q)) fs.copyFileSync(q, path.join(DESTINO, "capa", `${nome}.jpg`));
+  }
+}
