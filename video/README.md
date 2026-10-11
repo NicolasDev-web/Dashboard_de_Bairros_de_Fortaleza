@@ -103,3 +103,54 @@ video/
 ```
 
 **Versão vertical:** os textos ficam em contêineres flex alinhados às margens, e a câmera de cada tela é definida por um ponto de foco e um zoom (`Tela`). Para uma versão 1080×1920, basta registrar outra `Composition` e reposicionar os focos.
+
+# Demo do produto (composição "Demo")
+
+Segundo vídeo, feito a partir do roteiro em [`ROTEIRO_DEMO.md`](ROTEIRO_DEMO.md): uma demonstração da **aplicação real**, sem telas recriadas. O dashboard (`dashboard/`) roda no Chromium e é gravado quadro a quadro; a edição só escolhe os trechos, move a câmera de leve (push-ins de 3% a 20%), acelera um pouco as rolagens longas (speed ramp) e põe legendas curtas, a trilha e os cliques. 1920×1080, 60 fps, cerca de 1min35.
+
+## Como a gravação funciona
+
+`scripts/demo/gravar.mjs` abre `dashboard/index.html` e depois `dashboard/morar.html` e faz o que uma pessoa faria: passa o mouse pela cidade em pixels, clica em "Explorar o mapa", troca os indicadores, abre a ficha do Meireles, liga as camadas e as rotas do Strava, escolhe um destino de ônibus, troca as medidas da evolução, passa pelos preços, entra no "Onde morar", arrasta os sliders do orçamento, responde as perguntas e explora o resultado. Os cliques, a rolagem e os arrastes são eventos de verdade; o único elemento acrescentado é o cursor, desenhado por cima (o Chromium sem janela não tem um).
+
+O motor (`scripts/demo/motor.mjs`) controla o tempo: o relógio do Playwright (`Date`, `setTimeout`, `requestAnimationFrame`) e as animações CSS só andam 1/60 s por quadro, e cada quadro é fotografado. Assim a captura não depende da velocidade da máquina, nada engasga e o resultado é sempre o mesmo. O cursor anda em curvas com velocidade de jerk mínimo, para antes de clicar e sai devagar; a rolagem acelera e desacelera como num trackpad. Os quadros saem em 3840×2160 (DPR 2), o que deixa os push-ins nítidos.
+
+Limitação conhecida: o **Calor do Strava** (tiles do `heatmap-external-*.strava.com`) precisa de acesso a esse domínio. Sem ele, a demo mostra as **rotas mais feitas** de corrida e de pedal (que já estão no repositório, estimadas do heatmap) e não liga a camada do heatmap. Para incluí-la, rode a gravação numa rede que alcance o Strava e acrescente `#ctl-strava` ao plano "camadas" em `gravar.mjs`.
+
+## Gerar a demo
+
+```sh
+cd video
+npm i
+node scripts/demo/gravar.mjs                     # ~50 min; quadros em out/demo/quadros/<plano>/
+node scripts/demo/codificar.mjs                  # public/demo/<plano>.mp4 + src/demo/marcas.json
+node --experimental-strip-types scripts/demo/secoes.mjs   # src/demo/secoes.json (cortes, para a trilha)
+python3 scripts/demo/trilha_demo.py              # public/audio/trilha_demo.wav (só numpy)
+npx remotion render Demo out/bairros-de-fortaleza-demo.mp4 --codec=h264 --crf=16 --audio-bitrate=320k
+```
+
+Para refazer só alguns planos: `node scripts/demo/gravar.mjs camadas onibus` e `node scripts/demo/codificar.mjs camadas onibus` (os outros planos andam sem fotografar, para a página chegar no mesmo estado). `PREVIA=1` grava em 1920×1080 com JPEG leve em `out/demo/previa/`, para conferir o roteiro rápido.
+
+`public/demo/` e `trilha_demo.wav` ficam fora do git (centenas de MB; os scripts refazem). O vídeo pronto vai para as Releases, como o filme de lançamento.
+
+## Edição
+
+`src/demo/linha.ts` monta a linha do tempo a partir das marcas da gravação (`marcas.json`: o quadro de cada clique e de cada momento importante). Se um plano for regravado com outro ritmo, a edição acompanha. Os planos, na ordem:
+
+| Plano | O que mostra | Legenda |
+|---|---|---|
+| Abertura | o título sobe, o cursor passa por dois bairros da cidade em pixels | 121 bairros. Uma cidade vista através dos dados. |
+| Explorar o mapa | o clique e a rolagem até o mapa (speed ramp leve) | |
+| Indicadores | Renda, Saneamento e Segurança; o clique no Meireles abre a ficha | Renda. Saneamento. Segurança. / Cada bairro conta uma história diferente. |
+| Camadas | praças, hospitais e paradas de ônibus; rotas de corrida (a dica da Av. Beira Mar) e de pedal | Onde Fortaleza corre e pedala. |
+| Ônibus | Jangurussu → Centro: o tempo, a rota e as linhas | E se o tempo até o trabalho também fizer parte da escolha? |
+| Evolução | Renda e saneamento, Renda real, Esgoto em rede, e a dica de um bairro | 2010 → 2022 / A cidade também pode ser lida no tempo. |
+| Preços | o m² por regional | E quanto custa morar em cada região? |
+| Onde morar | o clique na barra do topo e a abertura do quiz | Mas e se os dados respondessem uma pergunta pessoal? |
+| Orçamento | renda de R$ 6.000 para R$ 12.000, entrada de R$ 100 mil: o teto e a contagem de bairros mudam e a cidade acende | O mapa responde às suas escolhas em tempo real. |
+| Trajeto | Aldeota, "Importa" | Até o seu deslocamento entra na conta. |
+| Preferências | montagem: Segurança (essencial), Lazer (essencial), Infraestrutura (importa), Mobilidade (essencial), Ritmo | O que importa para você? |
+| Resultado | a transição nativa, o mapa, os cards contando a compatibilidade; o clique no 2º card centraliza o mapa | Não existe apenas o "melhor bairro". / Existe o bairro que combina com você. |
+| Profundidade | hospitais e metrô/VLT ligados no mapa do resultado | |
+| Encerramento | a cidade em pixels; nome, frase, autoria e endereço | |
+
+A trilha (`scripts/demo/trilha_demo.py`, sintetizada com os instrumentos de `scripts/sintese.py`) entra só com o pad, ganha pulso no mapa, arpejo nas camadas, chimbal no ônibus, respira na entrada do "Onde morar", cresce no quiz e resolve em Ré maior no resultado. Os cliques soam baixinho no quadro exato de cada clique da gravação.

@@ -8,3 +8,7 @@ out
 
 # A trilha (≈15 MB) é refeita por scripts/gerar_assets.py
 public/audio/trilha.wav
+
+# Planos gravados da demo (centenas de MB; scripts/demo/gravar.mjs + codificar.mjs refazem)
+public/demo
+public/audio/trilha_demo.wav
