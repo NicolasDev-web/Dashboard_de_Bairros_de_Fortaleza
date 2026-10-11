@@ -58,17 +58,5 @@ export const Capa: React.FC = () => (
       </div>
     </div>
 
-    {/* selo de vídeo */}
-    <div
-      style={{
-        position: "absolute", left: 110, bottom: 84, display: "flex", alignItems: "center", gap: 16,
-        fontFamily: SANS, fontSize: 26, fontWeight: 500, color: COR.tinta, background: "#fff", padding: "12px 22px 12px 14px", borderRadius: 6,
-      }}
-    >
-      <span style={{ width: 38, height: 38, borderRadius: 4, background: COR.cobalto, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ width: 0, height: 0, borderTop: "9px solid transparent", borderBottom: "9px solid transparent", borderLeft: `14px solid #fff`, marginLeft: 4 }} />
-      </span>
-      Demo do produto · 1min30
-    </div>
   </AbsoluteFill>
 );
