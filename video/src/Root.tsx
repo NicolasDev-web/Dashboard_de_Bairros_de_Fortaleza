@@ -13,5 +13,6 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Lancamento" component={Lancamento} durationInFrames={DURACAO} fps={FPS} width={1920} height={1080} />
     <Composition id="Demo" component={Demo} durationInFrames={DURACAO_DEMO} fps={60} width={1920} height={1080} />
     <Composition id="DemoCapa" component={Capa} durationInFrames={1} fps={60} width={1920} height={1080} />
+    <Composition id="DemoCapaEN" component={Capa} defaultProps={{ idioma: "en" as const }} durationInFrames={1} fps={60} width={1920} height={1080} />
   </>
 );

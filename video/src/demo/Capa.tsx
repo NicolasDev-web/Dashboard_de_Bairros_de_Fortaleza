@@ -4,14 +4,30 @@ import { COR, MONO, SANS } from "../tema";
 
 // Thumbnail da demo (1920x1080): a cidade em pixels ao fundo, a tela real do resultado do
 // "Onde morar" em primeiro plano e o título grande, legível mesmo em miniatura.
-// npx remotion still DemoCapa out/bairros-de-fortaleza-demo-capa.png
+// npx remotion still DemoCapa out/bairros-de-fortaleza-demo-capa.png   (DemoCapaEN: em inglês)
 // Os dois quadros vêm direto da gravação (capa.json diz quais; codificar.mjs os copia para
 // public/demo/capa/), em 3840x2160.
 const Quadro: React.FC<{ nome: string; style?: React.CSSProperties }> = ({ nome, style }) => (
   <Img src={staticFile(`demo/capa/${nome}.jpg`)} style={{ width: 1920, height: 1080, display: "block", ...style }} />
 );
 
-export const Capa: React.FC = () => (
+// textos da capa em português e em inglês (DemoCapa e DemoCapaEN)
+const TEXTOS = {
+  pt: {
+    titulo: ["Onde morar", "em Fortaleza?"],
+    apoio: "Os 121 bairros comparados com dados públicos, e um quiz que mostra os que combinam com você.",
+    etiquetas: ["Renda", "Saneamento", "Segurança", "Ônibus", "Strava"],
+  },
+  en: {
+    titulo: ["Where to live", "in Fortaleza?"],
+    apoio: "All 121 neighborhoods compared with open data, plus a quiz that finds the ones that fit you.",
+    etiquetas: ["Income", "Sanitation", "Safety", "Transit", "Strava"],
+  },
+};
+
+export const Capa: React.FC<{ idioma?: keyof typeof TEXTOS }> = ({ idioma = "pt" }) => {
+  const T = TEXTOS[idioma];
+  return (
   <AbsoluteFill style={{ background: COR.cobaltoFundo }}>
     {/* a cidade em pixels do hero, empurrada para a direita */}
     <AbsoluteFill style={{ opacity: 0.9 }}>
@@ -46,17 +62,18 @@ export const Capa: React.FC = () => (
         Bairros de Fortaleza
       </div>
       <div style={{ fontFamily: SANS, fontSize: 132, fontWeight: 430, letterSpacing: "-0.05em", lineHeight: 0.95, marginTop: 34 }}>
-        Onde morar<br />em Fortaleza?
+        {T.titulo[0]}<br />{T.titulo[1]}
       </div>
       <div style={{ fontFamily: SANS, fontSize: 38, fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.22, marginTop: 38, color: "rgba(255,255,255,.9)", maxWidth: 700 }}>
-        Os 121 bairros comparados com dados públicos, e um quiz que mostra os que combinam com você.
+        {T.apoio}
       </div>
       <div style={{ display: "flex", gap: 12, marginTop: 52 }}>
-        {["Renda", "Saneamento", "Segurança", "Ônibus", "Strava"].map((t) => (
+        {T.etiquetas.map((t) => (
           <span key={t} style={{ fontFamily: MONO, fontSize: 21, padding: "9px 14px", border: "1.5px solid rgba(255,255,255,.55)", borderRadius: 4, color: "#fff" }}>{t}</span>
         ))}
       </div>
     </div>
 
   </AbsoluteFill>
-);
+  );
+};

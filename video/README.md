@@ -127,6 +127,7 @@ node --experimental-strip-types scripts/demo/secoes.mjs   # src/demo/secoes.json
 python3 scripts/demo/trilha_demo.py              # public/audio/trilha_demo.wav (só numpy)
 npx remotion render Demo out/bairros-de-fortaleza-demo.mp4 --codec=h264 --crf=16 --audio-bitrate=320k
 npx remotion still DemoCapa out/bairros-de-fortaleza-demo-capa.png   # thumbnail 1920x1080
+npx remotion still DemoCapaEN out/bairros-de-fortaleza-demo-capa-en.png   # a mesma, em inglês
 ```
 
 A thumbnail (`src/demo/Capa.tsx`) junta a tela real do resultado do "Onde morar", inclinada como uma janela, sobre a cidade em pixels, com o título grande para ler em miniatura. Os quadros usados estão em `src/demo/capa.json`; `codificar.mjs` os copia da gravação para `public/demo/capa/`.
