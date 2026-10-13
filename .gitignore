@@ -25,3 +25,10 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Ferramentas e materiais locais, fora do repositório: o grafo do graphify, o projeto do vídeo
+# (Remotion) e scripts avulsos
+graphify-out/
+video/
+output/
+scripts/baixar_fotos_mrv.py
