@@ -1,0 +1,5 @@
+node_modules/
+saida/bruto/
+renders/
+pesquisa/*/ref-*
+relatorios/*.png

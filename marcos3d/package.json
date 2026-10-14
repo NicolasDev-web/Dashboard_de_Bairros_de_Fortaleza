@@ -1,0 +1,27 @@
+{
+  "name": "marcos3d",
+  "private": true,
+  "description": "Oficina das miniaturas 3D dos marcos de Fortaleza: monta cada marco em React Three Fiber, gera renders e exporta o GLB usado em dashboard/marcos/",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "render": "node scripts/render.mjs",
+    "exportar": "node scripts/exportar.mjs",
+    "checar": "node scripts/checar.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "@vitejs/plugin-react": "6.1.1",
+    "meshoptimizer": "1.3.0",
+    "puppeteer-core": "25.12.0",
+    "vite": "8.3.1"
+  }
+}
