@@ -298,6 +298,10 @@
         <p>Cadastro de praças e espaços públicos da URBIFOR, de 2019: praças, largos, areninhas, calçadões e polos de lazer. Cada espaço foi posto no bairro atual pela posição no mapa, não pelo código antigo de bairro. É área de praças cadastradas, não área verde, e fica fora do índice. Quinze bairros não têm nenhum espaço no cadastro, o que pode ser falta de praça ou só de cadastro.</p>
       </div>
       <div class="bloco">
+        <h3>Histórias e maquetes</h3>
+        <p>A história de cada bairro parte da ficha "História e curiosidades" do Fortaleza em Bairros, do Iplanfor, e as datas dos marcos foram conferidas em jornais e nas instituições citadas em cada capítulo, com a fonte ao pé do texto. Onde as fontes divergem, o texto diz. A maquete é o contorno oficial do bairro (Seuma) erguido em 3D; as 13 miniaturas de marcos são fora de escala, montadas a partir de formas do OpenStreetMap (ODbL) e de fotos públicas, e ficam o mais perto possível do ponto real, dentro do bairro.</p>
+      </div>
+      <div class="bloco">
         <h3>Limitações</h3>
         <p>A renda de 2022 é ponderada pelo total de responsáveis, porque o IBGE não informa quantos têm rendimento. Praia de Iracema não aparece na lista oficial de AIS e foi posta na AIS 08. A camada do Strava mostra onde as pessoas correm e pedalam; é contexto visual, não entra no índice.</p>
       </div>
@@ -313,6 +317,8 @@
       <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">URBIFOR, praças (2019)</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/d6f1e64c-aca3-4867-8f39-53b7c9c2d211" rel="noopener">ETUFOR, GTFS</a></li>
       <li><a href="https://www.metrofor.ce.gov.br/gtfs/" rel="noopener">Metrofor, GTFS</a></li>
+      <li><a href="https://fortalezaembairros.fortaleza.ce.gov.br/" rel="noopener">Iplanfor, Fortaleza em Bairros</a></li>
+      <li><a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap (ODbL)</a></li>
     </ul>
   </section>
 
@@ -321,6 +327,15 @@
     <a href="#topo">Voltar ao topo</a>
   </footer>
 
+  <!-- O bairro em 3D: preenchido por bairro3d.js -->
+  <dialog class="b3d" id="b3d" aria-label="O bairro em 3D"></dialog>
+
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="data.js"></script>
   <script src="rotas.js"></script>
@@ -332,8 +347,10 @@
   <script src="transporte.js"></script>
   <script src="linhas.js"></script>
   <script src="linhas-camada.js"></script>
+  <script src="historias.js"></script>
   <script src="app.js"></script>
   <script src="trajeto.js"></script>
   <script src="regionais.js"></script>
+  <script type="module" src="bairro3d.js"></script>
 </body>
 </html>

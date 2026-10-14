@@ -9,6 +9,7 @@
   const E = window.EQUIP || null; // equipamentos.js (scripts/10_equipamentos_osm.py); opcional
   const T = window.TRANSPORTE || null; // transporte.js (scripts/12_transporte.py); opcional
   const LN = window.Linhas || null; // linhas.js + linhas-camada.js (scripts/13_linhas_bairros.py); opcional
+  const HI = window.HISTORIAS || {}; // historias.js: a história de cada bairro para o tour 3D (bairro3d.js)
   const FEATS = D.geojson.features;
   const BAIRROS = FEATS.map((f) => f.properties);
   const POR_ID = new Map(BAIRROS.map((p) => [p.id, p]));
@@ -412,6 +413,7 @@
     box.replaceChildren(...[
       el("p", { class: "ficha-ais", texto: `Regional ${p.regional} · ${p.ais}, ${nf0.format(p.pop_2022)} moradores` }),
       el("h3", { texto: p.nome }),
+      fichaTres(p),
       el("div", { class: "ficha-topo" }, [
         el("p", { class: "ficha-indice", html: `${nf0.format(indice(p))}<small>de 100</small>` }),
         el("p", { class: "ficha-pos", texto: `${rIdx.get(p.id)}º de 121 no índice` }),
@@ -445,6 +447,20 @@
         `Preço do m²: só ${preco.n} anúncio${preco.n === 1 ? "" : "s"} no bairro, pouco para estimar (veja a regional em Preços).`) : null,
     ].filter(Boolean));
     box.classList.remove("entrando"); void box.offsetWidth; box.classList.add("entrando");
+  }
+
+  // abre o tour 3D com a história do bairro (bairro3d.js + historias.js)
+  function fichaTres(p) {
+    const h = HI[p.id];
+    const nMarcos = h ? new Set(h.capitulos.filter((c) => c.tipo === "marco").map((c) => c.marco)).size : 0;
+    const bt = el("button", { type: "button", class: "botao botao-cheio" }, [
+      el("span", { class: "botao-icone", "aria-hidden": "true", texto: "↗" }), "Conhecer o bairro em 3D",
+    ]);
+    bt.addEventListener("click", () => document.dispatchEvent(new CustomEvent("bairro-3d", { detail: p.id })));
+    return el("div", { class: "ficha-3d" }, [
+      bt,
+      nMarcos ? el("span", { class: "selo-3d", texto: nMarcos === 1 ? "com marco em miniatura" : `com ${nMarcos} marcos em miniatura` }) : null,
+    ]);
   }
 
   // tempo de ônibus até três polos de referência e atalho para a seção de rotas

@@ -6,6 +6,8 @@ Dashboard que compara os 121 bairros de Fortaleza por renda, saneamento e segura
 
 **Onde morar:** `dashboard/morar.html` é uma página à parte com um questionário de 9 perguntas (renda, entrada e quartos, e o peso de segurança, saúde, lazer, infraestrutura, mobilidade, escolas, comércio e ritmo do bairro). A cidade em pixels acende conforme as respostas e, no fim, o mapa e a lista mostram os bairros mais compatíveis dentro do orçamento. O resultado fica no endereço da página, então dá para compartilhar o link.
 
+**O bairro em 3D:** a ficha de cada bairro tem o botão "Conhecer o bairro em 3D", que abre um tour em tela cheia (`dashboard/bairro3d.js`). O contorno do bairro sobe do mapa em 3D, as miniaturas dos marcos (`dashboard/marcos/*.glb`, 13 modelos low-poly) pousam em cima e a câmera percorre os capítulos da história, com pinos nos outros pontos importantes. O texto e as fontes de cada capítulo ficam em `dashboard/historias.js`, e `#b3d=ID` no endereço abre o tour direto. O three.js vem do jsDelivr e só é baixado na primeira abertura; sem WebGL, a camada mostra só o texto. Abra a página por um servidor (`python -m http.server` dentro de `dashboard/`), porque os módulos e os GLB não carregam por `file://`. Depois de mexer nas histórias, rode `node scripts/validar_historias.js`: ele confere se todo bairro tem história com fonte e se cada pino cai dentro do próprio bairro.
+
 ## Pipeline de dados
 
 ```sh
