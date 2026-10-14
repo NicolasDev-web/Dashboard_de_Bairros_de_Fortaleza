@@ -1,0 +1,30 @@
+== iracemaMartim: 79 vias, 4 nós com nome
+1082549477 3m [0,-3] 17x7.6 rumo 79 {"landuse":"grass"}
+1137318320 31m [-19,-25] 12.2x4.2 rumo 119 {"amenity":"parking_space"}
+1137318321 36m [-25,-25] 12.4x2.8 rumo 120 {"amenity":"parking_space"}
+1082549474 37m [-35,12] 26.3x4.5 rumo 65 {"landuse":"grass"}
+1082549475 37m [27,25] 26.3x4.8 rumo 94 {"landuse":"grass"}
+1137318319 44m [-35,-26] 22.3x6.8 rumo 88 {"amenity":"taxi"}
+1217908061 47m [-19,-43] 48.5x38.4 rumo 92 {"landuse":"residential","name":"Edifício Iracema Residence Service"}
+1097471043 55m [53,-15] 52.7x5.5 rumo 78 {"amenity":"parking"}
+1108262731 63m [-49,-41] 6.7x4.9 rumo 4 {"leisure":"swimming_pool"}
+1107482723 67m [-55,-38] 2.8x2.4 rumo 6 {"building":"yes","building:levels":"1","height":"3.5"}
+1108262691 71m [-59,-40] 2.9x2.1 rumo 92 {"leisure":"swimming_pool"}
+1144423331 72m [72,2] 5.7x3.3 rumo 81 {"amenity":"police","building":"container"}
+967285258 75m [19,-73] 30.8x7.8 rumo 8 {"landuse":"grass"}
+1137318323 79m [-74,-26] 9.9x3.6 rumo 134 {"amenity":"parking_space"}
+1097471038 80m [-79,13] 10.7x9.1 rumo 0 {"leisure":"fitness_station"}
+1097471042 80m [76,26] 7.7x4.1 rumo 90 {"building":"retail"}
+1107482431 83m [-25,-79] 48.5x23.2 rumo 92 {"building":"yes","building:levels":"21","height":"62.0"}
+1137318324 84m [-79,-26] 20.2x5.2 rumo 87 {"amenity":"parking"}
+1217908060 85m [-56,-64] 64.1x21.3 rumo 6 {"landuse":"residential","name":"Edifício Marc Chagall"}
+1107482724 87m [-61,-62] 39.3x10.6 rumo 6 {"building":"yes","building:levels":"21","height":"61.9"}
+1137318322 87m [-83,-26] 15.7x5.2 rumo 87 {"amenity":"parking_space"}
+1108262709 90m [-79,-42] 10.8x4.8 rumo 6 {"leisure":"swimming_pool"}
+1217908059 90m [-26,-86] 48.2x27.8 rumo 93 {"landuse":"residential","name":"Edifício Tereza Hinko"}
+967285257 100m [72,-69] 161.3x54.1 rumo 108 {"landuse":"grass"}
+967285259 100m [37,-93] 33.3x7.9 rumo 86 {"landuse":"grass"}
+node 4743315528 [0,0] {"artwork_type":"statue","name":"Estátua de Iracema e Martim","name:en":"Iracema and Martim Statue","name:es":"Estatua de Iracema y Martim","tourism":"artwork"}
+node 4988219421 [-3,-38] {"addr:city":"Fortaleza","addr:housenumber":"4050","addr:postcode":"60165-121","addr:street":"Avenida Beira Mar","addr:suburb":"Mucuripe","amenity":"ice_cream","cuisine":"ice_cream","delivery":"yes","name":"50 Sabores","opening_hours":"Mo-Su 07:00-24:00","outdoor_seating":"yes","phone":"+55 85 3032 5850","takeaway":"yes","website":"https://50sabores.com.br/"}
+node 10048939219 [-29,-11] {"natural":"tree"}
+node 13015695860 [-9,47] {"addr:street":"Calçadão da Beira Mar","amenity":"bar","brewery":"various;heineken;estela;bud;ypioca","currency:XBT":"yes","min_age":"18","name":"Thomas Bar","opening_hours":"Mo-Su 10:00-22:00","payment:cash":"yes","payment:lightning":"yes","payment:lightning_contactless":"yes","payment:onchain":"yes","smoking":"yes","survey:date":"2025-03-05"}

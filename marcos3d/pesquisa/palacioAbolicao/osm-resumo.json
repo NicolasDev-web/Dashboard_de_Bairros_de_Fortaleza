@@ -1,0 +1,16097 @@
+{
+ "id": "palacioAbolicao",
+ "lat": -3.7281783,
+ "lng": -38.5038238,
+ "vias": [
+  {
+   "way": "39804595",
+   "tags": {
+    "alt_name": "Rua Silvia Paulet",
+    "highway": "residential",
+    "lanes": "2",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxwidth": "2.2",
+    "name": "Rua Silva Paulet",
+    "oneway": "yes",
+    "postal_code": "60120-020",
+    "surface": "asphalt"
+   },
+   "centro": [
+    106,
+    179
+   ],
+   "dist": 208,
+   "dims": [
+    277.5,
+    1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 10,
+   "pts": [
+    [
+     157,
+     331.9
+    ],
+    [
+     154.6,
+     324.7
+    ],
+    [
+     122.5,
+     227.9
+    ],
+    [
+     119.6,
+     219.4
+    ],
+    [
+     100,
+     161.5
+    ],
+    [
+     98.1,
+     155.9
+    ],
+    [
+     96.2,
+     150
+    ],
+    [
+     73,
+     76.6
+    ],
+    [
+     72.7,
+     75.6
+    ],
+    [
+     70.3,
+     68.3
+    ]
+   ]
+  },
+  {
+   "way": "40068109",
+   "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Rua Tenente Amauri Pio",
+    "oneway": "yes",
+    "postal_code": "60160-090",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -167,
+    42
+   ],
+   "dist": 172,
+   "dims": [
+    248,
+    0.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     -312.8,
+     89
+    ],
+    [
+     -201.8,
+     53.5
+    ],
+    [
+     -197.7,
+     52.3
+    ],
+    [
+     -194.4,
+     51.2
+    ],
+    [
+     -186.4,
+     48.5
+    ],
+    [
+     -84.5,
+     15.9
+    ],
+    [
+     -82.1,
+     15.1
+    ],
+    [
+     -76.6,
+     13.4
+    ]
+   ]
+  },
+  {
+   "way": "40068111",
+   "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxwidth": "2.2",
+    "name": "Rua Tenente Amauri Pio",
+    "oneway": "yes",
+    "postal_code": "60160-090",
+    "surface": "asphalt"
+   },
+   "centro": [
+    111,
+    -46
+   ],
+   "dist": 121,
+   "dims": [
+    124.5,
+    0.1
+   ],
+   "rumoLadoMaior": 107,
+   "n": 5,
+   "pts": [
+    [
+     40.2,
+     -24.5
+    ],
+    [
+     52.4,
+     -28.2
+    ],
+    [
+     150.2,
+     -57.8
+    ],
+    [
+     154.7,
+     -59.2
+    ],
+    [
+     159.3,
+     -60.6
+    ]
+   ]
+  },
+  {
+   "way": "46154531",
+   "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Rua Antônio Lima",
+    "oneway": "yes",
+    "postal_code": "60115-270",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -93,
+    219
+   ],
+   "dist": 237,
+   "dims": [
+    230.7,
+    0.7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 8,
+   "pts": [
+    [
+     -125.3,
+     117.2
+    ],
+    [
+     -122.5,
+     126.2
+    ],
+    [
+     -99.4,
+     198.3
+    ],
+    [
+     -97.8,
+     203.2
+    ],
+    [
+     -93.5,
+     216.6
+    ],
+    [
+     -91.9,
+     221.6
+    ],
+    [
+     -56,
+     329.7
+    ],
+    [
+     -53.7,
+     336.5
+    ]
+   ]
+  },
+  {
+   "way": "46154532",
+   "tags": {
+    "alt_name": "Rua Doutor Medeirinhos",
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Rua Doutor Castro Medeiros",
+    "name:etymology": "José de Castro Medeiros",
+    "oneway": "yes",
+    "postal_code": "60160-100",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -97,
+    -60
+   ],
+   "dist": 114,
+   "dims": [
+    7.4,
+    0
+   ],
+   "rumoLadoMaior": 109,
+   "n": 2,
+   "pts": [
+    [
+     -93.4,
+     -61.6
+    ],
+    [
+     -100.4,
+     -59.2
+    ]
+   ]
+  },
+  {
+   "way": "234070311",
+   "tags": {
+    "crossing": "uncontrolled",
+    "crossing:island": "yes",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "lit": "yes",
+    "surface": "asphalt",
+    "traffic_calming": "table"
+   },
+   "centro": [
+    -88,
+    -32
+   ],
+   "dist": 94,
+   "dims": [
+    17,
+    0.2
+   ],
+   "rumoLadoMaior": 109,
+   "n": 5,
+   "pts": [
+    [
+     -80.1,
+     -35
+    ],
+    [
+     -84.5,
+     -33.5
+    ],
+    [
+     -88.2,
+     -32.3
+    ],
+    [
+     -91.4,
+     -31.1
+    ],
+    [
+     -96.1,
+     -29.4
+    ]
+   ]
+  },
+  {
+   "way": "243780005",
+   "tags": {
+    "alt_name": "Rua Doutor Medeirinhos",
+    "highway": "residential",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxwidth": "2.2",
+    "name": "Rua Doutor Castro Medeiros",
+    "name:etymology": "José de Castro Medeiros",
+    "postal_code": "60160-100",
+    "surface": "asphalt"
+   },
+   "centro": [
+    76,
+    -117
+   ],
+   "dist": 140,
+   "dims": [
+    124.5,
+    0.1
+   ],
+   "rumoLadoMaior": 107,
+   "n": 4,
+   "pts": [
+    [
+     16.8,
+     -99
+    ],
+    [
+     24.8,
+     -101.4
+    ],
+    [
+     127.9,
+     -132.7
+    ],
+    [
+     135.9,
+     -135.1
+    ]
+   ]
+  },
+  {
+   "way": "385035408",
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "40",
+    "maxwidth": "2.2",
+    "name": "Rua Deputado Moreira da Rocha",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "postal_code": "60160-060",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -346,
+    155
+   ],
+   "dist": 379,
+   "dims": [
+    422.2,
+    29.9
+   ],
+   "rumoLadoMaior": 94,
+   "n": 10,
+   "pts": [
+    [
+     -125.3,
+     117.2
+    ],
+    [
+     -168.4,
+     127.4
+    ],
+    [
+     -271.7,
+     152.9
+    ],
+    [
+     -281.7,
+     155.5
+    ],
+    [
+     -290.9,
+     157.8
+    ],
+    [
+     -299,
+     158.2
+    ],
+    [
+     -417.3,
+     165.7
+    ],
+    [
+     -521.4,
+     172.2
+    ],
+    [
+     -535.4,
+     173.1
+    ],
+    [
+     -544.7,
+     173.7
+    ]
+   ]
+  },
+  {
+   "way": "436565565",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00;Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-013",
+    "source:maxspeed": "sign",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -31,
+    131
+   ],
+   "dist": 135,
+   "dims": [
+    98.9,
+    0.4
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -42.8,
+     96.3
+    ],
+    [
+     -39,
+     106.8
+    ],
+    [
+     -11.9,
+     190.2
+    ]
+   ]
+  },
+  {
+   "way": "436565568",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-013",
+    "source:maxspeed": "sign",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -78,
+    -12
+   ],
+   "dist": 79,
+   "dims": [
+    38.7,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -81.9,
+     -25.4
+    ],
+    [
+     -81,
+     -22.7
+    ],
+    [
+     -70,
+     11.4
+    ]
+   ]
+  },
+  {
+   "way": "436565581",
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Rua Deputado Moreira da Rocha",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "postal_code": "60160-060",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -46,
+    97
+   ],
+   "dist": 107,
+   "dims": [
+    6.6,
+    0
+   ],
+   "rumoLadoMaior": 105,
+   "n": 2,
+   "pts": [
+    [
+     -42.8,
+     96.3
+    ],
+    [
+     -49.2,
+     98
+    ]
+   ]
+  },
+  {
+   "way": "436565582",
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "30",
+    "maxwidth": "2.2",
+    "name": "Rua Deputado Moreira da Rocha",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "postal_code": "60160-060",
+    "source:maxspeed": "sign",
+    "surface": "asphalt"
+   },
+   "centro": [
+    195,
+    38
+   ],
+   "dist": 199,
+   "dims": [
+    237.2,
+    6.2
+   ],
+   "rumoLadoMaior": 104,
+   "n": 5,
+   "pts": [
+    [
+     301.7,
+     15.8
+    ],
+    [
+     217.3,
+     32.2
+    ],
+    [
+     195.6,
+     36.4
+    ],
+    [
+     190.2,
+     37.8
+    ],
+    [
+     70.3,
+     68.3
+    ]
+   ]
+  },
+  {
+   "way": "437294420",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-000",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -116,
+    -105
+   ],
+   "dist": 156,
+   "dims": [
+    76.6,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -100.4,
+     -59.2
+    ],
+    [
+     -121.9,
+     -124.7
+    ],
+    [
+     -124.3,
+     -132
+    ]
+   ]
+  },
+  {
+   "way": "437294421",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00;Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-000",
+    "source:maxspeed": "sign",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -38,
+    133
+   ],
+   "dist": 138,
+   "dims": [
+    99.3,
+    0.2
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     -17.6,
+     192.1
+    ],
+    [
+     -45.8,
+     108.7
+    ],
+    [
+     -49.2,
+     98
+    ]
+   ]
+  },
+  {
+   "way": "620868013",
+   "tags": {
+    "crossing": "traffic_signals",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "lit": "yes",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -42,
+    108
+   ],
+   "dist": 116,
+   "dims": [
+    14.4,
+    0
+   ],
+   "rumoLadoMaior": 106,
+   "n": 4,
+   "pts": [
+    [
+     -49.2,
+     109.7
+    ],
+    [
+     -45.8,
+     108.7
+    ],
+    [
+     -39,
+     106.8
+    ],
+    [
+     -35.3,
+     105.8
+    ]
+   ]
+  },
+  {
+   "way": "636358323",
+   "tags": {
+    "barrier": "wall"
+   },
+   "centro": [
+    47,
+    17
+   ],
+   "dist": 50,
+   "dims": [
+    31.7,
+    0
+   ],
+   "rumoLadoMaior": 16,
+   "n": 2,
+   "pts": [
+    [
+     42.7,
+     1.6
+    ],
+    [
+     51.6,
+     32
+    ]
+   ]
+  },
+  {
+   "way": "636358356",
+   "tags": {
+    "bridge": "yes",
+    "bridge:structure": "arch",
+    "highway": "footway",
+    "layer": "1"
+   },
+   "centro": [
+    24,
+    63
+   ],
+   "dist": 67,
+   "dims": [
+    4.9,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 2,
+   "pts": [
+    [
+     26.3,
+     61.8
+    ],
+    [
+     21.6,
+     63.2
+    ]
+   ]
+  },
+  {
+   "way": "636358357",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    36,
+    54
+   ],
+   "dist": 65,
+   "dims": [
+    18.9,
+    8.5
+   ],
+   "rumoLadoMaior": 109,
+   "n": 4,
+   "pts": [
+    [
+     41.4,
+     47.8
+    ],
+    [
+     37.4,
+     49.2
+    ],
+    [
+     39.9,
+     57.3
+    ],
+    [
+     26.3,
+     61.8
+    ]
+   ]
+  },
+  {
+   "way": "636358358",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    4,
+    61
+   ],
+   "dist": 62,
+   "dims": [
+    24.1,
+    17.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 6,
+   "pts": [
+    [
+     21.6,
+     63.2
+    ],
+    [
+     6.8,
+     68.1
+    ],
+    [
+     4.8,
+     61.2
+    ],
+    [
+     4.3,
+     59.5
+    ],
+    [
+     -4.1,
+     62.3
+    ],
+    [
+     -6.7,
+     54.5
+    ]
+   ]
+  },
+  {
+   "way": "636358362",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    -16,
+    45
+   ],
+   "dist": 48,
+   "dims": [
+    9.2,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 2,
+   "pts": [
+    [
+     -14.5,
+     49.4
+    ],
+    [
+     -17.3,
+     40.6
+    ]
+   ]
+  },
+  {
+   "way": "636358363",
+   "tags": {
+    "highway": "steps"
+   },
+   "centro": [
+    -14,
+    51
+   ],
+   "dist": 53,
+   "dims": [
+    3.9,
+    0
+   ],
+   "rumoLadoMaior": 19,
+   "n": 2,
+   "pts": [
+    [
+     -13.2,
+     53.1
+    ],
+    [
+     -14.5,
+     49.4
+    ]
+   ]
+  },
+  {
+   "way": "636358364",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    -13,
+    55
+   ],
+   "dist": 56,
+   "dims": [
+    3.4,
+    0
+   ],
+   "rumoLadoMaior": 17,
+   "n": 2,
+   "pts": [
+    [
+     -12.2,
+     56.4
+    ],
+    [
+     -13.2,
+     53.1
+    ]
+   ]
+  },
+  {
+   "way": "636358366",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    -6,
+    -20
+   ],
+   "dist": 21,
+   "dims": [
+    72.5,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 2,
+   "pts": [
+    [
+     5,
+     14.9
+    ],
+    [
+     -17.1,
+     -54.1
+    ]
+   ]
+  },
+  {
+   "way": "636358367",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    1,
+    52
+   ],
+   "dist": 52,
+   "dims": [
+    58.9,
+    0.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 4,
+   "pts": [
+    [
+     38.7,
+     39.4
+    ],
+    [
+     -6.7,
+     54.5
+    ],
+    [
+     -12.2,
+     56.4
+    ],
+    [
+     -17.2,
+     58
+    ]
+   ]
+  },
+  {
+   "way": "636358368",
+   "tags": {
+    "barrier": "wall"
+   },
+   "centro": [
+    45,
+    34
+   ],
+   "dist": 56,
+   "dims": [
+    9.8,
+    0
+   ],
+   "rumoLadoMaior": 108,
+   "n": 2,
+   "pts": [
+    [
+     49.5,
+     32.8
+    ],
+    [
+     40.2,
+     35.8
+    ]
+   ]
+  },
+  {
+   "way": "636358369",
+   "tags": {
+    "barrier": "wall"
+   },
+   "centro": [
+    51,
+    32
+   ],
+   "dist": 60,
+   "dims": [
+    2.2,
+    0
+   ],
+   "rumoLadoMaior": 111,
+   "n": 2,
+   "pts": [
+    [
+     49.5,
+     32.8
+    ],
+    [
+     51.6,
+     32
+    ]
+   ]
+  },
+  {
+   "way": "636358371",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    35,
+    28
+   ],
+   "dist": 45,
+   "dims": [
+    8.7,
+    0
+   ],
+   "rumoLadoMaior": 17,
+   "n": 2,
+   "pts": [
+    [
+     36.4,
+     32.5
+    ],
+    [
+     33.8,
+     24.2
+    ]
+   ]
+  },
+  {
+   "way": "636358372",
+   "tags": {
+    "highway": "steps"
+   },
+   "centro": [
+    37,
+    35
+   ],
+   "dist": 51,
+   "dims": [
+    4.2,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 2,
+   "pts": [
+    [
+     37.7,
+     36.5
+    ],
+    [
+     36.4,
+     32.5
+    ]
+   ]
+  },
+  {
+   "way": "636358373",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    39,
+    39
+   ],
+   "dist": 55,
+   "dims": [
+    5.8,
+    0.1
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     39.5,
+     42
+    ],
+    [
+     38.7,
+     39.4
+    ],
+    [
+     37.7,
+     36.5
+    ]
+   ]
+  },
+  {
+   "way": "636358374",
+   "tags": {
+    "highway": "steps"
+   },
+   "centro": [
+    40,
+    44
+   ],
+   "dist": 60,
+   "dims": [
+    5.2,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 2,
+   "pts": [
+    [
+     41.1,
+     46.9
+    ],
+    [
+     39.5,
+     42
+    ]
+   ]
+  },
+  {
+   "way": "636358375",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    41,
+    48
+   ],
+   "dist": 63,
+   "dims": [
+    2.5,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     41.9,
+     49.3
+    ],
+    [
+     41.4,
+     47.8
+    ],
+    [
+     41.1,
+     46.9
+    ]
+   ]
+  },
+  {
+   "way": "636358376",
+   "tags": {
+    "barrier": "wall"
+   },
+   "centro": [
+    40,
+    -8
+   ],
+   "dist": 40,
+   "dims": [
+    20.5,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 2,
+   "pts": [
+    [
+     36.5,
+     -17.9
+    ],
+    [
+     42.7,
+     1.6
+    ]
+   ]
+  },
+  {
+   "way": "636358378",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    -24,
+    24
+   ],
+   "dist": 34,
+   "dims": [
+    55.1,
+    0
+   ],
+   "rumoLadoMaior": 108,
+   "n": 3,
+   "pts": [
+    [
+     -49.9,
+     32.5
+    ],
+    [
+     -23.7,
+     24.1
+    ],
+    [
+     2.6,
+     15.7
+    ]
+   ]
+  },
+  {
+   "way": "636358379",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    -25,
+    19
+   ],
+   "dist": 32,
+   "dims": [
+    17.7,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 4,
+   "pts": [
+    [
+     -23.7,
+     24.1
+    ],
+    [
+     -24,
+     23.2
+    ],
+    [
+     -24.2,
+     22.6
+    ],
+    [
+     -29.1,
+     7.2
+    ]
+   ]
+  },
+  {
+   "way": "636358380",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    -48,
+    7
+   ],
+   "dist": 49,
+   "dims": [
+    60.7,
+    40.4
+   ],
+   "rumoLadoMaior": 18,
+   "n": 14,
+   "pts": [
+    [
+     -81,
+     -22.7
+    ],
+    [
+     -76.7,
+     -24.2
+    ],
+    [
+     -74.9,
+     -24.8
+    ],
+    [
+     -42.6,
+     -35.2
+    ],
+    [
+     -29.1,
+     7.2
+    ],
+    [
+     -47.8,
+     13.4
+    ],
+    [
+     -49.9,
+     15.7
+    ],
+    [
+     -50.7,
+     18.6
+    ],
+    [
+     -48.4,
+     25.5
+    ],
+    [
+     -44.6,
+     26.7
+    ],
+    [
+     -39.4,
+     26.6
+    ],
+    [
+     -36.3,
+     26.5
+    ],
+    [
+     -26.2,
+     23.2
+    ],
+    [
+     -24.2,
+     22.6
+    ]
+   ]
+  },
+  {
+   "way": "636358381",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    22,
+    -2
+   ],
+   "dist": 22,
+   "dims": [
+    21.5,
+    0
+   ],
+   "rumoLadoMaior": 15,
+   "n": 2,
+   "pts": [
+    [
+     25.1,
+     8.5
+    ],
+    [
+     19.5,
+     -12.3
+    ]
+   ]
+  },
+  {
+   "way": "636358387",
+   "tags": {
+    "barrier": "wall"
+   },
+   "centro": [
+    25,
+    -44
+   ],
+   "dist": 50,
+   "dims": [
+    6.6,
+    0
+   ],
+   "rumoLadoMaior": 108,
+   "n": 2,
+   "pts": [
+    [
+     21.4,
+     -42.6
+    ],
+    [
+     27.7,
+     -44.6
+    ]
+   ]
+  },
+  {
+   "way": "636358388",
+   "tags": {
+    "barrier": "fence"
+   },
+   "centro": [
+    29,
+    -25
+   ],
+   "dist": 39,
+   "dims": [
+    28.3,
+    6.3
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     36.5,
+     -17.9
+    ],
+    [
+     30.5,
+     -16
+    ],
+    [
+     21.4,
+     -42.6
+    ]
+   ]
+  },
+  {
+   "way": "636358389",
+   "tags": {
+    "highway": "service",
+    "service": "parking_aisle"
+   },
+   "centro": [
+    29,
+    -28
+   ],
+   "dist": 40,
+   "dims": [
+    22.8,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 3,
+   "pts": [
+    [
+     16.5,
+     -23.6
+    ],
+    [
+     33.4,
+     -28.9
+    ],
+    [
+     38.3,
+     -30.4
+    ]
+   ]
+  },
+  {
+   "way": "650366543",
+   "tags": {
+    "landuse": "retail"
+   },
+   "centro": [
+    1,
+    115
+   ],
+   "dist": 115,
+   "dims": [
+    65.6,
+    49
+   ],
+   "rumoLadoMaior": 105,
+   "n": 11,
+   "pts": [
+    [
+     -27.8,
+     100.5
+    ],
+    [
+     -31.6,
+     102.7
+    ],
+    [
+     -32.5,
+     106.4
+    ],
+    [
+     -18.8,
+     148.8
+    ],
+    [
+     -11.5,
+     146.8
+    ],
+    [
+     19.3,
+     138.2
+    ],
+    [
+     42.4,
+     132
+    ],
+    [
+     35.4,
+     106
+    ],
+    [
+     32.2,
+     94.4
+    ],
+    [
+     29.9,
+     86.3
+    ],
+    [
+     -27.8,
+     100.5
+    ]
+   ]
+  },
+  {
+   "way": "650366567",
+   "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "capacity": "4",
+    "fee": "no",
+    "parking": "street_side"
+   },
+   "centro": [
+    -47,
+    134
+   ],
+   "dist": 142,
+   "dims": [
+    18.7,
+    8.4
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     -52.4,
+     129.2
+    ],
+    [
+     -46.6,
+     127.4
+    ],
+    [
+     -44.5,
+     126.8
+    ],
+    [
+     -38.9,
+     144.6
+    ],
+    [
+     -46.9,
+     147
+    ],
+    [
+     -52.4,
+     129.2
+    ]
+   ]
+  },
+  {
+   "way": "659361273",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-013",
+    "source:maxspeed": "sign",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -55,
+    57
+   ],
+   "dist": 80,
+   "dims": [
+    89.2,
+    0.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 4,
+   "pts": [
+    [
+     -70,
+     11.4
+    ],
+    [
+     -63.3,
+     32.5
+    ],
+    [
+     -45.4,
+     88.4
+    ],
+    [
+     -42.8,
+     96.3
+    ]
+   ]
+  },
+  {
+   "way": "723011939",
+   "tags": {
+    "access": "customers",
+    "amenity": "parking",
+    "fee": "no",
+    "parking": "street_side"
+   },
+   "centro": [
+    -54,
+    119
+   ],
+   "dist": 130,
+   "dims": [
+    21.3,
+    7.8
+   ],
+   "rumoLadoMaior": 15,
+   "n": 6,
+   "pts": [
+    [
+     -59.5,
+     109.1
+    ],
+    [
+     -52.8,
+     107.3
+    ],
+    [
+     -46.6,
+     127.4
+    ],
+    [
+     -52.4,
+     129.2
+    ],
+    [
+     -54.1,
+     129.7
+    ],
+    [
+     -59.5,
+     109.1
+    ]
+   ]
+  },
+  {
+   "way": "723011940",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "909",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Atibaia",
+    "residential": "apartments"
+   },
+   "centro": [
+    -139,
+    159
+   ],
+   "dist": 211,
+   "dims": [
+    47.7,
+    43
+   ],
+   "rumoLadoMaior": 17,
+   "n": 7,
+   "pts": [
+    [
+     -114.9,
+     167.8
+    ],
+    [
+     -128.4,
+     124.7
+    ],
+    [
+     -170,
+     134.8
+    ],
+    [
+     -158,
+     174
+    ],
+    [
+     -144.4,
+     170
+    ],
+    [
+     -142.6,
+     176.2
+    ],
+    [
+     -114.9,
+     167.8
+    ]
+   ]
+  },
+  {
+   "way": "746612787",
+   "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Rua Tenente Amauri Pio",
+    "oneway": "yes",
+    "postal_code": "60160-090",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -73,
+    12
+   ],
+   "dist": 74,
+   "dims": [
+    6.9,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 2,
+   "pts": [
+    [
+     -76.6,
+     13.4
+    ],
+    [
+     -70,
+     11.4
+    ]
+   ]
+  },
+  {
+   "way": "792218473",
+   "tags": {
+    "covered": "yes",
+    "highway": "footway"
+   },
+   "centro": [
+    5,
+    15
+   ],
+   "dist": 16,
+   "dims": [
+    5.4,
+    0
+   ],
+   "rumoLadoMaior": 108,
+   "n": 3,
+   "pts": [
+    [
+     2.6,
+     15.7
+    ],
+    [
+     5,
+     14.9
+    ],
+    [
+     7.7,
+     14
+    ]
+   ]
+  },
+  {
+   "way": "792218474",
+   "tags": {
+    "highway": "footway"
+   },
+   "centro": [
+    11,
+    23
+   ],
+   "dist": 26,
+   "dims": [
+    88.4,
+    17.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     7.7,
+     14
+    ],
+    [
+     25.1,
+     8.5
+    ],
+    [
+     34.3,
+     5.5
+    ],
+    [
+     39.8,
+     22.3
+    ],
+    [
+     33.8,
+     24.2
+    ],
+    [
+     -17.3,
+     40.6
+    ],
+    [
+     -44.4,
+     49.2
+    ]
+   ]
+  },
+  {
+   "way": "793267845",
+   "tags": {
+    "alt_name": "Rua Silvia Paulet",
+    "highway": "residential",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxwidth": "2.2",
+    "name": "Rua Silva Paulet",
+    "oneway": "yes",
+    "postal_code": "60120-020",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    29,
+    -61
+   ],
+   "dist": 67,
+   "dims": [
+    250.4,
+    0.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 13,
+   "pts": [
+    [
+     70.3,
+     68.3
+    ],
+    [
+     68.4,
+     61.3
+    ],
+    [
+     43.2,
+     -14.9
+    ],
+    [
+     41.3,
+     -21.2
+    ],
+    [
+     40.2,
+     -24.5
+    ],
+    [
+     38.3,
+     -30.4
+    ],
+    [
+     35.8,
+     -38.5
+    ],
+    [
+     18.8,
+     -92.5
+    ],
+    [
+     16.8,
+     -99
+    ],
+    [
+     15.2,
+     -104
+    ],
+    [
+     -3.7,
+     -163.2
+    ],
+    [
+     -4,
+     -164.3
+    ],
+    [
+     -5.8,
+     -170.3
+    ]
+   ]
+  },
+  {
+   "way": "907786951",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-000",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -83,
+    -5
+   ],
+   "dist": 83,
+   "dims": [
+    38.5,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 2,
+   "pts": [
+    [
+     -76.6,
+     13.4
+    ],
+    [
+     -88.8,
+     -23.1
+    ]
+   ]
+  },
+  {
+   "way": "911044379",
+   "tags": {
+    "highway": "service",
+    "oneway": "no"
+   },
+   "centro": [
+    -85,
+    -24
+   ],
+   "dist": 89,
+   "dims": [
+    7.3,
+    0
+   ],
+   "rumoLadoMaior": 108,
+   "n": 2,
+   "pts": [
+    [
+     -88.8,
+     -23.1
+    ],
+    [
+     -81.9,
+     -25.4
+    ]
+   ]
+  },
+  {
+   "way": "913940637",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-000",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -94,
+    -38
+   ],
+   "dist": 101,
+   "dims": [
+    37.9,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -88.8,
+     -23.1
+    ],
+    [
+     -91.4,
+     -31.1
+    ],
+    [
+     -100.4,
+     -59.2
+    ]
+   ]
+  },
+  {
+   "way": "913940638",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-013",
+    "source:maxspeed": "sign",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -87,
+    -40
+   ],
+   "dist": 95,
+   "dims": [
+    38,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -93.4,
+     -61.6
+    ],
+    [
+     -84.5,
+     -33.5
+    ],
+    [
+     -81.9,
+     -25.4
+    ]
+   ]
+  },
+  {
+   "way": "913940639",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-013",
+    "source:maxspeed": "sign",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -108,
+    -108
+   ],
+   "dist": 153,
+   "dims": [
+    76.5,
+    0.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -117.2,
+     -134.3
+    ],
+    [
+     -114.7,
+     -127
+    ],
+    [
+     -93.4,
+     -61.6
+    ]
+   ]
+  },
+  {
+   "way": "913940640",
+   "tags": {
+    "highway": "service"
+   },
+   "centro": [
+    -69,
+    -30
+   ],
+   "dist": 75,
+   "dims": [
+    45.8,
+    0.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 4,
+   "pts": [
+    [
+     -81.9,
+     -25.4
+    ],
+    [
+     -77.5,
+     -26.8
+    ],
+    [
+     -76.4,
+     -27.4
+    ],
+    [
+     -38.4,
+     -39.8
+    ]
+   ]
+  },
+  {
+   "way": "913940641",
+   "tags": {
+    "hgv:conditional": "no @ (Mo-Fr 06:00-20:00; Sa 06:00-13:00)",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "60",
+    "maxwidth": "2.2",
+    "name": "Avenida Barão de Studart",
+    "oneway": "yes",
+    "postal_code": "60120-000",
+    "source:maxspeed": "sign",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -62,
+    59
+   ],
+   "dist": 85,
+   "dims": [
+    88.9,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 4,
+   "pts": [
+    [
+     -49.2,
+     98
+    ],
+    [
+     -51.9,
+     89.8
+    ],
+    [
+     -69.8,
+     34.5
+    ],
+    [
+     -76.6,
+     13.4
+    ]
+   ]
+  },
+  {
+   "way": "914767128",
+   "tags": {
+    "crossing": "traffic_signals",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -118,
+    -126
+   ],
+   "dist": 173,
+   "dims": [
+    15.5,
+    0.1
+   ],
+   "rumoLadoMaior": 107,
+   "n": 4,
+   "pts": [
+    [
+     -125.2,
+     -123.7
+    ],
+    [
+     -121.9,
+     -124.7
+    ],
+    [
+     -114.7,
+     -127
+    ],
+    [
+     -110.4,
+     -128.3
+    ]
+   ]
+  },
+  {
+   "way": "915569635",
+   "tags": {
+    "alt_name": "Rua Doutor Medeirinhos",
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Rua Doutor Castro Medeiros",
+    "name:etymology": "José de Castro Medeiros",
+    "oneway": "yes",
+    "postal_code": "60160-100",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -212,
+    -23
+   ],
+   "dist": 213,
+   "dims": [
+    248.4,
+    0.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -100.4,
+     -59.2
+    ],
+    [
+     -106.8,
+     -57.1
+    ],
+    [
+     -176.5,
+     -34.2
+    ],
+    [
+     -202.6,
+     -25.9
+    ],
+    [
+     -209.1,
+     -23.8
+    ],
+    [
+     -217.9,
+     -21
+    ],
+    [
+     -226.8,
+     -18
+    ],
+    [
+     -329.7,
+     15.3
+    ],
+    [
+     -336.6,
+     17.6
+    ]
+   ]
+  },
+  {
+   "way": "1050321312",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "525",
+    "addr:postcode": "60120-020",
+    "addr:street": "Rua Silva Paulet",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Palatium Residencial Meireles",
+    "residential": "apartments"
+   },
+   "centro": [
+    51,
+    -156
+   ],
+   "dist": 165,
+   "dims": [
+    73,
+    64
+   ],
+   "rumoLadoMaior": 107,
+   "n": 10,
+   "pts": [
+    [
+     51,
+     -181.1
+    ],
+    [
+     71.9,
+     -187.9
+    ],
+    [
+     76.3,
+     -174.8
+    ],
+    [
+     91.3,
+     -126.9
+    ],
+    [
+     22,
+     -105.3
+    ],
+    [
+     11.9,
+     -136.2
+    ],
+    [
+     23.6,
+     -140
+    ],
+    [
+     60.7,
+     -152.4
+    ],
+    [
+     51.7,
+     -179.2
+    ],
+    [
+     51,
+     -181.1
+    ]
+   ]
+  },
+  {
+   "way": "1050321314",
+   "tags": {
+    "building": "construction",
+    "check_date": "2022-04-08",
+    "construction": "apartments"
+   },
+   "centro": [
+    53,
+    -133
+   ],
+   "dist": 143,
+   "dims": [
+    56.2,
+    18.6
+   ],
+   "rumoLadoMaior": 121,
+   "n": 24,
+   "pts": [
+    [
+     76.6,
+     -139.3
+    ],
+    [
+     75.1,
+     -144.9
+    ],
+    [
+     68.7,
+     -142.8
+    ],
+    [
+     68.3,
+     -145.1
+    ],
+    [
+     59.7,
+     -142.5
+    ],
+    [
+     58.7,
+     -146.1
+    ],
+    [
+     48,
+     -142.8
+    ],
+    [
+     48.6,
+     -140.7
+    ],
+    [
+     42.1,
+     -136.8
+    ],
+    [
+     40.3,
+     -135.4
+    ],
+    [
+     27.5,
+     -125.1
+    ],
+    [
+     29.2,
+     -122.6
+    ],
+    [
+     25,
+     -119.2
+    ],
+    [
+     28.8,
+     -114.6
+    ],
+    [
+     30.9,
+     -116.9
+    ],
+    [
+     33.1,
+     -115.3
+    ],
+    [
+     48.9,
+     -128.3
+    ],
+    [
+     52.8,
+     -129.8
+    ],
+    [
+     52.6,
+     -130.8
+    ],
+    [
+     64.5,
+     -134.7
+    ],
+    [
+     65.1,
+     -133.4
+    ],
+    [
+     73.4,
+     -136.3
+    ],
+    [
+     73,
+     -138
+    ],
+    [
+     76.6,
+     -139.3
+    ]
+   ]
+  },
+  {
+   "way": "1050321316",
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "30",
+    "maxwidth": "2.2",
+    "name": "Rua Deputado Moreira da Rocha",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "postal_code": "60160-060",
+    "source:maxspeed": "sign",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -3,
+    86
+   ],
+   "dist": 86,
+   "dims": [
+    116.5,
+    0
+   ],
+   "rumoLadoMaior": 104,
+   "n": 3,
+   "pts": [
+    [
+     70.3,
+     68.3
+    ],
+    [
+     -35.4,
+     94.5
+    ],
+    [
+     -42.8,
+     96.3
+    ]
+   ]
+  },
+  {
+   "way": "1050321317",
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "40",
+    "maxwidth": "2.2",
+    "name": "Rua Deputado Moreira da Rocha",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "postal_code": "60160-060",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -91,
+    108
+   ],
+   "dist": 141,
+   "dims": [
+    71.5,
+    0
+   ],
+   "rumoLadoMaior": 104,
+   "n": 2,
+   "pts": [
+    [
+     -56,
+     99.7
+    ],
+    [
+     -125.3,
+     117.2
+    ]
+   ]
+  },
+  {
+   "way": "1112705237",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "410",
+    "addr:postcode": "60120-000",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "contact:instagram": "mis_ceara",
+    "email": "mis-ce@institutomirante.org",
+    "museum": "technology",
+    "name": "Museu da Imagem e do Som do Ceará",
+    "official_name": "Museu da Imagem e do Som do Ceará Chico Albuquerque",
+    "opening_hours": "Mo off; Tu-Th 10:00-18:00; Fr-Su 13:00-20:00",
+    "operator": "Instituto Mirante",
+    "operator:type": "ngo",
+    "short_name": "MIS-CE",
+    "start_date": "1980",
+    "tourism": "museum",
+    "wheelchair": "yes",
+    "wikidata": "Q10333694",
+    "wikipedia": "pt:Museu da Imagem e do Som do Ceará"
+   },
+   "centro": [
+    -93,
+    64
+   ],
+   "dist": 113,
+   "dims": [
+    77,
+    46.4
+   ],
+   "rumoLadoMaior": 18,
+   "n": 12,
+   "pts": [
+    [
+     -103.9,
+     62.8
+    ],
+    [
+     -115.4,
+     66.5
+    ],
+    [
+     -111,
+     79.5
+    ],
+    [
+     -107.4,
+     90.7
+    ],
+    [
+     -103.1,
+     104
+    ],
+    [
+     -61.8,
+     93.8
+    ],
+    [
+     -58.8,
+     90.9
+    ],
+    [
+     -73,
+     46.9
+    ],
+    [
+     -81.2,
+     21.4
+    ],
+    [
+     -84.2,
+     20.1
+    ],
+    [
+     -115.1,
+     30.2
+    ],
+    [
+     -103.9,
+     62.8
+    ]
+   ]
+  },
+  {
+   "way": "1112705239",
+   "tags": {
+    "building": "apartments",
+    "building:levels": "26",
+    "height": "78.0",
+    "start_date": "2013"
+   },
+   "centro": [
+    -134,
+    54
+   ],
+   "dist": 144,
+   "dims": [
+    49.1,
+    25.3
+   ],
+   "rumoLadoMaior": 106,
+   "n": 32,
+   "pts": [
+    [
+     -116.4,
+     47.8
+    ],
+    [
+     -118.4,
+     41.9
+    ],
+    [
+     -125.6,
+     44.2
+    ],
+    [
+     -126.5,
+     41.5
+    ],
+    [
+     -139.2,
+     45.7
+    ],
+    [
+     -141.2,
+     47.4
+    ],
+    [
+     -142.5,
+     45.7
+    ],
+    [
+     -148.7,
+     47.6
+    ],
+    [
+     -148.6,
+     47.9
+    ],
+    [
+     -153.8,
+     49.6
+    ],
+    [
+     -158.4,
+     51.1
+    ],
+    [
+     -157.3,
+     54.4
+    ],
+    [
+     -158.9,
+     54.9
+    ],
+    [
+     -154.6,
+     68.1
+    ],
+    [
+     -160.3,
+     69.9
+    ],
+    [
+     -158.2,
+     76.4
+    ],
+    [
+     -133.9,
+     69.6
+    ],
+    [
+     -135.9,
+     61
+    ],
+    [
+     -133.3,
+     59.4
+    ],
+    [
+     -130.9,
+     58
+    ],
+    [
+     -128.9,
+     57
+    ],
+    [
+     -127,
+     56
+    ],
+    [
+     -124.8,
+     55
+    ],
+    [
+     -122.8,
+     54.1
+    ],
+    [
+     -121,
+     53.4
+    ],
+    [
+     -121.1,
+     53.3
+    ],
+    [
+     -119.3,
+     52.8
+    ],
+    [
+     -117,
+     52.2
+    ],
+    [
+     -115.5,
+     52
+    ],
+    [
+     -114.4,
+     51.8
+    ],
+    [
+     -115.8,
+     47.6
+    ],
+    [
+     -116.4,
+     47.8
+    ]
+   ]
+  },
+  {
+   "way": "1112705242",
+   "tags": {
+    "building": "apartments",
+    "building:levels": "27",
+    "height": "79.6",
+    "start_date": "1998"
+   },
+   "centro": [
+    -156,
+    90
+   ],
+   "dist": 180,
+   "dims": [
+    39.4,
+    31.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 15,
+   "pts": [
+    [
+     -164.4,
+     99.2
+    ],
+    [
+     -165.9,
+     99.7
+    ],
+    [
+     -161.2,
+     113.5
+    ],
+    [
+     -128.9,
+     103.2
+    ],
+    [
+     -136.3,
+     80.6
+    ],
+    [
+     -131.2,
+     78.9
+    ],
+    [
+     -133.2,
+     72.8
+    ],
+    [
+     -157.2,
+     79.5
+    ],
+    [
+     -160.5,
+     80.4
+    ],
+    [
+     -168.2,
+     82.5
+    ],
+    [
+     -167.7,
+     84.4
+    ],
+    [
+     -170.5,
+     85.3
+    ],
+    [
+     -167.8,
+     93.4
+    ],
+    [
+     -165.9,
+     94.5
+    ],
+    [
+     -164.4,
+     99.2
+    ]
+   ]
+  },
+  {
+   "way": "1112754713",
+   "tags": {
+    "access": "private",
+    "leisure": "swimming_pool"
+   },
+   "centro": [
+    -122,
+    74
+   ],
+   "dist": 142,
+   "dims": [
+    20.8,
+    8.5
+   ],
+   "rumoLadoMaior": 17,
+   "n": 7,
+   "pts": [
+    [
+     -119.4,
+     83.8
+    ],
+    [
+     -124.1,
+     68.8
+    ],
+    [
+     -126.9,
+     69.7
+    ],
+    [
+     -128.5,
+     64.8
+    ],
+    [
+     -120.4,
+     62.3
+    ],
+    [
+     -114.3,
+     82.2
+    ],
+    [
+     -119.4,
+     83.8
+    ]
+   ]
+  },
+  {
+   "way": "1112754714",
+   "tags": {
+    "access": "private",
+    "leisure": "pitch",
+    "sport": "multi"
+   },
+   "centro": [
+    -112,
+    101
+   ],
+   "dist": 151,
+   "dims": [
+    11.1,
+    7.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 5,
+   "pts": [
+    [
+     -115.3,
+     105.4
+    ],
+    [
+     -117.5,
+     98.4
+    ],
+    [
+     -107,
+     95
+    ],
+    [
+     -104.8,
+     102
+    ],
+    [
+     -115.3,
+     105.4
+    ]
+   ]
+  },
+  {
+   "way": "1112754715",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "6.3",
+    "layer": "1"
+   },
+   "centro": [
+    -121,
+    89
+   ],
+   "dist": 150,
+   "dims": [
+    15.7,
+    12.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 12,
+   "pts": [
+    [
+     -124.4,
+     87.1
+    ],
+    [
+     -125.5,
+     87.4
+    ],
+    [
+     -125.3,
+     88.1
+    ],
+    [
+     -126.2,
+     88.4
+    ],
+    [
+     -124.6,
+     93.5
+    ],
+    [
+     -121.4,
+     92.5
+    ],
+    [
+     -119.8,
+     97.6
+    ],
+    [
+     -108,
+     93.9
+    ],
+    [
+     -110.5,
+     86.1
+    ],
+    [
+     -111.8,
+     81.9
+    ],
+    [
+     -124.7,
+     86
+    ],
+    [
+     -124.4,
+     87.1
+    ]
+   ]
+  },
+  {
+   "way": "1112754716",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "179",
+    "addr:postcode": "60160-090",
+    "addr:street": "Rua Tenente Amauri Pio",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Lumni",
+    "residential": "apartments"
+   },
+   "centro": [
+    -136,
+    73
+   ],
+   "dist": 154,
+   "dims": [
+    74,
+    55.9
+   ],
+   "rumoLadoMaior": 18,
+   "n": 16,
+   "pts": [
+    [
+     -167.8,
+     47.3
+    ],
+    [
+     -161,
+     67.8
+    ],
+    [
+     -160.3,
+     69.9
+    ],
+    [
+     -158.2,
+     76.4
+    ],
+    [
+     -157.8,
+     77.8
+    ],
+    [
+     -157.2,
+     79.5
+    ],
+    [
+     -133.2,
+     72.8
+    ],
+    [
+     -131.2,
+     78.9
+    ],
+    [
+     -121.8,
+     108.6
+    ],
+    [
+     -103.1,
+     104
+    ],
+    [
+     -107.4,
+     90.7
+    ],
+    [
+     -111,
+     79.5
+    ],
+    [
+     -115.4,
+     66.5
+    ],
+    [
+     -103.9,
+     62.8
+    ],
+    [
+     -115.1,
+     30.2
+    ],
+    [
+     -167.8,
+     47.3
+    ]
+   ]
+  },
+  {
+   "way": "1112755011",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "365",
+    "addr:postcode": "60120-020",
+    "addr:street": "Rua Silva Paulet",
+    "addr:suburb": "Meireles",
+    "building": "yes"
+   },
+   "centro": [
+    80,
+    32
+   ],
+   "dist": 86,
+   "dims": [
+    56.9,
+    35.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 11,
+   "pts": [
+    [
+     88.2,
+     57.4
+    ],
+    [
+     83.4,
+     42.4
+    ],
+    [
+     71.4,
+     46.1
+    ],
+    [
+     65.5,
+     27.7
+    ],
+    [
+     67.1,
+     27.2
+    ],
+    [
+     65,
+     20.9
+    ],
+    [
+     75.2,
+     17.6
+    ],
+    [
+     70.7,
+     3.4
+    ],
+    [
+     92.3,
+     -3.4
+    ],
+    [
+     109.7,
+     50.6
+    ],
+    [
+     88.2,
+     57.4
+    ]
+   ]
+  },
+  {
+   "way": "1144520502",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.7",
+    "pmfsefin:idedif": "18851"
+   },
+   "centro": [
+    128,
+    39
+   ],
+   "dist": 134,
+   "dims": [
+    11.4,
+    8.8
+   ],
+   "rumoLadoMaior": 104,
+   "n": 5,
+   "pts": [
+    [
+     133.7,
+     41.7
+    ],
+    [
+     131.5,
+     33.2
+    ],
+    [
+     120.5,
+     36
+    ],
+    [
+     122.7,
+     44.5
+    ],
+    [
+     133.7,
+     41.7
+    ]
+   ]
+  },
+  {
+   "way": "1144520503",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.1",
+    "pmfsefin:idedif": "18920"
+   },
+   "centro": [
+    71,
+    -23
+   ],
+   "dist": 74,
+   "dims": [
+    15.4,
+    2.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 9,
+   "pts": [
+    [
+     76.3,
+     -25
+    ],
+    [
+     76,
+     -26.1
+    ],
+    [
+     63.1,
+     -22.3
+    ],
+    [
+     63.4,
+     -21.2
+    ],
+    [
+     62.4,
+     -20.9
+    ],
+    [
+     62.9,
+     -19.4
+    ],
+    [
+     77.6,
+     -23.8
+    ],
+    [
+     77.2,
+     -25.3
+    ],
+    [
+     76.3,
+     -25
+    ]
+   ]
+  },
+  {
+   "way": "1144520504",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.2",
+    "pmfsefin:idedif": "35154"
+   },
+   "centro": [
+    97,
+    -26
+   ],
+   "dist": 101,
+   "dims": [
+    18.9,
+    9.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 17,
+   "pts": [
+    [
+     95.6,
+     -29.2
+    ],
+    [
+     91.4,
+     -27.8
+    ],
+    [
+     91.9,
+     -26.5
+    ],
+    [
+     86.9,
+     -24.9
+    ],
+    [
+     88.5,
+     -20
+    ],
+    [
+     92.5,
+     -21.3
+    ],
+    [
+     97.9,
+     -23
+    ],
+    [
+     98.5,
+     -21.2
+    ],
+    [
+     107,
+     -24
+    ],
+    [
+     106.3,
+     -26.3
+    ],
+    [
+     103.5,
+     -25.4
+    ],
+    [
+     102.4,
+     -28.9
+    ],
+    [
+     101.9,
+     -30.5
+    ],
+    [
+     98.6,
+     -29.5
+    ],
+    [
+     98,
+     -31.4
+    ],
+    [
+     95.2,
+     -30.5
+    ],
+    [
+     95.6,
+     -29.2
+    ]
+   ]
+  },
+  {
+   "way": "1144521892",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "38732"
+   },
+   "centro": [
+    109,
+    123
+   ],
+   "dist": 164,
+   "dims": [
+    2.5,
+    1.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 5,
+   "pts": [
+    [
+     110.4,
+     123.3
+    ],
+    [
+     109.9,
+     121.7
+    ],
+    [
+     107.5,
+     122.5
+    ],
+    [
+     108,
+     124
+    ],
+    [
+     110.4,
+     123.3
+    ]
+   ]
+  },
+  {
+   "way": "1144521893",
+   "tags": {
+    "building:levels": "13",
+    "building:part": "yes",
+    "height": "38.5",
+    "pmfsefin:idedif": "38731"
+   },
+   "centro": [
+    115,
+    119
+   ],
+   "dist": 166,
+   "dims": [
+    8.5,
+    1.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 5,
+   "pts": [
+    [
+     118.9,
+     118.8
+    ],
+    [
+     118.3,
+     117.2
+    ],
+    [
+     110.3,
+     119.7
+    ],
+    [
+     110.8,
+     121.3
+    ],
+    [
+     118.9,
+     118.8
+    ]
+   ]
+  },
+  {
+   "way": "1144522187",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.1",
+    "pmfsefin:idedif": "37204"
+   },
+   "centro": [
+    -145,
+    -81
+   ],
+   "dist": 166,
+   "dims": [
+    30.5,
+    13.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 21,
+   "pts": [
+    [
+     -122.9,
+     -80.6
+    ],
+    [
+     -124.4,
+     -85.2
+    ],
+    [
+     -125.2,
+     -85
+    ],
+    [
+     -138.6,
+     -80.9
+    ],
+    [
+     -141.2,
+     -88.9
+    ],
+    [
+     -146.4,
+     -87
+    ],
+    [
+     -153.6,
+     -84.3
+    ],
+    [
+     -153.8,
+     -84.2
+    ],
+    [
+     -155.4,
+     -83.6
+    ],
+    [
+     -155.8,
+     -83.5
+    ],
+    [
+     -155.9,
+     -83.5
+    ],
+    [
+     -155.4,
+     -82.1
+    ],
+    [
+     -155.4,
+     -82
+    ],
+    [
+     -153.9,
+     -77.3
+    ],
+    [
+     -153.8,
+     -77.1
+    ],
+    [
+     -153.2,
+     -75.1
+    ],
+    [
+     -152.1,
+     -71.7
+    ],
+    [
+     -151.9,
+     -71.2
+    ],
+    [
+     -137.3,
+     -75.9
+    ],
+    [
+     -136.8,
+     -76.1
+    ],
+    [
+     -122.9,
+     -80.6
+    ]
+   ]
+  },
+  {
+   "way": "1144522210",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.6",
+    "pmfsefin:idedif": "37103"
+   },
+   "centro": [
+    123,
+    85
+   ],
+   "dist": 149,
+   "dims": [
+    11.1,
+    10
+   ],
+   "rumoLadoMaior": 7,
+   "n": 17,
+   "pts": [
+    [
+     129.3,
+     88.1
+    ],
+    [
+     129.2,
+     87.7
+    ],
+    [
+     125.9,
+     88.2
+    ],
+    [
+     125.1,
+     82.1
+    ],
+    [
+     121.9,
+     82.5
+    ],
+    [
+     120.6,
+     81.5
+    ],
+    [
+     120.3,
+     81.8
+    ],
+    [
+     120,
+     81.9
+    ],
+    [
+     119.7,
+     81.9
+    ],
+    [
+     119.5,
+     81.9
+    ],
+    [
+     119.2,
+     81.9
+    ],
+    [
+     119,
+     81.8
+    ],
+    [
+     118.7,
+     81.7
+    ],
+    [
+     118.5,
+     81.6
+    ],
+    [
+     119.8,
+     92.6
+    ],
+    [
+     129.7,
+     91.5
+    ],
+    [
+     129.3,
+     88.1
+    ]
+   ]
+  },
+  {
+   "way": "1144522212",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "37100"
+   },
+   "centro": [
+    129,
+    81
+   ],
+   "dist": 153,
+   "dims": [
+    26.8,
+    26.4
+   ],
+   "rumoLadoMaior": 20,
+   "n": 32,
+   "pts": [
+    [
+     144.5,
+     90.9
+    ],
+    [
+     142.9,
+     80
+    ],
+    [
+     141.6,
+     80.1
+    ],
+    [
+     137.5,
+     80.6
+    ],
+    [
+     136.7,
+     74.2
+    ],
+    [
+     135.6,
+     66.4
+    ],
+    [
+     132.8,
+     66.8
+    ],
+    [
+     132.6,
+     66.8
+    ],
+    [
+     132.9,
+     69.4
+    ],
+    [
+     133.3,
+     69.6
+    ],
+    [
+     133.7,
+     69.8
+    ],
+    [
+     134,
+     70.1
+    ],
+    [
+     134.2,
+     70.4
+    ],
+    [
+     134.7,
+     75
+    ],
+    [
+     134,
+     75.1
+    ],
+    [
+     135.8,
+     87.1
+    ],
+    [
+     129.3,
+     88.1
+    ],
+    [
+     129.7,
+     91.5
+    ],
+    [
+     119.8,
+     92.6
+    ],
+    [
+     118.5,
+     81.6
+    ],
+    [
+     118.2,
+     81.4
+    ],
+    [
+     118.1,
+     81.1
+    ],
+    [
+     118.1,
+     81
+    ],
+    [
+     116.8,
+     81.4
+    ],
+    [
+     115.6,
+     81.8
+    ],
+    [
+     118.8,
+     90.8
+    ],
+    [
+     119.4,
+     92.7
+    ],
+    [
+     119.5,
+     92.9
+    ],
+    [
+     120.4,
+     95.4
+    ],
+    [
+     120.5,
+     95.9
+    ],
+    [
+     136.5,
+     93.9
+    ],
+    [
+     144.5,
+     90.9
+    ]
+   ]
+  },
+  {
+   "way": "1144522214",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.5",
+    "pmfsefin:idedif": "37097"
+   },
+   "centro": [
+    133,
+    97
+   ],
+   "dist": 164,
+   "dims": [
+    24.5,
+    6.8
+   ],
+   "rumoLadoMaior": 98,
+   "n": 9,
+   "pts": [
+    [
+     145.2,
+     95.9
+    ],
+    [
+     144.5,
+     90.9
+    ],
+    [
+     136.5,
+     93.9
+    ],
+    [
+     120.5,
+     95.9
+    ],
+    [
+     121.6,
+     99
+    ],
+    [
+     122,
+     100
+    ],
+    [
+     122.2,
+     100.8
+    ],
+    [
+     138.1,
+     98.7
+    ],
+    [
+     145.2,
+     95.9
+    ]
+   ]
+  },
+  {
+   "way": "1144522217",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "37079"
+   },
+   "centro": [
+    103,
+    125
+   ],
+   "dist": 161,
+   "dims": [
+    9.4,
+    5.5
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     105.4,
+     125.4
+    ],
+    [
+     105.4,
+     125.3
+    ],
+    [
+     107,
+     124.7
+    ],
+    [
+     105.3,
+     119.7
+    ],
+    [
+     96.4,
+     122.6
+    ],
+    [
+     97.6,
+     125.9
+    ],
+    [
+     98.2,
+     127.8
+    ],
+    [
+     105.4,
+     125.4
+    ]
+   ]
+  },
+  {
+   "way": "1144522219",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.7",
+    "pmfsefin:idedif": "37069"
+   },
+   "centro": [
+    102,
+    133
+   ],
+   "dist": 167,
+   "dims": [
+    9.2,
+    3.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     107.6,
+     132.3
+    ],
+    [
+     106.5,
+     128.8
+    ],
+    [
+     98.7,
+     131.3
+    ],
+    [
+     98.1,
+     131.7
+    ],
+    [
+     97.9,
+     132
+    ],
+    [
+     98.7,
+     134.5
+    ],
+    [
+     99.2,
+     134.7
+    ],
+    [
+     99.9,
+     134.6
+    ],
+    [
+     104.8,
+     133.2
+    ],
+    [
+     107.6,
+     132.3
+    ]
+   ]
+  },
+  {
+   "way": "1144522220",
+   "tags": {
+    "building:levels": "13",
+    "building:part": "yes",
+    "height": "38.6",
+    "pmfsefin:idedif": "37068"
+   },
+   "centro": [
+    120,
+    125
+   ],
+   "dist": 174,
+   "dims": [
+    36.4,
+    14.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 32,
+   "pts": [
+    [
+     119,
+     131.1
+    ],
+    [
+     119.8,
+     130.8
+    ],
+    [
+     120.4,
+     133
+    ],
+    [
+     132.2,
+     129.3
+    ],
+    [
+     131.5,
+     127
+    ],
+    [
+     132.1,
+     126.8
+    ],
+    [
+     132.4,
+     127.5
+    ],
+    [
+     143.1,
+     124.1
+    ],
+    [
+     141.2,
+     117.9
+    ],
+    [
+     140,
+     114.4
+    ],
+    [
+     134.8,
+     116
+    ],
+    [
+     134.1,
+     113.8
+    ],
+    [
+     124.6,
+     116.8
+    ],
+    [
+     126.3,
+     121.9
+    ],
+    [
+     120.9,
+     123.7
+    ],
+    [
+     119.2,
+     118.7
+    ],
+    [
+     118.9,
+     118.8
+    ],
+    [
+     110.8,
+     121.3
+    ],
+    [
+     109.9,
+     121.7
+    ],
+    [
+     110.4,
+     123.3
+    ],
+    [
+     110.5,
+     123.6
+    ],
+    [
+     107,
+     124.7
+    ],
+    [
+     105.4,
+     125.3
+    ],
+    [
+     105.4,
+     125.4
+    ],
+    [
+     105.5,
+     125.6
+    ],
+    [
+     106.5,
+     128.8
+    ],
+    [
+     107.6,
+     132.3
+    ],
+    [
+     108.5,
+     135.2
+    ],
+    [
+     110,
+     134.7
+    ],
+    [
+     114.4,
+     133.3
+    ],
+    [
+     119.2,
+     131.8
+    ],
+    [
+     119,
+     131.1
+    ]
+   ]
+  },
+  {
+   "way": "1144522373",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.2",
+    "pmfsefin:idedif": "35308"
+   },
+   "centro": [
+    -106,
+    87
+   ],
+   "dist": 137,
+   "dims": [
+    12.8,
+    4.2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 12,
+   "pts": [
+    [
+     -106.3,
+     91.4
+    ],
+    [
+     -103.1,
+     90.3
+    ],
+    [
+     -103.5,
+     89
+    ],
+    [
+     -103.9,
+     87.8
+    ],
+    [
+     -105,
+     88.2
+    ],
+    [
+     -105.6,
+     86.3
+    ],
+    [
+     -104.7,
+     86
+    ],
+    [
+     -107.2,
+     78.3
+    ],
+    [
+     -111,
+     79.5
+    ],
+    [
+     -107.4,
+     90.7
+    ],
+    [
+     -106.6,
+     90.4
+    ],
+    [
+     -106.3,
+     91.4
+    ]
+   ]
+  },
+  {
+   "way": "1144522384",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.7",
+    "pmfsefin:idedif": "35296"
+   },
+   "centro": [
+    -133,
+    -92
+   ],
+   "dist": 162,
+   "dims": [
+    24,
+    17
+   ],
+   "rumoLadoMaior": 107,
+   "n": 22,
+   "pts": [
+    [
+     -122.1,
+     -88.4
+    ],
+    [
+     -122.9,
+     -90.8
+    ],
+    [
+     -123.6,
+     -90.6
+    ],
+    [
+     -126.9,
+     -100.6
+    ],
+    [
+     -127.9,
+     -100.3
+    ],
+    [
+     -128,
+     -100.8
+    ],
+    [
+     -139.1,
+     -97.2
+    ],
+    [
+     -139.4,
+     -98.1
+    ],
+    [
+     -139.5,
+     -98.4
+    ],
+    [
+     -145.3,
+     -96.6
+    ],
+    [
+     -149.2,
+     -95.3
+    ],
+    [
+     -149.2,
+     -95
+    ],
+    [
+     -148.7,
+     -93.8
+    ],
+    [
+     -146.4,
+     -87
+    ],
+    [
+     -141.2,
+     -88.9
+    ],
+    [
+     -138.6,
+     -80.9
+    ],
+    [
+     -125.2,
+     -85
+    ],
+    [
+     -124.4,
+     -85.2
+    ],
+    [
+     -125,
+     -87
+    ],
+    [
+     -122.6,
+     -87.8
+    ],
+    [
+     -122.7,
+     -88.2
+    ],
+    [
+     -122.1,
+     -88.4
+    ]
+   ]
+  },
+  {
+   "way": "1144522390",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "35236"
+   },
+   "centro": [
+    72,
+    132
+   ],
+   "dist": 150,
+   "dims": [
+    10.8,
+    3.5
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     77.6,
+     128.3
+    ],
+    [
+     77.6,
+     128.3
+    ],
+    [
+     72.4,
+     130
+    ],
+    [
+     70.8,
+     130.5
+    ],
+    [
+     67.3,
+     131.6
+    ],
+    [
+     68.3,
+     134.6
+    ],
+    [
+     68.4,
+     134.9
+    ],
+    [
+     68.6,
+     134.9
+    ],
+    [
+     68.8,
+     134.8
+    ],
+    [
+     71.9,
+     133.8
+    ],
+    [
+     73.4,
+     133.3
+    ],
+    [
+     78.7,
+     131.6
+    ],
+    [
+     77.6,
+     128.3
+    ]
+   ]
+  },
+  {
+   "way": "1144522395",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.3",
+    "pmfsefin:idedif": "35215"
+   },
+   "centro": [
+    98,
+    84
+   ],
+   "dist": 129,
+   "dims": [
+    26.7,
+    20.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 45,
+   "pts": [
+    [
+     97.8,
+     93
+    ],
+    [
+     95.8,
+     86.3
+    ],
+    [
+     94.9,
+     86.6
+    ],
+    [
+     94.5,
+     85.3
+    ],
+    [
+     93.6,
+     82.2
+    ],
+    [
+     94,
+     82.1
+    ],
+    [
+     97.2,
+     81.1
+    ],
+    [
+     98.1,
+     80.9
+    ],
+    [
+     100.2,
+     80.2
+    ],
+    [
+     100.7,
+     81.7
+    ],
+    [
+     102.7,
+     81.1
+    ],
+    [
+     103.4,
+     80.9
+    ],
+    [
+     111.1,
+     78.6
+    ],
+    [
+     113.8,
+     87.8
+    ],
+    [
+     100.4,
+     91.8
+    ],
+    [
+     98.6,
+     85.5
+    ],
+    [
+     98,
+     85.7
+    ],
+    [
+     98.4,
+     86.9
+    ],
+    [
+     100,
+     92.5
+    ],
+    [
+     103.3,
+     91.5
+    ],
+    [
+     103.4,
+     91.8
+    ],
+    [
+     107.6,
+     90.6
+    ],
+    [
+     107.5,
+     90.3
+    ],
+    [
+     114.5,
+     88.2
+    ],
+    [
+     110.2,
+     73.7
+    ],
+    [
+     108.8,
+     68.9
+    ],
+    [
+     101.5,
+     71.1
+    ],
+    [
+     101.4,
+     70.8
+    ],
+    [
+     97.4,
+     72
+    ],
+    [
+     97.5,
+     72.2
+    ],
+    [
+     94.2,
+     73.2
+    ],
+    [
+     96.2,
+     79.9
+    ],
+    [
+     94,
+     80.5
+    ],
+    [
+     93.7,
+     79.3
+    ],
+    [
+     93.9,
+     79.3
+    ],
+    [
+     92.9,
+     75.8
+    ],
+    [
+     89.5,
+     76.8
+    ],
+    [
+     89.6,
+     77
+    ],
+    [
+     83.9,
+     78.7
+    ],
+    [
+     89,
+     95.5
+    ],
+    [
+     89,
+     95.6
+    ],
+    [
+     89.5,
+     95.5
+    ],
+    [
+     93.6,
+     94.2
+    ],
+    [
+     97.5,
+     93
+    ],
+    [
+     97.8,
+     93
+    ]
+   ]
+  },
+  {
+   "way": "1144522456",
+   "tags": {
+    "building:levels": "16",
+    "building:part": "yes",
+    "height": "48.0",
+    "pmfsefin:idedif": "34651"
+   },
+   "centro": [
+    131,
+    72
+   ],
+   "dist": 149,
+   "dims": [
+    10.4,
+    5.8
+   ],
+   "rumoLadoMaior": 90,
+   "n": 25,
+   "pts": [
+    [
+     134.7,
+     75
+    ],
+    [
+     134.2,
+     70.4
+    ],
+    [
+     134,
+     70.1
+    ],
+    [
+     133.7,
+     69.8
+    ],
+    [
+     133.3,
+     69.6
+    ],
+    [
+     132.9,
+     69.4
+    ],
+    [
+     132.3,
+     69.4
+    ],
+    [
+     132,
+     69.3
+    ],
+    [
+     131.6,
+     69.4
+    ],
+    [
+     131.2,
+     69.5
+    ],
+    [
+     130.8,
+     69.8
+    ],
+    [
+     130.5,
+     70.1
+    ],
+    [
+     130.3,
+     70.4
+    ],
+    [
+     130.1,
+     70.7
+    ],
+    [
+     130.2,
+     71.4
+    ],
+    [
+     126.9,
+     71.8
+    ],
+    [
+     126.1,
+     71.9
+    ],
+    [
+     125.8,
+     71.6
+    ],
+    [
+     124.3,
+     73.5
+    ],
+    [
+     125.5,
+     74.4
+    ],
+    [
+     133.4,
+     73.2
+    ],
+    [
+     133.7,
+     74.7
+    ],
+    [
+     133.9,
+     74.7
+    ],
+    [
+     134,
+     75.1
+    ],
+    [
+     134.7,
+     75
+    ]
+   ]
+  },
+  {
+   "way": "1144522463",
+   "tags": {
+    "building:levels": "16",
+    "building:part": "yes",
+    "height": "48.0",
+    "pmfsefin:idedif": "34584"
+   },
+   "centro": [
+    125,
+    83
+   ],
+   "dist": 150,
+   "dims": [
+    9.7,
+    7.7
+   ],
+   "rumoLadoMaior": 8,
+   "n": 9,
+   "pts": [
+    [
+     129.2,
+     87.7
+    ],
+    [
+     127.9,
+     78.2
+    ],
+    [
+     126.1,
+     78.4
+    ],
+    [
+     122.6,
+     78.9
+    ],
+    [
+     120.6,
+     81.5
+    ],
+    [
+     121.9,
+     82.5
+    ],
+    [
+     125.1,
+     82.1
+    ],
+    [
+     125.9,
+     88.2
+    ],
+    [
+     129.2,
+     87.7
+    ]
+   ]
+  },
+  {
+   "way": "1144522526",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.9",
+    "pmfsefin:idedif": "34011"
+   },
+   "centro": [
+    -139,
+    -106
+   ],
+   "dist": 175,
+   "dims": [
+    19,
+    18.8
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     -139.5,
+     -98.4
+    ],
+    [
+     -127.4,
+     -102.2
+    ],
+    [
+     -129.7,
+     -109.2
+    ],
+    [
+     -132.6,
+     -118.3
+    ],
+    [
+     -133.2,
+     -120.1
+    ],
+    [
+     -151.2,
+     -114.3
+    ],
+    [
+     -149.6,
+     -109.2
+    ],
+    [
+     -145.8,
+     -97.9
+    ],
+    [
+     -145.3,
+     -96.6
+    ],
+    [
+     -139.5,
+     -98.4
+    ]
+   ]
+  },
+  {
+   "way": "1144522839",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.5",
+    "pmfsefin:idedif": "31891"
+   },
+   "centro": [
+    103,
+    103
+   ],
+   "dist": 145,
+   "dims": [
+    2.7,
+    2.2
+   ],
+   "rumoLadoMaior": 13,
+   "n": 8,
+   "pts": [
+    [
+     104.2,
+     103.7
+    ],
+    [
+     103.5,
+     101.1
+    ],
+    [
+     101.5,
+     101.5
+    ],
+    [
+     101.6,
+     101.8
+    ],
+    [
+     101.7,
+     102
+    ],
+    [
+     102.1,
+     104.1
+    ],
+    [
+     102.4,
+     104.1
+    ],
+    [
+     104.2,
+     103.7
+    ]
+   ]
+  },
+  {
+   "way": "1144522927",
+   "tags": {
+    "building:levels": "14",
+    "building:part": "yes",
+    "height": "42.6",
+    "pmfsefin:idedif": "30194"
+   },
+   "centro": [
+    122,
+    118
+   ],
+   "dist": 170,
+   "dims": [
+    6.9,
+    5.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 14,
+   "pts": [
+    [
+     124.2,
+     115.7
+    ],
+    [
+     123.9,
+     115.6
+    ],
+    [
+     123.4,
+     115.6
+    ],
+    [
+     119.3,
+     117
+    ],
+    [
+     119,
+     117.3
+    ],
+    [
+     118.9,
+     117.4
+    ],
+    [
+     118.9,
+     117.6
+    ],
+    [
+     119.2,
+     118.7
+    ],
+    [
+     120.9,
+     123.7
+    ],
+    [
+     126.3,
+     121.9
+    ],
+    [
+     124.6,
+     116.8
+    ],
+    [
+     124.5,
+     116.4
+    ],
+    [
+     124.4,
+     115.9
+    ],
+    [
+     124.2,
+     115.7
+    ]
+   ]
+  },
+  {
+   "way": "1144522930",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "13.2",
+    "pmfsefin:idedif": "30184"
+   },
+   "centro": [
+    97,
+    86
+   ],
+   "dist": 129,
+   "dims": [
+    3.9,
+    1.4
+   ],
+   "rumoLadoMaior": 107,
+   "n": 7,
+   "pts": [
+    [
+     98.6,
+     85.5
+    ],
+    [
+     98.2,
+     84.2
+    ],
+    [
+     94.5,
+     85.3
+    ],
+    [
+     94.9,
+     86.6
+    ],
+    [
+     95.8,
+     86.3
+    ],
+    [
+     98,
+     85.7
+    ],
+    [
+     98.6,
+     85.5
+    ]
+   ]
+  },
+  {
+   "way": "1144522932",
+   "tags": {
+    "building:levels": "5",
+    "building:part": "yes",
+    "height": "13.7",
+    "pmfsefin:idedif": "30181"
+   },
+   "centro": [
+    100,
+    83
+   ],
+   "dist": 130,
+   "dims": [
+    17.8,
+    11.2
+   ],
+   "rumoLadoMaior": 107,
+   "n": 15,
+   "pts": [
+    [
+     94.5,
+     85.3
+    ],
+    [
+     98.2,
+     84.2
+    ],
+    [
+     98.6,
+     85.5
+    ],
+    [
+     100.4,
+     91.8
+    ],
+    [
+     113.8,
+     87.8
+    ],
+    [
+     111.1,
+     78.6
+    ],
+    [
+     103.4,
+     80.9
+    ],
+    [
+     102.7,
+     81.1
+    ],
+    [
+     100.7,
+     81.7
+    ],
+    [
+     100.2,
+     80.2
+    ],
+    [
+     98.1,
+     80.9
+    ],
+    [
+     97.2,
+     81.1
+    ],
+    [
+     94,
+     82.1
+    ],
+    [
+     93.6,
+     82.2
+    ],
+    [
+     94.5,
+     85.3
+    ]
+   ]
+  },
+  {
+   "way": "1144522933",
+   "tags": {
+    "building:levels": "17",
+    "building:part": "yes",
+    "height": "51.8",
+    "pmfsefin:idedif": "30127"
+   },
+   "centro": [
+    130,
+    79
+   ],
+   "dist": 152,
+   "dims": [
+    14.1,
+    8.3
+   ],
+   "rumoLadoMaior": 9,
+   "n": 11,
+   "pts": [
+    [
+     125.5,
+     74.4
+    ],
+    [
+     126.1,
+     78.4
+    ],
+    [
+     127.9,
+     78.2
+    ],
+    [
+     129.2,
+     87.7
+    ],
+    [
+     129.3,
+     88.1
+    ],
+    [
+     135.8,
+     87.1
+    ],
+    [
+     134,
+     75.1
+    ],
+    [
+     133.9,
+     74.7
+    ],
+    [
+     133.7,
+     74.7
+    ],
+    [
+     133.4,
+     73.2
+    ],
+    [
+     125.5,
+     74.4
+    ]
+   ]
+  },
+  {
+   "way": "1144522934",
+   "tags": {
+    "building:levels": "18",
+    "building:part": "yes",
+    "height": "53.9",
+    "pmfsefin:idedif": "30126"
+   },
+   "centro": [
+    120,
+    80
+   ],
+   "dist": 145,
+   "dims": [
+    10,
+    5.5
+   ],
+   "rumoLadoMaior": 144,
+   "n": 22,
+   "pts": [
+    [
+     126.1,
+     78.4
+    ],
+    [
+     125.5,
+     74.4
+    ],
+    [
+     124.3,
+     73.5
+    ],
+    [
+     123.4,
+     72.8
+    ],
+    [
+     118.2,
+     79.9
+    ],
+    [
+     118.1,
+     80.1
+    ],
+    [
+     118,
+     80.5
+    ],
+    [
+     118,
+     80.8
+    ],
+    [
+     118.1,
+     81
+    ],
+    [
+     118.1,
+     81.1
+    ],
+    [
+     118.2,
+     81.4
+    ],
+    [
+     118.5,
+     81.6
+    ],
+    [
+     118.7,
+     81.7
+    ],
+    [
+     119,
+     81.8
+    ],
+    [
+     119.2,
+     81.9
+    ],
+    [
+     119.5,
+     81.9
+    ],
+    [
+     119.7,
+     81.9
+    ],
+    [
+     120,
+     81.9
+    ],
+    [
+     120.3,
+     81.8
+    ],
+    [
+     120.6,
+     81.5
+    ],
+    [
+     122.6,
+     78.9
+    ],
+    [
+     126.1,
+     78.4
+    ]
+   ]
+  },
+  {
+   "way": "1144523207",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "8.2",
+    "pmfsefin:idedif": "12520"
+   },
+   "centro": [
+    -122,
+    -6
+   ],
+   "dist": 122,
+   "dims": [
+    24.9,
+    16.6
+   ],
+   "rumoLadoMaior": 18,
+   "n": 11,
+   "pts": [
+    [
+     -121.2,
+     2.7
+    ],
+    [
+     -109,
+     -1.3
+    ],
+    [
+     -108.1,
+     -1.6
+    ],
+    [
+     -115.9,
+     -25.2
+    ],
+    [
+     -131.6,
+     -20
+    ],
+    [
+     -131.4,
+     -19.6
+    ],
+    [
+     -127.7,
+     -8.3
+    ],
+    [
+     -125.9,
+     -2.7
+    ],
+    [
+     -124,
+     3.2
+    ],
+    [
+     -123.8,
+     3.6
+    ],
+    [
+     -121.2,
+     2.7
+    ]
+   ]
+  },
+  {
+   "way": "1144523210",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.5",
+    "pmfsefin:idedif": "12517"
+   },
+   "centro": [
+    132,
+    -8
+   ],
+   "dist": 132,
+   "dims": [
+    4.1,
+    1.9
+   ],
+   "rumoLadoMaior": 106,
+   "n": 6,
+   "pts": [
+    [
+     134.2,
+     -7.5
+    ],
+    [
+     133.6,
+     -9.3
+    ],
+    [
+     131.2,
+     -8.5
+    ],
+    [
+     129.8,
+     -8.1
+    ],
+    [
+     130.4,
+     -6.4
+    ],
+    [
+     134.2,
+     -7.5
+    ]
+   ]
+  },
+  {
+   "way": "1144523212",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.5",
+    "pmfsefin:idedif": "12515"
+   },
+   "centro": [
+    143,
+    -20
+   ],
+   "dist": 144,
+   "dims": [
+    28.2,
+    23.4
+   ],
+   "rumoLadoMaior": 106,
+   "n": 26,
+   "pts": [
+    [
+     147.4,
+     -14.9
+    ],
+    [
+     147.6,
+     -14.3
+    ],
+    [
+     148,
+     -14.5
+    ],
+    [
+     154,
+     -16.2
+    ],
+    [
+     152.8,
+     -20.4
+    ],
+    [
+     154.7,
+     -21
+    ],
+    [
+     154.6,
+     -21.6
+    ],
+    [
+     151.6,
+     -31.8
+    ],
+    [
+     152,
+     -31.9
+    ],
+    [
+     149.9,
+     -39.3
+    ],
+    [
+     142.4,
+     -37.1
+    ],
+    [
+     141,
+     -36.7
+    ],
+    [
+     144,
+     -26.2
+    ],
+    [
+     130.4,
+     -22.3
+    ],
+    [
+     130.6,
+     -21.7
+    ],
+    [
+     126,
+     -20.3
+    ],
+    [
+     129.1,
+     -10.4
+    ],
+    [
+     129.4,
+     -9.4
+    ],
+    [
+     134.1,
+     -10.7
+    ],
+    [
+     134.2,
+     -10.5
+    ],
+    [
+     141.4,
+     -12.6
+    ],
+    [
+     141.2,
+     -13.5
+    ],
+    [
+     140.5,
+     -15.7
+    ],
+    [
+     142,
+     -16.1
+    ],
+    [
+     146.7,
+     -17.5
+    ],
+    [
+     147.4,
+     -14.9
+    ]
+   ]
+  },
+  {
+   "way": "1144523214",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.4",
+    "pmfsefin:idedif": "12513"
+   },
+   "centro": [
+    -131,
+    -34
+   ],
+   "dist": 136,
+   "dims": [
+    14,
+    10.2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 26,
+   "pts": [
+    [
+     -128.6,
+     -35.9
+    ],
+    [
+     -128.7,
+     -36.1
+    ],
+    [
+     -129.5,
+     -37
+    ],
+    [
+     -129.7,
+     -37.2
+    ],
+    [
+     -130.3,
+     -37.8
+    ],
+    [
+     -130.6,
+     -37.9
+    ],
+    [
+     -131.3,
+     -38.4
+    ],
+    [
+     -132.5,
+     -38.8
+    ],
+    [
+     -133.7,
+     -39
+    ],
+    [
+     -135.2,
+     -39
+    ],
+    [
+     -136.4,
+     -38.9
+    ],
+    [
+     -137.9,
+     -38.5
+    ],
+    [
+     -139,
+     -38
+    ],
+    [
+     -139.7,
+     -37.8
+    ],
+    [
+     -135.4,
+     -24.6
+    ],
+    [
+     -131.6,
+     -25.8
+    ],
+    [
+     -130.9,
+     -26.2
+    ],
+    [
+     -129.9,
+     -27
+    ],
+    [
+     -129.1,
+     -27.9
+    ],
+    [
+     -128.5,
+     -28.8
+    ],
+    [
+     -127.9,
+     -30.2
+    ],
+    [
+     -127.6,
+     -31.5
+    ],
+    [
+     -127.5,
+     -32.6
+    ],
+    [
+     -127.7,
+     -33.7
+    ],
+    [
+     -128,
+     -34.9
+    ],
+    [
+     -128.6,
+     -35.9
+    ]
+   ]
+  },
+  {
+   "way": "1144523217",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.4",
+    "pmfsefin:idedif": "12509"
+   },
+   "centro": [
+    136,
+    -45
+   ],
+   "dist": 143,
+   "dims": [
+    11.2,
+    6.3
+   ],
+   "rumoLadoMaior": 107,
+   "n": 9,
+   "pts": [
+    [
+     139,
+     -48.2
+    ],
+    [
+     138.9,
+     -48.7
+    ],
+    [
+     128.3,
+     -45.5
+    ],
+    [
+     128.4,
+     -44.9
+    ],
+    [
+     130.1,
+     -39.5
+    ],
+    [
+     139.9,
+     -42.5
+    ],
+    [
+     140.7,
+     -42.7
+    ],
+    [
+     139.1,
+     -48.1
+    ],
+    [
+     139,
+     -48.2
+    ]
+   ]
+  },
+  {
+   "way": "1144523218",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.2",
+    "pmfsefin:idedif": "12506"
+   },
+   "centro": [
+    -131,
+    -6
+   ],
+   "dist": 131,
+   "dims": [
+    24.1,
+    7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 15,
+   "pts": [
+    [
+     -124,
+     3.2
+    ],
+    [
+     -125.9,
+     -2.7
+    ],
+    [
+     -127.7,
+     -8.3
+    ],
+    [
+     -131.4,
+     -19.6
+    ],
+    [
+     -137.4,
+     -17.4
+    ],
+    [
+     -138,
+     -17.2
+    ],
+    [
+     -137.1,
+     -14.5
+    ],
+    [
+     -134.7,
+     -8.1
+    ],
+    [
+     -134.4,
+     -7.3
+    ],
+    [
+     -133.3,
+     -7.7
+    ],
+    [
+     -131.1,
+     -1.4
+    ],
+    [
+     -131.9,
+     -1.1
+    ],
+    [
+     -129.9,
+     4.3
+    ],
+    [
+     -129.6,
+     5.2
+    ],
+    [
+     -124,
+     3.2
+    ]
+   ]
+  },
+  {
+   "way": "1144523416",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "310",
+    "addr:postcode": "60160-080",
+    "addr:street": "Rua Tomás Pompeu",
+    "addr:suburb": "Meireles",
+    "building": "apartments",
+    "building:levels": "5",
+    "height": "16.1",
+    "name": "Edifício Frota Pinto"
+   },
+   "centro": [
+    70,
+    140
+   ],
+   "dist": 157,
+   "dims": [
+    26.6,
+    24.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 36,
+   "pts": [
+    [
+     72.4,
+     130
+    ],
+    [
+     70.8,
+     130.5
+    ],
+    [
+     67.3,
+     131.6
+    ],
+    [
+     68.3,
+     134.6
+    ],
+    [
+     65.9,
+     135.4
+    ],
+    [
+     64.9,
+     132.3
+    ],
+    [
+     62.5,
+     133.1
+    ],
+    [
+     63.2,
+     135.2
+    ],
+    [
+     62.6,
+     135.4
+    ],
+    [
+     60.6,
+     136
+    ],
+    [
+     62.2,
+     140.8
+    ],
+    [
+     58.7,
+     141.9
+    ],
+    [
+     58.8,
+     142.3
+    ],
+    [
+     58.9,
+     142.4
+    ],
+    [
+     60.3,
+     146.7
+    ],
+    [
+     57.7,
+     147.5
+    ],
+    [
+     59.3,
+     152.1
+    ],
+    [
+     60.4,
+     155.6
+    ],
+    [
+     61.3,
+     158.3
+    ],
+    [
+     66.3,
+     156.6
+    ],
+    [
+     66.4,
+     157.2
+    ],
+    [
+     73.4,
+     154.9
+    ],
+    [
+     73.3,
+     154.4
+    ],
+    [
+     86.1,
+     150.3
+    ],
+    [
+     84.5,
+     145.4
+    ],
+    [
+     84.9,
+     145.3
+    ],
+    [
+     83.9,
+     142
+    ],
+    [
+     81.8,
+     135.6
+    ],
+    [
+     81.4,
+     135.8
+    ],
+    [
+     80.2,
+     132
+    ],
+    [
+     79.3,
+     132.3
+    ],
+    [
+     79,
+     131.5
+    ],
+    [
+     78.7,
+     131.6
+    ],
+    [
+     77.6,
+     128.3
+    ],
+    [
+     77.6,
+     128.3
+    ],
+    [
+     72.4,
+     130
+    ]
+   ]
+  },
+  {
+   "way": "1144523420",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.8"
+   },
+   "centro": [
+    134,
+    -5
+   ],
+   "dist": 134,
+   "dims": [
+    9.3,
+    7.7
+   ],
+   "rumoLadoMaior": 17,
+   "n": 12,
+   "pts": [
+    [
+     129.8,
+     -8.1
+    ],
+    [
+     130.4,
+     -6.4
+    ],
+    [
+     132.5,
+     0.3
+    ],
+    [
+     138.1,
+     -1.1
+    ],
+    [
+     139.8,
+     -1.5
+    ],
+    [
+     139.1,
+     -4.1
+    ],
+    [
+     137.6,
+     -3.6
+    ],
+    [
+     136.3,
+     -8.1
+    ],
+    [
+     134.2,
+     -7.5
+    ],
+    [
+     133.6,
+     -9.3
+    ],
+    [
+     131.2,
+     -8.5
+    ],
+    [
+     129.8,
+     -8.1
+    ]
+   ]
+  },
+  {
+   "way": "1144523421",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.4",
+    "pmfsefin:idedif": "12512"
+   },
+   "centro": [
+    125,
+    -34
+   ],
+   "dist": 129,
+   "dims": [
+    14,
+    4.5
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     125.1,
+     -38
+    ],
+    [
+     124.5,
+     -40.1
+    ],
+    [
+     120.2,
+     -38.8
+    ],
+    [
+     124.4,
+     -25.4
+    ],
+    [
+     128.6,
+     -26.7
+    ],
+    [
+     125.1,
+     -38
+    ]
+   ]
+  },
+  {
+   "way": "1144523422",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "420",
+    "addr:postcode": "60160-090",
+    "addr:street": "Rua Tenente Amauri Pio",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.6"
+   },
+   "centro": [
+    142,
+    -27
+   ],
+   "dist": 145,
+   "dims": [
+    44.1,
+    31.1
+   ],
+   "rumoLadoMaior": 9,
+   "n": 37,
+   "pts": [
+    [
+     138.9,
+     -48.7
+    ],
+    [
+     128.3,
+     -45.5
+    ],
+    [
+     128.4,
+     -44.9
+    ],
+    [
+     130.1,
+     -39.5
+    ],
+    [
+     139.9,
+     -42.5
+    ],
+    [
+     140.7,
+     -42.7
+    ],
+    [
+     142.4,
+     -37.1
+    ],
+    [
+     141,
+     -36.7
+    ],
+    [
+     144,
+     -26.2
+    ],
+    [
+     130.4,
+     -22.3
+    ],
+    [
+     130.6,
+     -21.7
+    ],
+    [
+     126,
+     -20.3
+    ],
+    [
+     129.1,
+     -10.4
+    ],
+    [
+     129.4,
+     -9.4
+    ],
+    [
+     134.1,
+     -10.7
+    ],
+    [
+     134.2,
+     -10.5
+    ],
+    [
+     141.4,
+     -12.6
+    ],
+    [
+     141.2,
+     -13.5
+    ],
+    [
+     140.5,
+     -15.7
+    ],
+    [
+     142,
+     -16.1
+    ],
+    [
+     146.7,
+     -17.5
+    ],
+    [
+     147.4,
+     -14.9
+    ],
+    [
+     141.4,
+     -13.2
+    ],
+    [
+     143.5,
+     -5.8
+    ],
+    [
+     158.9,
+     -10.3
+    ],
+    [
+     157.9,
+     -13.9
+    ],
+    [
+     158.5,
+     -14.1
+    ],
+    [
+     156.1,
+     -22.1
+    ],
+    [
+     154.6,
+     -21.6
+    ],
+    [
+     151.6,
+     -31.8
+    ],
+    [
+     152,
+     -31.9
+    ],
+    [
+     149.9,
+     -39.3
+    ],
+    [
+     149.8,
+     -39.5
+    ],
+    [
+     154.1,
+     -40.7
+    ],
+    [
+     150.9,
+     -51.7
+    ],
+    [
+     139,
+     -48.2
+    ],
+    [
+     138.9,
+     -48.7
+    ]
+   ]
+  },
+  {
+   "way": "1144523528",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.8"
+   },
+   "centro": [
+    -153,
+    -103
+   ],
+   "dist": 184,
+   "dims": [
+    34.6,
+    19
+   ],
+   "rumoLadoMaior": 108,
+   "n": 30,
+   "pts": [
+    [
+     -127.4,
+     -102.2
+    ],
+    [
+     -129.7,
+     -109.2
+    ],
+    [
+     -132.6,
+     -118.3
+    ],
+    [
+     -133.2,
+     -120.1
+    ],
+    [
+     -151.2,
+     -114.3
+    ],
+    [
+     -153.8,
+     -113.4
+    ],
+    [
+     -158.4,
+     -111.8
+    ],
+    [
+     -163.5,
+     -110.1
+    ],
+    [
+     -164.1,
+     -109.9
+    ],
+    [
+     -163.9,
+     -109.5
+    ],
+    [
+     -163.9,
+     -109.2
+    ],
+    [
+     -163.8,
+     -109
+    ],
+    [
+     -162.7,
+     -105.7
+    ],
+    [
+     -161.7,
+     -102.9
+    ],
+    [
+     -161,
+     -103.1
+    ],
+    [
+     -160.6,
+     -102.2
+    ],
+    [
+     -161.7,
+     -101.9
+    ],
+    [
+     -163.4,
+     -101.3
+    ],
+    [
+     -160,
+     -91.3
+    ],
+    [
+     -158.5,
+     -92
+    ],
+    [
+     -158.2,
+     -92.1
+    ],
+    [
+     -153.8,
+     -93.6
+    ],
+    [
+     -153.6,
+     -93.6
+    ],
+    [
+     -153.5,
+     -93.7
+    ],
+    [
+     -151.4,
+     -94.3
+    ],
+    [
+     -151.9,
+     -95.8
+    ],
+    [
+     -145.8,
+     -97.9
+    ],
+    [
+     -145.3,
+     -96.6
+    ],
+    [
+     -139.5,
+     -98.4
+    ],
+    [
+     -127.4,
+     -102.2
+    ]
+   ]
+  },
+  {
+   "way": "1144523941",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.3",
+    "pmfsefin:idedif": "10837"
+   },
+   "centro": [
+    87,
+    -148
+   ],
+   "dist": 172,
+   "dims": [
+    49.9,
+    6.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 22,
+   "pts": [
+    [
+     76.3,
+     -174.8
+    ],
+    [
+     77.2,
+     -172
+    ],
+    [
+     78.4,
+     -172.3
+    ],
+    [
+     81.1,
+     -163.7
+    ],
+    [
+     80,
+     -163.4
+    ],
+    [
+     80.5,
+     -161.9
+    ],
+    [
+     81.3,
+     -159.4
+    ],
+    [
+     83.1,
+     -153.5
+    ],
+    [
+     86.9,
+     -141.8
+    ],
+    [
+     89,
+     -135.2
+    ],
+    [
+     89.1,
+     -134.9
+    ],
+    [
+     90.4,
+     -135.3
+    ],
+    [
+     91.8,
+     -130.9
+    ],
+    [
+     90.5,
+     -130.5
+    ],
+    [
+     91.4,
+     -127.7
+    ],
+    [
+     91.5,
+     -127.4
+    ],
+    [
+     97.6,
+     -129.4
+    ],
+    [
+     97.6,
+     -129.6
+    ],
+    [
+     96.8,
+     -131.9
+    ],
+    [
+     97.1,
+     -132
+    ],
+    [
+     82.7,
+     -177
+    ],
+    [
+     76.3,
+     -174.8
+    ]
+   ]
+  },
+  {
+   "way": "1144523969",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "598",
+    "addr:postcode": "60160-100",
+    "addr:street": "Rua Doutor Castro Medeiros",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "3",
+    "height": "8.2"
+   },
+   "centro": [
+    -127,
+    -8
+   ],
+   "dist": 128,
+   "dims": [
+    24.9,
+    23.5
+   ],
+   "rumoLadoMaior": 18,
+   "n": 19,
+   "pts": [
+    [
+     -115.9,
+     -25.2
+    ],
+    [
+     -131.6,
+     -20
+    ],
+    [
+     -131.4,
+     -19.6
+    ],
+    [
+     -137.4,
+     -17.4
+    ],
+    [
+     -138,
+     -17.2
+    ],
+    [
+     -137.1,
+     -14.5
+    ],
+    [
+     -134.7,
+     -8.1
+    ],
+    [
+     -134.4,
+     -7.3
+    ],
+    [
+     -133.3,
+     -7.7
+    ],
+    [
+     -131.1,
+     -1.4
+    ],
+    [
+     -131.9,
+     -1.1
+    ],
+    [
+     -129.9,
+     4.3
+    ],
+    [
+     -129.6,
+     5.2
+    ],
+    [
+     -124,
+     3.2
+    ],
+    [
+     -123.8,
+     3.6
+    ],
+    [
+     -121.2,
+     2.7
+    ],
+    [
+     -109,
+     -1.3
+    ],
+    [
+     -108.1,
+     -1.6
+    ],
+    [
+     -115.9,
+     -25.2
+    ]
+   ]
+  },
+  {
+   "way": "1144523972",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "10.4"
+   },
+   "centro": [
+    -139,
+    -34
+   ],
+   "dist": 143,
+   "dims": [
+    24.9,
+    15.9
+   ],
+   "rumoLadoMaior": 109,
+   "n": 43,
+   "pts": [
+    [
+     -137.1,
+     -40.7
+    ],
+    [
+     -136.4,
+     -38.9
+    ],
+    [
+     -137.9,
+     -38.5
+    ],
+    [
+     -139,
+     -38
+    ],
+    [
+     -139.7,
+     -37.8
+    ],
+    [
+     -140,
+     -38.6
+    ],
+    [
+     -143,
+     -37.7
+    ],
+    [
+     -142.8,
+     -37.1
+    ],
+    [
+     -145.4,
+     -36.2
+    ],
+    [
+     -145.7,
+     -37
+    ],
+    [
+     -147,
+     -36.6
+    ],
+    [
+     -146.7,
+     -35.8
+    ],
+    [
+     -148.8,
+     -35.1
+    ],
+    [
+     -149,
+     -35.7
+    ],
+    [
+     -150.2,
+     -35.4
+    ],
+    [
+     -150,
+     -34.6
+    ],
+    [
+     -153.1,
+     -33.7
+    ],
+    [
+     -153.4,
+     -34.7
+    ],
+    [
+     -153.6,
+     -34.6
+    ],
+    [
+     -153.8,
+     -34.5
+    ],
+    [
+     -153.7,
+     -34.2
+    ],
+    [
+     -149.3,
+     -20.2
+    ],
+    [
+     -143.9,
+     -21.9
+    ],
+    [
+     -135.4,
+     -24.6
+    ],
+    [
+     -131.6,
+     -25.8
+    ],
+    [
+     -130.9,
+     -26.2
+    ],
+    [
+     -129.9,
+     -27
+    ],
+    [
+     -129.1,
+     -27.9
+    ],
+    [
+     -128.5,
+     -28.8
+    ],
+    [
+     -127.9,
+     -30.2
+    ],
+    [
+     -127.6,
+     -31.5
+    ],
+    [
+     -127.5,
+     -32.6
+    ],
+    [
+     -127.7,
+     -33.7
+    ],
+    [
+     -128,
+     -34.9
+    ],
+    [
+     -128.6,
+     -35.9
+    ],
+    [
+     -128.7,
+     -36.1
+    ],
+    [
+     -129.5,
+     -37
+    ],
+    [
+     -129.7,
+     -37.2
+    ],
+    [
+     -130.3,
+     -37.8
+    ],
+    [
+     -130.6,
+     -37.9
+    ],
+    [
+     -130,
+     -38.1
+    ],
+    [
+     -131.5,
+     -42.6
+    ],
+    [
+     -137.1,
+     -40.7
+    ]
+   ]
+  },
+  {
+   "way": "1144524314",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.1",
+    "pmfsefin:idedif": "35216"
+   },
+   "centro": [
+    126,
+    104
+   ],
+   "dist": 164,
+   "dims": [
+    7.3,
+    3.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     123.9,
+     105.6
+    ],
+    [
+     124,
+     105.7
+    ],
+    [
+     124.1,
+     106.1
+    ],
+    [
+     130.6,
+     104
+    ],
+    [
+     130.5,
+     103.7
+    ],
+    [
+     130.2,
+     101.6
+    ],
+    [
+     122.9,
+     102.7
+    ],
+    [
+     123.9,
+     105.6
+    ]
+   ]
+  },
+  {
+   "way": "1144524315",
+   "tags": {
+    "building": "yes",
+    "building:levels": "18",
+    "height": "53.9"
+   },
+   "centro": [
+    129,
+    77
+   ],
+   "dist": 150,
+   "dims": [
+    35.1,
+    27.6
+   ],
+   "rumoLadoMaior": 18,
+   "n": 49,
+   "pts": [
+    [
+     132.3,
+     69.4
+    ],
+    [
+     132,
+     69.3
+    ],
+    [
+     131.6,
+     69.4
+    ],
+    [
+     131.2,
+     69.5
+    ],
+    [
+     130.8,
+     69.8
+    ],
+    [
+     130.5,
+     70.1
+    ],
+    [
+     130.3,
+     70.4
+    ],
+    [
+     130.1,
+     70.7
+    ],
+    [
+     130.2,
+     71.4
+    ],
+    [
+     126.9,
+     71.8
+    ],
+    [
+     126.1,
+     71.9
+    ],
+    [
+     125.8,
+     71.6
+    ],
+    [
+     124.3,
+     73.5
+    ],
+    [
+     123.4,
+     72.8
+    ],
+    [
+     118.2,
+     79.9
+    ],
+    [
+     118.1,
+     80.1
+    ],
+    [
+     118,
+     80.5
+    ],
+    [
+     118,
+     80.8
+    ],
+    [
+     118.1,
+     81
+    ],
+    [
+     116.8,
+     81.4
+    ],
+    [
+     115.6,
+     81.8
+    ],
+    [
+     118.8,
+     90.8
+    ],
+    [
+     119.4,
+     92.7
+    ],
+    [
+     119.5,
+     92.9
+    ],
+    [
+     120.4,
+     95.4
+    ],
+    [
+     120.5,
+     95.9
+    ],
+    [
+     121.6,
+     99
+    ],
+    [
+     122,
+     100
+    ],
+    [
+     122.2,
+     100.8
+    ],
+    [
+     138.1,
+     98.7
+    ],
+    [
+     145.2,
+     95.9
+    ],
+    [
+     144.5,
+     90.9
+    ],
+    [
+     142.9,
+     80
+    ],
+    [
+     142,
+     73.6
+    ],
+    [
+     136.7,
+     74.2
+    ],
+    [
+     135.6,
+     66.4
+    ],
+    [
+     135.3,
+     63.9
+    ],
+    [
+     135.1,
+     63.5
+    ],
+    [
+     134.8,
+     63.3
+    ],
+    [
+     134.3,
+     63.2
+    ],
+    [
+     133.8,
+     63.2
+    ],
+    [
+     133.2,
+     63.3
+    ],
+    [
+     132.6,
+     63.6
+    ],
+    [
+     132.3,
+     64
+    ],
+    [
+     132.2,
+     64.6
+    ],
+    [
+     132.5,
+     66.9
+    ],
+    [
+     132.6,
+     66.8
+    ],
+    [
+     132.9,
+     69.4
+    ],
+    [
+     132.3,
+     69.4
+    ]
+   ]
+  },
+  {
+   "way": "1144524316",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "2.8",
+    "pmfsefin:idedif": "38728"
+   },
+   "centro": [
+    114,
+    67
+   ],
+   "dist": 132,
+   "dims": [
+    4.9,
+    1.7
+   ],
+   "rumoLadoMaior": 104,
+   "n": 5,
+   "pts": [
+    [
+     115.6,
+     67.4
+    ],
+    [
+     115.2,
+     65.8
+    ],
+    [
+     110.4,
+     67
+    ],
+    [
+     111,
+     68.6
+    ],
+    [
+     115.6,
+     67.4
+    ]
+   ]
+  },
+  {
+   "way": "1144524368",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "299",
+    "addr:postcode": "60160-080",
+    "addr:street": "Rua Tomás Pompeu",
+    "addr:suburb": "Meireles",
+    "building": "apartments",
+    "building:levels": "14",
+    "height": "42.6",
+    "name": "Edifício Abolição Tower"
+   },
+   "centro": [
+    121,
+    125
+   ],
+   "dist": 175,
+   "dims": [
+    52.7,
+    26.9
+   ],
+   "rumoLadoMaior": 107,
+   "n": 63,
+   "pts": [
+    [
+     133.4,
+     111.3
+    ],
+    [
+     134.1,
+     113.8
+    ],
+    [
+     124.6,
+     116.8
+    ],
+    [
+     124.5,
+     116.4
+    ],
+    [
+     124.4,
+     115.9
+    ],
+    [
+     124.2,
+     115.7
+    ],
+    [
+     123.9,
+     115.6
+    ],
+    [
+     123.4,
+     115.6
+    ],
+    [
+     119.3,
+     117
+    ],
+    [
+     119,
+     117.3
+    ],
+    [
+     118.9,
+     117.4
+    ],
+    [
+     118.9,
+     117.6
+    ],
+    [
+     119.2,
+     118.7
+    ],
+    [
+     118.9,
+     118.8
+    ],
+    [
+     118.3,
+     117.2
+    ],
+    [
+     110.3,
+     119.7
+    ],
+    [
+     110.8,
+     121.3
+    ],
+    [
+     109.9,
+     121.7
+    ],
+    [
+     107.5,
+     122.5
+    ],
+    [
+     108,
+     124
+    ],
+    [
+     110.4,
+     123.3
+    ],
+    [
+     110.5,
+     123.6
+    ],
+    [
+     107,
+     124.7
+    ],
+    [
+     105.3,
+     119.7
+    ],
+    [
+     96.4,
+     122.6
+    ],
+    [
+     97.6,
+     125.9
+    ],
+    [
+     98.2,
+     127.8
+    ],
+    [
+     105.4,
+     125.4
+    ],
+    [
+     105.5,
+     125.6
+    ],
+    [
+     106.5,
+     128.8
+    ],
+    [
+     98.7,
+     131.3
+    ],
+    [
+     98.1,
+     131.7
+    ],
+    [
+     97.9,
+     132
+    ],
+    [
+     98.7,
+     134.5
+    ],
+    [
+     99.2,
+     134.7
+    ],
+    [
+     99.9,
+     134.6
+    ],
+    [
+     104.8,
+     133.2
+    ],
+    [
+     107.6,
+     132.3
+    ],
+    [
+     108.5,
+     135.2
+    ],
+    [
+     110,
+     134.7
+    ],
+    [
+     114.4,
+     133.3
+    ],
+    [
+     117.6,
+     143.3
+    ],
+    [
+     117.8,
+     144
+    ],
+    [
+     120.5,
+     143.1
+    ],
+    [
+     121.4,
+     142.8
+    ],
+    [
+     121.2,
+     142.2
+    ],
+    [
+     120.3,
+     139.3
+    ],
+    [
+     145,
+     131.2
+    ],
+    [
+     145.4,
+     132.6
+    ],
+    [
+     148.8,
+     131.5
+    ],
+    [
+     148.4,
+     130.1
+    ],
+    [
+     149.7,
+     129.9
+    ],
+    [
+     149.8,
+     129.9
+    ],
+    [
+     150,
+     129.9
+    ],
+    [
+     149.3,
+     124.3
+    ],
+    [
+     148.9,
+     124.4
+    ],
+    [
+     148.6,
+     124.4
+    ],
+    [
+     147.6,
+     124.5
+    ],
+    [
+     146.8,
+     118.1
+    ],
+    [
+     146.5,
+     116.1
+    ],
+    [
+     146.7,
+     116
+    ],
+    [
+     145.4,
+     107.2
+    ],
+    [
+     133.4,
+     111.3
+    ]
+   ]
+  },
+  {
+   "way": "1144524541",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "580",
+    "addr:postcode": "60120-000",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.3"
+   },
+   "centro": [
+    -142,
+    -88
+   ],
+   "dist": 167,
+   "dims": [
+    33.7,
+    22.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 36,
+   "pts": [
+    [
+     -122.9,
+     -90.8
+    ],
+    [
+     -123.6,
+     -90.6
+    ],
+    [
+     -126.9,
+     -100.6
+    ],
+    [
+     -127.9,
+     -100.3
+    ],
+    [
+     -128,
+     -100.8
+    ],
+    [
+     -139.1,
+     -97.2
+    ],
+    [
+     -139.4,
+     -98.1
+    ],
+    [
+     -139.5,
+     -98.4
+    ],
+    [
+     -145.3,
+     -96.6
+    ],
+    [
+     -149.2,
+     -95.3
+    ],
+    [
+     -149.2,
+     -95
+    ],
+    [
+     -151.4,
+     -94.3
+    ],
+    [
+     -153.5,
+     -93.7
+    ],
+    [
+     -153.6,
+     -93.6
+    ],
+    [
+     -153.8,
+     -93.6
+    ],
+    [
+     -158.2,
+     -92.1
+    ],
+    [
+     -156.7,
+     -87.8
+    ],
+    [
+     -155.4,
+     -83.6
+    ],
+    [
+     -155.8,
+     -83.5
+    ],
+    [
+     -155.9,
+     -83.5
+    ],
+    [
+     -155.4,
+     -82.1
+    ],
+    [
+     -155.4,
+     -82
+    ],
+    [
+     -153.9,
+     -77.3
+    ],
+    [
+     -153.8,
+     -77.1
+    ],
+    [
+     -153.2,
+     -75.1
+    ],
+    [
+     -152.1,
+     -71.7
+    ],
+    [
+     -151.9,
+     -71.2
+    ],
+    [
+     -137.3,
+     -75.9
+    ],
+    [
+     -136.8,
+     -76.1
+    ],
+    [
+     -122.9,
+     -80.6
+    ],
+    [
+     -124.4,
+     -85.2
+    ],
+    [
+     -125,
+     -87
+    ],
+    [
+     -122.6,
+     -87.8
+    ],
+    [
+     -122.7,
+     -88.2
+    ],
+    [
+     -122.1,
+     -88.4
+    ],
+    [
+     -122.9,
+     -90.8
+    ]
+   ]
+  },
+  {
+   "way": "1144524797",
+   "tags": {
+    "building": "yes",
+    "building:levels": "5",
+    "height": "13.7"
+   },
+   "centro": [
+    98,
+    83
+   ],
+   "dist": 128,
+   "dims": [
+    26.7,
+    20.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 31,
+   "pts": [
+    [
+     95.8,
+     86.3
+    ],
+    [
+     98,
+     85.7
+    ],
+    [
+     98.4,
+     86.9
+    ],
+    [
+     100,
+     92.5
+    ],
+    [
+     103.3,
+     91.5
+    ],
+    [
+     103.4,
+     91.8
+    ],
+    [
+     107.6,
+     90.6
+    ],
+    [
+     107.5,
+     90.3
+    ],
+    [
+     114.5,
+     88.2
+    ],
+    [
+     110.2,
+     73.7
+    ],
+    [
+     108.8,
+     68.9
+    ],
+    [
+     101.5,
+     71.1
+    ],
+    [
+     101.4,
+     70.8
+    ],
+    [
+     97.4,
+     72
+    ],
+    [
+     97.5,
+     72.2
+    ],
+    [
+     94.2,
+     73.2
+    ],
+    [
+     96.2,
+     79.9
+    ],
+    [
+     94,
+     80.5
+    ],
+    [
+     93.7,
+     79.3
+    ],
+    [
+     93.9,
+     79.3
+    ],
+    [
+     92.9,
+     75.8
+    ],
+    [
+     89.5,
+     76.8
+    ],
+    [
+     89.6,
+     77
+    ],
+    [
+     83.9,
+     78.7
+    ],
+    [
+     89,
+     95.5
+    ],
+    [
+     89,
+     95.6
+    ],
+    [
+     89.5,
+     95.5
+    ],
+    [
+     93.6,
+     94.2
+    ],
+    [
+     97.5,
+     93
+    ],
+    [
+     97.8,
+     93
+    ],
+    [
+     95.8,
+     86.3
+    ]
+   ]
+  },
+  {
+   "way": "1144793898",
+   "tags": {
+    "building:levels": "25",
+    "building:part": "yes",
+    "height": "74.3",
+    "pmfsefin:idedif": "32741"
+   },
+   "centro": [
+    -133,
+    54
+   ],
+   "dist": 144,
+   "dims": [
+    27.3,
+    15.8
+   ],
+   "rumoLadoMaior": 120,
+   "n": 23,
+   "pts": [
+    [
+     -124.8,
+     55
+    ],
+    [
+     -122.8,
+     54.1
+    ],
+    [
+     -121,
+     53.4
+    ],
+    [
+     -121.1,
+     53.3
+    ],
+    [
+     -123.7,
+     45.2
+    ],
+    [
+     -125.1,
+     45.6
+    ],
+    [
+     -125.6,
+     44.2
+    ],
+    [
+     -126.5,
+     41.5
+    ],
+    [
+     -139.2,
+     45.7
+    ],
+    [
+     -141.2,
+     47.4
+    ],
+    [
+     -149.2,
+     54.4
+    ],
+    [
+     -147.3,
+     56.6
+    ],
+    [
+     -146.3,
+     57.7
+    ],
+    [
+     -147.4,
+     58.7
+    ],
+    [
+     -141.7,
+     65.2
+    ],
+    [
+     -139.2,
+     63.4
+    ],
+    [
+     -136.7,
+     61.6
+    ],
+    [
+     -135.9,
+     61
+    ],
+    [
+     -133.3,
+     59.4
+    ],
+    [
+     -130.9,
+     58
+    ],
+    [
+     -128.9,
+     57
+    ],
+    [
+     -127,
+     56
+    ],
+    [
+     -124.8,
+     55
+    ]
+   ]
+  },
+  {
+   "way": "1144793899",
+   "tags": {
+    "building:levels": "23",
+    "building:part": "yes",
+    "height": "70.5",
+    "pmfsefin:idedif": "39558"
+   },
+   "centro": [
+    -119,
+    49
+   ],
+   "dist": 129,
+   "dims": [
+    10.9,
+    8.1
+   ],
+   "rumoLadoMaior": 20,
+   "n": 12,
+   "pts": [
+    [
+     -114.4,
+     51.8
+    ],
+    [
+     -115.8,
+     47.6
+    ],
+    [
+     -116.4,
+     47.8
+    ],
+    [
+     -118.4,
+     41.9
+    ],
+    [
+     -125.6,
+     44.2
+    ],
+    [
+     -125.1,
+     45.6
+    ],
+    [
+     -123.7,
+     45.2
+    ],
+    [
+     -121.1,
+     53.3
+    ],
+    [
+     -119.3,
+     52.8
+    ],
+    [
+     -117,
+     52.2
+    ],
+    [
+     -115.5,
+     52
+    ],
+    [
+     -114.4,
+     51.8
+    ]
+   ]
+  },
+  {
+   "way": "1144793907",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "37088"
+   },
+   "centro": [
+    -152,
+    94
+   ],
+   "dist": 178,
+   "dims": [
+    39.4,
+    31.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 48,
+   "pts": [
+    [
+     -128.9,
+     103.2
+    ],
+    [
+     -136.3,
+     80.6
+    ],
+    [
+     -131.2,
+     78.9
+    ],
+    [
+     -133.2,
+     72.8
+    ],
+    [
+     -157.2,
+     79.5
+    ],
+    [
+     -160.5,
+     80.4
+    ],
+    [
+     -168.2,
+     82.5
+    ],
+    [
+     -167.7,
+     84.4
+    ],
+    [
+     -170.5,
+     85.3
+    ],
+    [
+     -167.8,
+     93.4
+    ],
+    [
+     -165.7,
+     89.5
+    ],
+    [
+     -157.9,
+     87
+    ],
+    [
+     -158.4,
+     85.5
+    ],
+    [
+     -155.9,
+     85
+    ],
+    [
+     -155.1,
+     87.6
+    ],
+    [
+     -154,
+     87.3
+    ],
+    [
+     -153.8,
+     87.2
+    ],
+    [
+     -152.7,
+     86.8
+    ],
+    [
+     -146.2,
+     90.2
+    ],
+    [
+     -144.4,
+     86.8
+    ],
+    [
+     -136.4,
+     91.3
+    ],
+    [
+     -137.2,
+     92.9
+    ],
+    [
+     -137.1,
+     93.2
+    ],
+    [
+     -137,
+     93.7
+    ],
+    [
+     -137.1,
+     94.2
+    ],
+    [
+     -137.3,
+     94.6
+    ],
+    [
+     -137.6,
+     95
+    ],
+    [
+     -138.2,
+     95.2
+    ],
+    [
+     -150.6,
+     99.1
+    ],
+    [
+     -151.5,
+     99.3
+    ],
+    [
+     -152.2,
+     99.8
+    ],
+    [
+     -153,
+     100.6
+    ],
+    [
+     -153.7,
+     101.2
+    ],
+    [
+     -153.8,
+     101.4
+    ],
+    [
+     -154.8,
+     102.3
+    ],
+    [
+     -155.6,
+     102.7
+    ],
+    [
+     -156.4,
+     102.9
+    ],
+    [
+     -157.4,
+     102.9
+    ],
+    [
+     -158.6,
+     102.7
+    ],
+    [
+     -159.6,
+     102.2
+    ],
+    [
+     -160.4,
+     101.8
+    ],
+    [
+     -161,
+     101.4
+    ],
+    [
+     -162.8,
+     96.1
+    ],
+    [
+     -165.9,
+     94.5
+    ],
+    [
+     -164.4,
+     99.2
+    ],
+    [
+     -165.9,
+     99.7
+    ],
+    [
+     -161.2,
+     113.5
+    ],
+    [
+     -128.9,
+     103.2
+    ]
+   ]
+  },
+  {
+   "way": "1144793908",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.9",
+    "pmfsefin:idedif": "35310"
+   },
+   "centro": [
+    -122,
+    88
+   ],
+   "dist": 150,
+   "dims": [
+    15.7,
+    7.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 11,
+   "pts": [
+    [
+     -122.2,
+     89.7
+    ],
+    [
+     -110.5,
+     86.1
+    ],
+    [
+     -111.8,
+     81.9
+    ],
+    [
+     -124.7,
+     86
+    ],
+    [
+     -124.4,
+     87.1
+    ],
+    [
+     -125.5,
+     87.4
+    ],
+    [
+     -125.3,
+     88.1
+    ],
+    [
+     -126.2,
+     88.4
+    ],
+    [
+     -124.6,
+     93.5
+    ],
+    [
+     -121.4,
+     92.5
+    ],
+    [
+     -122.2,
+     89.7
+    ]
+   ]
+  },
+  {
+   "way": "1144793909",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.3",
+    "pmfsefin:idedif": "34009"
+   },
+   "centro": [
+    -117,
+    93
+   ],
+   "dist": 149,
+   "dims": [
+    12.4,
+    8.3
+   ],
+   "rumoLadoMaior": 107,
+   "n": 6,
+   "pts": [
+    [
+     -119.8,
+     97.6
+    ],
+    [
+     -108,
+     93.9
+    ],
+    [
+     -110.5,
+     86.1
+    ],
+    [
+     -122.2,
+     89.7
+    ],
+    [
+     -121.4,
+     92.5
+    ],
+    [
+     -119.8,
+     97.6
+    ]
+   ]
+  },
+  {
+   "way": "1144793911",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "920",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Senador Virgilio Távora"
+   },
+   "centro": [
+    -155,
+    95
+   ],
+   "dist": 182,
+   "dims": [
+    45.6,
+    37.6
+   ],
+   "rumoLadoMaior": 106,
+   "n": 14,
+   "pts": [
+    [
+     -133.2,
+     72.8
+    ],
+    [
+     -157.2,
+     79.5
+    ],
+    [
+     -160.5,
+     80.4
+    ],
+    [
+     -168.2,
+     82.5
+    ],
+    [
+     -168.4,
+     82.6
+    ],
+    [
+     -175.8,
+     84.9
+    ],
+    [
+     -165.7,
+     115.8
+    ],
+    [
+     -163.6,
+     118.2
+    ],
+    [
+     -163.2,
+     118.6
+    ],
+    [
+     -162.5,
+     118.7
+    ],
+    [
+     -162,
+     118.7
+    ],
+    [
+     -121.8,
+     108.6
+    ],
+    [
+     -131.2,
+     78.9
+    ],
+    [
+     -133.2,
+     72.8
+    ]
+   ]
+  },
+  {
+   "way": "1144796398",
+   "tags": {
+    "cycleway:right": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "40",
+    "maxwidth": "2.2",
+    "name": "Rua Deputado Moreira da Rocha",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "postal_code": "60160-060",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -53,
+    99
+   ],
+   "dist": 112,
+   "dims": [
+    7,
+    0
+   ],
+   "rumoLadoMaior": 104,
+   "n": 2,
+   "pts": [
+    [
+     -49.2,
+     98
+    ],
+    [
+     -56,
+     99.7
+    ]
+   ]
+  },
+  {
+   "way": "1145093805",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -125,
+    64
+   ],
+   "dist": 141,
+   "dims": [
+    113.4,
+    78.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 10,
+   "pts": [
+    [
+     -187.3,
+     54.9
+    ],
+    [
+     -185.5,
+     51.2
+    ],
+    [
+     -83.4,
+     19.1
+    ],
+    [
+     -83.2,
+     19.1
+    ],
+    [
+     -78.9,
+     21.8
+    ],
+    [
+     -57.1,
+     90.9
+    ],
+    [
+     -58,
+     93.6
+    ],
+    [
+     -163.9,
+     120.1
+    ],
+    [
+     -166,
+     118.6
+    ],
+    [
+     -187.3,
+     54.9
+    ]
+   ]
+  },
+  {
+   "way": "1145093807",
+   "tags": {
+    "crossing": "marked",
+    "crossing:markings": "yes",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -56,
+    99
+   ],
+   "dist": 114,
+   "dims": [
+    12.1,
+    0.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -58,
+     93.6
+    ],
+    [
+     -56,
+     99.7
+    ],
+    [
+     -54.1,
+     105.1
+    ]
+   ]
+  },
+  {
+   "way": "1145093808",
+   "tags": {
+    "crossing": "traffic_signals",
+    "crossing:markings": "yes",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -49,
+    89
+   ],
+   "dist": 102,
+   "dims": [
+    17.1,
+    0.1
+   ],
+   "rumoLadoMaior": 102,
+   "n": 4,
+   "pts": [
+    [
+     -57.1,
+     90.9
+    ],
+    [
+     -51.9,
+     89.8
+    ],
+    [
+     -45.4,
+     88.4
+    ],
+    [
+     -40.4,
+     87.4
+    ]
+   ]
+  },
+  {
+   "way": "1145093809",
+   "tags": {
+    "crossing": "traffic_signals",
+    "crossing:markings": "yes",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -35,
+    95
+   ],
+   "dist": 101,
+   "dims": [
+    12.8,
+    0.3
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     -37.5,
+     89.2
+    ],
+    [
+     -35.4,
+     94.5
+    ],
+    [
+     -33.1,
+     101.2
+    ]
+   ]
+  },
+  {
+   "way": "1145093810",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -29,
+    -48
+   ],
+   "dist": 56,
+   "dims": [
+    240.3,
+    106.6
+   ],
+   "rumoLadoMaior": 18,
+   "n": 20,
+   "pts": [
+    [
+     -110.7,
+     -129.2
+    ],
+    [
+     -110.2,
+     -131.4
+    ],
+    [
+     -109.5,
+     -132.4
+    ],
+    [
+     -12.7,
+     -163.6
+    ],
+    [
+     -9.1,
+     -161.4
+    ],
+    [
+     9.7,
+     -102.7
+    ],
+    [
+     13.3,
+     -91.4
+    ],
+    [
+     30.8,
+     -36.9
+    ],
+    [
+     33.4,
+     -28.9
+    ],
+    [
+     38.4,
+     -13
+    ],
+    [
+     62.7,
+     62.6
+    ],
+    [
+     62.5,
+     63.3
+    ],
+    [
+     62,
+     64.8
+    ],
+    [
+     -37.5,
+     89.2
+    ],
+    [
+     -40.4,
+     87.4
+    ],
+    [
+     -76.7,
+     -24.2
+    ],
+    [
+     -77.5,
+     -26.8
+    ],
+    [
+     -80.1,
+     -35
+    ],
+    [
+     -110.4,
+     -128.3
+    ],
+    [
+     -110.7,
+     -129.2
+    ]
+   ]
+  },
+  {
+   "way": "1145093812",
+   "tags": {
+    "crossing": "traffic_signals",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -130,
+    -130
+   ],
+   "dist": 184,
+   "dims": [
+    7.3,
+    0.1
+   ],
+   "rumoLadoMaior": 16,
+   "n": 3,
+   "pts": [
+    [
+     -130.9,
+     -133.6
+    ],
+    [
+     -129.9,
+     -130.2
+    ],
+    [
+     -128.9,
+     -126.6
+    ]
+   ]
+  },
+  {
+   "way": "1145093813",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -162,
+    -74
+   ],
+   "dist": 178,
+   "dims": [
+    114.9,
+    68.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 20,
+   "pts": [
+    [
+     -128.9,
+     -126.6
+    ],
+    [
+     -125.2,
+     -123.7
+    ],
+    [
+     -114.4,
+     -84.9
+    ],
+    [
+     -113.4,
+     -81.4
+    ],
+    [
+     -117.6,
+     -80.1
+    ],
+    [
+     -114.1,
+     -70
+    ],
+    [
+     -110.7,
+     -69.1
+    ],
+    [
+     -109.7,
+     -65.5
+    ],
+    [
+     -106.5,
+     -64.3
+    ],
+    [
+     -108.1,
+     -60.9
+    ],
+    [
+     -180.3,
+     -37.6
+    ],
+    [
+     -201.8,
+     -31.4
+    ],
+    [
+     -210.7,
+     -28.5
+    ],
+    [
+     -212.3,
+     -27.9
+    ],
+    [
+     -214.9,
+     -29.8
+    ],
+    [
+     -234.5,
+     -88.7
+    ],
+    [
+     -235.1,
+     -90.2
+    ],
+    [
+     -234.4,
+     -92
+    ],
+    [
+     -232.1,
+     -92.8
+    ],
+    [
+     -128.9,
+     -126.6
+    ]
+   ]
+  },
+  {
+   "way": "1218125190",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "380",
+    "addr:postcode": "60160-090",
+    "addr:street": "Rua Tenente Amauri Pio",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Isola di Capri",
+    "residential": "apartments"
+   },
+   "centro": [
+    95,
+    -66
+   ],
+   "dist": 116,
+   "dims": [
+    33,
+    23.4
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     83.1,
+     -76.2
+    ],
+    [
+     103.9,
+     -82.8
+    ],
+    [
+     114.5,
+     -51.5
+    ],
+    [
+     92.1,
+     -44.6
+    ],
+    [
+     83.1,
+     -76.2
+    ]
+   ]
+  },
+  {
+   "way": "1218125191",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "430",
+    "addr:postcode": "60160-090",
+    "addr:street": "Rua Tenente Amauri Pio",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "residential": "apartments"
+   },
+   "centro": [
+    127,
+    -74
+   ],
+   "dist": 147,
+   "dims": [
+    39.7,
+    33
+   ],
+   "rumoLadoMaior": 109,
+   "n": 6,
+   "pts": [
+    [
+     103.9,
+     -82.8
+    ],
+    [
+     141.5,
+     -95.4
+    ],
+    [
+     150.4,
+     -67.1
+    ],
+    [
+     147.4,
+     -62.7
+    ],
+    [
+     114.5,
+     -51.5
+    ],
+    [
+     103.9,
+     -82.8
+    ]
+   ]
+  },
+  {
+   "way": "1218137067",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "354",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Abolição",
+    "residential": "apartments"
+   },
+   "centro": [
+    54,
+    90
+   ],
+   "dist": 105,
+   "dims": [
+    40.1,
+    20.5
+   ],
+   "rumoLadoMaior": 106,
+   "n": 7,
+   "pts": [
+    [
+     35.4,
+     106
+    ],
+    [
+     73.7,
+     94.2
+    ],
+    [
+     69.2,
+     80
+    ],
+    [
+     67.9,
+     78.5
+    ],
+    [
+     65,
+     77.5
+    ],
+    [
+     29.9,
+     86.3
+    ],
+    [
+     35.4,
+     106
+    ]
+   ]
+  },
+  {
+   "way": "1218137068",
+   "tags": {
+    "landuse": "residential",
+    "residential": "apartments"
+   },
+   "centro": [
+    37,
+    146
+   ],
+   "dist": 150,
+   "dims": [
+    36.4,
+    31
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     19.3,
+     138.2
+    ],
+    [
+     42.4,
+     132
+    ],
+    [
+     49,
+     129.7
+    ],
+    [
+     59.7,
+     163.8
+    ],
+    [
+     29.8,
+     172.2
+    ],
+    [
+     19.3,
+     138.2
+    ]
+   ]
+  },
+  {
+   "way": "1218137069",
+   "tags": {
+    "landuse": "residential",
+    "residential": "apartments"
+   },
+   "centro": [
+    65,
+    140
+   ],
+   "dist": 154,
+   "dims": [
+    35.7,
+    32
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     49,
+     129.7
+    ],
+    [
+     79.3,
+     121.3
+    ],
+    [
+     90.2,
+     154
+    ],
+    [
+     59.7,
+     163.8
+    ],
+    [
+     49,
+     129.7
+    ]
+   ]
+  },
+  {
+   "way": "1218137070",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "333",
+    "addr:postcode": "60120-020",
+    "addr:street": "Rua Silva Paulet",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Santa Filomena",
+    "residential": "apartments"
+   },
+   "centro": [
+    101,
+    102
+   ],
+   "dist": 143,
+   "dims": [
+    31.7,
+    18.2
+   ],
+   "rumoLadoMaior": 107,
+   "n": 5,
+   "pts": [
+    [
+     86.5,
+     98.5
+    ],
+    [
+     117.1,
+     91.2
+    ],
+    [
+     121.8,
+     106.9
+    ],
+    [
+     91.4,
+     116
+    ],
+    [
+     86.5,
+     98.5
+    ]
+   ]
+  },
+  {
+   "way": "1218137071",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "1183",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "name": "Edifício Edite Fernandes",
+    "residential": "apartments"
+   },
+   "centro": [
+    126,
+    88
+   ],
+   "dist": 154,
+   "dims": [
+    42.3,
+    29.1
+   ],
+   "rumoLadoMaior": 16,
+   "n": 6,
+   "pts": [
+    [
+     121.8,
+     106.9
+    ],
+    [
+     117.1,
+     91.2
+    ],
+    [
+     109.8,
+     66.3
+    ],
+    [
+     138.3,
+     60.1
+    ],
+    [
+     147,
+     99.3
+    ],
+    [
+     121.8,
+     106.9
+    ]
+   ]
+  },
+  {
+   "way": "1218137072",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "1173",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "landuse": "residential",
+    "residential": "apartments"
+   },
+   "centro": [
+    98,
+    83
+   ],
+   "dist": 129,
+   "dims": [
+    32.5,
+    25.9
+   ],
+   "rumoLadoMaior": 106,
+   "n": 6,
+   "pts": [
+    [
+     117.1,
+     91.2
+    ],
+    [
+     86.5,
+     98.5
+    ],
+    [
+     78.9,
+     76.5
+    ],
+    [
+     79.5,
+     75.4
+    ],
+    [
+     109.8,
+     66.3
+    ],
+    [
+     117.1,
+     91.2
+    ]
+   ]
+  },
+  {
+   "way": "1218137075",
+   "tags": {
+    "landuse": "residential",
+    "residential": "apartments"
+   },
+   "centro": [
+    128,
+    124
+   ],
+   "dist": 178,
+   "dims": [
+    58.1,
+    35.9
+   ],
+   "rumoLadoMaior": 107,
+   "n": 8,
+   "pts": [
+    [
+     155.6,
+     132.9
+    ],
+    [
+     105.2,
+     149.3
+    ],
+    [
+     102.1,
+     147.8
+    ],
+    [
+     91.4,
+     116
+    ],
+    [
+     121.8,
+     106.9
+    ],
+    [
+     147,
+     99.3
+    ],
+    [
+     148.2,
+     104.7
+    ],
+    [
+     155.6,
+     132.9
+    ]
+   ]
+  },
+  {
+   "way": "1218911570",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.2",
+    "pmfsefin:idedif": "10872"
+   },
+   "centro": [
+    10,
+    109
+   ],
+   "dist": 109,
+   "dims": [
+    39.3,
+    27.5
+   ],
+   "rumoLadoMaior": 108,
+   "n": 15,
+   "pts": [
+    [
+     13,
+     117.1
+    ],
+    [
+     7,
+     119.1
+    ],
+    [
+     7.6,
+     121
+    ],
+    [
+     -4.2,
+     124.8
+    ],
+    [
+     -4.5,
+     124.2
+    ],
+    [
+     -3.6,
+     123.9
+    ],
+    [
+     -9,
+     106.8
+    ],
+    [
+     7.6,
+     101.5
+    ],
+    [
+     5,
+     92.9
+    ],
+    [
+     25,
+     87.7
+    ],
+    [
+     27.4,
+     95.2
+    ],
+    [
+     27.5,
+     95.4
+    ],
+    [
+     28.5,
+     98.6
+    ],
+    [
+     9.2,
+     104.5
+    ],
+    [
+     13,
+     117.1
+    ]
+   ]
+  },
+  {
+   "way": "1218911574",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.2",
+    "pmfsefin:idedif": "37074"
+   },
+   "centro": [
+    -68,
+    124
+   ],
+   "dist": 141,
+   "dims": [
+    25.1,
+    21.1
+   ],
+   "rumoLadoMaior": 104,
+   "n": 20,
+   "pts": [
+    [
+     -55.1,
+     129.8
+    ],
+    [
+     -54.8,
+     130.8
+    ],
+    [
+     -58.2,
+     132
+    ],
+    [
+     -58.4,
+     131
+    ],
+    [
+     -59.2,
+     127.6
+    ],
+    [
+     -67.5,
+     129.6
+    ],
+    [
+     -67.4,
+     130
+    ],
+    [
+     -75.1,
+     131.9
+    ],
+    [
+     -75.3,
+     131.2
+    ],
+    [
+     -76.3,
+     131.4
+    ],
+    [
+     -78.5,
+     122.4
+    ],
+    [
+     -82.4,
+     123.3
+    ],
+    [
+     -84,
+     116.9
+    ],
+    [
+     -78.4,
+     115.5
+    ],
+    [
+     -75.7,
+     114.8
+    ],
+    [
+     -75.7,
+     114.5
+    ],
+    [
+     -62.8,
+     111.4
+    ],
+    [
+     -62.4,
+     112.9
+    ],
+    [
+     -59.3,
+     112.2
+    ],
+    [
+     -55.1,
+     129.8
+    ]
+   ]
+  },
+  {
+   "way": "1218911618",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.0",
+    "pmfsefin:idedif": "30564"
+   },
+   "centro": [
+    -92,
+    135
+   ],
+   "dist": 163,
+   "dims": [
+    13,
+    11.3
+   ],
+   "rumoLadoMaior": 15,
+   "n": 15,
+   "pts": [
+    [
+     -85.6,
+     140.7
+    ],
+    [
+     -85.5,
+     141.2
+    ],
+    [
+     -89.2,
+     142.4
+    ],
+    [
+     -90,
+     139.2
+    ],
+    [
+     -97.2,
+     141
+    ],
+    [
+     -99.3,
+     132.5
+    ],
+    [
+     -98.7,
+     132.3
+    ],
+    [
+     -95.5,
+     131.5
+    ],
+    [
+     -95.7,
+     130.7
+    ],
+    [
+     -91.4,
+     129.6
+    ],
+    [
+     -91.2,
+     129.5
+    ],
+    [
+     -91.1,
+     130
+    ],
+    [
+     -90.5,
+     132.2
+    ],
+    [
+     -88,
+     131.6
+    ],
+    [
+     -85.6,
+     140.7
+    ]
+   ]
+  },
+  {
+   "way": "1218911729",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "35233"
+   },
+   "centro": [
+    30,
+    99
+   ],
+   "dist": 103,
+   "dims": [
+    8.8,
+    2.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 7,
+   "pts": [
+    [
+     32.1,
+     102.8
+    ],
+    [
+     30.1,
+     103.5
+    ],
+    [
+     28.5,
+     98.6
+    ],
+    [
+     27.5,
+     95.4
+    ],
+    [
+     27.4,
+     95.2
+    ],
+    [
+     29.4,
+     94.5
+    ],
+    [
+     32.1,
+     102.8
+    ]
+   ]
+  },
+  {
+   "way": "1218911732",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.6",
+    "pmfsefin:idedif": "38716"
+   },
+   "centro": [
+    90,
+    -111
+   ],
+   "dist": 143,
+   "dims": [
+    1.9,
+    1.7
+   ],
+   "rumoLadoMaior": 106,
+   "n": 6,
+   "pts": [
+    [
+     91.3,
+     -110.9
+    ],
+    [
+     89.7,
+     -110.5
+    ],
+    [
+     89.5,
+     -110.4
+    ],
+    [
+     89,
+     -112
+    ],
+    [
+     90.8,
+     -112.5
+    ],
+    [
+     91.3,
+     -110.9
+    ]
+   ]
+  },
+  {
+   "way": "1218911770",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.5",
+    "pmfsefin:idedif": "35150"
+   },
+   "centro": [
+    104,
+    -76
+   ],
+   "dist": 128,
+   "dims": [
+    10.4,
+    6.8
+   ],
+   "rumoLadoMaior": 17,
+   "n": 9,
+   "pts": [
+    [
+     107.4,
+     -73.8
+    ],
+    [
+     107.9,
+     -72
+    ],
+    [
+     101.5,
+     -70.1
+    ],
+    [
+     100,
+     -74.9
+    ],
+    [
+     100,
+     -75.1
+    ],
+    [
+     98.5,
+     -80
+    ],
+    [
+     104.6,
+     -81.9
+    ],
+    [
+     104.9,
+     -82
+    ],
+    [
+     107.4,
+     -73.8
+    ]
+   ]
+  },
+  {
+   "way": "1218911935",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "8.9",
+    "pmfsefin:idedif": "10873"
+   },
+   "centro": [
+    -11,
+    117
+   ],
+   "dist": 118,
+   "dims": [
+    19.3,
+    12.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 9,
+   "pts": [
+    [
+     -4.5,
+     124.2
+    ],
+    [
+     -15.8,
+     127.8
+    ],
+    [
+     -15.9,
+     127.6
+    ],
+    [
+     -21.6,
+     109.5
+    ],
+    [
+     -10.4,
+     105.9
+    ],
+    [
+     -9.4,
+     105.6
+    ],
+    [
+     -9,
+     106.8
+    ],
+    [
+     -3.6,
+     123.9
+    ],
+    [
+     -4.5,
+     124.2
+    ]
+   ]
+  },
+  {
+   "way": "1218911955",
+   "tags": {
+    "building:levels": "16",
+    "building:part": "yes",
+    "height": "48.5",
+    "pmfsefin:idedif": "29580"
+   },
+   "centro": [
+    91,
+    -67
+   ],
+   "dist": 113,
+   "dims": [
+    8.3,
+    3.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     93.5,
+     -64.5
+    ],
+    [
+     90.1,
+     -63.5
+    ],
+    [
+     87.7,
+     -71.3
+    ],
+    [
+     91.1,
+     -72.4
+    ],
+    [
+     93.5,
+     -64.5
+    ]
+   ]
+  },
+  {
+   "way": "1218911967",
+   "tags": {
+    "building:levels": "16",
+    "building:part": "yes",
+    "height": "48.4",
+    "pmfsefin:idedif": "52283"
+   },
+   "centro": [
+    39,
+    99
+   ],
+   "dist": 107,
+   "dims": [
+    7.4,
+    7.2
+   ],
+   "rumoLadoMaior": 17,
+   "n": 9,
+   "pts": [
+    [
+     41.8,
+     99
+    ],
+    [
+     42.1,
+     99.9
+    ],
+    [
+     41.6,
+     100.9
+    ],
+    [
+     41.4,
+     101
+    ],
+    [
+     36.2,
+     102.6
+    ],
+    [
+     35.3,
+     102.2
+    ],
+    [
+     33.3,
+     95.8
+    ],
+    [
+     40.1,
+     93.7
+    ],
+    [
+     41.8,
+     99
+    ]
+   ]
+  },
+  {
+   "way": "1218912017",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.0",
+    "pmfsefin:idedif": "30565"
+   },
+   "centro": [
+    -87,
+    124
+   ],
+   "dist": 152,
+   "dims": [
+    11.3,
+    4.2
+   ],
+   "rumoLadoMaior": 14,
+   "n": 12,
+   "pts": [
+    [
+     -86.1,
+     122.3
+    ],
+    [
+     -85.6,
+     124.2
+    ],
+    [
+     -85.5,
+     124.7
+    ],
+    [
+     -86.6,
+     124.9
+    ],
+    [
+     -85.5,
+     129.7
+    ],
+    [
+     -88.3,
+     130.4
+    ],
+    [
+     -88.5,
+     129.3
+    ],
+    [
+     -91,
+     119.5
+    ],
+    [
+     -87.9,
+     118.7
+    ],
+    [
+     -87.2,
+     121.5
+    ],
+    [
+     -86.3,
+     121.2
+    ],
+    [
+     -86.1,
+     122.3
+    ]
+   ]
+  },
+  {
+   "way": "1218912023",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.7",
+    "pmfsefin:idedif": "12543"
+   },
+   "centro": [
+    39,
+    119
+   ],
+   "dist": 125,
+   "dims": [
+    10.9,
+    5.3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 7,
+   "pts": [
+    [
+     39.8,
+     116.5
+    ],
+    [
+     42,
+     122.7
+    ],
+    [
+     41.6,
+     122.8
+    ],
+    [
+     37,
+     124.4
+    ],
+    [
+     33.7,
+     114.2
+    ],
+    [
+     38.5,
+     112.5
+    ],
+    [
+     39.8,
+     116.5
+    ]
+   ]
+  },
+  {
+   "way": "1218912043",
+   "tags": {
+    "building:levels": "19",
+    "building:part": "yes",
+    "height": "58.4",
+    "pmfsefin:idedif": "51168"
+   },
+   "centro": [
+    121,
+    -84
+   ],
+   "dist": 147,
+   "dims": [
+    12.7,
+    4.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     116.1,
+     -82.4
+    ],
+    [
+     115.9,
+     -82.9
+    ],
+    [
+     115.5,
+     -84
+    ],
+    [
+     115.6,
+     -84.6
+    ],
+    [
+     127.3,
+     -88.3
+    ],
+    [
+     128.1,
+     -86.1
+    ],
+    [
+     128.8,
+     -84
+    ],
+    [
+     123.6,
+     -82.4
+    ],
+    [
+     122.9,
+     -84.5
+    ],
+    [
+     116.1,
+     -82.4
+    ]
+   ]
+  },
+  {
+   "way": "1218912044",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.8",
+    "pmfsefin:idedif": "37072"
+   },
+   "centro": [
+    -83,
+    123
+   ],
+   "dist": 148,
+   "dims": [
+    18.3,
+    9.1
+   ],
+   "rumoLadoMaior": 13,
+   "n": 17,
+   "pts": [
+    [
+     -76.3,
+     131.4
+    ],
+    [
+     -81.9,
+     132.7
+    ],
+    [
+     -82.7,
+     129.4
+    ],
+    [
+     -83.9,
+     129.7
+    ],
+    [
+     -85.2,
+     124.1
+    ],
+    [
+     -85.6,
+     124.2
+    ],
+    [
+     -86.1,
+     122.3
+    ],
+    [
+     -86.3,
+     121.2
+    ],
+    [
+     -87.7,
+     115.6
+    ],
+    [
+     -84.3,
+     114.8
+    ],
+    [
+     -84.4,
+     114.6
+    ],
+    [
+     -78.9,
+     113.2
+    ],
+    [
+     -78.4,
+     115.5
+    ],
+    [
+     -84,
+     116.9
+    ],
+    [
+     -82.4,
+     123.3
+    ],
+    [
+     -78.5,
+     122.4
+    ],
+    [
+     -76.3,
+     131.4
+    ]
+   ]
+  },
+  {
+   "way": "1218912081",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.4",
+    "pmfsefin:idedif": "10468"
+   },
+   "centro": [
+    -7,
+    23
+   ],
+   "dist": 24,
+   "dims": [
+    87.9,
+    21.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 12,
+   "pts": [
+    [
+     -44.7,
+     52.3
+    ],
+    [
+     -51.2,
+     32
+    ],
+    [
+     -26,
+     23.9
+    ],
+    [
+     -24,
+     23.2
+    ],
+    [
+     -22,
+     22.6
+    ],
+    [
+     2.5,
+     14.7
+    ],
+    [
+     6.4,
+     13.4
+    ],
+    [
+     23.7,
+     7.8
+    ],
+    [
+     26.8,
+     6.8
+    ],
+    [
+     32.3,
+     5
+    ],
+    [
+     38.9,
+     25.3
+    ],
+    [
+     -44.7,
+     52.3
+    ]
+   ]
+  },
+  {
+   "way": "1218912093",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.8",
+    "pmfsefin:idedif": "35234"
+   },
+   "centro": [
+    39,
+    96
+   ],
+   "dist": 103,
+   "dims": [
+    34,
+    20.6
+   ],
+   "rumoLadoMaior": 107,
+   "n": 20,
+   "pts": [
+    [
+     42,
+     103
+    ],
+    [
+     42.3,
+     103.9
+    ],
+    [
+     33.4,
+     106.7
+    ],
+    [
+     32.1,
+     103
+    ],
+    [
+     33.2,
+     102.7
+    ],
+    [
+     30.5,
+     94.2
+    ],
+    [
+     29.4,
+     94.5
+    ],
+    [
+     27.4,
+     95.2
+    ],
+    [
+     25,
+     87.7
+    ],
+    [
+     38.8,
+     84.3
+    ],
+    [
+     58.2,
+     79.9
+    ],
+    [
+     59.9,
+     85.2
+    ],
+    [
+     59.5,
+     85.4
+    ],
+    [
+     56.8,
+     86.2
+    ],
+    [
+     32.7,
+     93.8
+    ],
+    [
+     33.3,
+     95.8
+    ],
+    [
+     35.3,
+     102.2
+    ],
+    [
+     36.2,
+     102.6
+    ],
+    [
+     41.4,
+     101
+    ],
+    [
+     42,
+     103
+    ]
+   ]
+  },
+  {
+   "way": "1218912100",
+   "tags": {
+    "building:levels": "17",
+    "building:part": "yes",
+    "height": "50.7",
+    "pmfsefin:idedif": "29572"
+   },
+   "centro": [
+    124,
+    -77
+   ],
+   "dist": 146,
+   "dims": [
+    27.3,
+    19.4
+   ],
+   "rumoLadoMaior": 175,
+   "n": 21,
+   "pts": [
+    [
+     135,
+     -82.2
+    ],
+    [
+     130,
+     -80.5
+    ],
+    [
+     129.9,
+     -79.7
+    ],
+    [
+     126.7,
+     -65
+    ],
+    [
+     126.2,
+     -62.3
+    ],
+    [
+     123.1,
+     -61.3
+    ],
+    [
+     116.1,
+     -62.9
+    ],
+    [
+     115.7,
+     -63.3
+    ],
+    [
+     115.8,
+     -64.4
+    ],
+    [
+     117.9,
+     -74.3
+    ],
+    [
+     115.5,
+     -82.1
+    ],
+    [
+     115.6,
+     -82.7
+    ],
+    [
+     115.9,
+     -82.9
+    ],
+    [
+     116.1,
+     -82.4
+    ],
+    [
+     122.9,
+     -84.5
+    ],
+    [
+     123.6,
+     -82.4
+    ],
+    [
+     128.8,
+     -84
+    ],
+    [
+     128.1,
+     -86.1
+    ],
+    [
+     133.1,
+     -87.8
+    ],
+    [
+     134,
+     -85.2
+    ],
+    [
+     135,
+     -82.2
+    ]
+   ]
+  },
+  {
+   "way": "1218912114",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.5",
+    "pmfsefin:idedif": "37066"
+   },
+   "centro": [
+    -64,
+    131
+   ],
+   "dist": 146,
+   "dims": [
+    16.9,
+    5.5
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -58.4,
+     131
+    ],
+    [
+     -58.2,
+     132
+    ],
+    [
+     -59.1,
+     132.3
+    ],
+    [
+     -73.8,
+     137.3
+    ],
+    [
+     -75.1,
+     131.9
+    ],
+    [
+     -67.4,
+     130
+    ],
+    [
+     -67.5,
+     129.6
+    ],
+    [
+     -59.2,
+     127.6
+    ],
+    [
+     -58.4,
+     131
+    ]
+   ]
+  },
+  {
+   "way": "1218912153",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.9",
+    "pmfsefin:idedif": "30560"
+   },
+   "centro": [
+    -107,
+    135
+   ],
+   "dist": 173,
+   "dims": [
+    19.3,
+    9.6
+   ],
+   "rumoLadoMaior": 15,
+   "n": 14,
+   "pts": [
+    [
+     -100.7,
+     142
+    ],
+    [
+     -105.8,
+     143.4
+    ],
+    [
+     -108.6,
+     144.2
+    ],
+    [
+     -109.5,
+     141.2
+    ],
+    [
+     -110,
+     141.4
+    ],
+    [
+     -111.4,
+     137.1
+    ],
+    [
+     -110,
+     136.7
+    ],
+    [
+     -113.2,
+     125.5
+    ],
+    [
+     -111.1,
+     124.9
+    ],
+    [
+     -111.1,
+     125
+    ],
+    [
+     -105.4,
+     123.4
+    ],
+    [
+     -103,
+     131.6
+    ],
+    [
+     -103.6,
+     131.8
+    ],
+    [
+     -100.7,
+     142
+    ]
+   ]
+  },
+  {
+   "way": "1218912234",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.6",
+    "pmfsefin:idedif": "12504"
+   },
+   "centro": [
+    71,
+    -88
+   ],
+   "dist": 113,
+   "dims": [
+    36.5,
+    12.6
+   ],
+   "rumoLadoMaior": 18,
+   "n": 10,
+   "pts": [
+    [
+     82,
+     -74
+    ],
+    [
+     71,
+     -70.5
+    ],
+    [
+     70.7,
+     -71.4
+    ],
+    [
+     64.2,
+     -91.7
+    ],
+    [
+     60,
+     -104.5
+    ],
+    [
+     60.5,
+     -104.6
+    ],
+    [
+     60.3,
+     -105.3
+    ],
+    [
+     71.7,
+     -109
+    ],
+    [
+     83,
+     -74.3
+    ],
+    [
+     82,
+     -74
+    ]
+   ]
+  },
+  {
+   "way": "1218912281",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "8.2",
+    "pmfsefin:idedif": "37081"
+   },
+   "centro": [
+    65,
+    121
+   ],
+   "dist": 137,
+   "dims": [
+    11.7,
+    10.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     61.2,
+     118.6
+    ],
+    [
+     60.8,
+     117.2
+    ],
+    [
+     71.9,
+     113.6
+    ],
+    [
+     75.2,
+     123.6
+    ],
+    [
+     64.1,
+     127.3
+    ],
+    [
+     63.7,
+     126.2
+    ],
+    [
+     61.2,
+     118.6
+    ]
+   ]
+  },
+  {
+   "way": "1218912326",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.9",
+    "pmfsefin:idedif": "34396"
+   },
+   "centro": [
+    48,
+    98
+   ],
+   "dist": 109,
+   "dims": [
+    10.7,
+    1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 5,
+   "pts": [
+    [
+     52.3,
+     96.7
+    ],
+    [
+     42.1,
+     99.9
+    ],
+    [
+     41.8,
+     99
+    ],
+    [
+     52,
+     95.7
+    ],
+    [
+     52.3,
+     96.7
+    ]
+   ]
+  },
+  {
+   "way": "1218912412",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.6",
+    "pmfsefin:idedif": "11235"
+   },
+   "centro": [
+    -20,
+    114
+   ],
+   "dist": 116,
+   "dims": [
+    27,
+    18.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 11,
+   "pts": [
+    [
+     -15.9,
+     127.6
+    ],
+    [
+     -17.6,
+     128.1
+    ],
+    [
+     -20.6,
+     118.5
+    ],
+    [
+     -25.4,
+     120
+    ],
+    [
+     -29.4,
+     107.5
+    ],
+    [
+     -25.7,
+     106.3
+    ],
+    [
+     -26.9,
+     102.8
+    ],
+    [
+     -12.5,
+     99.2
+    ],
+    [
+     -10.4,
+     105.9
+    ],
+    [
+     -21.6,
+     109.5
+    ],
+    [
+     -15.9,
+     127.6
+    ]
+   ]
+  },
+  {
+   "way": "1218912495",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.6",
+    "pmfsefin:idedif": "37067"
+   },
+   "centro": [
+    55,
+    126
+   ],
+   "dist": 138,
+   "dims": [
+    16.5,
+    15.2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 13,
+   "pts": [
+    [
+     63.7,
+     126.2
+    ],
+    [
+     57.6,
+     128.2
+    ],
+    [
+     59.5,
+     134.1
+    ],
+    [
+     51.3,
+     136.7
+    ],
+    [
+     49.4,
+     131.3
+    ],
+    [
+     49.2,
+     130.5
+    ],
+    [
+     50.1,
+     130.2
+    ],
+    [
+     47.1,
+     121
+    ],
+    [
+     47.9,
+     120.7
+    ],
+    [
+     57.6,
+     117.4
+    ],
+    [
+     58.3,
+     119.5
+    ],
+    [
+     61.2,
+     118.6
+    ],
+    [
+     63.7,
+     126.2
+    ]
+   ]
+  },
+  {
+   "way": "1218912515",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.2",
+    "pmfsefin:idedif": "12540"
+   },
+   "centro": [
+    39,
+    110
+   ],
+   "dist": 117,
+   "dims": [
+    11.9,
+    11.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     46.2,
+     114.4
+    ],
+    [
+     39.8,
+     116.5
+    ],
+    [
+     38.5,
+     112.5
+    ],
+    [
+     33.7,
+     114.2
+    ],
+    [
+     32.5,
+     110.8
+    ],
+    [
+     31.4,
+     107.4
+    ],
+    [
+     33.4,
+     106.7
+    ],
+    [
+     42.3,
+     103.9
+    ],
+    [
+     42.7,
+     103.8
+    ],
+    [
+     46.2,
+     114.4
+    ]
+   ]
+  },
+  {
+   "way": "1218912607",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.1",
+    "pmfsefin:idedif": "34022"
+   },
+   "centro": [
+    94,
+    -58
+   ],
+   "dist": 110,
+   "dims": [
+    9.3,
+    3.3
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     94,
+     -61.8
+    ],
+    [
+     96.7,
+     -53
+    ],
+    [
+     93.6,
+     -52
+    ],
+    [
+     90.9,
+     -60.9
+    ],
+    [
+     94,
+     -61.8
+    ]
+   ]
+  },
+  {
+   "way": "1218912625",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.3",
+    "pmfsefin:idedif": "11245"
+   },
+   "centro": [
+    58,
+    -96
+   ],
+   "dist": 112,
+   "dims": [
+    14.1,
+    13.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     64.2,
+     -91.7
+    ],
+    [
+     60.3,
+     -90.3
+    ],
+    [
+     60.3,
+     -90.5
+    ],
+    [
+     50.8,
+     -87.4
+    ],
+    [
+     47.3,
+     -98.1
+    ],
+    [
+     58.8,
+     -101.8
+    ],
+    [
+     58.1,
+     -103.9
+    ],
+    [
+     60,
+     -104.5
+    ],
+    [
+     64.2,
+     -91.7
+    ]
+   ]
+  },
+  {
+   "way": "1218912642",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.5",
+    "pmfsefin:idedif": "30562"
+   },
+   "centro": [
+    -89,
+    131
+   ],
+   "dist": 158,
+   "dims": [
+    2.7,
+    2.4
+   ],
+   "rumoLadoMaior": 105,
+   "n": 6,
+   "pts": [
+    [
+     -88.3,
+     130.4
+    ],
+    [
+     -88,
+     131.6
+    ],
+    [
+     -90.5,
+     132.2
+    ],
+    [
+     -91.1,
+     130
+    ],
+    [
+     -88.5,
+     129.3
+    ],
+    [
+     -88.3,
+     130.4
+    ]
+   ]
+  },
+  {
+   "way": "1218912672",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.2",
+    "pmfsefin:idedif": "10159"
+   },
+   "centro": [
+    63,
+    105
+   ],
+   "dist": 122,
+   "dims": [
+    12.1,
+    10.4
+   ],
+   "rumoLadoMaior": 18,
+   "n": 9,
+   "pts": [
+    [
+     64,
+     100.9
+    ],
+    [
+     66.3,
+     100.2
+    ],
+    [
+     66.5,
+     100.8
+    ],
+    [
+     70,
+     111.6
+    ],
+    [
+     60.2,
+     114.9
+    ],
+    [
+     57.1,
+     105.6
+    ],
+    [
+     61.2,
+     104.2
+    ],
+    [
+     60.5,
+     102.1
+    ],
+    [
+     64,
+     100.9
+    ]
+   ]
+  },
+  {
+   "way": "1218912705",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.4",
+    "pmfsefin:idedif": "34397"
+   },
+   "centro": [
+    56,
+    95
+   ],
+   "dist": 110,
+   "dims": [
+    10.1,
+    1
+   ],
+   "rumoLadoMaior": 107,
+   "n": 6,
+   "pts": [
+    [
+     52,
+     95.7
+    ],
+    [
+     57.9,
+     93.9
+    ],
+    [
+     61.6,
+     92.7
+    ],
+    [
+     61.9,
+     93.7
+    ],
+    [
+     52.3,
+     96.7
+    ],
+    [
+     52,
+     95.7
+    ]
+   ]
+  },
+  {
+   "way": "1218912712",
+   "tags": {
+    "building:levels": "14",
+    "building:part": "yes",
+    "height": "41.9",
+    "pmfsefin:idedif": "29582"
+   },
+   "centro": [
+    101,
+    -57
+   ],
+   "dist": 117,
+   "dims": [
+    4.9,
+    4.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     103.8,
+     -56
+    ],
+    [
+     99.4,
+     -54.7
+    ],
+    [
+     98.3,
+     -58.2
+    ],
+    [
+     100.6,
+     -58.9
+    ],
+    [
+     102.4,
+     -60.7
+    ],
+    [
+     103.8,
+     -56
+    ]
+   ]
+  },
+  {
+   "way": "1218912790",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.9",
+    "pmfsefin:idedif": "11237"
+   },
+   "centro": [
+    0,
+    0
+   ],
+   "dist": 0,
+   "dims": [
+    24.3,
+    4.1
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     -0.9,
+     -9.7
+    ],
+    [
+     6.4,
+     13.4
+    ],
+    [
+     2.5,
+     14.7
+    ],
+    [
+     -4.8,
+     -8.5
+    ],
+    [
+     -0.9,
+     -9.7
+    ]
+   ]
+  },
+  {
+   "way": "1218912799",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.1",
+    "pmfsefin:idedif": "35148"
+   },
+   "centro": [
+    129,
+    -78
+   ],
+   "dist": 151,
+   "dims": [
+    35.2,
+    31
+   ],
+   "rumoLadoMaior": 107,
+   "n": 47,
+   "pts": [
+    [
+     117.9,
+     -74.3
+    ],
+    [
+     115.8,
+     -64.4
+    ],
+    [
+     111.8,
+     -65.3
+    ],
+    [
+     112.4,
+     -68
+    ],
+    [
+     108.9,
+     -68.7
+    ],
+    [
+     107.9,
+     -72
+    ],
+    [
+     107.4,
+     -73.8
+    ],
+    [
+     108.1,
+     -73.7
+    ],
+    [
+     110.3,
+     -84.2
+    ],
+    [
+     110,
+     -85.6
+    ],
+    [
+     135.9,
+     -94.1
+    ],
+    [
+     136.5,
+     -94.2
+    ],
+    [
+     137,
+     -94.1
+    ],
+    [
+     137.6,
+     -93.8
+    ],
+    [
+     138.1,
+     -93.2
+    ],
+    [
+     142.3,
+     -79.8
+    ],
+    [
+     140.9,
+     -73.4
+    ],
+    [
+     142,
+     -73
+    ],
+    [
+     142.8,
+     -72.5
+    ],
+    [
+     143.4,
+     -71.9
+    ],
+    [
+     143.9,
+     -71.2
+    ],
+    [
+     144.3,
+     -69.5
+    ],
+    [
+     144,
+     -67.8
+    ],
+    [
+     143,
+     -66.3
+    ],
+    [
+     142.3,
+     -65.8
+    ],
+    [
+     140.8,
+     -65.1
+    ],
+    [
+     140,
+     -65.1
+    ],
+    [
+     139.2,
+     -65.2
+    ],
+    [
+     138.7,
+     -62.5
+    ],
+    [
+     126.7,
+     -65
+    ],
+    [
+     129.9,
+     -79.7
+    ],
+    [
+     135.4,
+     -81.6
+    ],
+    [
+     135.9,
+     -81.9
+    ],
+    [
+     136.4,
+     -82.7
+    ],
+    [
+     136.4,
+     -84.1
+    ],
+    [
+     135.6,
+     -85
+    ],
+    [
+     135.1,
+     -85.3
+    ],
+    [
+     134,
+     -85.2
+    ],
+    [
+     133.1,
+     -87.8
+    ],
+    [
+     128.1,
+     -86.1
+    ],
+    [
+     127.3,
+     -88.3
+    ],
+    [
+     115.6,
+     -84.6
+    ],
+    [
+     115.5,
+     -84
+    ],
+    [
+     115.9,
+     -82.9
+    ],
+    [
+     115.6,
+     -82.7
+    ],
+    [
+     115.5,
+     -82.1
+    ],
+    [
+     117.9,
+     -74.3
+    ]
+   ]
+  },
+  {
+   "way": "1218912833",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.1",
+    "pmfsefin:idedif": "12507"
+   },
+   "centro": [
+    47,
+    -53
+   ],
+   "dist": 70,
+   "dims": [
+    16,
+    6.3
+   ],
+   "rumoLadoMaior": 19,
+   "n": 9,
+   "pts": [
+    [
+     50.8,
+     -47
+    ],
+    [
+     48.9,
+     -46.3
+    ],
+    [
+     48,
+     -49
+    ],
+    [
+     44,
+     -47.6
+    ],
+    [
+     39.9,
+     -60.2
+    ],
+    [
+     45.3,
+     -62
+    ],
+    [
+     46.9,
+     -57.2
+    ],
+    [
+     47.3,
+     -57.4
+    ],
+    [
+     50.8,
+     -47
+    ]
+   ]
+  },
+  {
+   "way": "1218912875",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "6.5",
+    "pmfsefin:idedif": "10875"
+   },
+   "centro": [
+    13,
+    127
+   ],
+   "dist": 128,
+   "dims": [
+    53.2,
+    22.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 20,
+   "pts": [
+    [
+     22.2,
+     135.6
+    ],
+    [
+     14.2,
+     138.2
+    ],
+    [
+     4.4,
+     141.4
+    ],
+    [
+     -11.6,
+     146.6
+    ],
+    [
+     -17.6,
+     128.1
+    ],
+    [
+     -15.9,
+     127.6
+    ],
+    [
+     -15.8,
+     127.8
+    ],
+    [
+     -4.5,
+     124.2
+    ],
+    [
+     -4.2,
+     124.8
+    ],
+    [
+     7.6,
+     121
+    ],
+    [
+     7,
+     119.1
+    ],
+    [
+     13,
+     117.1
+    ],
+    [
+     25.7,
+     113
+    ],
+    [
+     32.5,
+     110.8
+    ],
+    [
+     33.7,
+     114.2
+    ],
+    [
+     37,
+     124.4
+    ],
+    [
+     39.5,
+     131.8
+    ],
+    [
+     35.1,
+     133.2
+    ],
+    [
+     34.5,
+     131.6
+    ],
+    [
+     22.2,
+     135.6
+    ]
+   ]
+  },
+  {
+   "way": "1218912890",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.6",
+    "pmfsefin:idedif": "37214"
+   },
+   "centro": [
+    89,
+    -96
+   ],
+   "dist": 131,
+   "dims": [
+    29.1,
+    19
+   ],
+   "rumoLadoMaior": 19,
+   "n": 18,
+   "pts": [
+    [
+     101.2,
+     -83.9
+    ],
+    [
+     90.8,
+     -80.4
+    ],
+    [
+     89.3,
+     -85.5
+    ],
+    [
+     81.5,
+     -83.1
+    ],
+    [
+     79.7,
+     -88.9
+    ],
+    [
+     80.7,
+     -89.2
+    ],
+    [
+     76.3,
+     -103.9
+    ],
+    [
+     85,
+     -106.5
+    ],
+    [
+     84.3,
+     -108.9
+    ],
+    [
+     89.5,
+     -110.4
+    ],
+    [
+     89.7,
+     -110.5
+    ],
+    [
+     91.5,
+     -104.2
+    ],
+    [
+     88.3,
+     -103.2
+    ],
+    [
+     89.1,
+     -100.4
+    ],
+    [
+     92.9,
+     -101.5
+    ],
+    [
+     96.9,
+     -87.9
+    ],
+    [
+     99.7,
+     -88.7
+    ],
+    [
+     101.2,
+     -83.9
+    ]
+   ]
+  },
+  {
+   "way": "1218912899",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.1",
+    "pmfsefin:idedif": "12541"
+   },
+   "centro": [
+    56,
+    110
+   ],
+   "dist": 123,
+   "dims": [
+    21.2,
+    16.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     60.2,
+     114.9
+    ],
+    [
+     60.4,
+     115.5
+    ],
+    [
+     53.3,
+     117.9
+    ],
+    [
+     52.5,
+     115.5
+    ],
+    [
+     47.2,
+     117.2
+    ],
+    [
+     46.2,
+     114.4
+    ],
+    [
+     42.7,
+     103.8
+    ],
+    [
+     62.8,
+     97.4
+    ],
+    [
+     64,
+     100.9
+    ],
+    [
+     60.5,
+     102.1
+    ],
+    [
+     61.2,
+     104.2
+    ],
+    [
+     57.1,
+     105.6
+    ],
+    [
+     60.2,
+     114.9
+    ]
+   ]
+  },
+  {
+   "way": "1218912927",
+   "tags": {
+    "building:levels": "7",
+    "building:part": "yes",
+    "height": "20.2",
+    "pmfsefin:idedif": "11523"
+   },
+   "centro": [
+    -3,
+    -11
+   ],
+   "dist": 12,
+   "dims": [
+    5,
+    4.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 5,
+   "pts": [
+    [
+     -0.7,
+     -10
+    ],
+    [
+     -5.5,
+     -8.5
+    ],
+    [
+     -6.9,
+     -13
+    ],
+    [
+     -2.2,
+     -14.5
+    ],
+    [
+     -0.7,
+     -10
+    ]
+   ]
+  },
+  {
+   "way": "1218912969",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.5",
+    "pmfsefin:idedif": "10871"
+   },
+   "centro": [
+    29,
+    109
+   ],
+   "dist": 113,
+   "dims": [
+    7.4,
+    7.2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 6,
+   "pts": [
+    [
+     32.5,
+     110.8
+    ],
+    [
+     25.7,
+     113
+    ],
+    [
+     23.4,
+     106
+    ],
+    [
+     30.2,
+     103.8
+    ],
+    [
+     31.4,
+     107.4
+    ],
+    [
+     32.5,
+     110.8
+    ]
+   ]
+  },
+  {
+   "way": "1218912985",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.3",
+    "pmfsefin:idedif": "34023"
+   },
+   "centro": [
+    104,
+    -62
+   ],
+   "dist": 121,
+   "dims": [
+    9.4,
+    2.7
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     102.4,
+     -64.4
+    ],
+    [
+     103.2,
+     -64.7
+    ],
+    [
+     105,
+     -65.2
+    ],
+    [
+     107.7,
+     -56.3
+    ],
+    [
+     105.1,
+     -55.5
+    ],
+    [
+     102.4,
+     -64.4
+    ]
+   ]
+  },
+  {
+   "way": "1218913020",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.1",
+    "pmfsefin:idedif": "30563"
+   },
+   "centro": [
+    -97,
+    127
+   ],
+   "dist": 160,
+   "dims": [
+    11.2,
+    9.7
+   ],
+   "rumoLadoMaior": 15,
+   "n": 9,
+   "pts": [
+    [
+     -95.5,
+     131.5
+    ],
+    [
+     -98.7,
+     132.3
+    ],
+    [
+     -100.6,
+     124.8
+    ],
+    [
+     -102.5,
+     125.3
+    ],
+    [
+     -103.4,
+     122
+    ],
+    [
+     -94,
+     119.7
+    ],
+    [
+     -91.4,
+     129.6
+    ],
+    [
+     -95.7,
+     130.7
+    ],
+    [
+     -95.5,
+     131.5
+    ]
+   ]
+  },
+  {
+   "way": "1218913079",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.9",
+    "pmfsefin:idedif": "37070"
+   },
+   "centro": [
+    44,
+    130
+   ],
+   "dist": 137,
+   "dims": [
+    10.5,
+    9.6
+   ],
+   "rumoLadoMaior": 18,
+   "n": 10,
+   "pts": [
+    [
+     49.2,
+     130.5
+    ],
+    [
+     49.4,
+     131.3
+    ],
+    [
+     40.7,
+     134.2
+    ],
+    [
+     40.3,
+     134.3
+    ],
+    [
+     39.5,
+     131.8
+    ],
+    [
+     37,
+     124.4
+    ],
+    [
+     41.6,
+     122.8
+    ],
+    [
+     43.7,
+     129.6
+    ],
+    [
+     48.4,
+     128.1
+    ],
+    [
+     49.2,
+     130.5
+    ]
+   ]
+  },
+  {
+   "way": "1218913133",
+   "tags": {
+    "building:levels": "15",
+    "building:part": "yes",
+    "height": "46.1",
+    "pmfsefin:idedif": "29578"
+   },
+   "centro": [
+    99,
+    -69
+   ],
+   "dist": 121,
+   "dims": [
+    11,
+    7.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 10,
+   "pts": [
+    [
+     100,
+     -74.9
+    ],
+    [
+     101.5,
+     -70.1
+    ],
+    [
+     103.2,
+     -64.7
+    ],
+    [
+     102.4,
+     -64.4
+    ],
+    [
+     96,
+     -62.4
+    ],
+    [
+     95.2,
+     -65
+    ],
+    [
+     96.5,
+     -65.4
+    ],
+    [
+     94.1,
+     -73.3
+    ],
+    [
+     100,
+     -75.1
+    ],
+    [
+     100,
+     -74.9
+    ]
+   ]
+  },
+  {
+   "way": "1218913176",
+   "tags": {
+    "building:levels": "16",
+    "building:part": "yes",
+    "height": "49.5",
+    "pmfsefin:idedif": "35149"
+   },
+   "centro": [
+    134,
+    -83
+   ],
+   "dist": 158,
+   "dims": [
+    7.8,
+    3.7
+   ],
+   "rumoLadoMaior": 132,
+   "n": 11,
+   "pts": [
+    [
+     135.1,
+     -85.3
+    ],
+    [
+     135.6,
+     -85
+    ],
+    [
+     136.4,
+     -84.1
+    ],
+    [
+     136.4,
+     -82.7
+    ],
+    [
+     135.9,
+     -81.9
+    ],
+    [
+     135.4,
+     -81.6
+    ],
+    [
+     129.9,
+     -79.7
+    ],
+    [
+     130,
+     -80.5
+    ],
+    [
+     135,
+     -82.2
+    ],
+    [
+     134,
+     -85.2
+    ],
+    [
+     135.1,
+     -85.3
+    ]
+   ]
+  },
+  {
+   "way": "1218913189",
+   "tags": {
+    "building:levels": "15",
+    "building:part": "yes",
+    "height": "43.7",
+    "pmfsefin:idedif": "30185"
+   },
+   "centro": [
+    50,
+    93
+   ],
+   "dist": 105,
+   "dims": [
+    25.3,
+    7.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 11,
+   "pts": [
+    [
+     57.9,
+     93.9
+    ],
+    [
+     52,
+     95.7
+    ],
+    [
+     41.8,
+     99
+    ],
+    [
+     40.1,
+     93.7
+    ],
+    [
+     33.3,
+     95.8
+    ],
+    [
+     32.7,
+     93.8
+    ],
+    [
+     56.8,
+     86.2
+    ],
+    [
+     57.8,
+     89.3
+    ],
+    [
+     57.1,
+     90.4
+    ],
+    [
+     57.1,
+     91
+    ],
+    [
+     57.9,
+     93.9
+    ]
+   ]
+  },
+  {
+   "way": "1218913208",
+   "tags": {
+    "building:levels": "13",
+    "building:part": "yes",
+    "height": "39.8",
+    "pmfsefin:idedif": "30415"
+   },
+   "centro": [
+    59,
+    90
+   ],
+   "dist": 107,
+   "dims": [
+    7.7,
+    4.1
+   ],
+   "rumoLadoMaior": 17,
+   "n": 10,
+   "pts": [
+    [
+     60.3,
+     87.9
+    ],
+    [
+     61.8,
+     92.7
+    ],
+    [
+     61.6,
+     92.7
+    ],
+    [
+     57.9,
+     93.9
+    ],
+    [
+     57.1,
+     91
+    ],
+    [
+     57.1,
+     90.4
+    ],
+    [
+     57.8,
+     89.3
+    ],
+    [
+     56.8,
+     86.2
+    ],
+    [
+     59.5,
+     85.4
+    ],
+    [
+     60.3,
+     87.9
+    ]
+   ]
+  },
+  {
+   "way": "1218913212",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.7",
+    "pmfsefin:idedif": "12508"
+   },
+   "centro": [
+    69,
+    -62
+   ],
+   "dist": 93,
+   "dims": [
+    40,
+    26.3
+   ],
+   "rumoLadoMaior": 104,
+   "n": 20,
+   "pts": [
+    [
+     82,
+     -74
+    ],
+    [
+     82.6,
+     -72.3
+    ],
+    [
+     83.3,
+     -72.5
+    ],
+    [
+     88,
+     -58.1
+    ],
+    [
+     87.7,
+     -58
+    ],
+    [
+     90.4,
+     -49.9
+    ],
+    [
+     81.5,
+     -47
+    ],
+    [
+     79,
+     -54.5
+    ],
+    [
+     51.3,
+     -45.4
+    ],
+    [
+     50.8,
+     -47
+    ],
+    [
+     47.3,
+     -57.4
+    ],
+    [
+     47.8,
+     -57.5
+    ],
+    [
+     45.6,
+     -64.4
+    ],
+    [
+     52.3,
+     -66.7
+    ],
+    [
+     53.8,
+     -62.1
+    ],
+    [
+     71.4,
+     -67.9
+    ],
+    [
+     70.3,
+     -71.3
+    ],
+    [
+     70.7,
+     -71.4
+    ],
+    [
+     71,
+     -70.5
+    ],
+    [
+     82,
+     -74
+    ]
+   ]
+  },
+  {
+   "way": "1218913486",
+   "tags": {
+    "building": "yes",
+    "building:levels": "16",
+    "height": "48.4"
+   },
+   "centro": [
+    43,
+    95
+   ],
+   "dist": 104,
+   "dims": [
+    34,
+    20.6
+   ],
+   "rumoLadoMaior": 107,
+   "n": 26,
+   "pts": [
+    [
+     59.9,
+     85.2
+    ],
+    [
+     59.5,
+     85.4
+    ],
+    [
+     60.3,
+     87.9
+    ],
+    [
+     61.8,
+     92.7
+    ],
+    [
+     61.6,
+     92.7
+    ],
+    [
+     61.9,
+     93.7
+    ],
+    [
+     52.3,
+     96.7
+    ],
+    [
+     42.1,
+     99.9
+    ],
+    [
+     41.6,
+     100.9
+    ],
+    [
+     41.4,
+     101
+    ],
+    [
+     42,
+     103
+    ],
+    [
+     42.3,
+     103.9
+    ],
+    [
+     33.4,
+     106.7
+    ],
+    [
+     32.1,
+     103
+    ],
+    [
+     33.2,
+     102.7
+    ],
+    [
+     30.5,
+     94.2
+    ],
+    [
+     29.4,
+     94.5
+    ],
+    [
+     32.1,
+     102.8
+    ],
+    [
+     30.1,
+     103.5
+    ],
+    [
+     28.5,
+     98.6
+    ],
+    [
+     27.5,
+     95.4
+    ],
+    [
+     27.4,
+     95.2
+    ],
+    [
+     25,
+     87.7
+    ],
+    [
+     38.8,
+     84.3
+    ],
+    [
+     58.2,
+     79.9
+    ],
+    [
+     59.9,
+     85.2
+    ]
+   ]
+  },
+  {
+   "way": "1218913489",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "433",
+    "addr:postcode": "60160-100",
+    "addr:street": "Rua Doutor Castro Medeiros",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.6"
+   },
+   "centro": [
+    89,
+    -99
+   ],
+   "dist": 133,
+   "dims": [
+    30.5,
+    19
+   ],
+   "rumoLadoMaior": 19,
+   "n": 21,
+   "pts": [
+    [
+     90.8,
+     -112.5
+    ],
+    [
+     91.3,
+     -110.9
+    ],
+    [
+     89.7,
+     -110.5
+    ],
+    [
+     91.5,
+     -104.2
+    ],
+    [
+     88.3,
+     -103.2
+    ],
+    [
+     89.1,
+     -100.4
+    ],
+    [
+     92.9,
+     -101.5
+    ],
+    [
+     96.9,
+     -87.9
+    ],
+    [
+     99.7,
+     -88.7
+    ],
+    [
+     101.2,
+     -83.9
+    ],
+    [
+     90.8,
+     -80.4
+    ],
+    [
+     89.3,
+     -85.5
+    ],
+    [
+     81.5,
+     -83.1
+    ],
+    [
+     79.7,
+     -88.9
+    ],
+    [
+     80.7,
+     -89.2
+    ],
+    [
+     76.3,
+     -103.9
+    ],
+    [
+     85,
+     -106.5
+    ],
+    [
+     84.3,
+     -108.9
+    ],
+    [
+     89.5,
+     -110.4
+    ],
+    [
+     89,
+     -112
+    ],
+    [
+     90.8,
+     -112.5
+    ]
+   ]
+  },
+  {
+   "way": "1218913501",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.1",
+    "pmfsefin:idedif": "12542"
+   },
+   "centro": [
+    45,
+    120
+   ],
+   "dist": 128,
+   "dims": [
+    4.3,
+    4
+   ],
+   "rumoLadoMaior": 109,
+   "n": 7,
+   "pts": [
+    [
+     43.5,
+     121.1
+    ],
+    [
+     42.5,
+     118.3
+    ],
+    [
+     46.6,
+     116.9
+    ],
+    [
+     47.9,
+     120.7
+    ],
+    [
+     47.1,
+     121
+    ],
+    [
+     43.8,
+     122.1
+    ],
+    [
+     43.5,
+     121.1
+    ]
+   ]
+  },
+  {
+   "way": "1218913509",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.8",
+    "pmfsefin:idedif": "10465"
+   },
+   "centro": [
+    38,
+    -77
+   ],
+   "dist": 86,
+   "dims": [
+    10.9,
+    9.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 5,
+   "pts": [
+    [
+     35.1,
+     -72.1
+    ],
+    [
+     32.3,
+     -80.8
+    ],
+    [
+     42.7,
+     -84.1
+    ],
+    [
+     45.5,
+     -75.4
+    ],
+    [
+     35.1,
+     -72.1
+    ]
+   ]
+  },
+  {
+   "way": "1218913533",
+   "tags": {
+    "building": "yes",
+    "building:levels": "16",
+    "height": "48.5"
+   },
+   "centro": [
+    100,
+    -66
+   ],
+   "dist": 120,
+   "dims": [
+    25.6,
+    19.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 23,
+   "pts": [
+    [
+     104.6,
+     -81.9
+    ],
+    [
+     104.9,
+     -82
+    ],
+    [
+     107.4,
+     -73.8
+    ],
+    [
+     107.9,
+     -72
+    ],
+    [
+     101.5,
+     -70.1
+    ],
+    [
+     103.2,
+     -64.7
+    ],
+    [
+     105,
+     -65.2
+    ],
+    [
+     107.7,
+     -56.3
+    ],
+    [
+     105.1,
+     -55.5
+    ],
+    [
+     103.9,
+     -55.1
+    ],
+    [
+     104,
+     -55
+    ],
+    [
+     97.8,
+     -53.1
+    ],
+    [
+     97.8,
+     -53.3
+    ],
+    [
+     96.7,
+     -53
+    ],
+    [
+     93.6,
+     -52
+    ],
+    [
+     90.9,
+     -60.9
+    ],
+    [
+     90.1,
+     -63.5
+    ],
+    [
+     87.7,
+     -71.3
+    ],
+    [
+     91.1,
+     -72.4
+    ],
+    [
+     94.1,
+     -73.3
+    ],
+    [
+     100,
+     -75.1
+    ],
+    [
+     98.5,
+     -80
+    ],
+    [
+     104.6,
+     -81.9
+    ]
+   ]
+  },
+  {
+   "way": "1218913605",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "505",
+    "addr:postcode": "60120-000;60120-013",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "7",
+    "height": "20.2",
+    "layer": "1",
+    "name": "Palácio da Abolição",
+    "source": "SECULT-CE"
+   },
+   "centro": [
+    -8,
+    -11
+   ],
+   "dist": 14,
+   "dims": [
+    92.8,
+    87.9
+   ],
+   "rumoLadoMaior": 18,
+   "n": 29,
+   "pts": [
+    [
+     8.9,
+     -14
+    ],
+    [
+     9.2,
+     -14.1
+    ],
+    [
+     9.5,
+     -13.1
+    ],
+    [
+     -0.9,
+     -9.7
+    ],
+    [
+     6.4,
+     13.4
+    ],
+    [
+     23.7,
+     7.8
+    ],
+    [
+     26.8,
+     6.8
+    ],
+    [
+     32.3,
+     5
+    ],
+    [
+     38.9,
+     25.3
+    ],
+    [
+     -44.7,
+     52.3
+    ],
+    [
+     -51.2,
+     32
+    ],
+    [
+     -26,
+     23.9
+    ],
+    [
+     -24,
+     23.2
+    ],
+    [
+     -22,
+     22.6
+    ],
+    [
+     2.5,
+     14.7
+    ],
+    [
+     -4.8,
+     -8.5
+    ],
+    [
+     -15.5,
+     -5
+    ],
+    [
+     -15.8,
+     -6
+    ],
+    [
+     -15.4,
+     -6.1
+    ],
+    [
+     -24.5,
+     -34.2
+    ],
+    [
+     -29.3,
+     -49.1
+    ],
+    [
+     -29.6,
+     -49
+    ],
+    [
+     -29.9,
+     -49.9
+    ],
+    [
+     -29.1,
+     -50.2
+    ],
+    [
+     -17.1,
+     -54.1
+    ],
+    [
+     -5,
+     -58
+    ],
+    [
+     -4.7,
+     -57
+    ],
+    [
+     -4.9,
+     -56.9
+    ],
+    [
+     8.9,
+     -14
+    ]
+   ]
+  },
+  {
+   "way": "1218913631",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.7",
+    "pmfsefin:idedif": "37210"
+   },
+   "centro": [
+    84,
+    -80
+   ],
+   "dist": 116,
+   "dims": [
+    4.4,
+    1.7
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     84.3,
+     -79.3
+    ],
+    [
+     84.6,
+     -78.3
+    ],
+    [
+     83.1,
+     -77.8
+    ],
+    [
+     81.8,
+     -82
+    ],
+    [
+     83.4,
+     -82.5
+    ],
+    [
+     84.3,
+     -79.3
+    ]
+   ]
+  },
+  {
+   "way": "1218913666",
+   "tags": {
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "2",
+    "description": "TOMBAMENTO ESTADUAL: Processo em andamento, apresentado ao Conselho Estadual de Preservação do Patrimônio Cultural em 17.05.2004.",
+    "height": "7.0",
+    "name": "Mausoléu Castelo Branco",
+    "pmfsefin:idedif": "10470",
+    "source": "SECULT-CE",
+    "tourism": "museum"
+   },
+   "centro": [
+    -66,
+    -63
+   ],
+   "dist": 91,
+   "dims": [
+    37.9,
+    8.3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     -58,
+     -50.1
+    ],
+    [
+     -65.8,
+     -47.4
+    ],
+    [
+     -77.4,
+     -83.5
+    ],
+    [
+     -70.2,
+     -85.8
+    ],
+    [
+     -58,
+     -50.1
+    ]
+   ]
+  },
+  {
+   "way": "1218913714",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.0",
+    "pmfsefin:idedif": "10466"
+   },
+   "centro": [
+    47,
+    56
+   ],
+   "dist": 73,
+   "dims": [
+    13.2,
+    12.9
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     44.1,
+     62.2
+    ],
+    [
+     40.1,
+     49.7
+    ],
+    [
+     52.4,
+     45.8
+    ],
+    [
+     56.4,
+     58.3
+    ],
+    [
+     44.1,
+     62.2
+    ]
+   ]
+  },
+  {
+   "way": "1218913753",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "6.9"
+   },
+   "centro": [
+    -107,
+    135
+   ],
+   "dist": 172,
+   "dims": [
+    23.5,
+    11
+   ],
+   "rumoLadoMaior": 16,
+   "n": 16,
+   "pts": [
+    [
+     -105.4,
+     123.4
+    ],
+    [
+     -103,
+     131.6
+    ],
+    [
+     -101.6,
+     131.2
+    ],
+    [
+     -98.9,
+     140.6
+    ],
+    [
+     -97.6,
+     145.2
+    ],
+    [
+     -104.7,
+     147.5
+    ],
+    [
+     -105.8,
+     143.4
+    ],
+    [
+     -108.6,
+     144.2
+    ],
+    [
+     -109.5,
+     141.2
+    ],
+    [
+     -110,
+     141.4
+    ],
+    [
+     -111.4,
+     137.1
+    ],
+    [
+     -110,
+     136.7
+    ],
+    [
+     -113.2,
+     125.5
+    ],
+    [
+     -111.1,
+     124.9
+    ],
+    [
+     -111.1,
+     125
+    ],
+    [
+     -105.4,
+     123.4
+    ]
+   ]
+  },
+  {
+   "way": "1218913819",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "6.7"
+   },
+   "centro": [
+    -77,
+    123
+   ],
+   "dist": 146,
+   "dims": [
+    32.5,
+    25.1
+   ],
+   "rumoLadoMaior": 104,
+   "n": 32,
+   "pts": [
+    [
+     -59.3,
+     112.2
+    ],
+    [
+     -55.1,
+     129.8
+    ],
+    [
+     -54.8,
+     130.8
+    ],
+    [
+     -58.2,
+     132
+    ],
+    [
+     -59.1,
+     132.3
+    ],
+    [
+     -73.8,
+     137.3
+    ],
+    [
+     -77.5,
+     138.5
+    ],
+    [
+     -80.3,
+     139.4
+    ],
+    [
+     -81.9,
+     132.7
+    ],
+    [
+     -82.7,
+     129.4
+    ],
+    [
+     -83.9,
+     129.7
+    ],
+    [
+     -85.2,
+     124.1
+    ],
+    [
+     -85.6,
+     124.2
+    ],
+    [
+     -85.5,
+     124.7
+    ],
+    [
+     -86.6,
+     124.9
+    ],
+    [
+     -85.5,
+     129.7
+    ],
+    [
+     -88.3,
+     130.4
+    ],
+    [
+     -88.5,
+     129.3
+    ],
+    [
+     -91,
+     119.5
+    ],
+    [
+     -87.9,
+     118.7
+    ],
+    [
+     -87.2,
+     121.5
+    ],
+    [
+     -86.3,
+     121.2
+    ],
+    [
+     -87.7,
+     115.6
+    ],
+    [
+     -84.3,
+     114.8
+    ],
+    [
+     -84.4,
+     114.6
+    ],
+    [
+     -78.9,
+     113.2
+    ],
+    [
+     -78.4,
+     115.5
+    ],
+    [
+     -75.7,
+     114.8
+    ],
+    [
+     -75.7,
+     114.5
+    ],
+    [
+     -62.8,
+     111.4
+    ],
+    [
+     -62.4,
+     112.9
+    ],
+    [
+     -59.3,
+     112.2
+    ]
+   ]
+  },
+  {
+   "way": "1218913862",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "8.9"
+   },
+   "centro": [
+    14,
+    119
+   ],
+   "dist": 120,
+   "dims": [
+    58,
+    51.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 43,
+   "pts": [
+    [
+     27.5,
+     95.4
+    ],
+    [
+     28.5,
+     98.6
+    ],
+    [
+     9.2,
+     104.5
+    ],
+    [
+     13,
+     117.1
+    ],
+    [
+     25.7,
+     113
+    ],
+    [
+     23.4,
+     106
+    ],
+    [
+     30.2,
+     103.8
+    ],
+    [
+     31.4,
+     107.4
+    ],
+    [
+     32.5,
+     110.8
+    ],
+    [
+     33.7,
+     114.2
+    ],
+    [
+     37,
+     124.4
+    ],
+    [
+     39.5,
+     131.8
+    ],
+    [
+     40.3,
+     134.3
+    ],
+    [
+     35.9,
+     135.8
+    ],
+    [
+     35.1,
+     133.2
+    ],
+    [
+     34.5,
+     131.6
+    ],
+    [
+     22.2,
+     135.6
+    ],
+    [
+     22.9,
+     137.4
+    ],
+    [
+     33.4,
+     134
+    ],
+    [
+     34.2,
+     136.3
+    ],
+    [
+     34.2,
+     136.4
+    ],
+    [
+     23.8,
+     140
+    ],
+    [
+     14.9,
+     143
+    ],
+    [
+     14.6,
+     142.2
+    ],
+    [
+     15.4,
+     141.9
+    ],
+    [
+     14.2,
+     138.2
+    ],
+    [
+     4.4,
+     141.4
+    ],
+    [
+     -11.6,
+     146.6
+    ],
+    [
+     -17.6,
+     128.1
+    ],
+    [
+     -20.6,
+     118.5
+    ],
+    [
+     -25.4,
+     120
+    ],
+    [
+     -29.4,
+     107.5
+    ],
+    [
+     -25.7,
+     106.3
+    ],
+    [
+     -26.9,
+     102.8
+    ],
+    [
+     -12.5,
+     99.2
+    ],
+    [
+     -10.4,
+     105.9
+    ],
+    [
+     -9.4,
+     105.6
+    ],
+    [
+     -9,
+     106.8
+    ],
+    [
+     7.6,
+     101.5
+    ],
+    [
+     5,
+     92.9
+    ],
+    [
+     25,
+     87.7
+    ],
+    [
+     27.4,
+     95.2
+    ],
+    [
+     27.5,
+     95.4
+    ]
+   ]
+  },
+  {
+   "way": "1218913911",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.0",
+    "pmfsefin:idedif": "10469"
+   },
+   "centro": [
+    -69,
+    -21
+   ],
+   "dist": 72,
+   "dims": [
+    11.2,
+    4.5
+   ],
+   "rumoLadoMaior": 108,
+   "n": 5,
+   "pts": [
+    [
+     -72.5,
+     -17.6
+    ],
+    [
+     -73.9,
+     -21.9
+    ],
+    [
+     -63.3,
+     -25.3
+    ],
+    [
+     -61.9,
+     -21.1
+    ],
+    [
+     -72.5,
+     -17.6
+    ]
+   ]
+  },
+  {
+   "way": "1218913977",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "9.2"
+   },
+   "centro": [
+    50,
+    111
+   ],
+   "dist": 122,
+   "dims": [
+    35.4,
+    17.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 22,
+   "pts": [
+    [
+     66.5,
+     100.8
+    ],
+    [
+     70,
+     111.6
+    ],
+    [
+     60.2,
+     114.9
+    ],
+    [
+     60.4,
+     115.5
+    ],
+    [
+     53.3,
+     117.9
+    ],
+    [
+     52.5,
+     115.5
+    ],
+    [
+     47.2,
+     117.2
+    ],
+    [
+     46.2,
+     114.4
+    ],
+    [
+     39.8,
+     116.5
+    ],
+    [
+     42,
+     122.7
+    ],
+    [
+     41.6,
+     122.8
+    ],
+    [
+     37,
+     124.4
+    ],
+    [
+     33.7,
+     114.2
+    ],
+    [
+     32.5,
+     110.8
+    ],
+    [
+     31.4,
+     107.4
+    ],
+    [
+     33.4,
+     106.7
+    ],
+    [
+     42.3,
+     103.9
+    ],
+    [
+     42.7,
+     103.8
+    ],
+    [
+     62.8,
+     97.4
+    ],
+    [
+     64,
+     100.9
+    ],
+    [
+     66.3,
+     100.2
+    ],
+    [
+     66.5,
+     100.8
+    ]
+   ]
+  },
+  {
+   "way": "1218914000",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "10.0"
+   },
+   "centro": [
+    -93,
+    131
+   ],
+   "dist": 161,
+   "dims": [
+    23.9,
+    12
+   ],
+   "rumoLadoMaior": 18,
+   "n": 18,
+   "pts": [
+    [
+     -94,
+     119.7
+    ],
+    [
+     -91.4,
+     129.6
+    ],
+    [
+     -91.2,
+     129.5
+    ],
+    [
+     -91.1,
+     130
+    ],
+    [
+     -88.5,
+     129.3
+    ],
+    [
+     -88.3,
+     130.4
+    ],
+    [
+     -88,
+     131.6
+    ],
+    [
+     -85.6,
+     140.7
+    ],
+    [
+     -85.5,
+     141.2
+    ],
+    [
+     -89.2,
+     142.4
+    ],
+    [
+     -90,
+     139.2
+    ],
+    [
+     -97.2,
+     141
+    ],
+    [
+     -99.3,
+     132.5
+    ],
+    [
+     -98.7,
+     132.3
+    ],
+    [
+     -100.6,
+     124.8
+    ],
+    [
+     -102.5,
+     125.3
+    ],
+    [
+     -103.4,
+     122
+    ],
+    [
+     -94,
+     119.7
+    ]
+   ]
+  },
+  {
+   "way": "1218914063",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "8.2"
+   },
+   "centro": [
+    53,
+    126
+   ],
+   "dist": 137,
+   "dims": [
+    36.5,
+    16.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 24,
+   "pts": [
+    [
+     64.1,
+     127.3
+    ],
+    [
+     63.7,
+     126.2
+    ],
+    [
+     57.6,
+     128.2
+    ],
+    [
+     59.5,
+     134.1
+    ],
+    [
+     51.3,
+     136.7
+    ],
+    [
+     49.4,
+     131.3
+    ],
+    [
+     40.7,
+     134.2
+    ],
+    [
+     40.3,
+     134.3
+    ],
+    [
+     39.5,
+     131.8
+    ],
+    [
+     37,
+     124.4
+    ],
+    [
+     41.6,
+     122.8
+    ],
+    [
+     43.7,
+     129.6
+    ],
+    [
+     48.4,
+     128.1
+    ],
+    [
+     49.2,
+     130.5
+    ],
+    [
+     50.1,
+     130.2
+    ],
+    [
+     47.1,
+     121
+    ],
+    [
+     47.9,
+     120.7
+    ],
+    [
+     57.6,
+     117.4
+    ],
+    [
+     58.3,
+     119.5
+    ],
+    [
+     61.2,
+     118.6
+    ],
+    [
+     60.8,
+     117.2
+    ],
+    [
+     71.9,
+     113.6
+    ],
+    [
+     75.2,
+     123.6
+    ],
+    [
+     64.1,
+     127.3
+    ]
+   ]
+  },
+  {
+   "way": "1218914070",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.3",
+    "pmfsefin:idedif": "11238"
+   },
+   "centro": [
+    35,
+    -10
+   ],
+   "dist": 37,
+   "dims": [
+    15.9,
+    5.7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     31.4,
+     -15.2
+    ],
+    [
+     36.8,
+     -16.9
+    ],
+    [
+     41.6,
+     -1.8
+    ],
+    [
+     36.2,
+     -0.1
+    ],
+    [
+     31.4,
+     -15.2
+    ]
+   ]
+  },
+  {
+   "way": "1218914076",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.9",
+    "pmfsefin:idedif": "12443"
+   },
+   "centro": [
+    75,
+    108
+   ],
+   "dist": 132,
+   "dims": [
+    2.9,
+    2.3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     73.9,
+     107.4
+    ],
+    [
+     76.1,
+     106.7
+    ],
+    [
+     77,
+     109.5
+    ],
+    [
+     74.8,
+     110.2
+    ],
+    [
+     73.9,
+     107.4
+    ]
+   ]
+  },
+  {
+   "way": "1218914081",
+   "tags": {
+    "building": "yes",
+    "building:levels": "19",
+    "height": "58.4"
+   },
+   "centro": [
+    130,
+    -73
+   ],
+   "dist": 149,
+   "dims": [
+    35.2,
+    31
+   ],
+   "rumoLadoMaior": 107,
+   "n": 34,
+   "pts": [
+    [
+     139.2,
+     -65.2
+    ],
+    [
+     138.7,
+     -62.5
+    ],
+    [
+     126.7,
+     -65
+    ],
+    [
+     126.2,
+     -62.3
+    ],
+    [
+     123.1,
+     -61.3
+    ],
+    [
+     116.1,
+     -62.9
+    ],
+    [
+     115.7,
+     -63.3
+    ],
+    [
+     115.8,
+     -64.4
+    ],
+    [
+     111.8,
+     -65.3
+    ],
+    [
+     112.4,
+     -68
+    ],
+    [
+     108.9,
+     -68.7
+    ],
+    [
+     107.9,
+     -72
+    ],
+    [
+     107.4,
+     -73.8
+    ],
+    [
+     108.1,
+     -73.7
+    ],
+    [
+     110.3,
+     -84.2
+    ],
+    [
+     110,
+     -85.6
+    ],
+    [
+     135.9,
+     -94.1
+    ],
+    [
+     136.5,
+     -94.2
+    ],
+    [
+     137,
+     -94.1
+    ],
+    [
+     137.6,
+     -93.8
+    ],
+    [
+     138.1,
+     -93.2
+    ],
+    [
+     142.3,
+     -79.8
+    ],
+    [
+     140.9,
+     -73.4
+    ],
+    [
+     142,
+     -73
+    ],
+    [
+     142.8,
+     -72.5
+    ],
+    [
+     143.4,
+     -71.9
+    ],
+    [
+     143.9,
+     -71.2
+    ],
+    [
+     144.3,
+     -69.5
+    ],
+    [
+     144,
+     -67.8
+    ],
+    [
+     143,
+     -66.3
+    ],
+    [
+     142.3,
+     -65.8
+    ],
+    [
+     140.8,
+     -65.1
+    ],
+    [
+     140,
+     -65.1
+    ],
+    [
+     139.2,
+     -65.2
+    ]
+   ]
+  },
+  {
+   "way": "1218914088",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "495",
+    "addr:postcode": "60120-020",
+    "addr:street": "Rua Silva Paulet",
+    "addr:suburb": "Meireles",
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.7"
+   },
+   "centro": [
+    62,
+    -73
+   ],
+   "dist": 96,
+   "dims": [
+    62,
+    45.3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 37,
+   "pts": [
+    [
+     58.1,
+     -103.9
+    ],
+    [
+     60,
+     -104.5
+    ],
+    [
+     60.5,
+     -104.6
+    ],
+    [
+     60.3,
+     -105.3
+    ],
+    [
+     71.7,
+     -109
+    ],
+    [
+     83,
+     -74.3
+    ],
+    [
+     82,
+     -74
+    ],
+    [
+     82.6,
+     -72.3
+    ],
+    [
+     83.3,
+     -72.5
+    ],
+    [
+     88,
+     -58.1
+    ],
+    [
+     87.7,
+     -58
+    ],
+    [
+     90.4,
+     -49.9
+    ],
+    [
+     81.5,
+     -47
+    ],
+    [
+     79,
+     -54.5
+    ],
+    [
+     51.3,
+     -45.4
+    ],
+    [
+     50.8,
+     -47
+    ],
+    [
+     48.9,
+     -46.3
+    ],
+    [
+     48,
+     -49
+    ],
+    [
+     44,
+     -47.6
+    ],
+    [
+     39.9,
+     -60.2
+    ],
+    [
+     45.3,
+     -62
+    ],
+    [
+     46.9,
+     -57.2
+    ],
+    [
+     47.3,
+     -57.4
+    ],
+    [
+     47.8,
+     -57.5
+    ],
+    [
+     45.6,
+     -64.4
+    ],
+    [
+     52.3,
+     -66.7
+    ],
+    [
+     53.8,
+     -62.1
+    ],
+    [
+     71.4,
+     -67.9
+    ],
+    [
+     70.3,
+     -71.3
+    ],
+    [
+     70.7,
+     -71.4
+    ],
+    [
+     64.2,
+     -91.7
+    ],
+    [
+     60.3,
+     -90.3
+    ],
+    [
+     60.3,
+     -90.5
+    ],
+    [
+     50.8,
+     -87.4
+    ],
+    [
+     47.3,
+     -98.1
+    ],
+    [
+     58.8,
+     -101.8
+    ],
+    [
+     58.1,
+     -103.9
+    ]
+   ]
+  },
+  {
+   "way": "1219382537",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    49,
+    -157
+   ],
+   "dist": 164,
+   "dims": [
+    113.3,
+    68.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 11,
+   "pts": [
+    [
+     1.6,
+     -164.9
+    ],
+    [
+     3.1,
+     -167.2
+    ],
+    [
+     4.8,
+     -169.3
+    ],
+    [
+     7.9,
+     -171
+    ],
+    [
+     105.9,
+     -202.1
+    ],
+    [
+     109.1,
+     -200.7
+    ],
+    [
+     128.4,
+     -139.5
+    ],
+    [
+     126.3,
+     -137.3
+    ],
+    [
+     23.9,
+     -104.5
+    ],
+    [
+     21,
+     -105.2
+    ],
+    [
+     1.6,
+     -164.9
+    ]
+   ]
+  },
+  {
+   "way": "1219384418",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    99,
+    -84
+   ],
+   "dist": 129,
+   "dims": [
+    113.6,
+    69.7
+   ],
+   "rumoLadoMaior": 107,
+   "n": 10,
+   "pts": [
+    [
+     148.9,
+     -61.6
+    ],
+    [
+     152.2,
+     -66.7
+    ],
+    [
+     133.4,
+     -127.6
+    ],
+    [
+     130.6,
+     -128.9
+    ],
+    [
+     129.4,
+     -128.5
+    ],
+    [
+     26.4,
+     -96.2
+    ],
+    [
+     24.9,
+     -93.8
+    ],
+    [
+     41.6,
+     -40.3
+    ],
+    [
+     51.1,
+     -32.6
+    ],
+    [
+     148.9,
+     -61.6
+    ]
+   ]
+  },
+  {
+   "way": "1219384419",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    102,
+    -6
+   ],
+   "dist": 103,
+   "dims": [
+    114,
+    94.6
+   ],
+   "rumoLadoMaior": 107,
+   "n": 12,
+   "pts": [
+    [
+     48.5,
+     -19.1
+    ],
+    [
+     51.2,
+     -22.9
+    ],
+    [
+     53.8,
+     -23.8
+    ],
+    [
+     151.5,
+     -53.8
+    ],
+    [
+     153,
+     -54.3
+    ],
+    [
+     157.8,
+     -51.5
+    ],
+    [
+     182.9,
+     32.3
+    ],
+    [
+     181.6,
+     35.9
+    ],
+    [
+     76.8,
+     61.6
+    ],
+    [
+     73.2,
+     59.8
+    ],
+    [
+     49.1,
+     -17.1
+    ],
+    [
+     48.5,
+     -19.1
+    ]
+   ]
+  },
+  {
+   "way": "1219384420",
+   "tags": {
+    "crossing": "marked",
+    "crossing:markings": "yes",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    44,
+    -15
+   ],
+   "dist": 46,
+   "dims": [
+    11.5,
+    0.1
+   ],
+   "rumoLadoMaior": 110,
+   "n": 3,
+   "pts": [
+    [
+     49.1,
+     -17.1
+    ],
+    [
+     43.2,
+     -14.9
+    ],
+    [
+     38.4,
+     -13
+    ]
+   ]
+  },
+  {
+   "way": "1219384421",
+   "tags": {
+    "crossing": "marked",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    52,
+    -28
+   ],
+   "dist": 60,
+   "dims": [
+    9.2,
+    0.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     51.1,
+     -32.6
+    ],
+    [
+     52.4,
+     -28.2
+    ],
+    [
+     53.8,
+     -23.8
+    ]
+   ]
+  },
+  {
+   "way": "1219384422",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    25,
+    -101
+   ],
+   "dist": 104,
+   "dims": [
+    8.7,
+    0.1
+   ],
+   "rumoLadoMaior": 17,
+   "n": 3,
+   "pts": [
+    [
+     23.9,
+     -104.5
+    ],
+    [
+     24.8,
+     -101.4
+    ],
+    [
+     26.4,
+     -96.2
+    ]
+   ]
+  },
+  {
+   "way": "1219384423",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    15,
+    -104
+   ],
+   "dist": 105,
+   "dims": [
+    11.6,
+    0.2
+   ],
+   "rumoLadoMaior": 102,
+   "n": 3,
+   "pts": [
+    [
+     9.7,
+     -102.7
+    ],
+    [
+     15.2,
+     -104
+    ],
+    [
+     21,
+     -105.2
+    ]
+   ]
+  },
+  {
+   "way": "1219384424",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    19,
+    -93
+   ],
+   "dist": 94,
+   "dims": [
+    11.8,
+    0.1
+   ],
+   "rumoLadoMaior": 102,
+   "n": 3,
+   "pts": [
+    [
+     24.9,
+     -93.8
+    ],
+    [
+     18.8,
+     -92.5
+    ],
+    [
+     13.3,
+     -91.4
+    ]
+   ]
+  },
+  {
+   "way": "1219384425",
+   "tags": {
+    "crossing": "unmarked",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    128,
+    -133
+   ],
+   "dist": 184,
+   "dims": [
+    9.3,
+    0
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     126.3,
+     -137.3
+    ],
+    [
+     127.9,
+     -132.7
+    ],
+    [
+     129.4,
+     -128.5
+    ]
+   ]
+  },
+  {
+   "way": "1219384434",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    36,
+    -39
+   ],
+   "dist": 53,
+   "dims": [
+    11.3,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 3,
+   "pts": [
+    [
+     41.6,
+     -40.3
+    ],
+    [
+     35.8,
+     -38.5
+    ],
+    [
+     30.8,
+     -36.9
+    ]
+   ]
+  },
+  {
+   "way": "1219384435",
+   "tags": {
+    "crossing": "unmarked",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    68,
+    61
+   ],
+   "dist": 92,
+   "dims": [
+    11.3,
+    0.1
+   ],
+   "rumoLadoMaior": 109,
+   "n": 3,
+   "pts": [
+    [
+     62.5,
+     63.3
+    ],
+    [
+     68.4,
+     61.3
+    ],
+    [
+     73.2,
+     59.8
+    ]
+   ]
+  },
+  {
+   "way": "1219387848",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    134,
+    141
+   ],
+   "dist": 195,
+   "dims": [
+    154.1,
+    112
+   ],
+   "rumoLadoMaior": 18,
+   "n": 20,
+   "pts": [
+    [
+     150.2,
+     141.9
+    ],
+    [
+     106.9,
+     156.8
+    ],
+    [
+     106,
+     157.1
+    ],
+    [
+     105.4,
+     158.3
+    ],
+    [
+     105.8,
+     159.5
+    ],
+    [
+     124.2,
+     216.3
+    ],
+    [
+     124.7,
+     217.8
+    ],
+    [
+     124.9,
+     218.3
+    ],
+    [
+     127.9,
+     220
+    ],
+    [
+     228.3,
+     186.8
+    ],
+    [
+     229.9,
+     184.2
+    ],
+    [
+     189.1,
+     52.9
+    ],
+    [
+     186.5,
+     49.5
+    ],
+    [
+     183.1,
+     48.3
+    ],
+    [
+     79.7,
+     73.6
+    ],
+    [
+     78.5,
+     74.7
+    ],
+    [
+     78.7,
+     75.2
+    ],
+    [
+     102,
+     148.4
+    ],
+    [
+     105.3,
+     149.8
+    ],
+    [
+     149.8,
+     136.2
+    ]
+   ]
+  },
+  {
+   "way": "1219387854",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    35,
+    132
+   ],
+   "dist": 137,
+   "dims": [
+    108,
+    87.5
+   ],
+   "rumoLadoMaior": 107,
+   "n": 9,
+   "pts": [
+    [
+     90.2,
+     154.6
+    ],
+    [
+     91.8,
+     151.2
+    ],
+    [
+     68.5,
+     77.7
+    ],
+    [
+     64.2,
+     76.1
+    ],
+    [
+     -33.1,
+     101.2
+    ],
+    [
+     -35.3,
+     105.8
+    ],
+    [
+     -9.8,
+     182.5
+    ],
+    [
+     -7.4,
+     184.8
+    ],
+    [
+     90.2,
+     154.6
+    ]
+   ]
+  },
+  {
+   "way": "1219387857",
+   "tags": {
+    "crossing": "unmarked",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    73,
+    77
+   ],
+   "dist": 106,
+   "dims": [
+    10.5,
+    0
+   ],
+   "rumoLadoMaior": 104,
+   "n": 3,
+   "pts": [
+    [
+     68.5,
+     77.7
+    ],
+    [
+     73,
+     76.6
+    ],
+    [
+     78.7,
+     75.2
+    ]
+   ]
+  },
+  {
+   "way": "1219390390",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -148,
+    -8
+   ],
+   "dist": 148,
+   "dims": [
+    112.7,
+    67.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     -207.9,
+     -20.2
+    ],
+    [
+     -105.4,
+     -53.1
+    ],
+    [
+     -102.7,
+     -50.9
+    ],
+    [
+     -96.1,
+     -29.4
+    ],
+    [
+     -84.2,
+     9.1
+    ],
+    [
+     -86,
+     11.7
+    ],
+    [
+     -187.8,
+     44.1
+    ],
+    [
+     -191.2,
+     42.5
+    ],
+    [
+     -209.9,
+     -16.6
+    ],
+    [
+     -207.9,
+     -20.2
+    ]
+   ]
+  },
+  {
+   "way": "1219390391",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -107,
+    -57
+   ],
+   "dist": 121,
+   "dims": [
+    8.3,
+    0
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     -108.1,
+     -60.9
+    ],
+    [
+     -106.8,
+     -57.1
+    ],
+    [
+     -105.4,
+     -53.1
+    ]
+   ]
+  },
+  {
+   "way": "1219390392",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -85,
+    16
+   ],
+   "dist": 86,
+   "dims": [
+    7.8,
+    0
+   ],
+   "rumoLadoMaior": 20,
+   "n": 3,
+   "pts": [
+    [
+     -83.4,
+     19.1
+    ],
+    [
+     -84.5,
+     15.9
+    ],
+    [
+     -86,
+     11.7
+    ]
+   ]
+  },
+  {
+   "way": "1219390402",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -210,
+    189
+   ],
+   "dist": 283,
+   "dims": [
+    157.7,
+    91.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     -282.3,
+     163.7
+    ],
+    [
+     -279.9,
+     161.3
+    ],
+    [
+     -131.1,
+     124.2
+    ],
+    [
+     -128.5,
+     127.7
+    ],
+    [
+     -105.4,
+     199.7
+    ],
+    [
+     -106.4,
+     202.3
+    ],
+    [
+     -108.1,
+     202.8
+    ],
+    [
+     -251.7,
+     248.4
+    ],
+    [
+     -253.2,
+     248.1
+    ],
+    [
+     -254.5,
+     246.6
+    ],
+    [
+     -274.1,
+     188.4
+    ],
+    [
+     -278.2,
+     176.1
+    ],
+    [
+     -282.3,
+     163.7
+    ]
+   ]
+  },
+  {
+   "way": "1219390951",
+   "tags": {
+    "crossing": "unmarked",
+    "crossing:markings": "no",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -123,
+    126
+   ],
+   "dist": 176,
+   "dims": [
+    11,
+    0
+   ],
+   "rumoLadoMaior": 104,
+   "n": 3,
+   "pts": [
+    [
+     -128.5,
+     127.7
+    ],
+    [
+     -122.5,
+     126.2
+    ],
+    [
+     -117.8,
+     125
+    ]
+   ]
+  },
+  {
+   "way": "1219390952",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -81,
+    159
+   ],
+   "dist": 179,
+   "dims": [
+    94.1,
+    70
+   ],
+   "rumoLadoMaior": 17,
+   "n": 14,
+   "pts": [
+    [
+     -117.8,
+     125
+    ],
+    [
+     -117.8,
+     122.3
+    ],
+    [
+     -117.1,
+     121.2
+    ],
+    [
+     -54.1,
+     105.1
+    ],
+    [
+     -50.5,
+     107.2
+    ],
+    [
+     -49.2,
+     109.7
+    ],
+    [
+     -27.5,
+     185
+    ],
+    [
+     -32.8,
+     193
+    ],
+    [
+     -88.1,
+     210.7
+    ],
+    [
+     -88.5,
+     210.8
+    ],
+    [
+     -89.9,
+     210.1
+    ],
+    [
+     -91.7,
+     207.8
+    ],
+    [
+     -95,
+     197.4
+    ],
+    [
+     -117.8,
+     125
+    ]
+   ]
+  },
+  {
+   "way": "1235309783",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "building:levels:underground": "2"
+   },
+   "centro": [
+    -100,
+    45
+   ],
+   "dist": 110,
+   "dims": [
+    33,
+    10.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 10,
+   "pts": [
+    [
+     -90.4,
+     61
+    ],
+    [
+     -97.6,
+     37.5
+    ],
+    [
+     -100.1,
+     29.5
+    ],
+    [
+     -110.2,
+     32.6
+    ],
+    [
+     -108.2,
+     39.2
+    ],
+    [
+     -100,
+     36.7
+    ],
+    [
+     -98.5,
+     41.5
+    ],
+    [
+     -106.5,
+     44
+    ],
+    [
+     -100.3,
+     64
+    ],
+    [
+     -90.4,
+     61
+    ]
+   ]
+  }
+ ],
+ "nos": [
+  {
+   "node": "6001097700",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    48,
+    28
+   ]
+  },
+  {
+   "node": "6001097701",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    42,
+    31
+   ]
+  },
+  {
+   "node": "6001097702",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    47,
+    42
+   ]
+  },
+  {
+   "node": "6001097703",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    30,
+    52
+   ]
+  },
+  {
+   "node": "6001097704",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    36,
+    63
+   ]
+  },
+  {
+   "node": "6001097705",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    30,
+    65
+   ]
+  },
+  {
+   "node": "6001097706",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -35,
+    71
+   ]
+  },
+  {
+   "node": "6001097707",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -27,
+    70
+   ]
+  },
+  {
+   "node": "6001097708",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -16,
+    73
+   ]
+  },
+  {
+   "node": "6001097709",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -3,
+    71
+   ]
+  },
+  {
+   "node": "6001097710",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -7,
+    68
+   ]
+  },
+  {
+   "node": "6001097711",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -3,
+    68
+   ]
+  },
+  {
+   "node": "6001097712",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -10,
+    73
+   ]
+  },
+  {
+   "node": "6001097713",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -26,
+    78
+   ]
+  },
+  {
+   "node": "6001097714",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -29,
+    75
+   ]
+  },
+  {
+   "node": "6001097715",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -34,
+    75
+   ]
+  },
+  {
+   "node": "6001097718",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -2,
+    -96
+   ]
+  },
+  {
+   "node": "6001097721",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -29,
+    -68
+   ]
+  },
+  {
+   "node": "6001097723",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -2,
+    -76
+   ]
+  },
+  {
+   "node": "6001097724",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -24,
+    -19
+   ]
+  },
+  {
+   "node": "6001097725",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -26,
+    -24
+   ]
+  },
+  {
+   "node": "6001097726",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -27,
+    -28
+   ]
+  },
+  {
+   "node": "6001097727",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -73,
+    -47
+   ]
+  },
+  {
+   "node": "6001097728",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -71,
+    -37
+   ]
+  },
+  {
+   "node": "6001097729",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -69,
+    -38
+   ]
+  },
+  {
+   "node": "6001097730",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -73,
+    -39
+   ]
+  },
+  {
+   "node": "6001097731",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -60,
+    -18
+   ]
+  },
+  {
+   "node": "6001097732",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -57,
+    0
+   ]
+  },
+  {
+   "node": "6001097733",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -68,
+    -17
+   ]
+  },
+  {
+   "node": "6001097734",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -65,
+    0
+   ]
+  },
+  {
+   "node": "6001097738",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -55,
+    -54
+   ]
+  },
+  {
+   "node": "6001097739",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -53,
+    -50
+   ]
+  },
+  {
+   "node": "6001097740",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -54,
+    -46
+   ]
+  },
+  {
+   "node": "6001097741",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -53,
+    -43
+   ]
+  },
+  {
+   "node": "6001097742",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -48,
+    -45
+   ]
+  },
+  {
+   "node": "6001097743",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -50,
+    -49
+   ]
+  },
+  {
+   "node": "6001097744",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -50,
+    -52
+   ]
+  },
+  {
+   "node": "6001097745",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -52,
+    -57
+   ]
+  },
+  {
+   "node": "6001097746",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -48,
+    -61
+   ]
+  },
+  {
+   "node": "6001097747",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -47,
+    -58
+   ]
+  },
+  {
+   "node": "6001097748",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -47,
+    -54
+   ]
+  },
+  {
+   "node": "6001097749",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -45,
+    -50
+   ]
+  },
+  {
+   "node": "6001097750",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -44,
+    -47
+   ]
+  },
+  {
+   "node": "6001097751",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -39,
+    -49
+   ]
+  },
+  {
+   "node": "6001097752",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -41,
+    -54
+   ]
+  },
+  {
+   "node": "6001097753",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -42,
+    -57
+   ]
+  },
+  {
+   "node": "6001097754",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -44,
+    -61
+   ]
+  },
+  {
+   "node": "6001097755",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -91,
+    -46
+   ]
+  },
+  {
+   "node": "6515487046",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "915",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "name": "Racine Mourão Arquitetura &amp; Interiores",
+    "office": "architect"
+   },
+   "xy": [
+    -108,
+    126
+   ]
+  },
+  {
+   "node": "6515659685",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "925",
+    "addr:postcode": "60160-060",
+    "addr:street": "Rua Deputado Moreira da Rocha",
+    "addr:suburb": "Meireles",
+    "name": "Centro Integrado de Apoio ao Atleta",
+    "opening_hours": "Mo-Fr 07:30-20:00; Sa 07:00-13:00",
+    "phone": "+55 85 2181 0840",
+    "shop": "massage",
+    "short_name": "CIAA"
+   },
+   "xy": [
+    -97,
+    122
+   ]
+  },
+  {
+   "node": "9048591288",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "350",
+    "addr:postcode": "60120-000",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "amenity": "dentist",
+    "email": "ce.fortalezaaldeota@sorridents.com.br",
+    "healthcare": "dentist",
+    "name": "Sorridents",
+    "opening_hours": "Mo-Fr 08:00-20:00",
+    "operator:type": "private",
+    "phone": "+55 85 99409 4082",
+    "website": "https://sorridents.com.br/fortaleza-aldeota/"
+   },
+   "xy": [
+    -65,
+    122
+   ]
+  },
+  {
+   "node": "10181170145",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -84,
+    97
+   ]
+  },
+  {
+   "node": "10181170146",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -89,
+    98
+   ]
+  },
+  {
+   "node": "10181170147",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -88,
+    94
+   ]
+  },
+  {
+   "node": "10181170148",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -91,
+    95
+   ]
+  },
+  {
+   "node": "10181170149",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -86,
+    94
+   ]
+  },
+  {
+   "node": "10181170150",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -83,
+    93
+   ]
+  },
+  {
+   "node": "10181170151",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -80,
+    96
+   ]
+  },
+  {
+   "node": "10181170152",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -67,
+    94
+   ]
+  },
+  {
+   "node": "10181170153",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -63,
+    91
+   ]
+  },
+  {
+   "node": "10181170154",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -59,
+    88
+   ]
+  },
+  {
+   "node": "10181170155",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -69,
+    90
+   ]
+  },
+  {
+   "node": "10181170156",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -64,
+    85
+   ]
+  },
+  {
+   "node": "10181170157",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -63,
+    82
+   ]
+  },
+  {
+   "node": "10181170158",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -71,
+    82
+   ]
+  },
+  {
+   "node": "10181170159",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -72,
+    77
+   ]
+  },
+  {
+   "node": "10181170160",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -72,
+    73
+   ]
+  },
+  {
+   "node": "10181170161",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -72,
+    66
+   ]
+  },
+  {
+   "node": "10181170162",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -73,
+    60
+   ]
+  },
+  {
+   "node": "10181170163",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -65,
+    73
+   ]
+  },
+  {
+   "node": "10181170164",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -68,
+    73
+   ]
+  },
+  {
+   "node": "10181170165",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -72,
+    56
+   ]
+  },
+  {
+   "node": "10181170166",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -72,
+    52
+   ]
+  },
+  {
+   "node": "10181170167",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -74,
+    49
+   ]
+  },
+  {
+   "node": "10181170168",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -74,
+    46
+   ]
+  },
+  {
+   "node": "10181170169",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -75,
+    42
+   ]
+  },
+  {
+   "node": "10181170170",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -76,
+    38
+   ]
+  },
+  {
+   "node": "10181170171",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -78,
+    34
+   ]
+  },
+  {
+   "node": "11287297979",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "345",
+    "addr:postcode": "60120-013",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "brand": "Honda",
+    "brand:wikidata": "Q9584",
+    "brand:wikipedia": "en:Honda",
+    "name": "Honda",
+    "opening_hours": "Mo-Fr 08:00-18:00; Sa 08:00-12:00",
+    "operator": "NovaLuz",
+    "phone": "+55 85 3306 8400",
+    "second_hand": "yes",
+    "service:vehicle:car_repair": "yes",
+    "service:vehicle:new_car_sales": "yes",
+    "service:vehicle:used_car_sales": "yes",
+    "shop": "car",
+    "website": "https://www.carmais.com.br/hondanovaluz"
+   },
+   "xy": [
+    10,
+    120
+   ]
+  },
+  {
+   "node": "11467164959",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "410",
+    "addr:postcode": "60120-000",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "amenity": "library",
+    "level": "1",
+    "name": "Biblioteca Marly Mariano e Thomaz Farkas",
+    "opening_hours": "We-Fr 13:00-18:00"
+   },
+   "xy": [
+    -104,
+    35
+   ]
+  },
+  {
+   "node": "11613643028",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "560",
+    "addr:postcode": "60120-000",
+    "addr:street": "Avenida Barão de Studart",
+    "addr:suburb": "Meireles",
+    "amenity": "hospital",
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "name": "Hospital Prontocardio",
+    "opening_hours": "24/7",
+    "phone": "+55 85 3466 3000",
+    "website": "https://www.hospitalprontocardio.com.br"
+   },
+   "xy": [
+    -120,
+    -65
+   ]
+  }
+ ]
+}

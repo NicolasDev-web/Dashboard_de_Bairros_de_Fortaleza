@@ -4,6 +4,7 @@ import puppeteer from "puppeteer-core";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import os from "node:os";
 
 export const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const PUBLICADOS = path.resolve(RAIZ, "../dashboard/marcos");
@@ -44,6 +45,8 @@ export async function abrirOficina(porta = 5300, largura = 1200, altura = 900) {
   const navegador = await puppeteer.launch({
     executablePath: CHROME,
     headless: true,
+    // perfil próprio por porta e processo: vários agentes abrindo o Chrome ao mesmo tempo não colidem
+    userDataDir: path.join(os.tmpdir(), `oficina-chrome-${porta}-${process.pid}`),
     args: ["--ignore-gpu-blocklist", "--enable-unsafe-swiftshader", "--use-angle=swiftshader", `--window-size=${largura},${altura}`],
     defaultViewport: { width: largura, height: altura },
   });

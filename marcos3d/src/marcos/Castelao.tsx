@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import type { Fabrica } from "../Cena";
+import { aleatorio, posicionar } from "../util/geometria";
 
 /** Ponto do perfil de revolução: semieixo L–O (a), semieixo N–S (b), altura (y) e expoente da superelipse (n) */
 type Anel = [a: number, b: number, y: number, n: number];
@@ -42,7 +43,7 @@ function mistura(p: Anel, q: Anel, f: number): Anel {
  * (sentido do perfil × avanço do anel): perfil subindo → normal para fora; indo para o centro → para cima.
  * O UV é em metros (u ao longo do anel, v ao longo do perfil), para texturas repetidas.
  */
-function anel(perfil: Anel[], seg = 160) {
+function anel(perfil: Anel[], seg = 160, perimetroU?: number) {
   const pos: number[] = [];
   const uv: number[] = [];
   const idx: number[] = [];
@@ -61,7 +62,8 @@ function anel(perfil: Anel[], seg = 160) {
       px = x;
       pz = z;
       pos.push(x, y, z);
-      uv.push(u, v);
+      // com perimetroU, u vem do ângulo: as linhas de u constante ficam radiais em todos os anéis
+      uv.push(perimetroU ? (i / seg) * perimetroU : u, v);
     }
   }
   const linha = seg + 1;
@@ -202,6 +204,61 @@ function texturaDe(cv: HTMLCanvasElement) {
   return t;
 }
 
+/**
+ * Pele de vidro da fachada (módulo de 1,6 m × 2,4 m): vidro cinza-azulado com reflexo do céu no alto,
+ * montantes verticais claros e uma travessa por pavimento. UV em metros (u ao longo do anel).
+ */
+function desenharVidro() {
+  const { cv, g } = novoCanvas(32, 48);
+  const grad = g.createLinearGradient(0, 0, 0, 48);
+  grad.addColorStop(0, "#8394a0");
+  grad.addColorStop(0.55, "#56677a");
+  grad.addColorStop(1, "#3e4c5b");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 32, 48);
+  g.fillStyle = "#c9d0d4";
+  g.fillRect(0, 0, 3, 48); // montante
+  g.fillRect(0, 0, 32, 3); // travessa
+  g.fillStyle = "rgba(255,255,255,0.08)";
+  g.fillRect(3, 3, 12, 45); // reflexo na metade do painel
+  return cv;
+}
+
+/**
+ * Chapa metálica branca da cobertura: juntas radiais a cada 1,5 m (u vem do ângulo) e uma linha
+ * mais escura a cada 6 m de perfil, onde as chapas se emendam.
+ */
+function desenharChapa() {
+  const { cv, g } = novoCanvas(32, 64);
+  g.fillStyle = CORES.cobertura;
+  g.fillRect(0, 0, 32, 64);
+  g.fillStyle = "rgba(90,105,115,0.16)";
+  g.fillRect(0, 0, 2, 64);
+  g.fillStyle = "rgba(90,105,115,0.1)";
+  g.fillRect(0, 0, 32, 2);
+  g.fillStyle = "rgba(255,255,255,0.18)";
+  g.fillRect(2, 0, 2, 64); // brilho da dobra da junta
+  return cv;
+}
+
+/** Árvores do entorno: um anel solto fora da esplanada, com falhas nos quatro acessos */
+function arvoresEntorno() {
+  const rnd = aleatorio(9);
+  const out: [number, number, number, number, number][] = [];
+  const n = 64;
+  for (let i = 0; i < n; i++) {
+    const t = (i / n) * Math.PI * 2;
+    const eixo = Math.min(...[0, Math.PI / 2, Math.PI, 1.5 * Math.PI, 2 * Math.PI].map((e) => Math.abs(t - e)));
+    if (eixo < 0.16 || rnd() < 0.25) continue;
+    const r = 30.9 + rnd() * 0.8;
+    out.push([Math.cos(t) * r, 0, Math.sin(t) * r, 0.75 + rnd() * 0.3, rnd() * 6]);
+  }
+  return out;
+}
+
+/** Perímetro usado no u angular da cobertura (as juntas ficam radiais do vazio até a borda) */
+const PERIMETRO_COBERTURA = 150;
+
 /** Arena Castelão: anel de cobertura branco com o vazio oval, coroa de 60 pórticos e fachada de vidro escuro */
 export function Castelao({ fab }: { fab: Fabrica }) {
   const geo = useMemo(() => {
@@ -214,19 +271,26 @@ export function Castelao({ fab }: { fab: Fabrica }) {
       passeio: anel([ext(2.6, 0.235), ext(-2.9, 0.235)], 120),
       // embasamento recuado e a pele de vidro, inclinada para fora
       embasamento: anel([ext(-2.8, 0.2), ext(-2.8, 1.4)]),
-      vidro: anel([ext(-2.5, 1.4), ext(-0.5, 8.6)]),
-      // cobertura: chapa branca com leve caimento para o vazio, faixa de policarbonato na borda interna
-      coberturaTopo: anel([ext(0, 9.4), PICO, ABERTURA]),
+      vidro: anel([ext(-2.5, 1.4), ext(-0.5, 8.6)], 160, 140),
+      // cobertura: chapa branca com leve caimento para o vazio, faixa de policarbonato na borda interna;
+      // a borda externa ganha um chanfro (9,3 → 9,45 m) para a luz desenhar a aresta
+      coberturaTopo: anel([ext(-0.18, 9.45), PICO, ABERTURA], 160, PERIMETRO_COBERTURA),
       policarbonato: anel([[poli[0], poli[1], poli[2] + 0.04, poli[3]], [ABERTURA[0], ABERTURA[1], ABERTURA[2] + 0.04, ABERTURA[3]]]),
       coberturaFundo: anel([[ABERTURA[0], ABERTURA[1], 8.2, ABERTURA[3]], ext(0, 8.6)]),
-      coberturaBorda: anel([ext(0, 8.6), ext(0, 9.4)]),
+      coberturaBorda: anel([ext(0, 8.6), ext(0, 9.3), ext(-0.18, 9.45)]),
       coberturaVazio: anel([ABERTURA, [ABERTURA[0], ABERTURA[1], 8.2, ABERTURA[3]]]),
       // arquibancadas: anel inferior perto do campo, faixa de camarotes e anel superior sob a cobertura
       anelInferior: anel([[13.2, 17.6, 3.4, 3], [8.4, 12.6, 0.24, 4]]),
       camarotes: anel([[13.5, 17.9, 4.5, 3], [13.2, 17.6, 3.4, 3]]),
       anelSuperior: anel([[19, 23.4, 8.1, 2.6], [13.5, 17.9, 4.5, 3]]),
+      // mureta clara na frente do anel inferior, separando a arquibancada do campo
+      muretaCampo: anel([[8.4, 12.6, 0.24, 4], [8.4, 12.6, 0.62, 4], [8.25, 12.45, 0.62, 4]], 120),
       portico: geometriaPortico(),
       tirante: new THREE.CylinderGeometry(0.05, 0.05, 1, 4),
+      // trave em "Π": dois postes e o travessão (7,32 m × 2,44 m reais, exagerados para ler de longe)
+      trave: new THREE.ExtrudeGeometry(new THREE.Shape([[-0.75, 0], [-0.75, 0.5], [0.75, 0.5], [0.75, 0], [0.68, 0], [0.68, 0.43], [-0.68, 0.43], [-0.68, 0]].map(([x, y]) => new THREE.Vector2(x, y))), { depth: 0.07, bevelEnabled: false }).translate(0, 0, -0.035),
+      copa: new THREE.IcosahedronGeometry(1, 1),
+      tronco: new THREE.CylinderGeometry(0.1, 0.15, 1.3, 6).translate(0, 0.65, 0),
     };
   }, []);
 
@@ -235,11 +299,22 @@ export function Castelao({ fab }: { fab: Fabrica }) {
     degrau.wrapS = degrau.wrapT = THREE.RepeatWrapping;
     degrau.repeat.set(1 / 4.5, 1 / 0.75);
     const campo = texturaDe(desenharCampo());
+    const vidro = texturaDe(desenharVidro());
+    vidro.wrapS = vidro.wrapT = THREE.RepeatWrapping;
+    vidro.repeat.set(1 / 1.6, 1 / 2.4);
+    const chapa = texturaDe(desenharChapa());
+    chapa.wrapS = chapa.wrapT = THREE.RepeatWrapping;
+    chapa.repeat.set(1 / 1.5, 1 / 6);
+    const mat = (nome: string, p: THREE.MeshStandardMaterialParameters) => Object.assign(new THREE.MeshStandardMaterial(p), { name: nome });
     return {
       degrau,
       campo,
-      arquibancada: new THREE.MeshStandardMaterial({ map: degrau, roughness: 0.9 }),
-      gramado: new THREE.MeshStandardMaterial({ map: campo, roughness: 0.95 }),
+      vidro,
+      chapa,
+      arquibancada: mat("Mat_Arquibancada_Degraus", { map: degrau, roughness: 0.9 }),
+      gramado: mat("Mat_Gramado_Campo", { map: campo, roughness: 0.95 }),
+      peleVidro: mat("Mat_Vidro_Fachada", { map: vidro, roughness: 0.22, metalness: 0.35 }),
+      cobertura: mat("Mat_Cobertura_Chapa", { map: chapa, roughness: 0.45, metalness: 0.15 }),
     };
   }, []);
 
@@ -253,7 +328,11 @@ export function Castelao({ fab }: { fab: Fabrica }) {
 
   const porticos = useRef<THREE.InstancedMesh>(null);
   const tirantes = useRef<THREE.InstancedMesh>(null);
+  const traves = useRef<THREE.InstancedMesh>(null);
+  const copas = useRef<THREE.InstancedMesh>(null);
+  const troncos = useRef<THREE.InstancedMesh>(null);
   const referenciais = useMemo(() => referenciaisPorticos(), []);
+  const arvores = useMemo(() => arvoresEntorno(), []);
 
   useLayoutEffect(() => {
     // tirante da ponta do pórtico até a cobertura, no referencial local do pórtico
@@ -275,33 +354,44 @@ export function Castelao({ fab }: { fab: Fabrica }) {
     tirantes.current!.instanceMatrix.needsUpdate = true;
     porticos.current!.computeBoundingSphere();
     tirantes.current!.computeBoundingSphere();
-  }, [referenciais]);
+    // traves nas duas linhas de fundo (o campo de 105 m corre em z)
+    const fundo = (105 * ESCALA) / 2;
+    posicionar(traves.current!, [[0, 0.24, -fundo], [0, 0.24, fundo]]);
+    const tons = ["#4f7d3c", "#3f6d34", "#5f8c45"];
+    posicionar(copas.current!, arvores.map(([x, , z, e, g]): [number, number, number, number, number] => [x, 1.25 + e * 0.6, z, e, g]), arvores.map((_, i) => tons[i % 3]));
+    posicionar(troncos.current!, arvores.map(([x, , z]): [number, number, number] => [x, 0, z]));
+  }, [referenciais, arvores]);
 
   const branco = fab.cor(CORES.cobertura, 0.55);
   return (
-    <group rotation-y={GIRO}>
-      <mesh geometry={geo.esplanadaTopo} material={fab.cor(CORES.esplanada, 0.95)} receiveShadow />
-      <mesh geometry={geo.esplanadaBorda} material={fab.cor(CORES.esplanada, 0.95)} receiveShadow />
-      <mesh geometry={geo.passeio} material={fab.cor(CORES.passeio, 0.95)} receiveShadow />
-      <mesh rotation-x={-Math.PI / 2} position-y={0.24} material={tex.gramado} receiveShadow>
+    <group name="Arena_Castelao" rotation-y={GIRO}>
+      <mesh name="Esplanada_Piso" geometry={geo.esplanadaTopo} material={fab.cor(CORES.esplanada, 0.95)} receiveShadow />
+      <mesh name="Esplanada_Borda" geometry={geo.esplanadaBorda} material={fab.cor(CORES.esplanada, 0.95)} receiveShadow />
+      <mesh name="Passeio_Fachada" geometry={geo.passeio} material={fab.cor(CORES.passeio, 0.95)} receiveShadow />
+      <mesh name="Campo_Gramado" rotation-x={-Math.PI / 2} position-y={0.24} material={tex.gramado} receiveShadow>
         <planeGeometry args={[CAMPO.w, CAMPO.h]} />
       </mesh>
+      <instancedMesh name="Campo_Traves" ref={traves} args={[geo.trave, fab.cor("#f4f6f2", 0.5), 2]} castShadow />
 
-      <mesh geometry={geo.anelInferior} material={tex.arquibancada} castShadow receiveShadow />
-      <mesh geometry={geo.camarotes} material={fab.cor(CORES.camarotes, 0.35)} receiveShadow />
-      <mesh geometry={geo.anelSuperior} material={tex.arquibancada} castShadow receiveShadow />
+      <mesh name="Arquibancada_Anel_Inferior" geometry={geo.anelInferior} material={tex.arquibancada} castShadow receiveShadow />
+      <mesh name="Arquibancada_Mureta_Campo" geometry={geo.muretaCampo} material={fab.cor("#d8d6cc", 0.8)} receiveShadow />
+      <mesh name="Arquibancada_Camarotes" geometry={geo.camarotes} material={fab.cor(CORES.camarotes, 0.35)} receiveShadow />
+      <mesh name="Arquibancada_Anel_Superior" geometry={geo.anelSuperior} material={tex.arquibancada} castShadow receiveShadow />
 
-      <mesh geometry={geo.embasamento} material={fab.cor(CORES.embasamento, 0.6)} castShadow receiveShadow />
-      <mesh geometry={geo.vidro} material={fab.cor(CORES.vidro, 0.42)} castShadow receiveShadow />
+      <mesh name="Fachada_Embasamento" geometry={geo.embasamento} material={fab.cor(CORES.embasamento, 0.6)} castShadow receiveShadow />
+      <mesh name="Fachada_Pele_Vidro" geometry={geo.vidro} material={tex.peleVidro} castShadow receiveShadow />
 
-      <mesh geometry={geo.coberturaTopo} material={branco} castShadow receiveShadow />
-      <mesh geometry={geo.policarbonato} material={fab.cor(CORES.policarbonato, 0.4)} receiveShadow />
-      <mesh geometry={geo.coberturaFundo} material={branco} castShadow receiveShadow />
-      <mesh geometry={geo.coberturaBorda} material={branco} castShadow receiveShadow />
-      <mesh geometry={geo.coberturaVazio} material={branco} castShadow receiveShadow />
+      <mesh name="Cobertura_Topo" geometry={geo.coberturaTopo} material={tex.cobertura} castShadow receiveShadow />
+      <mesh name="Cobertura_Policarbonato" geometry={geo.policarbonato} material={fab.cor(CORES.policarbonato, 0.4)} receiveShadow />
+      <mesh name="Cobertura_Fundo" geometry={geo.coberturaFundo} material={branco} castShadow receiveShadow />
+      <mesh name="Cobertura_Borda" geometry={geo.coberturaBorda} material={branco} castShadow receiveShadow />
+      <mesh name="Cobertura_Vazio" geometry={geo.coberturaVazio} material={branco} castShadow receiveShadow />
 
-      <instancedMesh ref={porticos} args={[geo.portico, fab.cor(CORES.porticos, 0.45), PORTICOS]} castShadow receiveShadow />
-      <instancedMesh ref={tirantes} args={[geo.tirante, fab.cor("#C9CDD0", 0.5), PORTICOS]} />
+      <instancedMesh name="Porticos_Trelicados" ref={porticos} args={[geo.portico, fab.cor(CORES.porticos, 0.45), PORTICOS]} castShadow receiveShadow />
+      <instancedMesh name="Porticos_Tirantes" ref={tirantes} args={[geo.tirante, fab.cor("#C9CDD0", 0.5), PORTICOS]} />
+
+      <instancedMesh name="Entorno_Arvores_Copas" ref={copas} args={[geo.copa, fab.cor("#ffffff", 0.9), arvores.length]} castShadow receiveShadow />
+      <instancedMesh name="Entorno_Arvores_Troncos" ref={troncos} args={[geo.tronco, fab.cor("#6e5a45", 0.9), arvores.length]} castShadow />
     </group>
   );
 }

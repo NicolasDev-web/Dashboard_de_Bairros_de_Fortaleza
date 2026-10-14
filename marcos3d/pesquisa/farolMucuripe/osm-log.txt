@@ -1,0 +1,26 @@
+== farolMucuripe: 269 vias, 0 nós com nome
+709260459 1m [0,1] 9.9x9.7 rumo 131 {"building":"yes","building:levels":"4","height":"11.8","man_made":"lighthouse","name":"Farol do Mucuripe","name:de":"Leuchtturm Mucuripe (1872)"}
+361267803 4m [-4,-2] 65.8x64.3 rumo 133 {"landuse":"grass"}
+1161513397 38m [37,-10] 9.2x4.8 rumo 176 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513400 39m [35,-17] 4.2x3.4 rumo 15 {"building":"yes","building:levels":"1","height":"2.8"}
+1161512814 40m [-15,-37] 6.1x5.4 rumo 19 {"building":"yes","building:levels":"2","height":"6.1"}
+1161512827 40m [40,7] 9.9x6.4 rumo 86 {"building":"yes","building:levels":"1","height":"3.0"}
+1161512828 40m [40,-4] 10.7x6.2 rumo 86 {"building":"yes","building:levels":"1","height":"2.9"}
+1161512826 41m [41,1] 11.6x5.7 rumo 86 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513383 41m [32,-26] 8.3x6.4 rumo 96 {"building":"yes","building:levels":"1","height":"2.8"}
+1161520377 41m [9,-40] 5.6x3.7 rumo 177 {"building":"yes","building:levels":"1","height":"2.9"}
+1161512824 42m [35,-22] 12.6x4.4 rumo 97 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513362 42m [-38,-19] 7.1x3.4 rumo 99 {"building":"yes","building:levels":"1","height":"3.7"}
+1161512825 44m [41,-15] 7.2x3.5 rumo 103 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513369 44m [-38,-22] 8x4.3 rumo 99 {"building":"yes","building:levels":"1","height":"3.7"}
+1161513399 45m [44,-11] 7.2x6.7 rumo 103 {"building":"yes","building:levels":"1","height":"3.0"}
+1161520189 45m [32,31] 7.5x6.2 rumo 125 {"building":"yes","building:levels":"1","height":"2.8"}
+1161512823 46m [35,-30] 4.5x3.8 rumo 93 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513366 46m [-16,-43] 5.8x5.2 rumo 110 {"building":"yes","building:levels":"1","height":"3.5"}
+1161513382 46m [38,-26] 7.1x5.3 rumo 94 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513398 46m [42,-19] 7.4x3.7 rumo 102 {"building":"yes","building:levels":"1","height":"2.8"}
+1161513361 47m [-38,-27] 8.5x4.9 rumo 100 {"building":"yes","building:levels":"1","height":"3.7"}
+1161520193 49m [39,29] 11.8x5.9 rumo 33 {"building":"yes","building:levels":"1","height":"3.0"}
+1161520840 49m [13,-48] 24.9x7.4 rumo 0 {"building":"yes","building:levels":"2","height":"6.0"}
+1161513395 51m [41,-30] 9.1x3.3 rumo 93 {"building":"yes","building:levels":"2","height":"6.3"}
+1161512811 52m [-32,-42] 23.1x6.4 rumo 5 {"building":"yes","building:levels":"1","height":"2.9"}

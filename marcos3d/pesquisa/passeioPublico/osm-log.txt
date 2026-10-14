@@ -1,0 +1,51 @@
+== passeioPublico: 166 vias, 66 nós com nome
+630998502 18m [3,-17] 6.9x6.9 rumo 125 {"natural":"water"}
+630998506 38m [37,-10] 5.8x5.6 rumo 86 {"building":"government"}
+630998504 40m [40,-2] 8.6x5.4 rumo 19 {"building":"government"}
+630998529 56m [-10,55] 10.4x6.5 rumo 17 {"building":"yes","building:levels":"1","height":"3.4"}
+630998523 61m [26,55] 37.1x32.9 rumo 19 {"building":"yes","building:levels":"1","height":"4.0"}
+630998531 68m [61,29] 29.6x15.6 rumo 108 {"leisure":"pitch"}
+1169922745 70m [1,-70] 26.8x5.2 rumo 18 {"building":"yes","building:levels":"2","height":"7.2"}
+1169923709 72m [-57,-44] 18.9x11.6 rumo 17 {"building":"yes","building:levels":"2","height":"7.3"}
+1169928180 72m [7,-71] 26.7x9.3 rumo 18 {"building":"yes","building:levels":"3","height":"8.0"}
+630998527 74m [-43,61] 40.4x14.4 rumo 108 {"building":"yes","building:levels":"2","height":"4.7"}
+1169925242 74m [-64,-38] 6.2x5.6 rumo 108 {"building":"yes","building:levels":"1","height":"3.6"}
+1169923170 80m [-31,-73] 39x20.7 rumo 18 {"building":"yes","building:levels":"5","height":"15.1"}
+1169922748 82m [-53,-63] 35.8x7.1 rumo 18 {"building":"yes","building:levels":"3","height":"9.9"}
+1169925156 82m [-48,-66] 39.2x15.5 rumo 18 {"building":"yes","building:levels":"4","height":"11.6"}
+1169921619 85m [12,-84] 35.5x11.7 rumo 19 {"building":"yes","building:levels":"2","height":"5.0"}
+630998525 87m [-24,84] 42.9x14.4 rumo 108 {"building":"yes","building:levels":"2","height":"5.9"}
+434287222 92m [32,-87] 35.8x24.9 rumo 19 {"building":"yes","building:levels":"2","name":"Museu da Indústria","tourism":"museum"}
+630998514 97m [-44,86] 6.9x5.3 rumo 17 {"building":"yes","building:levels":"1","height":"3.8"}
+1169928964 97m [1,-97] 23.5x7.8 rumo 107 {"building":"yes","building:levels":"2","height":"6.6"}
+1169920305 98m [-50,-84] 38.6x8.4 rumo 108 {"building":"yes","building:levels":"2","height":"4.9"}
+1169925243 99m [-86,-48] 39.2x5.1 rumo 18 {"building":"yes","building:levels":"1","height":"3.1"}
+1169927590 104m [-70,-78] 14x8.3 rumo 108 {"building":"yes","building:levels":"2","height":"4.6"}
+1169922975 105m [-1,-105] 28.4x7.7 rumo 106 {"building":"yes","building:levels":"3","height":"8.1"}
+1169923979 105m [-48,-93] 36.6x6.7 rumo 108 {"building":"yes","building:levels":"4","height":"11.1"}
+1170435714 107m [18,-106] 33.4x9.9 rumo 109 {"building":"yes","building:levels":"3","height":"10.3"}
+node 4175124294 [-21,-28] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Baobá"}
+node 4175124295 [62,-1] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Benjamin"}
+node 4175124296 [30,-39] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Jucazeiro"}
+node 4175124297 [-48,-16] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Macaúba"}
+node 4175124298 [-28,25] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Mungubeira"}
+node 4175124299 [7,9] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Mungubeira"}
+node 4175124300 [-38,-5] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Oiticica"}
+node 4175124301 [58,-23] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Oitizeiro"}
+node 4175124302 [17,-27] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Pau d'Arco Roxo"}
+node 4175124303 [36,-48] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Timbaúba"}
+node 5958040891 [108,-61] {"natural":"tree"}
+node 5958040892 [102,-58] {"natural":"tree"}
+node 5958040893 [96,-57] {"natural":"tree"}
+node 5958040894 [91,-54] {"natural":"tree"}
+node 5958040899 [108,-44] {"natural":"tree"}
+node 5958040900 [103,-42] {"natural":"tree"}
+node 5958040901 [97,-40] {"natural":"tree"}
+node 5958040914 [101,18] {"natural":"tree"}
+node 5958040915 [87,36] {"natural":"tree"}
+node 5958040916 [80,43] {"natural":"tree"}
+node 5958040917 [69,47] {"natural":"tree"}
+node 5958040918 [59,52] {"natural":"tree"}
+node 5958129838 [25,76] {"natural":"tree"}
+node 5958129839 [41,70] {"natural":"tree"}
+node 5958129840 [29,55] {"natural":"tree"}

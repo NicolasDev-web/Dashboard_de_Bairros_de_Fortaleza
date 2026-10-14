@@ -1,0 +1,51 @@
+== forteAssuncao: 148 vias, 65 nós com nome
+630998508 29m [28,7] 9.3x9.3 rumo 117 {"natural":"water"}
+630998516 30m [-30,2] 26.1x20.7 rumo 111 {"building":"yes","building:levels":"2","height":"5.3"}
+1254344773 66m [-5,66] 8.9x8.7 rumo 78 {"historic":"monument"}
+1254344775 79m [-7,79] 37.7x5.4 rumo 104 {"amenity":"parking"}
+1482879453 85m [13,84] 147.6x6.1 rumo 107 {"landuse":"grass"}
+630998531 91m [-80,43] 29.6x15.6 rumo 108 {"leisure":"pitch"}
+1169921610 94m [-48,-81] 9x5.3 rumo 22 {"building":"yes","building:levels":"2","height":"5.8"}
+1169923970 94m [-52,-78] 9x4.4 rumo 22 {"building":"yes","building:levels":"2","height":"5.0"}
+1169928757 94m [-56,-75] 8.9x4.2 rumo 22 {"building":"yes","building:levels":"2","height":"5.2"}
+1170435612 94m [-45,-83] 9.1x4.2 rumo 22 {"building":"yes","building:levels":"2","height":"5.3"}
+1170436112 94m [-19,-92] 37x11.5 rumo 116 {"building":"yes","building:levels":"4","height":"12.7"}
+1482879454 94m [-46,82] 30x8.2 rumo 101 {"landuse":"grass"}
+1169920445 97m [-61,-75] 8.9x5.7 rumo 22 {"building":"yes","building:levels":"2","height":"7.3"}
+1169926270 99m [-69,-71] 18x8.9 rumo 111 {"building":"yes","building:levels":"4","height":"11.5"}
+1169922734 101m [-60,-82] 37.2x7.3 rumo 111 {"building":"yes","building:levels":"3","height":"9.7"}
+630998504 102m [-101,12] 8.4x5.4 rumo 18 {"building":"government"}
+630998506 104m [-104,4] 5.8x5.6 rumo 90 {"building":"government"}
+1170436155 107m [-27,-103] 36.9x13.9 rumo 116 {"building":"yes","building:levels":"6","height":"19.2","name":"Hotel Catedral","tourism":"hotel"}
+1169923971 109m [-64,-88] 36.8x5 rumo 110 {"building":"yes","building:levels":"3","height":"7.8"}
+1169925149 112m [-57,-97] 13x8.1 rumo 108 {"building":"yes","building:levels":"2","height":"4.6"}
+1169925148 116m [-73,-90] 19.3x4.5 rumo 108 {"building":"yes","building:levels":"3","height":"7.5"}
+1169920443 118m [-73,-92] 23.4x4.8 rumo 107 {"building":"yes","building:levels":"3","height":"7.9"}
+583544310 122m [106,61] 54.3x39.8 rumo 25 {"amenity":"recycling","name":"Ecoponto Centro"}
+1169921721 123m [-69,-103] 36.1x8.3 rumo 108 {"building":"yes","building:levels":"2","height":"7.1"}
+1169922733 128m [-48,-119] 37.7x30.8 rumo 116 {"building":"yes","building:levels":"5","height":"14.0"}
+node 3874529581 [39,3] {"name":"Forte Schoonenborch","tourism":"attraction"}
+node 4175124295 [-79,13] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Benjamin"}
+node 4175124296 [-112,-25] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Jucazeiro"}
+node 4175124301 [-83,-9] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Oitizeiro"}
+node 4175124303 [-105,-34] {"denotation":"natural_monument","description":"Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.","natural":"tree","source":"survey","species:pt":"Timbaúba"}
+node 5958040888 [-13,-56] {"natural":"tree"}
+node 5958040889 [-18,-53] {"natural":"tree"}
+node 5958040890 [-26,-50] {"natural":"tree"}
+node 5958040891 [-33,-47] {"natural":"tree"}
+node 5958040892 [-39,-45] {"natural":"tree"}
+node 5958040893 [-45,-43] {"natural":"tree"}
+node 5958040894 [-50,-40] {"natural":"tree"}
+node 5958040895 [-6,-41] {"natural":"tree"}
+node 5958040896 [-12,-39] {"natural":"tree"}
+node 5958040897 [-20,-36] {"natural":"tree"}
+node 5958040898 [-27,-33] {"natural":"tree"}
+node 5958040899 [-33,-30] {"natural":"tree"}
+node 5958040900 [-39,-28] {"natural":"tree"}
+node 5958040901 [-44,-26] {"natural":"tree"}
+node 5958040902 [9,-19] {"natural":"tree"}
+node 5958040903 [-6,-14] {"natural":"tree"}
+node 5958040904 [-16,-10] {"natural":"tree"}
+node 5958040905 [-25,-6] {"natural":"tree"}
+node 5958040906 [37,-3] {"natural":"tree"}
+node 5958040907 [40,11] {"natural":"tree"}

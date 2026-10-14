@@ -1,0 +1,51 @@
+== dragaoDoMar: 230 vias, 100 nós com nome
+1170436038 28m [-22,18] 59.9x56.5 rumo 151 {"building":"yes","building:levels":"7","height":"21.1"}
+638574559 32m [32,3] 6.1x0 rumo 60 {"amenity":"bench"}
+1170436399 32m [6,32] 4.8x3.7 rumo 55 {"building":"yes","building:levels":"3","height":"10.2"}
+638574560 34m [33,10] 6.5x0 rumo 149 {"amenity":"bench"}
+638574562 37m [31,21] 7x0 rumo 62 {"amenity":"bench"}
+1170435037 40m [-26,-30] 4.3x4.1 rumo 0 {"building":"yes","building:levels":"6","height":"18.5","name":"Torre do Café","name:en":"Coffee Tower"}
+1170435877 41m [-7,-41] 18.5x8.3 rumo 0 {"building":"yes","building:levels":"3","height":"9.4"}
+638574561 42m [33,26] 6.8x0 rumo 153 {"amenity":"bench"}
+243219269 43m [15,-40] 18.1x15.1 rumo 179 {"building":"yes","height":"11.1"}
+1170436271 46m [-37,-28] 12.6x12.3 rumo 155 {"building":"yes","building:levels":"4","height":"11.4"}
+1170436132 50m [3,-50] 41.3x11.1 rumo 1 {"building":"yes","building:levels":"4","height":"11.8"}
+638574620 52m [-14,-50] 40x8.7 rumo 0 {"building":"yes","height":"10.1000000000"}
+1170435006 52m [-7,-51] 22.1x8.3 rumo 0 {"building":"yes","building:levels":"2","height":"7.3"}
+1170435336 54m [15,-52] 16.1x15.2 rumo 1 {"building":"yes","building:levels":"2","height":"6.8"}
+377672419 57m [-57,-1] 42.3x11.7 rumo 127 {"leisure":"swimming_pool"}
+638574624 57m [-33,-47] 8.6x4.6 rumo 168 {"building":"yes","height":"3.3000000000"}
+1170436162 59m [-12,58] 5x3.9 rumo 54 {"building":"yes","building:levels":"3","height":"10.3"}
+1170435022 64m [5,64] 8.6x4.1 rumo 56 {"building":"yes","building:levels":"2","height":"6.7"}
+1170435411 67m [13,-65] 15.7x8.7 rumo 94 {"building":"yes","building:levels":"2","height":"6.8"}
+1170435294 68m [-28,-62] 4.5x4.3 rumo 67 {"building":"yes","building:levels":"6","height":"19.2"}
+1170435811 68m [-58,-36] 13.2x12.4 rumo 88 {"building":"yes","building:levels":"2","height":"5.6"}
+1170435386 70m [60,36] 11.8x5.4 rumo 68 {"building":"yes","building:levels":"2","height":"4.9"}
+638574557 72m [-72,-11] 6.4x0 rumo 157 {"amenity":"bench"}
+638574556 74m [72,16] 6.2x0 rumo 58 {"amenity":"bench"}
+1082792616 74m [58,-46] 49.3x47.6 rumo 90 {"addr:housename":"Capitânia dos Portos do Ceará","amenity":"college","name":"Porto Iracema das Artes"}
+node 627226805 [73,118] {"addr:city":"Fortaleza","addr:country":"BR","addr:housenumber":"435","addr:postcode":"60060-440","addr:street":"Avenida Almirante Barroso","addr:suburb":"Praia de Iracema","brand":"Fiat","brand:wikidata":"Q27597","brand:wikipedia":"en:Fiat Automobiles","name":"Guarautos","opening_hours":"Mo-Fr 08:00-18:00; Sa 08:00-12:00","phone":"+55 85 3308 6520","second_hand":"yes","shop":"car","website":"https://www.guarautos.com.br/"}
+node 627226828 [-37,24] {"addr:city":"Fortaleza","addr:country":"BR","addr:housenumber":"81","addr:postcode":"60060-195","addr:street":"Rua Dragão do Mar","addr:suburb":"Centro","amenity":"cinema","contact:instagram":"cinemadodragao","name":"Cinema do Dragão","phone":"+55 85 3219 5899","website":"http://www.dragaodomar.org.br/espacos/cinema-do-dragao","wheelchair":"yes"}
+node 627226839 [-37,-30] {"addr:city":"Fortaleza","addr:country":"BR","addr:housenumber":"81","addr:postcode":"60060-195","addr:street":"Rua Dragão do Mar","addr:suburb":"Centro","air_conditioning":"yes","amenity":"cafe","check_date":"2023-01-31","cuisine":"cake;local;coffee_shop","diet:vegan":"yes","diet:vegetarian":"yes","highchair":"no","internet_access":"wlan","internet_access:fee":"customers","internet_access:ssid":"CAFETEIRA-VISITANTES","name":"Café Santa Clara","name:pt":"Santa Clara Cafeteria","note":"@santaclaracafeteria","opening_hours":"Tu-Su 15:00-22:00","outdoor_seating":"no","payment:credit_cards":"yes","payment:debit_cards":"yes","payment:pix":"yes","phone":"+55 85 3219 6900; +55859992878284","smoking":"no","takeaway":"yes","website":"https://www.cafesantaclara.com.br/cafeteria.php","wheelchair":"yes"}
+node 3810576800 [40,-1] {"natural":"tree"}
+node 3810576801 [34,24] {"natural":"tree"}
+node 3810576803 [19,-13] {"natural":"tree"}
+node 3810576804 [9,7] {"natural":"tree"}
+node 3810576805 [19,5] {"natural":"tree"}
+node 3810576806 [7,-7] {"natural":"tree"}
+node 3810576807 [21,-5] {"natural":"tree"}
+node 3810576808 [15,-7] {"natural":"tree"}
+node 3810576809 [10,-15] {"natural":"tree"}
+node 3810576810 [49,65] {"natural":"tree"}
+node 3810576811 [69,55] {"natural":"tree"}
+node 3810576812 [83,81] {"natural":"tree"}
+node 3810576813 [23,63] {"natural":"tree"}
+node 3810576814 [18,68] {"natural":"tree"}
+node 3810576815 [17,78] {"natural":"tree"}
+node 3810576816 [84,0] {"natural":"tree"}
+node 3810576817 [75,-5] {"natural":"tree"}
+node 3810576818 [-67,-16] {"natural":"tree"}
+node 3810576819 [-61,-15] {"natural":"tree"}
+node 3810576820 [-55,-16] {"natural":"tree"}
+node 3810576821 [-85,-7] {"natural":"tree"}
+node 3810576822 [-1,67] {"natural":"tree"}

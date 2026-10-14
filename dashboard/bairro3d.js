@@ -46,23 +46,24 @@ const MOLA = (t) => { const c = 1.9; return 1 + (c + 1) * Math.pow(t - 1, 3) + c
 // ---------------------------------------------------------------------------------------------------------
 // three.js sob demanda
 // ---------------------------------------------------------------------------------------------------------
-let T = null; // { THREE, OrbitControls, GLTFLoader, mesclar }
+let T = null; // { THREE, OrbitControls, GLTFLoader, MeshoptDecoder, mesclar }
 async function carregarThree() {
   if (T) return T;
-  const [THREE, { OrbitControls }, { GLTFLoader }, { mergeGeometries }] = await Promise.all([
+  const [THREE, { OrbitControls }, { GLTFLoader }, { mergeGeometries }, { MeshoptDecoder }] = await Promise.all([
     import("three"),
     import("three/addons/controls/OrbitControls.js"),
     import("three/addons/loaders/GLTFLoader.js"),
     import("three/addons/utils/BufferGeometryUtils.js"),
+    import("three/addons/libs/meshopt_decoder.module.js"), // os GLB da oficina (marcos3d/) saem comprimidos com meshopt
   ]);
-  T = { THREE, OrbitControls, GLTFLoader, mesclar: mergeGeometries };
+  T = { THREE, OrbitControls, GLTFLoader, MeshoptDecoder, mesclar: mergeGeometries };
   return T;
 }
 
 const cacheGLB = new Map(); // arquivo -> Promise<Object3D>
 function carregarMarco(arquivo) {
   if (!cacheGLB.has(arquivo)) {
-    const loader = new T.GLTFLoader();
+    const loader = new T.GLTFLoader().setMeshoptDecoder(T.MeshoptDecoder);
     cacheGLB.set(arquivo, loader.loadAsync(`marcos/${arquivo}`).then((g) => {
       // marcadas para o descarte do bairro não apagar o cache (clone() copia o userData)
       g.scene.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.userData.doMarco = true; } });
@@ -99,24 +100,24 @@ function montarUI() {
   const palco = el("div", { class: "b3d-palco" });
   const etiquetas = el("div", { class: "b3d-etiquetas", "aria-hidden": "true" });
   const fechar = el("button", { type: "button", class: "b3d-fechar", "aria-label": "Fechar e voltar ao mapa", texto: "×" });
-  const caps = el("div", { class: "b3d-caps", role: "group", "aria-label": "Capítulos" });
-  const regional = el("p", { class: "b3d-regional" });
   const nome = el("h2", { id: "b3d-nome" });
-  const kicker = el("p", { class: "b3d-kicker" });
+  const progresso = el("div", { class: "b3d-progresso", role: "group", "aria-label": "Capítulos" });
+  const passo = el("p", { class: "b3d-passo" });
+  const destaque = el("figure", { class: "b3d-destaque" });
   const titulo = el("h3", { class: "b3d-titulo" });
   const texto = el("div", { class: "b3d-corpo" });
-  const fonte = el("p", { class: "b3d-fonte" });
-  const ant = el("button", { type: "button", class: "botao b3d-ant" }, [el("span", { class: "botao-icone", "aria-hidden": "true", texto: "←" }), "Anterior"]);
-  const prox = el("button", { type: "button", class: "botao botao-cheio b3d-prox" }, [el("span", { class: "botao-icone", "aria-hidden": "true", texto: "→" }), el("span", { texto: "Próximo" })]);
-  const conteudo = el("div", { class: "b3d-conteudo", "aria-live": "polite" }, [kicker, titulo, texto, fonte]);
+  const fonte = el("details", { class: "b3d-fontes" });
+  const ant = el("button", { type: "button", class: "botao botao-contorno-claro b3d-ant" }, [el("span", { class: "botao-icone", "aria-hidden": "true", texto: "←" }), "Anterior"]);
+  const prox = el("button", { type: "button", class: "botao botao-claro b3d-prox", autofocus: "" }, [el("span", { class: "botao-icone", "aria-hidden": "true", texto: "→" }), el("span", { texto: "Próximo" })]);
+  const conteudo = el("div", { class: "b3d-conteudo", "aria-live": "polite" }, [passo, destaque, titulo, texto, fonte]);
   const painel = el("article", { class: "b3d-painel" }, [
-    el("div", { class: "b3d-cabeca" }, [regional, nome]),
+    el("div", { class: "b3d-cabeca" }, [nome, progresso]),
     conteudo,
     el("div", { class: "b3d-nav" }, [ant, prox]),
   ]);
   const aviso = el("p", { class: "b3d-aviso", texto: "Carregando a maquete…" });
-  const dica = el("p", { class: "b3d-dica", texto: "Arraste para girar · ← → muda de capítulo · Esc fecha" });
-  dlg.replaceChildren(palco, etiquetas, el("header", { class: "b3d-topo" }, [caps, fechar]), painel, aviso, dica);
+  const dica = el("p", { class: "b3d-dica", texto: "Arraste para girar a maquete. As setas mudam de capítulo; Esc fecha." });
+  dlg.replaceChildren(palco, etiquetas, el("header", { class: "b3d-topo" }, [fechar]), painel, aviso, dica);
 
   fechar.addEventListener("click", () => dlg.close());
   ant.addEventListener("click", () => irPara(estado.cap - 1));
@@ -140,8 +141,43 @@ function montarUI() {
     }
   }, { passive: false });
 
-  ui = { palco, etiquetas, caps, regional, nome, kicker, titulo, texto, fonte, ant, prox, painel, aviso, conteudo };
+  ui = { palco, etiquetas, nome, progresso, passo, destaque, titulo, texto, fonte, ant, prox, painel, aviso, conteudo };
   return ui;
+}
+
+// Dígitos em matriz de 5 × 7, como os pixels da cidade na abertura do site
+const PIXELS = {
+  0: ["01110", "10001", "10011", "10101", "11001", "10001", "01110"],
+  1: ["00100", "01100", "00100", "00100", "00100", "00100", "01110"],
+  2: ["01110", "10001", "00001", "00010", "00100", "01000", "11111"],
+  3: ["11110", "00001", "00001", "01110", "00001", "00001", "11110"],
+  4: ["00010", "00110", "01010", "10010", "11111", "00010", "00010"],
+  5: ["11111", "10000", "11110", "00001", "00001", "10001", "01110"],
+  6: ["00110", "01000", "10000", "11110", "10001", "10001", "01110"],
+  7: ["11111", "00001", "00010", "00100", "01000", "01000", "01000"],
+  8: ["01110", "10001", "10001", "01110", "10001", "10001", "01110"],
+  9: ["01110", "10001", "10001", "01111", "00001", "00010", "01100"],
+};
+const NS = "http://www.w3.org/2000/svg";
+
+/** O valor do destaque (só dígitos) em pixels; cada pixel aceso leva --i para a varredura da esquerda para a direita */
+function pixels(valor) {
+  const svg = document.createElementNS(NS, "svg");
+  const digitos = String(valor).split("").filter((d) => PIXELS[d]);
+  const passo = 8, lado = 6.4;
+  svg.setAttribute("viewBox", `0 0 ${digitos.length * 6 * passo - passo} ${7 * passo}`);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", String(valor));
+  digitos.forEach((d, k) => PIXELS[d].forEach((linha, y) => [...linha].forEach((on, x) => {
+    const r = document.createElementNS(NS, "rect");
+    const col = k * 6 + x;
+    r.setAttribute("x", col * passo); r.setAttribute("y", y * passo);
+    r.setAttribute("width", lado); r.setAttribute("height", lado);
+    if (on === "1") r.style.setProperty("--i", col + y * 0.35);
+    else r.setAttribute("class", "apagado");
+    svg.append(r);
+  })));
+  return svg;
 }
 
 // ---------------------------------------------------------------------------------------------------------
@@ -320,7 +356,8 @@ function assentar(reais, anel, r) {
   if (!celulas.length) return reais;
   const ordens = (n) => (n <= 1 ? [[0]] : ordens(n - 1).flatMap((o) => o.map((_, i) => [...o.slice(0, i), n - 1, ...o.slice(i)]).concat([[...o, n - 1]])));
   let melhor = null, menor = Infinity;
-  for (const ordem of ordens(reais.length)) {
+  // até 5 marcos testa todas as ordens (120); acima disso, encaixa na ordem dada
+  for (const ordem of reais.length <= 5 ? ordens(reais.length) : [reais.map((_, i) => i)]) {
     const postos = [], saida = [];
     let total = 0;
     for (const k of ordem) {
@@ -370,6 +407,7 @@ function capitulosDe(p) {
   const vr = p.var_renda_real_pct;
   caps.push({
     tipo: "hoje", titulo: "O bairro hoje",
+    destaque: { valor: String(Math.round(p.indice)), legenda: `de 100 no índice do painel: ${pos}º de 121 bairros` },
     texto: [
       `${nf0.format(p.pop_2022)} moradores no Censo de 2022, em ${String(p.area_km2).replace(".", ",")} km². No índice do painel, com pesos iguais para renda, saneamento e segurança, ${nf0.format(p.indice)} de 100: ${pos}º de 121.`,
       `Renda média de quem sustenta a casa: R$ ${nf0.format(p.renda_real_2022)} por mês, ${nf0.format(Math.abs(vr))}% ${vr >= 0 ? "acima" : "abaixo"} da de 2010, já descontada a inflação. Esgoto em rede: ${nf0.format(p.saneamento_2022)}% das casas.`,
@@ -400,11 +438,10 @@ async function abrir(id) {
   estado.id = id;
   estado.caps = capitulosDe(p);
   estado.cap = 0;
-  ui.regional.textContent = `Regional ${p.regional} · ${H[id] && H[id].capitulos ? "história em 3D" : "maquete"}`;
-  ui.nome.textContent = p.nome;
+  ui.nome.replaceChildren(p.nome, " ", el("small", { texto: `Regional ${p.regional}` }));
   dlg.setAttribute("aria-labelledby", "b3d-nome");
-  ui.caps.replaceChildren(...estado.caps.map((c, i) => {
-    const b = el("button", { type: "button", "aria-label": `Capítulo ${i + 1}: ${c.titulo}`, title: c.titulo, texto: String(i + 1).padStart(2, "0") });
+  ui.progresso.replaceChildren(...estado.caps.map((c, i) => {
+    const b = el("button", { type: "button", "aria-label": `Capítulo ${i + 1}: ${c.titulo}`, title: c.titulo });
     b.addEventListener("click", () => irPara(i));
     return b;
   }));
@@ -445,7 +482,8 @@ function montarMaquete(f) {
 
   // alvos de câmera e etiquetas: um por capítulo
   const marcos = marcosDoBairro(estado.caps);
-  const frac = marcos.length > 1 ? 0.27 : 0.33;
+  // diâmetro da base de cada miniatura, em fração do bairro: encolhe com a quantidade (o Centro tem 5)
+  const frac = Math.max(0.15, 0.33 / Math.sqrt(Math.max(1, marcos.length)) * (marcos.length > 1 ? 1.15 : 1));
   const posMarco = new Map();
   const anel = f.geometry.coordinates[0].map(([lon, lat]) => b.pr.xz(lon, lat));
   const reais = marcos.map((c) => b.pr.xz(c.lng ?? M[c.marco].lng, c.lat ?? M[c.marco].lat));
@@ -562,21 +600,23 @@ function irPara(i, primeiro = false) {
 function mostrarTexto() {
   const c = estado.caps[estado.cap];
   const n = estado.caps.length;
-  const rotuloTipo = { bairro: "O bairro", marco: "Marco em 3D", ponto: "Ponto no mapa", hoje: "Os números" }[c.tipo] || "";
-  ui.kicker.textContent = `${String(estado.cap + 1).padStart(2, "0")} / ${String(n).padStart(2, "0")} · ${rotuloTipo}`;
+  ui.passo.textContent = `Capítulo ${estado.cap + 1} de ${n}`;
+  ui.destaque.hidden = !c.destaque;
+  ui.destaque.replaceChildren(...(c.destaque ? [pixels(c.destaque.valor), el("figcaption", { texto: c.destaque.legenda })] : []));
   ui.titulo.textContent = c.titulo;
   ui.texto.replaceChildren(...[].concat(c.texto).map((t) => el("p", { texto: t })));
   const fontes = [].concat(c.fonte || []);
-  ui.fonte.replaceChildren(...(fontes.length ? ["Fonte: ", ...fontes.flatMap((x, k) => [
-    k ? "; " : null,
-    x.url ? el("a", { href: x.url, ...(x.url.startsWith("#") ? {} : { target: "_blank", rel: "noopener" }), texto: x.nome }) : x.nome,
-  ].filter(Boolean))] : []));
+  ui.fonte.hidden = !fontes.length;
+  ui.fonte.open = false;
+  ui.fonte.replaceChildren(
+    el("summary", { texto: fontes.length === 1 ? "Fonte" : `Fontes (${fontes.length})` }),
+    el("ul", {}, fontes.map((x) => el("li", {}, x.url ? el("a", { href: x.url, ...(x.url.startsWith("#") ? {} : { target: "_blank", rel: "noopener" }), texto: x.nome }) : x.nome))),
+  );
   // link para uma seção da página: fecha a camada antes de rolar até ela
   for (const a of ui.fonte.querySelectorAll('a[href^="#"]')) a.addEventListener("click", () => dlg.close());
-  ui.fonte.hidden = !fontes.length;
   ui.ant.disabled = estado.cap === 0;
   ui.prox.lastChild.textContent = estado.cap === n - 1 ? "Voltar ao mapa" : "Próximo";
-  [...ui.caps.children].forEach((b, k) => b.setAttribute("aria-current", String(k === estado.cap)));
+  [...ui.progresso.children].forEach((b, k) => { b.setAttribute("aria-current", String(k === estado.cap)); b.classList.toggle("lido", k < estado.cap); });
   ui.conteudo.classList.remove("entrando"); void ui.conteudo.offsetWidth; ui.conteudo.classList.add("entrando");
   ui.conteudo.scrollTop = 0;
 }
@@ -635,9 +675,19 @@ function quadro(agora) {
     const atras = tmp.v.z > 1;
     const ativo = a.marco ? c.marco === a.marco : a.cap === estado.cap;
     const visivel = !atras && (a.marco ? a.pronto : a.obj.visible);
-    a.et.style.transform = `translate(${((tmp.v.x + 1) / 2) * w}px, ${((1 - tmp.v.y) / 2) * h}px) translate(-50%, -100%)`;
+    a.x = ((tmp.v.x + 1) / 2) * w; a.y = ((1 - tmp.v.y) / 2) * h;
+    a.et.style.transform = `translate(${a.x}px, ${a.y}px) translate(-50%, -100%)`;
     a.et.classList.toggle("ativa", ativo);
-    a.et.hidden = !visivel;
+    a.ativo = ativo; a.visivel = visivel;
+  }
+  // etiquetas que se encavalam: fica a do capítulo atual e, depois, as mais perto da câmera (mais abaixo na tela)
+  const postas = [];
+  for (const a of [...estado.alvos].sort((p, q) => (q.ativo - p.ativo) || (q.y - p.y))) {
+    if (!a.visivel) { a.et.hidden = true; continue; }
+    const lw = (a.lw ||= a.et.offsetWidth || 120) / 2 + 4, lh = 24;
+    const bate = postas.some((b) => Math.abs(b.x - a.x) < lw + b.lw && Math.abs(b.y - a.y) < lh);
+    a.et.hidden = bate && !a.ativo;
+    if (!a.et.hidden) postas.push({ x: a.x, y: a.y, lw });
   }
 }
 

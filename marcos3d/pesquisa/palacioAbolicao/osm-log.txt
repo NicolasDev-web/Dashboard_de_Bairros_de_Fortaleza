@@ -1,0 +1,51 @@
+== palacioAbolicao: 224 vias, 81 nós com nome
+1218913605 14m [-8,-11] 92.8x87.9 rumo 18 {"building":"yes","building:levels":"7","height":"20.2","name":"Palácio da Abolição"}
+1218914070 37m [35,-10] 15.9x5.7 rumo 18 {"building":"yes","building:levels":"1","height":"4.3"}
+1218913911 72m [-69,-21] 11.2x4.5 rumo 108 {"building":"yes","building:levels":"1","height":"4.0"}
+1218913714 73m [47,56] 13.2x12.9 rumo 18 {"building":"yes","building:levels":"1","height":"4.0"}
+1144520503 74m [71,-23] 15.4x2.7 rumo 107 {"building":"yes","building:levels":"1","height":"4.1"}
+1112755011 86m [80,32] 56.9x35.1 rumo 18 {"building":"yes"}
+1218913509 86m [38,-77] 10.9x9.1 rumo 108 {"building":"yes","building:levels":"2","height":"4.8"}
+1218913666 91m [-66,-63] 37.9x8.3 rumo 18 {"building":"yes","building:levels":"2","height":"7.0","name":"Mausoléu Castelo Branco","tourism":"museum"}
+1218914088 96m [62,-73] 62x45.3 rumo 18 {"building":"yes","building:levels":"2","height":"4.7"}
+1144520504 101m [97,-26] 18.9x9.9 rumo 108 {"building":"yes","building:levels":"2","height":"5.2"}
+1218913486 104m [43,95] 34x20.6 rumo 107 {"building":"yes","building:levels":"16","height":"48.4"}
+1218137067 105m [54,90] 40.1x20.5 rumo 106 {"landuse":"residential","name":"Edifício Abolição"}
+1235309783 110m [-100,45] 33x10.6 rumo 17 {"building":"yes","building:levels":"3","building:levels:underground":"2"}
+1112705237 113m [-93,64] 77x46.4 rumo 18 {"name":"Museu da Imagem e do Som do Ceará","official_name":"Museu da Imagem e do Som do Ceará Chico Albuquerque","short_name":"MIS-CE","tourism":"museum"}
+650366543 115m [1,115] 65.6x49 rumo 105 {"landuse":"retail"}
+1218125190 116m [95,-66] 33x23.4 rumo 17 {"landuse":"residential","name":"Edifício Isola di Capri"}
+1218913631 116m [84,-80] 4.4x1.7 rumo 17 {"building":"yes","building:levels":"2","height":"4.7"}
+1218913533 120m [100,-66] 25.6x19.6 rumo 17 {"building":"yes","building:levels":"16","height":"48.5"}
+1218913862 120m [14,119] 58x51.2 rumo 108 {"building":"yes","building:levels":"1","height":"8.9"}
+1218913977 122m [50,111] 35.4x17.9 rumo 108 {"building":"yes","building:levels":"3","height":"9.2"}
+1144523969 128m [-127,-8] 24.9x23.5 rumo 18 {"building":"yes","building:levels":"3","height":"8.2"}
+1144524797 128m [98,83] 26.7x20.7 rumo 107 {"building":"yes","building:levels":"5","height":"13.7"}
+1218913501 128m [45,120] 4.3x4 rumo 109 {"building":"yes","building:levels":"1","height":"3.1"}
+1144523421 129m [125,-34] 14x4.5 rumo 17 {"building":"yes","building:levels":"1","height":"3.4"}
+1218137072 129m [98,83] 32.5x25.9 rumo 106 {"landuse":"residential"}
+node 6001097700 [48,28] {"natural":"tree"}
+node 6001097701 [42,31] {"natural":"tree"}
+node 6001097702 [47,42] {"natural":"tree"}
+node 6001097703 [30,52] {"natural":"tree"}
+node 6001097704 [36,63] {"natural":"tree"}
+node 6001097705 [30,65] {"natural":"tree"}
+node 6001097706 [-35,71] {"natural":"tree"}
+node 6001097707 [-27,70] {"natural":"tree"}
+node 6001097708 [-16,73] {"natural":"tree"}
+node 6001097709 [-3,71] {"natural":"tree"}
+node 6001097710 [-7,68] {"natural":"tree"}
+node 6001097711 [-3,68] {"natural":"tree"}
+node 6001097712 [-10,73] {"natural":"tree"}
+node 6001097713 [-26,78] {"natural":"tree"}
+node 6001097714 [-29,75] {"natural":"tree"}
+node 6001097715 [-34,75] {"natural":"tree"}
+node 6001097718 [-2,-96] {"natural":"tree"}
+node 6001097721 [-29,-68] {"natural":"tree"}
+node 6001097723 [-2,-76] {"natural":"tree"}
+node 6001097724 [-24,-19] {"natural":"tree"}
+node 6001097725 [-26,-24] {"natural":"tree"}
+node 6001097726 [-27,-28] {"natural":"tree"}
+node 6001097727 [-73,-47] {"natural":"tree"}
+node 6001097728 [-71,-37] {"natural":"tree"}
+node 6001097729 [-69,-38] {"natural":"tree"}

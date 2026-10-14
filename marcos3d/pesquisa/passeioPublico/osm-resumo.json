@@ -1,0 +1,10375 @@
+{
+ "id": "passeioPublico",
+ "lat": -3.7226365,
+ "lng": -38.5263038,
+ "vias": [
+  {
+   "way": "24404180",
+   "tags": {
+    "destination": "Centro;Centro de Turismo;Theatro José de Alencar;Mercado Central",
+    "highway": "primary_link",
+    "lanes": "2",
+    "maxspeed": "50",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -120,
+    134
+   ],
+   "dist": 180,
+   "dims": [
+    280.6,
+    1
+   ],
+   "rumoLadoMaior": 110,
+   "n": 5,
+   "pts": [
+    [
+     -295.3,
+     198.4
+    ],
+    [
+     -187.1,
+     159
+    ],
+    [
+     -46.2,
+     106.6
+    ],
+    [
+     -37.6,
+     103.8
+    ],
+    [
+     -31.9,
+     101.8
+    ]
+   ]
+  },
+  {
+   "way": "24419494",
+   "tags": {
+    "cycleway:left": "lane",
+    "destination": "Mercado Central",
+    "highway": "primary_link",
+    "lanes": "2",
+    "maxspeed": "50",
+    "name": "Avenida Presidente Castelo Branco",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "surface": "asphalt"
+   },
+   "centro": [
+    170,
+    32
+   ],
+   "dist": 173,
+   "dims": [
+    208.8,
+    13.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     59.2,
+     73.6
+    ],
+    [
+     65.3,
+     71.2
+    ],
+    [
+     110.1,
+     46.4
+    ],
+    [
+     136.4,
+     34.6
+    ],
+    [
+     165.5,
+     26.6
+    ],
+    [
+     188.7,
+     22.9
+    ],
+    [
+     217.3,
+     19.9
+    ],
+    [
+     248.6,
+     10
+    ],
+    [
+     253.3,
+     7.4
+    ],
+    [
+     256.7,
+     5.6
+    ]
+   ]
+  },
+  {
+   "way": "24439917",
+   "tags": {
+    "barrier": "fence"
+   },
+   "centro": [
+    -2,
+    -8
+   ],
+   "dist": 8,
+   "dims": [
+    140.7,
+    73.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -56.9,
+     54
+    ],
+    [
+     -68.7,
+     15.2
+    ],
+    [
+     -76.7,
+     -10.5
+    ],
+    [
+     -4.4,
+     -36.8
+    ],
+    [
+     53.8,
+     -58.9
+    ],
+    [
+     63.6,
+     -29.8
+    ],
+    [
+     76.9,
+     10.5
+    ]
+   ]
+  },
+  {
+   "way": "24439918",
+   "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "30",
+    "maxwidth": "2.2",
+    "name": "Rua Major Facundo",
+    "oneway": "yes",
+    "smoothness": "good",
+    "surface": "asphalt",
+    "zone:maxspeed": "BR:30"
+   },
+   "centro": [
+    -79,
+    -268
+   ],
+   "dist": 280,
+   "dims": [
+    435.4,
+    1.5
+   ],
+   "rumoLadoMaior": 18,
+   "n": 11,
+   "pts": [
+    [
+     -6,
+     -45.2
+    ],
+    [
+     -41.3,
+     -153.1
+    ],
+    [
+     -43.5,
+     -159.8
+    ],
+    [
+     -45.4,
+     -165.9
+    ],
+    [
+     -78,
+     -267.2
+    ],
+    [
+     -80.3,
+     -274.4
+    ],
+    [
+     -82.5,
+     -281
+    ],
+    [
+     -115.3,
+     -376.2
+    ],
+    [
+     -117.2,
+     -382.3
+    ],
+    [
+     -119,
+     -388.2
+    ],
+    [
+     -141.7,
+     -458.9
+    ]
+   ]
+  },
+  {
+   "way": "243231233",
+   "tags": {
+    "alt_name": "Avenida Leste-Oeste",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Avenida Presidente Castelo Branco",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "centro": [
+    124,
+    84
+   ],
+   "dist": 149,
+   "dims": [
+    265.8,
+    2.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     221.7,
+     51.6
+    ],
+    [
+     202.9,
+     59.3
+    ],
+    [
+     191,
+     63.3
+    ],
+    [
+     140.7,
+     78.3
+    ],
+    [
+     122.4,
+     83.7
+    ],
+    [
+     79.4,
+     97.1
+    ],
+    [
+     62.6,
+     102.4
+    ],
+    [
+     -31.1,
+     133.6
+    ]
+   ]
+  },
+  {
+   "way": "243790988",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "building": "yes",
+    "building:levels": "4",
+    "height": "12.1"
+   },
+   "centro": [
+    70,
+    131
+   ],
+   "dist": 148,
+   "dims": [
+    152.6,
+    83.4
+   ],
+   "rumoLadoMaior": 97,
+   "n": 64,
+   "pts": [
+    [
+     43.4,
+     119.2
+    ],
+    [
+     42.4,
+     116.2
+    ],
+    [
+     52.3,
+     112.9
+    ],
+    [
+     53.2,
+     115.6
+    ],
+    [
+     53.4,
+     116.1
+    ],
+    [
+     59.3,
+     113.9
+    ],
+    [
+     71.7,
+     109.7
+    ],
+    [
+     83,
+     106.1
+    ],
+    [
+     94,
+     141.7
+    ],
+    [
+     121.1,
+     132.9
+    ],
+    [
+     113,
+     108.4
+    ],
+    [
+     111.5,
+     108.9
+    ],
+    [
+     110.9,
+     107.3
+    ],
+    [
+     93,
+     113.3
+    ],
+    [
+     92.6,
+     112.3
+    ],
+    [
+     90.2,
+     112.9
+    ],
+    [
+     86.4,
+     101.6
+    ],
+    [
+     88,
+     101.1
+    ],
+    [
+     113.1,
+     92.8
+    ],
+    [
+     117.7,
+     105.7
+    ],
+    [
+     120.6,
+     114
+    ],
+    [
+     120.3,
+     114.2
+    ],
+    [
+     120.3,
+     114.4
+    ],
+    [
+     121.6,
+     115.9
+    ],
+    [
+     123.5,
+     117.7
+    ],
+    [
+     129,
+     121.2
+    ],
+    [
+     131,
+     122.1
+    ],
+    [
+     133.2,
+     122.8
+    ],
+    [
+     136.8,
+     134.2
+    ],
+    [
+     137.1,
+     134.9
+    ],
+    [
+     145.9,
+     132
+    ],
+    [
+     148.5,
+     138.7
+    ],
+    [
+     148.1,
+     138.8
+    ],
+    [
+     161.2,
+     170.9
+    ],
+    [
+     120,
+     176
+    ],
+    [
+     45,
+     185.1
+    ],
+    [
+     44.1,
+     178.4
+    ],
+    [
+     42,
+     161.3
+    ],
+    [
+     26,
+     165.4
+    ],
+    [
+     7.4,
+     167.8
+    ],
+    [
+     5.6,
+     156.1
+    ],
+    [
+     24.5,
+     153.4
+    ],
+    [
+     25,
+     157.4
+    ],
+    [
+     26.3,
+     153.8
+    ],
+    [
+     26.7,
+     152.4
+    ],
+    [
+     27.6,
+     150.7
+    ],
+    [
+     29.7,
+     148.5
+    ],
+    [
+     31.4,
+     147.8
+    ],
+    [
+     30.3,
+     144.3
+    ],
+    [
+     18.4,
+     148
+    ],
+    [
+     15.6,
+     138.8
+    ],
+    [
+     26.1,
+     135.5
+    ],
+    [
+     24.5,
+     130.3
+    ],
+    [
+     13.9,
+     133.8
+    ],
+    [
+     7.7,
+     135.8
+    ],
+    [
+     6.2,
+     131
+    ],
+    [
+     24.5,
+     125
+    ],
+    [
+     23.9,
+     123.4
+    ],
+    [
+     22.7,
+     123.9
+    ],
+    [
+     22.3,
+     122.8
+    ],
+    [
+     40.8,
+     116.7
+    ],
+    [
+     41.7,
+     119.8
+    ],
+    [
+     43.5,
+     119.3
+    ],
+    [
+     43.4,
+     119.2
+    ]
+   ]
+  },
+  {
+   "way": "434287222",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "143",
+    "addr:postcode": "60030-000",
+    "addr:street": "Rua Doutor João Moreira",
+    "addr:suburb": "Centro",
+    "air_conditioning": "yes",
+    "building": "yes",
+    "building:levels": "2",
+    "check_date": "2026-05-25",
+    "description": "O edifício onde funcionou o antigo Hotel do norte foi construído no final do século XIX. Com a desativação do hotel, passou a abrigar as instalações da Sociedade União Cearense e, entre 1895 e 1935, serviu de sede para os Correios e Telégrafos.",
+    "fee": "no",
+    "name": "Museu da Indústria",
+    "opening_hours": "Tu-Sa 09:00-17:00; Su 09:00-13:00",
+    "phone": "+55 85 3201 3901",
+    "source": "SECULT-CE",
+    "tourism": "museum",
+    "website": "https://museudaindustria-ce.org.br/"
+   },
+   "centro": [
+    32,
+    -87
+   ],
+   "dist": 92,
+   "dims": [
+    35.8,
+    24.9
+   ],
+   "rumoLadoMaior": 19,
+   "n": 8,
+   "pts": [
+    [
+     39.8,
+     -105.8
+    ],
+    [
+     51.3,
+     -71.9
+    ],
+    [
+     27.7,
+     -64.1
+    ],
+    [
+     27.4,
+     -65
+    ],
+    [
+     21.9,
+     -81.6
+    ],
+    [
+     16.5,
+     -97.7
+    ],
+    [
+     29.3,
+     -102.1
+    ],
+    [
+     39.8,
+     -105.8
+    ]
+   ]
+  },
+  {
+   "way": "437963252",
+   "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "30",
+    "maxwidth": "2.2",
+    "name": "Rua Barão do Rio Branco",
+    "oneway": "yes",
+    "surface": "asphalt",
+    "zone:maxspeed": "BR:30"
+   },
+   "centro": [
+    -234,
+    -473
+   ],
+   "dist": 528,
+   "dims": [
+    1037,
+    1.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 26,
+   "pts": [
+    [
+     -403.4,
+     -1005.2
+    ],
+    [
+     -401.6,
+     -999.1
+    ],
+    [
+     -376.4,
+     -919
+    ],
+    [
+     -374.4,
+     -912.6
+    ],
+    [
+     -371.9,
+     -904.6
+    ],
+    [
+     -326.8,
+     -762.5
+    ],
+    [
+     -324.2,
+     -754.2
+    ],
+    [
+     -322.4,
+     -748.3
+    ],
+    [
+     -281.8,
+     -619.4
+    ],
+    [
+     -279.6,
+     -612.6
+    ],
+    [
+     -251.7,
+     -527.8
+    ],
+    [
+     -233.1,
+     -468.3
+    ],
+    [
+     -231.9,
+     -464.4
+    ],
+    [
+     -199.6,
+     -363.6
+    ],
+    [
+     -197.2,
+     -356.1
+    ],
+    [
+     -194.8,
+     -348.8
+    ],
+    [
+     -175.6,
+     -293.1
+    ],
+    [
+     -163.6,
+     -255.3
+    ],
+    [
+     -161.5,
+     -248.7
+    ],
+    [
+     -158.6,
+     -239.7
+    ],
+    [
+     -127,
+     -141.1
+    ],
+    [
+     -124.5,
+     -133.3
+    ],
+    [
+     -121.6,
+     -124.7
+    ],
+    [
+     -98.7,
+     -52.3
+    ],
+    [
+     -90.1,
+     -24.9
+    ],
+    [
+     -87.7,
+     -17.4
+    ]
+   ]
+  },
+  {
+   "way": "630998481",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    31,
+    -27
+   ],
+   "dist": 41,
+   "dims": [
+    31.3,
+    0.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     34.3,
+     -15.3
+    ],
+    [
+     32.9,
+     -19.4
+    ],
+    [
+     24.7,
+     -45.1
+    ]
+   ]
+  },
+  {
+   "way": "630998483",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    43,
+    9
+   ],
+   "dist": 44,
+   "dims": [
+    14.6,
+    0.1
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     46.1,
+     17.8
+    ],
+    [
+     41.8,
+     5.6
+    ],
+    [
+     41.3,
+     4
+    ]
+   ]
+  },
+  {
+   "way": "630998485",
+   "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "horse": "yes",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -44,
+    17
+   ],
+   "dist": 47,
+   "dims": [
+    63.4,
+    0.5
+   ],
+   "rumoLadoMaior": 19,
+   "n": 4,
+   "pts": [
+    [
+     -34.1,
+     44.4
+    ],
+    [
+     -38,
+     32.9
+    ],
+    [
+     -47.1,
+     7.9
+    ],
+    [
+     -55.1,
+     -15.4
+    ]
+   ]
+  },
+  {
+   "way": "630998487",
+   "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "horse": "no",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    7,
+    17
+   ],
+   "dist": 19,
+   "dims": [
+    133.3,
+    0.1
+   ],
+   "rumoLadoMaior": 109,
+   "n": 6,
+   "pts": [
+    [
+     -55.9,
+     39.1
+    ],
+    [
+     -38,
+     32.9
+    ],
+    [
+     8.8,
+     16.9
+    ],
+    [
+     17.5,
+     13.9
+    ],
+    [
+     41.8,
+     5.6
+    ],
+    [
+     70.2,
+     -4.1
+    ]
+   ]
+  },
+  {
+   "way": "630998489",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "concrete"
+   },
+   "centro": [
+    -51,
+    7
+   ],
+   "dist": 51,
+   "dims": [
+    75.3,
+    62.1
+   ],
+   "rumoLadoMaior": 110,
+   "n": 6,
+   "pts": [
+    [
+     -3.6,
+     -34.5
+    ],
+    [
+     -55.1,
+     -15.4
+    ],
+    [
+     -71.8,
+     -9.2
+    ],
+    [
+     -64.4,
+     13.8
+    ],
+    [
+     -55.9,
+     39.1
+    ],
+    [
+     -52.6,
+     49.9
+    ]
+   ]
+  },
+  {
+   "way": "630998491",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    5,
+    5
+   ],
+   "dist": 7,
+   "dims": [
+    47.2,
+    0
+   ],
+   "rumoLadoMaior": 19,
+   "n": 4,
+   "pts": [
+    [
+     -2.7,
+     -15.7
+    ],
+    [
+     0,
+     -8.1
+    ],
+    [
+     8.8,
+     16.9
+    ],
+    [
+     13,
+     28.8
+    ]
+   ]
+  },
+  {
+   "way": "630998493",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    14,
+    3
+   ],
+   "dist": 14,
+   "dims": [
+    43.2,
+    0.1
+   ],
+   "rumoLadoMaior": 20,
+   "n": 4,
+   "pts": [
+    [
+     7,
+     -14.8
+    ],
+    [
+     8.3,
+     -11
+    ],
+    [
+     17.5,
+     13.9
+    ],
+    [
+     21.9,
+     25.8
+    ]
+   ]
+  },
+  {
+   "way": "630998495",
+   "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "horse": "no",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -2,
+    -7
+   ],
+   "dist": 8,
+   "dims": [
+    155.5,
+    0.1
+   ],
+   "rumoLadoMaior": 109,
+   "n": 10,
+   "pts": [
+    [
+     -76.3,
+     17.9
+    ],
+    [
+     -68.7,
+     15.2
+    ],
+    [
+     -64.4,
+     13.8
+    ],
+    [
+     -47.1,
+     7.9
+    ],
+    [
+     0,
+     -8.1
+    ],
+    [
+     8.3,
+     -11
+    ],
+    [
+     32.9,
+     -19.4
+    ],
+    [
+     61.9,
+     -29.2
+    ],
+    [
+     63.6,
+     -29.8
+    ],
+    [
+     70.9,
+     -32.3
+    ]
+   ]
+  },
+  {
+   "way": "630998497",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    3,
+    -17
+   ],
+   "dist": 17,
+   "dims": [
+    10.5,
+    10.4
+   ],
+   "rumoLadoMaior": 94,
+   "n": 16,
+   "pts": [
+    [
+     7.3,
+     -19.2
+    ],
+    [
+     5.7,
+     -21.4
+    ],
+    [
+     3.3,
+     -22.5
+    ],
+    [
+     0.6,
+     -22.3
+    ],
+    [
+     -1.6,
+     -20.8
+    ],
+    [
+     -2.8,
+     -18.4
+    ],
+    [
+     -2.7,
+     -15.7
+    ],
+    [
+     -1.7,
+     -13.8
+    ],
+    [
+     0,
+     -12.5
+    ],
+    [
+     2.1,
+     -12
+    ],
+    [
+     4.3,
+     -12.3
+    ],
+    [
+     6.1,
+     -13.4
+    ],
+    [
+     7,
+     -14.8
+    ],
+    [
+     7.3,
+     -15.1
+    ],
+    [
+     7.7,
+     -17.2
+    ],
+    [
+     7.3,
+     -19.2
+    ]
+   ]
+  },
+  {
+   "way": "630998500",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -4,
+    -35
+   ],
+   "dist": 35,
+   "dims": [
+    23.9,
+    0.1
+   ],
+   "rumoLadoMaior": 19,
+   "n": 4,
+   "pts": [
+    [
+     -7.1,
+     -44.9
+    ],
+    [
+     -4.4,
+     -36.8
+    ],
+    [
+     -3.6,
+     -34.5
+    ],
+    [
+     0.6,
+     -22.3
+    ]
+   ]
+  },
+  {
+   "way": "630998502",
+   "tags": {
+    "natural": "water",
+    "water": "source"
+   },
+   "centro": [
+    3,
+    -17
+   ],
+   "dist": 18,
+   "dims": [
+    6.9,
+    6.9
+   ],
+   "rumoLadoMaior": 125,
+   "n": 13,
+   "pts": [
+    [
+     5.8,
+     -18.5
+    ],
+    [
+     4.7,
+     -20
+    ],
+    [
+     3.1,
+     -20.8
+    ],
+    [
+     1.3,
+     -20.7
+    ],
+    [
+     -0.2,
+     -19.7
+    ],
+    [
+     -1.1,
+     -18.1
+    ],
+    [
+     -1,
+     -16.3
+    ],
+    [
+     0,
+     -14.7
+    ],
+    [
+     1.7,
+     -13.8
+    ],
+    [
+     3.5,
+     -13.9
+    ],
+    [
+     5.1,
+     -15
+    ],
+    [
+     5.9,
+     -16.6
+    ],
+    [
+     5.8,
+     -18.5
+    ]
+   ]
+  },
+  {
+   "way": "630998504",
+   "tags": {
+    "building": "government"
+   },
+   "centro": [
+    40,
+    -2
+   ],
+   "dist": 40,
+   "dims": [
+    8.6,
+    5.4
+   ],
+   "rumoLadoMaior": 19,
+   "n": 9,
+   "pts": [
+    [
+     40.9,
+     -5.5
+    ],
+    [
+     38.9,
+     -6
+    ],
+    [
+     36.7,
+     -4.9
+    ],
+    [
+     36.1,
+     -3.6
+    ],
+    [
+     38.2,
+     2.4
+    ],
+    [
+     40.1,
+     2.6
+    ],
+    [
+     42,
+     2
+    ],
+    [
+     43,
+     -0.1
+    ],
+    [
+     40.9,
+     -5.5
+    ]
+   ]
+  },
+  {
+   "way": "630998506",
+   "tags": {
+    "building": "government"
+   },
+   "centro": [
+    37,
+    -10
+   ],
+   "dist": 38,
+   "dims": [
+    5.8,
+    5.6
+   ],
+   "rumoLadoMaior": 86,
+   "n": 13,
+   "pts": [
+    [
+     39,
+     -11.6
+    ],
+    [
+     37.6,
+     -12.5
+    ],
+    [
+     36,
+     -12.6
+    ],
+    [
+     34.5,
+     -11.8
+    ],
+    [
+     33.8,
+     -10.3
+    ],
+    [
+     34,
+     -8.6
+    ],
+    [
+     34.8,
+     -7.6
+    ],
+    [
+     35.9,
+     -7
+    ],
+    [
+     37.3,
+     -6.9
+    ],
+    [
+     38.5,
+     -7.5
+    ],
+    [
+     39.4,
+     -8.7
+    ],
+    [
+     39.6,
+     -10.2
+    ],
+    [
+     39,
+     -11.6
+    ]
+   ]
+  },
+  {
+   "way": "630998507",
+   "tags": {
+    "highway": "service",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxwidth": "2.2",
+    "name": "Rua Floriano Peixoto",
+    "service": "driveway",
+    "surface": "sett"
+   },
+   "centro": [
+    69,
+    -39
+   ],
+   "dist": 79,
+   "dims": [
+    76.4,
+    0.2
+   ],
+   "rumoLadoMaior": 20,
+   "n": 4,
+   "pts": [
+    [
+     58.3,
+     -67.4
+    ],
+    [
+     61.5,
+     -59
+    ],
+    [
+     70.9,
+     -32.3
+    ],
+    [
+     84,
+     4.5
+    ]
+   ]
+  },
+  {
+   "way": "630998514",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.8",
+    "pmfsefin:idedif": "505718"
+   },
+   "centro": [
+    -44,
+    86
+   ],
+   "dist": 97,
+   "dims": [
+    6.9,
+    5.3
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     -47.1,
+     84.4
+    ],
+    [
+     -42,
+     82.9
+    ],
+    [
+     -40,
+     89.4
+    ],
+    [
+     -45,
+     90.9
+    ],
+    [
+     -47.1,
+     84.4
+    ]
+   ]
+  },
+  {
+   "way": "630998516",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.3",
+    "pmfsefin:idedif": "505703"
+   },
+   "centro": [
+    111,
+    -12
+   ],
+   "dist": 111,
+   "dims": [
+    26.1,
+    20.8
+   ],
+   "rumoLadoMaior": 111,
+   "n": 7,
+   "pts": [
+    [
+     109.6,
+     -11.5
+    ],
+    [
+     123.8,
+     -16.9
+    ],
+    [
+     127.6,
+     -7
+    ],
+    [
+     103.3,
+     2.4
+    ],
+    [
+     95.9,
+     -17
+    ],
+    [
+     106,
+     -20.8
+    ],
+    [
+     109.6,
+     -11.5
+    ]
+   ]
+  },
+  {
+   "way": "630998517",
+   "tags": {
+    "barrier": "city_wall"
+   },
+   "centro": [
+    44,
+    37
+   ],
+   "dist": 57,
+   "dims": [
+    29.6,
+    0
+   ],
+   "rumoLadoMaior": 2,
+   "n": 2,
+   "pts": [
+    [
+     43.5,
+     22.2
+    ],
+    [
+     44.4,
+     51.8
+    ]
+   ]
+  },
+  {
+   "way": "630998521",
+   "tags": {
+    "barrier": "city_wall"
+   },
+   "centro": [
+    124,
+    17
+   ],
+   "dist": 125,
+   "dims": [
+    173.9,
+    31.3
+   ],
+   "rumoLadoMaior": 111,
+   "n": 6,
+   "pts": [
+    [
+     44.4,
+     51.8
+    ],
+    [
+     83,
+     30.7
+    ],
+    [
+     88.6,
+     16.8
+    ],
+    [
+     154.8,
+     -9.2
+    ],
+    [
+     162.6,
+     8.4
+    ],
+    [
+     211.7,
+     2.1
+    ]
+   ]
+  },
+  {
+   "way": "630998523",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.0",
+    "pmfsefin:idedif": "506357"
+   },
+   "centro": [
+    26,
+    55
+   ],
+   "dist": 61,
+   "dims": [
+    37.1,
+    32.9
+   ],
+   "rumoLadoMaior": 19,
+   "n": 15,
+   "pts": [
+    [
+     42.6,
+     62.2
+    ],
+    [
+     41.5,
+     62.6
+    ],
+    [
+     43.2,
+     67.6
+    ],
+    [
+     13.4,
+     77.8
+    ],
+    [
+     1.2,
+     42.8
+    ],
+    [
+     5.8,
+     41.2
+    ],
+    [
+     15.7,
+     70.9
+    ],
+    [
+     18.7,
+     70
+    ],
+    [
+     17,
+     64.4
+    ],
+    [
+     31.8,
+     60
+    ],
+    [
+     26.1,
+     42.7
+    ],
+    [
+     29.3,
+     41.6
+    ],
+    [
+     26.7,
+     34
+    ],
+    [
+     32.3,
+     32.1
+    ],
+    [
+     42.6,
+     62.2
+    ]
+   ]
+  },
+  {
+   "way": "630998525",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.9"
+   },
+   "centro": [
+    -24,
+    84
+   ],
+   "dist": 87,
+   "dims": [
+    42.9,
+    14.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -36.8,
+     84.6
+    ],
+    [
+     -30.9,
+     82.7
+    ],
+    [
+     -32.5,
+     77.7
+    ],
+    [
+     1.9,
+     66.6
+    ],
+    [
+     6.3,
+     80.2
+    ],
+    [
+     -28.1,
+     91.4
+    ],
+    [
+     -28.2,
+     91.2
+    ],
+    [
+     -34.6,
+     93.3
+    ],
+    [
+     -36.8,
+     84.6
+    ]
+   ]
+  },
+  {
+   "way": "630998527",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.7",
+    "pmfsefin:idedif": "505716"
+   },
+   "centro": [
+    -43,
+    61
+   ],
+   "dist": 74,
+   "dims": [
+    40.4,
+    14.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -51.2,
+     56.7
+    ],
+    [
+     -16.9,
+     45.6
+    ],
+    [
+     -12.5,
+     59.3
+    ],
+    [
+     -46.9,
+     70.4
+    ],
+    [
+     -47.5,
+     68.5
+    ],
+    [
+     -51.5,
+     69.8
+    ],
+    [
+     -54.6,
+     60.2
+    ],
+    [
+     -50.5,
+     58.9
+    ],
+    [
+     -51.2,
+     56.7
+    ]
+   ]
+  },
+  {
+   "way": "630998529",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.4",
+    "pmfsefin:idedif": "505131"
+   },
+   "centro": [
+    -10,
+    55
+   ],
+   "dist": 56,
+   "dims": [
+    10.4,
+    6.5
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     -11.6,
+     59.7
+    ],
+    [
+     -14.7,
+     49.8
+    ],
+    [
+     -8.5,
+     47.8
+    ],
+    [
+     -5.4,
+     57.7
+    ],
+    [
+     -11.6,
+     59.7
+    ]
+   ]
+  },
+  {
+   "way": "630998531",
+   "tags": {
+    "leisure": "pitch",
+    "sport": "multi"
+   },
+   "centro": [
+    61,
+    29
+   ],
+   "dist": 68,
+   "dims": [
+    29.6,
+    15.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 5,
+   "pts": [
+    [
+     52,
+     38.6
+    ],
+    [
+     80.1,
+     29.3
+    ],
+    [
+     75.1,
+     14.5
+    ],
+    [
+     47.1,
+     23.8
+    ],
+    [
+     52,
+     38.6
+    ]
+   ]
+  },
+  {
+   "way": "630998534",
+   "tags": {
+    "barrier": "city_wall"
+   },
+   "centro": [
+    126,
+    28
+   ],
+   "dist": 129,
+   "dims": [
+    182.4,
+    31.6
+   ],
+   "rumoLadoMaior": 111,
+   "n": 8,
+   "pts": [
+    [
+     44.4,
+     51.8
+    ],
+    [
+     44.7,
+     70
+    ],
+    [
+     93.6,
+     35.4
+    ],
+    [
+     91.3,
+     27.3
+    ],
+    [
+     149,
+     4.7
+    ],
+    [
+     156.3,
+     19.3
+    ],
+    [
+     217.8,
+     11.7
+    ],
+    [
+     213.7,
+     4.8
+    ]
+   ]
+  },
+  {
+   "way": "630998535",
+   "tags": {
+    "barrier": "gate"
+   },
+   "centro": [
+    -7,
+    38
+   ],
+   "dist": 39,
+   "dims": [
+    105.3,
+    0
+   ],
+   "rumoLadoMaior": 108,
+   "n": 2,
+   "pts": [
+    [
+     43.5,
+     22.2
+    ],
+    [
+     -56.9,
+     54
+    ]
+   ]
+  },
+  {
+   "way": "630998537",
+   "tags": {
+    "barrier": "city_wall"
+   },
+   "centro": [
+    60,
+    16
+   ],
+   "dist": 62,
+   "dims": [
+    35.4,
+    0
+   ],
+   "rumoLadoMaior": 109,
+   "n": 2,
+   "pts": [
+    [
+     76.9,
+     10.5
+    ],
+    [
+     43.5,
+     22.2
+    ]
+   ]
+  },
+  {
+   "way": "630998538",
+   "tags": {
+    "barrier": "city_wall"
+   },
+   "centro": [
+    84,
+    8
+   ],
+   "dist": 84,
+   "dims": [
+    13.2,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 3,
+   "pts": [
+    [
+     76.9,
+     10.5
+    ],
+    [
+     85.6,
+     7.9
+    ],
+    [
+     89.5,
+     6.7
+    ]
+   ]
+  },
+  {
+   "way": "707848841",
+   "tags": {
+    "cycleway:left": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Rua Doutor João Moreira",
+    "oneway": "yes",
+    "smoothness": "good",
+    "surface": "asphalt",
+    "zone:maxspeed": "BR:30"
+   },
+   "centro": [
+    4,
+    -50
+   ],
+   "dist": 50,
+   "dims": [
+    247.1,
+    4.7
+   ],
+   "rumoLadoMaior": 109,
+   "n": 6,
+   "pts": [
+    [
+     144.5,
+     -102.1
+    ],
+    [
+     58.3,
+     -67.4
+    ],
+    [
+     -6,
+     -45.2
+    ],
+    [
+     -7.1,
+     -44.9
+    ],
+    [
+     -79.6,
+     -20.1
+    ],
+    [
+     -87.7,
+     -17.4
+    ]
+   ]
+  },
+  {
+   "way": "744896826",
+   "tags": {
+    "destination": "Dragão do Mar;Praia de Iracema;Monsenhor Tabosa",
+    "highway": "primary_link",
+    "lanes": "1",
+    "maxspeed": "50",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "centro": [
+    10,
+    98
+   ],
+   "dist": 98,
+   "dims": [
+    72.7,
+    4.4
+   ],
+   "rumoLadoMaior": 98,
+   "n": 3,
+   "pts": [
+    [
+     -31.9,
+     101.8
+    ],
+    [
+     20.8,
+     94.6
+    ],
+    [
+     40.7,
+     96.3
+    ]
+   ]
+  },
+  {
+   "way": "766526877",
+   "tags": {
+    "cycleway:left": "lane",
+    "highway": "tertiary",
+    "lanes": "2",
+    "maxspeed": "30",
+    "name": "Rua Doutor João Moreira",
+    "oneway": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones",
+    "zone:maxspeed": "BR:30"
+   },
+   "centro": [
+    -216,
+    25
+   ],
+   "dist": 217,
+   "dims": [
+    264.4,
+    0.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -87.7,
+     -17.4
+    ],
+    [
+     -95.1,
+     -15
+    ],
+    [
+     -211.5,
+     23.2
+    ],
+    [
+     -218.6,
+     25.5
+    ],
+    [
+     -225.3,
+     27.7
+    ],
+    [
+     -332.5,
+     63.5
+    ],
+    [
+     -338.8,
+     65.5
+    ]
+   ]
+  },
+  {
+   "way": "903439434",
+   "tags": {
+    "landuse": "grass"
+   },
+   "centro": [
+    -83,
+    128
+   ],
+   "dist": 152,
+   "dims": [
+    187.7,
+    8.1
+   ],
+   "rumoLadoMaior": 107,
+   "n": 9,
+   "pts": [
+    [
+     -157.4,
+     150.9
+    ],
+    [
+     -35.1,
+     106.2
+    ],
+    [
+     20.9,
+     95.6
+    ],
+    [
+     22,
+     96
+    ],
+    [
+     21.5,
+     97.1
+    ],
+    [
+     -147.1,
+     149.4
+    ],
+    [
+     -157,
+     151.5
+    ],
+    [
+     -157.4,
+     151.3
+    ],
+    [
+     -157.4,
+     150.9
+    ]
+   ]
+  },
+  {
+   "way": "903439435",
+   "tags": {
+    "button_operated": "yes",
+    "crossing": "traffic_signals",
+    "crossing:island": "yes",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "surface": "asphalt",
+    "tactile_paving": "no"
+   },
+   "centro": [
+    64,
+    90
+   ],
+   "dist": 110,
+   "dims": [
+    7.2,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     63.1,
+     85.8
+    ],
+    [
+     64.5,
+     90.1
+    ],
+    [
+     65.3,
+     92.7
+    ]
+   ]
+  },
+  {
+   "way": "903439436",
+   "tags": {
+    "footway": "traffic_island",
+    "highway": "footway",
+    "surface": "concrete"
+   },
+   "centro": [
+    62,
+    82
+   ],
+   "dist": 103,
+   "dims": [
+    8.4,
+    0
+   ],
+   "rumoLadoMaior": 17,
+   "n": 2,
+   "pts": [
+    [
+     60.6,
+     77.8
+    ],
+    [
+     63.1,
+     85.8
+    ]
+   ]
+  },
+  {
+   "way": "903439437",
+   "tags": {
+    "highway": "footway",
+    "surface": "concrete"
+   },
+   "centro": [
+    72,
+    94
+   ],
+   "dist": 118,
+   "dims": [
+    12,
+    6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 4,
+   "pts": [
+    [
+     65.3,
+     92.7
+    ],
+    [
+     66.5,
+     96.4
+    ],
+    [
+     77.8,
+     92.5
+    ],
+    [
+     78.6,
+     94.7
+    ]
+   ]
+  },
+  {
+   "way": "903439438",
+   "tags": {
+    "crossing": "traffic_signals",
+    "crossing:island": "no",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "tactile_paving": "no"
+   },
+   "centro": [
+    80,
+    99
+   ],
+   "dist": 127,
+   "dims": [
+    7.9,
+    0
+   ],
+   "rumoLadoMaior": 19,
+   "n": 4,
+   "pts": [
+    [
+     78.6,
+     94.7
+    ],
+    [
+     79.4,
+     97.1
+    ],
+    [
+     80.7,
+     100.8
+    ],
+    [
+     81.2,
+     102.2
+    ]
+   ]
+  },
+  {
+   "way": "903439439",
+   "tags": {
+    "button_operated": "yes",
+    "crossing": "traffic_signals",
+    "crossing:island": "yes",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "surface": "asphalt",
+    "tactile_paving": "no"
+   },
+   "centro": [
+    59,
+    74
+   ],
+   "dist": 94,
+   "dims": [
+    8.8,
+    0.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     60.6,
+     77.8
+    ],
+    [
+     59.2,
+     73.6
+    ],
+    [
+     57.9,
+     69.4
+    ]
+   ]
+  },
+  {
+   "way": "913637498",
+   "tags": {
+    "alt_name": "Avenida Leste-Oeste",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Avenida Presidente Castelo Branco",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "asphalt"
+   },
+   "centro": [
+    32,
+    100
+   ],
+   "dist": 105,
+   "dims": [
+    536.3,
+    2.9
+   ],
+   "rumoLadoMaior": 106,
+   "n": 10,
+   "pts": [
+    [
+     -295.3,
+     198.4
+    ],
+    [
+     -170.5,
+     161.6
+    ],
+    [
+     -23.4,
+     115.4
+    ],
+    [
+     40.7,
+     96.3
+    ],
+    [
+     57,
+     92
+    ],
+    [
+     64.5,
+     90.1
+    ],
+    [
+     70.2,
+     88.6
+    ],
+    [
+     163.9,
+     62.9
+    ],
+    [
+     199.1,
+     51.8
+    ],
+    [
+     218.5,
+     44.5
+    ]
+   ]
+  },
+  {
+   "way": "913965691",
+   "tags": {
+    "crossing": "traffic_signals",
+    "crossing:markings": "yes",
+    "cycleway": "crossing",
+    "highway": "cycleway"
+   },
+   "centro": [
+    56,
+    82
+   ],
+   "dist": 100,
+   "dims": [
+    17.6,
+    6
+   ],
+   "rumoLadoMaior": 11,
+   "n": 5,
+   "pts": [
+    [
+     57,
+     92
+    ],
+    [
+     56,
+     87.7
+    ],
+    [
+     54.5,
+     80.2
+    ],
+    [
+     54.1,
+     78.8
+    ],
+    [
+     59.2,
+     73.6
+    ]
+   ]
+  },
+  {
+   "way": "913965692",
+   "tags": {
+    "destination": "Mercado Central",
+    "highway": "primary_link",
+    "lanes": "2",
+    "maxspeed": "50",
+    "name": "Avenida Presidente Castelo Branco",
+    "oneway": "yes",
+    "surface": "asphalt"
+   },
+   "centro": [
+    14,
+    88
+   ],
+   "dist": 89,
+   "dims": [
+    95.4,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 2,
+   "pts": [
+    [
+     -31.9,
+     101.8
+    ],
+    [
+     59.2,
+     73.6
+    ]
+   ]
+  },
+  {
+   "way": "937444723",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "concrete"
+   },
+   "centro": [
+    47,
+    -27
+   ],
+   "dist": 54,
+   "dims": [
+    67.4,
+    60.8
+   ],
+   "rumoLadoMaior": 20,
+   "n": 6,
+   "pts": [
+    [
+     74.4,
+     8.4
+    ],
+    [
+     70.2,
+     -4.1
+    ],
+    [
+     61.9,
+     -29.2
+    ],
+    [
+     53.4,
+     -55.7
+    ],
+    [
+     24.7,
+     -45.1
+    ],
+    [
+     -3.6,
+     -34.5
+    ]
+   ]
+  },
+  {
+   "way": "937444724",
+   "tags": {
+    "highway": "footway",
+    "lit": "yes",
+    "name": "Avenida Caio Prado",
+    "note": "Nome comemorativo do caminho. Há uma placa no local indicando o nome.",
+    "smoothness": "good",
+    "surface": "concrete"
+   },
+   "centro": [
+    11,
+    29
+   ],
+   "dist": 31,
+   "dims": [
+    133.6,
+    0.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 6,
+   "pts": [
+    [
+     -52.6,
+     49.9
+    ],
+    [
+     -34.1,
+     44.4
+    ],
+    [
+     13,
+     28.8
+    ],
+    [
+     21.9,
+     25.8
+    ],
+    [
+     46.1,
+     17.8
+    ],
+    [
+     74.4,
+     8.4
+    ]
+   ]
+  },
+  {
+   "way": "952700867",
+   "tags": {
+    "cycleway:left": "lane",
+    "highway": "residential",
+    "lanes": "1",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "30",
+    "maxwidth": "2.2",
+    "name": "Rua Floriano Peixoto",
+    "oneway": "yes",
+    "surface": "asphalt",
+    "zone:maxspeed": "BR:30"
+   },
+   "centro": [
+    -3,
+    -253
+   ],
+   "dist": 253,
+   "dims": [
+    443.5,
+    1.2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 17,
+   "pts": [
+    [
+     -81.5,
+     -488.3
+    ],
+    [
+     -60.7,
+     -428.3
+    ],
+    [
+     -54.4,
+     -410.5
+    ],
+    [
+     -52.2,
+     -403.8
+    ],
+    [
+     -49.4,
+     -395.5
+    ],
+    [
+     -18.1,
+     -300.4
+    ],
+    [
+     -16,
+     -293.9
+    ],
+    [
+     -13.6,
+     -285.4
+    ],
+    [
+     3.5,
+     -232.7
+    ],
+    [
+     18.6,
+     -187.6
+    ],
+    [
+     19,
+     -186.2
+    ],
+    [
+     20.9,
+     -180.5
+    ],
+    [
+     28.4,
+     -157.9
+    ],
+    [
+     34.9,
+     -138
+    ],
+    [
+     56.3,
+     -73.4
+    ],
+    [
+     56.9,
+     -71.5
+    ],
+    [
+     58.3,
+     -67.4
+    ]
+   ]
+  },
+  {
+   "way": "975859153",
+   "tags": {
+    "highway": "cycleway",
+    "loc_name": "Avenida Leste-Oeste",
+    "name": "Avenida Presidente Castelo Branco",
+    "oneway": "no",
+    "surface": "asphalt"
+   },
+   "centro": [
+    58,
+    95
+   ],
+   "dist": 111,
+   "dims": [
+    6.6,
+    0
+   ],
+   "rumoLadoMaior": 12,
+   "n": 2,
+   "pts": [
+    [
+     57,
+     92
+    ],
+    [
+     58.4,
+     98.5
+    ]
+   ]
+  },
+  {
+   "way": "975859167",
+   "tags": {
+    "highway": "cycleway",
+    "lit": "yes",
+    "loc_name": "Avenida Leste-Oeste",
+    "name": "Avenida Presidente Castelo Branco",
+    "oneway": "no",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -262,
+    206
+   ],
+   "dist": 333,
+   "dims": [
+    684,
+    27.4
+   ],
+   "rumoLadoMaior": 109,
+   "n": 13,
+   "pts": [
+    [
+     58.4,
+     98.5
+    ],
+    [
+     56.5,
+     100.3
+    ],
+    [
+     -38.6,
+     128.1
+    ],
+    [
+     -147.3,
+     164.1
+    ],
+    [
+     -207.4,
+     182.2
+    ],
+    [
+     -225.9,
+     187.5
+    ],
+    [
+     -276.3,
+     202
+    ],
+    [
+     -296.1,
+     208.8
+    ],
+    [
+     -308.2,
+     212.8
+    ],
+    [
+     -431.8,
+     261.3
+    ],
+    [
+     -489.9,
+     288
+    ],
+    [
+     -522,
+     301.9
+    ],
+    [
+     -583.2,
+     336.2
+    ]
+   ]
+  },
+  {
+   "way": "977932367",
+   "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Rua Senador Jaguaribe",
+    "oneway": "yes",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -175,
+    101
+   ],
+   "dist": 202,
+   "dims": [
+    266,
+    0.6
+   ],
+   "rumoLadoMaior": 109,
+   "n": 7,
+   "pts": [
+    [
+     -314.1,
+     147.9
+    ],
+    [
+     -208.2,
+     111.9
+    ],
+    [
+     -198.8,
+     108.8
+    ],
+    [
+     -193.9,
+     107.1
+    ],
+    [
+     -184.5,
+     103.9
+    ],
+    [
+     -66.8,
+     64.5
+    ],
+    [
+     -62,
+     62.9
+    ]
+   ]
+  },
+  {
+   "way": "1080100534",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "20",
+    "addr:postcode": "60025-060",
+    "addr:street": "Rua Barão do Rio Branco",
+    "addr:suburb": "Centro",
+    "amenity": "hospital",
+    "healthcare": "hospital",
+    "name": "Santa Casa da Misericódia de Fortaleza",
+    "operator:type": "ngo",
+    "phone": "+55 85 3455 9100",
+    "ref:CNES": "2651394",
+    "short_name": "Santa Casa da Misericórdia",
+    "source": "Secretaria Municipal da Saúde de Fortaleza",
+    "source:date": "2019",
+    "website": "https://santacasace.org.br/"
+   },
+   "centro": [
+    -149,
+    51
+   ],
+   "dist": 158,
+   "dims": [
+    125.5,
+    70.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     -209.1,
+     33.6
+    ],
+    [
+     -199.1,
+     66.5
+    ],
+    [
+     -190.5,
+     93.9
+    ],
+    [
+     -186.9,
+     96.6
+    ],
+    [
+     -160.6,
+     88.5
+    ],
+    [
+     -124.8,
+     76.6
+    ],
+    [
+     -93,
+     65.8
+    ],
+    [
+     -70.2,
+     58.1
+    ],
+    [
+     -82.4,
+     21
+    ],
+    [
+     -91.2,
+     -6.9
+    ],
+    [
+     -119.1,
+     1.9
+    ],
+    [
+     -207.1,
+     29.7
+    ],
+    [
+     -209.1,
+     33.6
+    ]
+   ]
+  },
+  {
+   "way": "1144194666",
+   "tags": {
+    "addr:city": "Fortaleza",
+    "addr:housenumber": "245",
+    "addr:postcode": "60010-000",
+    "addr:street": "Avenida Presidente Castelo Branco",
+    "addr:suburb": "Moura Brasil",
+    "amenity": "parking",
+    "parking": "surface"
+   },
+   "centro": [
+    -137,
+    113
+   ],
+   "dist": 178,
+   "dims": [
+    127,
+    35.5
+   ],
+   "rumoLadoMaior": 109,
+   "n": 8,
+   "pts": [
+    [
+     -177,
+     146.6
+    ],
+    [
+     -178.8,
+     139.5
+    ],
+    [
+     -185.7,
+     112.1
+    ],
+    [
+     -182.3,
+     111
+    ],
+    [
+     -68.4,
+     71.8
+    ],
+    [
+     -68.9,
+     75.2
+    ],
+    [
+     -59.2,
+     104.3
+    ],
+    [
+     -177,
+     146.6
+    ]
+   ]
+  },
+  {
+   "way": "1144194668",
+   "tags": {
+    "highway": "service",
+    "service": "parking_aisle"
+   },
+   "centro": [
+    -124,
+    110
+   ],
+   "dist": 165,
+   "dims": [
+    121.2,
+    20.2
+   ],
+   "rumoLadoMaior": 111,
+   "n": 4,
+   "pts": [
+    [
+     -178.8,
+     139.5
+    ],
+    [
+     -66.2,
+     96.6
+    ],
+    [
+     -70.4,
+     83.7
+    ],
+    [
+     -180,
+     118.3
+    ]
+   ]
+  },
+  {
+   "way": "1169910729",
+   "tags": {
+    "building:levels": "5",
+    "building:part": "yes",
+    "height": "15.1",
+    "pmfsefin:idedif": "505701"
+   },
+   "centro": [
+    -30,
+    -65
+   ],
+   "dist": 72,
+   "dims": [
+    32.9,
+    20.7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 9,
+   "pts": [
+    [
+     -14.9,
+     -50.1
+    ],
+    [
+     -34.6,
+     -43.7
+    ],
+    [
+     -37.1,
+     -51.8
+    ],
+    [
+     -43.7,
+     -72.5
+    ],
+    [
+     -44.4,
+     -75
+    ],
+    [
+     -33.3,
+     -78.7
+    ],
+    [
+     -25.2,
+     -81.3
+    ],
+    [
+     -25,
+     -81.3
+    ],
+    [
+     -14.9,
+     -50.1
+    ]
+   ]
+  },
+  {
+   "way": "1169913803",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.6",
+    "pmfsefin:idedif": "472802"
+   },
+   "centro": [
+    -84,
+    -112
+   ],
+   "dist": 140,
+   "dims": [
+    17.2,
+    11.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 12,
+   "pts": [
+    [
+     -86.7,
+     -106.9
+    ],
+    [
+     -91,
+     -105.5
+    ],
+    [
+     -92.9,
+     -110.9
+    ],
+    [
+     -94.6,
+     -115.8
+    ],
+    [
+     -80.4,
+     -120.7
+    ],
+    [
+     -78.3,
+     -121.4
+    ],
+    [
+     -76.5,
+     -115.4
+    ],
+    [
+     -75,
+     -110.8
+    ],
+    [
+     -77.4,
+     -110
+    ],
+    [
+     -81.9,
+     -108.5
+    ],
+    [
+     -83.5,
+     -108
+    ],
+    [
+     -86.7,
+     -106.9
+    ]
+   ]
+  },
+  {
+   "way": "1169915414",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.6",
+    "pmfsefin:idedif": "467249"
+   },
+   "centro": [
+    -73,
+    -77
+   ],
+   "dist": 106,
+   "dims": [
+    11.3,
+    8.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -68.7,
+     -79.7
+    ],
+    [
+     -68,
+     -77.5
+    ],
+    [
+     -67,
+     -74.2
+    ],
+    [
+     -77.5,
+     -70.8
+    ],
+    [
+     -78.5,
+     -73.4
+    ],
+    [
+     -77.5,
+     -73.7
+    ],
+    [
+     -79.1,
+     -78.9
+    ],
+    [
+     -69.5,
+     -82.1
+    ],
+    [
+     -68.7,
+     -79.7
+    ]
+   ]
+  },
+  {
+   "way": "1169915417",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "8.4",
+    "pmfsefin:idedif": "467241"
+   },
+   "centro": [
+    -57,
+    -70
+   ],
+   "dist": 90,
+   "dims": [
+    6.1,
+    3.3
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     -55.2,
+     -68.1
+    ],
+    [
+     -58.2,
+     -67.1
+    ],
+    [
+     -60,
+     -72.9
+    ],
+    [
+     -56.9,
+     -73.9
+    ],
+    [
+     -56.3,
+     -71.7
+    ],
+    [
+     -55.2,
+     -68.1
+    ]
+   ]
+  },
+  {
+   "way": "1169915421",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "11.1",
+    "pmfsefin:idedif": "467236"
+   },
+   "centro": [
+    -43,
+    -94
+   ],
+   "dist": 104,
+   "dims": [
+    23.2,
+    6.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -30.3,
+     -94.8
+    ],
+    [
+     -49.2,
+     -88.7
+    ],
+    [
+     -50.1,
+     -92.2
+    ],
+    [
+     -53.3,
+     -91.3
+    ],
+    [
+     -53.5,
+     -91.2
+    ],
+    [
+     -54.3,
+     -94
+    ],
+    [
+     -37.8,
+     -99.4
+    ],
+    [
+     -32.4,
+     -101.2
+    ],
+    [
+     -30.3,
+     -94.8
+    ]
+   ]
+  },
+  {
+   "way": "1169915427",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.1",
+    "pmfsefin:idedif": "467222"
+   },
+   "centro": [
+    -77,
+    -105
+   ],
+   "dist": 130,
+   "dims": [
+    7.7,
+    4.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 6,
+   "pts": [
+    [
+     -75,
+     -102.7
+    ],
+    [
+     -79.6,
+     -101.2
+    ],
+    [
+     -81.9,
+     -108.5
+    ],
+    [
+     -77.4,
+     -110
+    ],
+    [
+     -75.2,
+     -103
+    ],
+    [
+     -75,
+     -102.7
+    ]
+   ]
+  },
+  {
+   "way": "1169915429",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "12.4",
+    "pmfsefin:idedif": "467220"
+   },
+   "centro": [
+    -59,
+    -113
+   ],
+   "dist": 128,
+   "dims": [
+    40.2,
+    7.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     -37,
+     -115.5
+    ],
+    [
+     -75.2,
+     -103
+    ],
+    [
+     -77.4,
+     -110
+    ],
+    [
+     -75,
+     -110.8
+    ],
+    [
+     -72.9,
+     -111.5
+    ],
+    [
+     -57.1,
+     -116.7
+    ],
+    [
+     -39.3,
+     -122.7
+    ],
+    [
+     -37,
+     -115.5
+    ]
+   ]
+  },
+  {
+   "way": "1169916204",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "11.0",
+    "pmfsefin:idedif": "463960"
+   },
+   "centro": [
+    -40,
+    -60
+   ],
+   "dist": 72,
+   "dims": [
+    21.8,
+    2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     -37.1,
+     -51.8
+    ],
+    [
+     -39,
+     -51.2
+    ],
+    [
+     -45.6,
+     -72
+    ],
+    [
+     -43.7,
+     -72.5
+    ],
+    [
+     -37.1,
+     -51.8
+    ]
+   ]
+  },
+  {
+   "way": "1169916205",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.0",
+    "pmfsefin:idedif": "463959"
+   },
+   "centro": [
+    -54,
+    -70
+   ],
+   "dist": 88,
+   "dims": [
+    3.8,
+    3.1
+   ],
+   "rumoLadoMaior": 17,
+   "n": 5,
+   "pts": [
+    [
+     -52.2,
+     -69
+    ],
+    [
+     -55.2,
+     -68.1
+    ],
+    [
+     -56.3,
+     -71.7
+    ],
+    [
+     -53.4,
+     -72.5
+    ],
+    [
+     -52.2,
+     -69
+    ]
+   ]
+  },
+  {
+   "way": "1169916211",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "2.5",
+    "pmfsefin:idedif": "463949"
+   },
+   "centro": [
+    -109,
+    -31
+   ],
+   "dist": 114,
+   "dims": [
+    6.8,
+    4.5
+   ],
+   "rumoLadoMaior": 107,
+   "n": 7,
+   "pts": [
+    [
+     -106.2,
+     -31
+    ],
+    [
+     -106.2,
+     -30.8
+    ],
+    [
+     -112.5,
+     -28.7
+    ],
+    [
+     -112.6,
+     -28.9
+    ],
+    [
+     -113.9,
+     -33
+    ],
+    [
+     -107.4,
+     -35
+    ],
+    [
+     -106.2,
+     -31
+    ]
+   ]
+  },
+  {
+   "way": "1169916315",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.3",
+    "pmfsefin:idedif": "463782"
+   },
+   "centro": [
+    -66,
+    -76
+   ],
+   "dist": 101,
+   "dims": [
+    3.4,
+    2.8
+   ],
+   "rumoLadoMaior": 18,
+   "n": 7,
+   "pts": [
+    [
+     -64.3,
+     -75.1
+    ],
+    [
+     -67,
+     -74.2
+    ],
+    [
+     -68,
+     -77.5
+    ],
+    [
+     -66.2,
+     -78.1
+    ],
+    [
+     -65.6,
+     -76.2
+    ],
+    [
+     -64.8,
+     -76.5
+    ],
+    [
+     -64.3,
+     -75.1
+    ]
+   ]
+  },
+  {
+   "way": "1169916316",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.3",
+    "pmfsefin:idedif": "463781"
+   },
+   "centro": [
+    -29,
+    -83
+   ],
+   "dist": 88,
+   "dims": [
+    8.6,
+    6.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 6,
+   "pts": [
+    [
+     -25.2,
+     -81.3
+    ],
+    [
+     -33.3,
+     -78.7
+    ],
+    [
+     -35,
+     -84.5
+    ],
+    [
+     -27.7,
+     -86.9
+    ],
+    [
+     -27,
+     -87.1
+    ],
+    [
+     -25.2,
+     -81.3
+    ]
+   ]
+  },
+  {
+   "way": "1169916317",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.9",
+    "pmfsefin:idedif": "463780"
+   },
+   "centro": [
+    -54,
+    -74
+   ],
+   "dist": 92,
+   "dims": [
+    15.5,
+    5.8
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -53.5,
+     -73.1
+    ],
+    [
+     -53.4,
+     -72.5
+    ],
+    [
+     -56.3,
+     -71.7
+    ],
+    [
+     -56.9,
+     -73.9
+    ],
+    [
+     -60,
+     -72.9
+    ],
+    [
+     -61,
+     -76.1
+    ],
+    [
+     -46.3,
+     -80.9
+    ],
+    [
+     -44.7,
+     -75.7
+    ],
+    [
+     -53.5,
+     -73.1
+    ]
+   ]
+  },
+  {
+   "way": "1169916318",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.3",
+    "pmfsefin:idedif": "463779"
+   },
+   "centro": [
+    -68,
+    -81
+   ],
+   "dist": 106,
+   "dims": [
+    2.7,
+    2.5
+   ],
+   "rumoLadoMaior": 108,
+   "n": 6,
+   "pts": [
+    [
+     -68.7,
+     -79.7
+    ],
+    [
+     -69.5,
+     -82.1
+    ],
+    [
+     -67,
+     -82.9
+    ],
+    [
+     -66.4,
+     -81.1
+    ],
+    [
+     -66.2,
+     -80.6
+    ],
+    [
+     -68.7,
+     -79.7
+    ]
+   ]
+  },
+  {
+   "way": "1169916320",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.8",
+    "pmfsefin:idedif": "463775"
+   },
+   "centro": [
+    -98,
+    -109
+   ],
+   "dist": 147,
+   "dims": [
+    16.4,
+    10.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 6,
+   "pts": [
+    [
+     -92.9,
+     -110.9
+    ],
+    [
+     -91,
+     -105.5
+    ],
+    [
+     -106.6,
+     -100.3
+    ],
+    [
+     -109.9,
+     -110.6
+    ],
+    [
+     -94.6,
+     -115.8
+    ],
+    [
+     -92.9,
+     -110.9
+    ]
+   ]
+  },
+  {
+   "way": "1169916328",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "8.2",
+    "pmfsefin:idedif": "463759"
+   },
+   "centro": [
+    -117,
+    -31
+   ],
+   "dist": 121,
+   "dims": [
+    33.2,
+    12.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 14,
+   "pts": [
+    [
+     -112.6,
+     -28.9
+    ],
+    [
+     -112.5,
+     -28.7
+    ],
+    [
+     -118.8,
+     -26.6
+    ],
+    [
+     -120.5,
+     -26
+    ],
+    [
+     -121.3,
+     -25.8
+    ],
+    [
+     -122.4,
+     -29.4
+    ],
+    [
+     -127.4,
+     -27.8
+    ],
+    [
+     -132.6,
+     -26.2
+    ],
+    [
+     -135.1,
+     -34
+    ],
+    [
+     -103.6,
+     -44.3
+    ],
+    [
+     -101.3,
+     -36.9
+    ],
+    [
+     -107.4,
+     -35
+    ],
+    [
+     -113.9,
+     -33
+    ],
+    [
+     -112.6,
+     -28.9
+    ]
+   ]
+  },
+  {
+   "way": "1169916329",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "7.2",
+    "pmfsefin:idedif": "463758"
+   },
+   "centro": [
+    -104,
+    -23
+   ],
+   "dist": 107,
+   "dims": [
+    19.8,
+    5.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     -97.8,
+     -25.5
+    ],
+    [
+     -97.9,
+     -24.4
+    ],
+    [
+     -98.1,
+     -23.7
+    ],
+    [
+     -98.7,
+     -22.9
+    ],
+    [
+     -99.3,
+     -22.4
+    ],
+    [
+     -115.8,
+     -17
+    ],
+    [
+     -117.5,
+     -22.3
+    ],
+    [
+     -117.5,
+     -22.3
+    ],
+    [
+     -98.6,
+     -28.1
+    ],
+    [
+     -97.8,
+     -25.5
+    ]
+   ]
+  },
+  {
+   "way": "1169916331",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "5.5",
+    "pmfsefin:idedif": "463755"
+   },
+   "centro": [
+    -120,
+    -59
+   ],
+   "dist": 134,
+   "dims": [
+    20.7,
+    4.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -110.2,
+     -64.3
+    ],
+    [
+     -108.9,
+     -60
+    ],
+    [
+     -117.3,
+     -57.3
+    ],
+    [
+     -128.5,
+     -53.7
+    ],
+    [
+     -129.3,
+     -57.3
+    ],
+    [
+     -128.1,
+     -57.6
+    ],
+    [
+     -128.4,
+     -58.5
+    ],
+    [
+     -119.9,
+     -61.4
+    ],
+    [
+     -110.2,
+     -64.3
+    ]
+   ]
+  },
+  {
+   "way": "1169916423",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "7.8",
+    "pmfsefin:idedif": "463580"
+   },
+   "centro": [
+    66,
+    -97
+   ],
+   "dist": 118,
+   "dims": [
+    17.5,
+    5
+   ],
+   "rumoLadoMaior": 109,
+   "n": 5,
+   "pts": [
+    [
+     73.5,
+     -97.7
+    ],
+    [
+     57,
+     -91.8
+    ],
+    [
+     55.5,
+     -96.6
+    ],
+    [
+     72,
+     -102.2
+    ],
+    [
+     73.5,
+     -97.7
+    ]
+   ]
+  },
+  {
+   "way": "1169916886",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.7",
+    "pmfsefin:idedif": "462660"
+   },
+   "centro": [
+    74,
+    -93
+   ],
+   "dist": 119,
+   "dims": [
+    22.5,
+    7.3
+   ],
+   "rumoLadoMaior": 111,
+   "n": 10,
+   "pts": [
+    [
+     80,
+     -93.3
+    ],
+    [
+     80.1,
+     -93
+    ],
+    [
+     75.5,
+     -91.2
+    ],
+    [
+     59.2,
+     -84.8
+    ],
+    [
+     57,
+     -91.8
+    ],
+    [
+     73.5,
+     -97.7
+    ],
+    [
+     75.9,
+     -98.5
+    ],
+    [
+     77.5,
+     -94.4
+    ],
+    [
+     79.3,
+     -95.1
+    ],
+    [
+     80,
+     -93.3
+    ]
+   ]
+  },
+  {
+   "way": "1169916887",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.1",
+    "pmfsefin:idedif": "462658"
+   },
+   "centro": [
+    82,
+    -103
+   ],
+   "dist": 132,
+   "dims": [
+    19.2,
+    4.8
+   ],
+   "rumoLadoMaior": 109,
+   "n": 9,
+   "pts": [
+    [
+     91.5,
+     -104.5
+    ],
+    [
+     75.9,
+     -98.5
+    ],
+    [
+     73.5,
+     -97.7
+    ],
+    [
+     72,
+     -102.2
+    ],
+    [
+     73.7,
+     -102.7
+    ],
+    [
+     77.6,
+     -104.1
+    ],
+    [
+     89.5,
+     -108.1
+    ],
+    [
+     90,
+     -108.3
+    ],
+    [
+     91.5,
+     -104.5
+    ]
+   ]
+  },
+  {
+   "way": "1169917333",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.9",
+    "pmfsefin:idedif": "462720"
+   },
+   "centro": [
+    -51,
+    -58
+   ],
+   "dist": 77,
+   "dims": [
+    29.7,
+    7.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 13,
+   "pts": [
+    [
+     -42.7,
+     -40.9
+    ],
+    [
+     -49.5,
+     -38.7
+    ],
+    [
+     -55,
+     -56.7
+    ],
+    [
+     -58.2,
+     -67.1
+    ],
+    [
+     -55.2,
+     -68.1
+    ],
+    [
+     -52.2,
+     -69
+    ],
+    [
+     -51.3,
+     -66.2
+    ],
+    [
+     -50.9,
+     -66.3
+    ],
+    [
+     -49.6,
+     -62.3
+    ],
+    [
+     -51.5,
+     -61.7
+    ],
+    [
+     -50.2,
+     -57.3
+    ],
+    [
+     -48.2,
+     -58
+    ],
+    [
+     -42.7,
+     -40.9
+    ]
+   ]
+  },
+  {
+   "way": "1169917334",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "11.6",
+    "pmfsefin:idedif": "462719"
+   },
+   "centro": [
+    -45,
+    -61
+   ],
+   "dist": 76,
+   "dims": [
+    34,
+    9.3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 17,
+   "pts": [
+    [
+     -34.6,
+     -43.7
+    ],
+    [
+     -34.5,
+     -43.5
+    ],
+    [
+     -42.7,
+     -40.9
+    ],
+    [
+     -48.2,
+     -58
+    ],
+    [
+     -49.6,
+     -62.3
+    ],
+    [
+     -50.9,
+     -66.3
+    ],
+    [
+     -51.3,
+     -66.2
+    ],
+    [
+     -52.2,
+     -69
+    ],
+    [
+     -53.4,
+     -72.5
+    ],
+    [
+     -53.5,
+     -73.1
+    ],
+    [
+     -44.7,
+     -75.7
+    ],
+    [
+     -44.4,
+     -75
+    ],
+    [
+     -43.7,
+     -72.5
+    ],
+    [
+     -45.6,
+     -72
+    ],
+    [
+     -39,
+     -51.2
+    ],
+    [
+     -37.1,
+     -51.8
+    ],
+    [
+     -34.6,
+     -43.7
+    ]
+   ]
+  },
+  {
+   "way": "1169919740",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "4.9",
+    "pmfsefin:idedif": "355991"
+   },
+   "centro": [
+    -35,
+    -105
+   ],
+   "dist": 111,
+   "dims": [
+    14.9,
+    7.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 6,
+   "pts": [
+    [
+     -32.4,
+     -101.2
+    ],
+    [
+     -37.8,
+     -99.4
+    ],
+    [
+     -42.3,
+     -113.6
+    ],
+    [
+     -35.5,
+     -115.8
+    ],
+    [
+     -31,
+     -101.6
+    ],
+    [
+     -32.4,
+     -101.2
+    ]
+   ]
+  },
+  {
+   "way": "1169919742",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "7.0",
+    "pmfsefin:idedif": "355988"
+   },
+   "centro": [
+    -54,
+    -100
+   ],
+   "dist": 113,
+   "dims": [
+    31.1,
+    14.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -37.8,
+     -99.4
+    ],
+    [
+     -54.3,
+     -94
+    ],
+    [
+     -67.2,
+     -89.8
+    ],
+    [
+     -69.6,
+     -97.1
+    ],
+    [
+     -71.8,
+     -103.8
+    ],
+    [
+     -42.3,
+     -113.6
+    ],
+    [
+     -37.8,
+     -99.4
+    ]
+   ]
+  },
+  {
+   "way": "1169919744",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.3",
+    "pmfsefin:idedif": "355986"
+   },
+   "centro": [
+    -57,
+    -89
+   ],
+   "dist": 106,
+   "dims": [
+    13.7,
+    6.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -52.2,
+     -87.7
+    ],
+    [
+     -65.1,
+     -83.5
+    ],
+    [
+     -67.2,
+     -89.8
+    ],
+    [
+     -54.3,
+     -94
+    ],
+    [
+     -53.5,
+     -91.2
+    ],
+    [
+     -53.3,
+     -91.3
+    ],
+    [
+     -52.2,
+     -87.7
+    ]
+   ]
+  },
+  {
+   "way": "1169920305",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.9",
+    "pmfsefin:idedif": "467247"
+   },
+   "centro": [
+    -50,
+    -84
+   ],
+   "dist": 98,
+   "dims": [
+    38.6,
+    8.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 15,
+   "pts": [
+    [
+     -30,
+     -94
+    ],
+    [
+     -27.7,
+     -86.9
+    ],
+    [
+     -35,
+     -84.5
+    ],
+    [
+     -46.3,
+     -80.9
+    ],
+    [
+     -61,
+     -76.1
+    ],
+    [
+     -64.3,
+     -75.1
+    ],
+    [
+     -64.8,
+     -76.5
+    ],
+    [
+     -66.2,
+     -80.6
+    ],
+    [
+     -66.4,
+     -81.1
+    ],
+    [
+     -67,
+     -82.9
+    ],
+    [
+     -65.1,
+     -83.5
+    ],
+    [
+     -52.2,
+     -87.7
+    ],
+    [
+     -49.2,
+     -88.7
+    ],
+    [
+     -30.3,
+     -94.8
+    ],
+    [
+     -30,
+     -94
+    ]
+   ]
+  },
+  {
+   "way": "1169920443",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "7.9",
+    "pmfsefin:idedif": "467223"
+   },
+   "centro": [
+    68,
+    -106
+   ],
+   "dist": 126,
+   "dims": [
+    23.4,
+    4.9
+   ],
+   "rumoLadoMaior": 107,
+   "n": 9,
+   "pts": [
+    [
+     70.4,
+     -106
+    ],
+    [
+     54.1,
+     -100.8
+    ],
+    [
+     52.7,
+     -105
+    ],
+    [
+     75.1,
+     -111.8
+    ],
+    [
+     76.4,
+     -107.4
+    ],
+    [
+     72.5,
+     -106.1
+    ],
+    [
+     70.8,
+     -105.4
+    ],
+    [
+     70.5,
+     -106.1
+    ],
+    [
+     70.4,
+     -106
+    ]
+   ]
+  },
+  {
+   "way": "1169920445",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.3",
+    "pmfsefin:idedif": "462792"
+   },
+   "centro": [
+    80,
+    -89
+   ],
+   "dist": 119,
+   "dims": [
+    8.9,
+    5.7
+   ],
+   "rumoLadoMaior": 21,
+   "n": 10,
+   "pts": [
+    [
+     82.8,
+     -88.1
+    ],
+    [
+     82.5,
+     -88
+    ],
+    [
+     83.7,
+     -84.9
+    ],
+    [
+     78.7,
+     -83
+    ],
+    [
+     76.7,
+     -88
+    ],
+    [
+     76.3,
+     -89.2
+    ],
+    [
+     75.5,
+     -91.2
+    ],
+    [
+     80.1,
+     -93
+    ],
+    [
+     80.8,
+     -93.3
+    ],
+    [
+     82.8,
+     -88.1
+    ]
+   ]
+  },
+  {
+   "way": "1169920823",
+   "tags": {
+    "building": "yes",
+    "building:levels": "5",
+    "height": "14.2",
+    "pmfsefin:idedif": "355985"
+   },
+   "centro": [
+    -80,
+    -89
+   ],
+   "dist": 120,
+   "dims": [
+    31.3,
+    7.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -70.8,
+     -91.1
+    ],
+    [
+     -70.1,
+     -88.9
+    ],
+    [
+     -99.9,
+     -79.3
+    ],
+    [
+     -102.1,
+     -86.2
+    ],
+    [
+     -74.3,
+     -95.5
+    ],
+    [
+     -72.9,
+     -90.5
+    ],
+    [
+     -70.8,
+     -91.1
+    ]
+   ]
+  },
+  {
+   "way": "1169920824",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.5",
+    "pmfsefin:idedif": "467235"
+   },
+   "centro": [
+    -70,
+    -94
+   ],
+   "dist": 117,
+   "dims": [
+    7.7,
+    2.5
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     -69.6,
+     -97.1
+    ],
+    [
+     -67.2,
+     -89.8
+    ],
+    [
+     -69.6,
+     -89
+    ],
+    [
+     -71.8,
+     -96.3
+    ],
+    [
+     -69.6,
+     -97.1
+    ]
+   ]
+  },
+  {
+   "way": "1169921610",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.8",
+    "pmfsefin:idedif": "463581"
+   },
+   "centro": [
+    93,
+    -95
+   ],
+   "dist": 133,
+   "dims": [
+    9.1,
+    5.2
+   ],
+   "rumoLadoMaior": 22,
+   "n": 6,
+   "pts": [
+    [
+     93.5,
+     -98.3
+    ],
+    [
+     96.8,
+     -90.1
+    ],
+    [
+     92,
+     -88.2
+    ],
+    [
+     88.6,
+     -96.5
+    ],
+    [
+     93.4,
+     -98.5
+    ],
+    [
+     93.5,
+     -98.3
+    ]
+   ]
+  },
+  {
+   "way": "1169921619",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.0",
+    "pmfsefin:idedif": "452358"
+   },
+   "centro": [
+    12,
+    -84
+   ],
+   "dist": 85,
+   "dims": [
+    35.5,
+    11.7
+   ],
+   "rumoLadoMaior": 19,
+   "n": 25,
+   "pts": [
+    [
+     19.2,
+     -72
+    ],
+    [
+     17.6,
+     -71.5
+    ],
+    [
+     20.2,
+     -63.7
+    ],
+    [
+     14.1,
+     -61.7
+    ],
+    [
+     10.3,
+     -73.7
+    ],
+    [
+     9.6,
+     -73.5
+    ],
+    [
+     6.8,
+     -81.7
+    ],
+    [
+     2.3,
+     -95.1
+    ],
+    [
+     3.9,
+     -95.6
+    ],
+    [
+     4.7,
+     -95.9
+    ],
+    [
+     7.7,
+     -96.8
+    ],
+    [
+     9.1,
+     -97.3
+    ],
+    [
+     11.2,
+     -91
+    ],
+    [
+     12.6,
+     -91.4
+    ],
+    [
+     11.7,
+     -93.9
+    ],
+    [
+     14.7,
+     -94.9
+    ],
+    [
+     16.9,
+     -88.3
+    ],
+    [
+     12.3,
+     -86.8
+    ],
+    [
+     11.7,
+     -88.6
+    ],
+    [
+     9.8,
+     -88
+    ],
+    [
+     11.7,
+     -82.2
+    ],
+    [
+     13.7,
+     -82.9
+    ],
+    [
+     13.1,
+     -84.6
+    ],
+    [
+     14.8,
+     -85.1
+    ],
+    [
+     19.2,
+     -72
+    ]
+   ]
+  },
+  {
+   "way": "1169921622",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "8.2"
+   },
+   "centro": [
+    -116,
+    -31
+   ],
+   "dist": 120,
+   "dims": [
+    33.2,
+    12.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 14,
+   "pts": [
+    [
+     -101.3,
+     -36.9
+    ],
+    [
+     -107.4,
+     -35
+    ],
+    [
+     -106.2,
+     -31
+    ],
+    [
+     -106.2,
+     -30.8
+    ],
+    [
+     -112.5,
+     -28.7
+    ],
+    [
+     -118.8,
+     -26.6
+    ],
+    [
+     -120.5,
+     -26
+    ],
+    [
+     -121.3,
+     -25.8
+    ],
+    [
+     -126.3,
+     -24.1
+    ],
+    [
+     -127.4,
+     -27.8
+    ],
+    [
+     -132.6,
+     -26.2
+    ],
+    [
+     -135.1,
+     -34
+    ],
+    [
+     -103.6,
+     -44.3
+    ],
+    [
+     -101.3,
+     -36.9
+    ]
+   ]
+  },
+  {
+   "way": "1169921721",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.1",
+    "pmfsefin:idedif": "462656"
+   },
+   "centro": [
+    72,
+    -117
+   ],
+   "dist": 137,
+   "dims": [
+    36.1,
+    8.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 17,
+   "pts": [
+    [
+     75.1,
+     -111.8
+    ],
+    [
+     52.7,
+     -105
+    ],
+    [
+     50.5,
+     -111.8
+    ],
+    [
+     60.5,
+     -115.2
+    ],
+    [
+     60.6,
+     -114.8
+    ],
+    [
+     69.5,
+     -117.3
+    ],
+    [
+     69.2,
+     -118.2
+    ],
+    [
+     70.9,
+     -118.7
+    ],
+    [
+     71.2,
+     -117.8
+    ],
+    [
+     78.9,
+     -120.1
+    ],
+    [
+     78.7,
+     -120.8
+    ],
+    [
+     80.8,
+     -121.4
+    ],
+    [
+     80.6,
+     -122
+    ],
+    [
+     83.7,
+     -123.1
+    ],
+    [
+     87.2,
+     -115.6
+    ],
+    [
+     87.2,
+     -115.5
+    ],
+    [
+     75.1,
+     -111.8
+    ]
+   ]
+  },
+  {
+   "way": "1169922734",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "9.7"
+   },
+   "centro": [
+    81,
+    -95
+   ],
+   "dist": 125,
+   "dims": [
+    37.2,
+    7.3
+   ],
+   "rumoLadoMaior": 111,
+   "n": 14,
+   "pts": [
+    [
+     88.5,
+     -96.5
+    ],
+    [
+     84.5,
+     -94.8
+    ],
+    [
+     80.8,
+     -93.3
+    ],
+    [
+     80.1,
+     -93
+    ],
+    [
+     75.5,
+     -91.2
+    ],
+    [
+     59.2,
+     -84.8
+    ],
+    [
+     57,
+     -91.8
+    ],
+    [
+     73.5,
+     -97.7
+    ],
+    [
+     75.9,
+     -98.5
+    ],
+    [
+     91.5,
+     -104.5
+    ],
+    [
+     93.8,
+     -98.6
+    ],
+    [
+     93.4,
+     -98.5
+    ],
+    [
+     88.6,
+     -96.5
+    ],
+    [
+     88.5,
+     -96.5
+    ]
+   ]
+  },
+  {
+   "way": "1169922745",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.2",
+    "pmfsefin:idedif": "452356"
+   },
+   "centro": [
+    1,
+    -70
+   ],
+   "dist": 70,
+   "dims": [
+    26.8,
+    5.2
+   ],
+   "rumoLadoMaior": 18,
+   "n": 7,
+   "pts": [
+    [
+     1.7,
+     -70.9
+    ],
+    [
+     1.4,
+     -70.9
+    ],
+    [
+     5.9,
+     -57
+    ],
+    [
+     1.6,
+     -55.6
+    ],
+    [
+     -6.8,
+     -81
+    ],
+    [
+     -1.8,
+     -82.6
+    ],
+    [
+     1.7,
+     -70.9
+    ]
+   ]
+  },
+  {
+   "way": "1169922747",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "12.4"
+   },
+   "centro": [
+    -65,
+    -111
+   ],
+   "dist": 129,
+   "dims": [
+    45,
+    7.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 11,
+   "pts": [
+    [
+     -39.3,
+     -122.7
+    ],
+    [
+     -37,
+     -115.5
+    ],
+    [
+     -75.2,
+     -103
+    ],
+    [
+     -75,
+     -102.7
+    ],
+    [
+     -79.6,
+     -101.2
+    ],
+    [
+     -81.9,
+     -108.5
+    ],
+    [
+     -77.4,
+     -110
+    ],
+    [
+     -75,
+     -110.8
+    ],
+    [
+     -72.9,
+     -111.5
+    ],
+    [
+     -57.1,
+     -116.7
+    ],
+    [
+     -39.3,
+     -122.7
+    ]
+   ]
+  },
+  {
+   "way": "1169922748",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "9.9"
+   },
+   "centro": [
+    -53,
+    -63
+   ],
+   "dist": 82,
+   "dims": [
+    35.8,
+    7.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 16,
+   "pts": [
+    [
+     -56.9,
+     -73.9
+    ],
+    [
+     -56.3,
+     -71.7
+    ],
+    [
+     -53.4,
+     -72.5
+    ],
+    [
+     -52.2,
+     -69
+    ],
+    [
+     -51.3,
+     -66.2
+    ],
+    [
+     -50.9,
+     -66.3
+    ],
+    [
+     -49.6,
+     -62.3
+    ],
+    [
+     -51.5,
+     -61.7
+    ],
+    [
+     -50.2,
+     -57.3
+    ],
+    [
+     -48.2,
+     -58
+    ],
+    [
+     -42.7,
+     -40.9
+    ],
+    [
+     -49.5,
+     -38.7
+    ],
+    [
+     -55,
+     -56.7
+    ],
+    [
+     -58.2,
+     -67.1
+    ],
+    [
+     -60,
+     -72.9
+    ],
+    [
+     -56.9,
+     -73.9
+    ]
+   ]
+  },
+  {
+   "way": "1169922749",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "8.2",
+    "pmfsefin:idedif": "467248"
+   },
+   "centro": [
+    -77,
+    -82
+   ],
+   "dist": 113,
+   "dims": [
+    34.4,
+    6.8
+   ],
+   "rumoLadoMaior": 108,
+   "n": 11,
+   "pts": [
+    [
+     -82.1,
+     -78
+    ],
+    [
+     -97.8,
+     -72.9
+    ],
+    [
+     -99.9,
+     -79.3
+    ],
+    [
+     -70.1,
+     -88.9
+    ],
+    [
+     -69.6,
+     -89
+    ],
+    [
+     -67.2,
+     -89.8
+    ],
+    [
+     -65.1,
+     -83.5
+    ],
+    [
+     -67,
+     -82.9
+    ],
+    [
+     -69.5,
+     -82.1
+    ],
+    [
+     -79.1,
+     -78.9
+    ],
+    [
+     -82.1,
+     -78
+    ]
+   ]
+  },
+  {
+   "way": "1169922755",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "4.3",
+    "pmfsefin:idedif": "463756"
+   },
+   "centro": [
+    -111,
+    -54
+   ],
+   "dist": 124,
+   "dims": [
+    8.9,
+    8
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -106.5,
+     -52.4
+    ],
+    [
+     -110.6,
+     -51.1
+    ],
+    [
+     -111.7,
+     -54.8
+    ],
+    [
+     -116.1,
+     -53.4
+    ],
+    [
+     -117.3,
+     -57.3
+    ],
+    [
+     -108.9,
+     -60
+    ],
+    [
+     -106.5,
+     -52.4
+    ]
+   ]
+  },
+  {
+   "way": "1169922975",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "8.1",
+    "pmfsefin:idedif": "467227"
+   },
+   "centro": [
+    -1,
+    -105
+   ],
+   "dist": 105,
+   "dims": [
+    28.4,
+    7.7
+   ],
+   "rumoLadoMaior": 106,
+   "n": 8,
+   "pts": [
+    [
+     0.6,
+     -102.3
+    ],
+    [
+     -17,
+     -97.2
+    ],
+    [
+     -19.3,
+     -104.5
+    ],
+    [
+     7.7,
+     -112.2
+    ],
+    [
+     9.3,
+     -107.8
+    ],
+    [
+     4.5,
+     -106.2
+    ],
+    [
+     5.3,
+     -103.7
+    ],
+    [
+     0.6,
+     -102.3
+    ]
+   ]
+  },
+  {
+   "way": "1169923170",
+   "tags": {
+    "building": "yes",
+    "building:levels": "5",
+    "height": "15.1"
+   },
+   "centro": [
+    -31,
+    -73
+   ],
+   "dist": 80,
+   "dims": [
+    39,
+    20.7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 12,
+   "pts": [
+    [
+     -27,
+     -87.1
+    ],
+    [
+     -25.2,
+     -81.3
+    ],
+    [
+     -25,
+     -81.3
+    ],
+    [
+     -14.9,
+     -50.1
+    ],
+    [
+     -34.6,
+     -43.7
+    ],
+    [
+     -37.1,
+     -51.8
+    ],
+    [
+     -43.7,
+     -72.5
+    ],
+    [
+     -44.4,
+     -75
+    ],
+    [
+     -33.3,
+     -78.7
+    ],
+    [
+     -35,
+     -84.5
+    ],
+    [
+     -27.7,
+     -86.9
+    ],
+    [
+     -27,
+     -87.1
+    ]
+   ]
+  },
+  {
+   "way": "1169923709",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.3",
+    "pmfsefin:idedif": "463957"
+   },
+   "centro": [
+    -57,
+    -44
+   ],
+   "dist": 72,
+   "dims": [
+    18.9,
+    11.6
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     -49.5,
+     -38.7
+    ],
+    [
+     -60.4,
+     -35.2
+    ],
+    [
+     -62.1,
+     -40.5
+    ],
+    [
+     -66,
+     -53.1
+    ],
+    [
+     -55,
+     -56.7
+    ],
+    [
+     -49.5,
+     -38.7
+    ]
+   ]
+  },
+  {
+   "way": "1169923970",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.0",
+    "pmfsefin:idedif": "463582"
+   },
+   "centro": [
+    89,
+    -92
+   ],
+   "dist": 128,
+   "dims": [
+    9,
+    4.4
+   ],
+   "rumoLadoMaior": 22,
+   "n": 6,
+   "pts": [
+    [
+     92,
+     -88.2
+    ],
+    [
+     87.9,
+     -86.6
+    ],
+    [
+     84.5,
+     -94.8
+    ],
+    [
+     88.5,
+     -96.5
+    ],
+    [
+     88.6,
+     -96.5
+    ],
+    [
+     92,
+     -88.2
+    ]
+   ]
+  },
+  {
+   "way": "1169923971",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "7.8"
+   },
+   "centro": [
+    77,
+    -102
+   ],
+   "dist": 128,
+   "dims": [
+    36.8,
+    5
+   ],
+   "rumoLadoMaior": 109,
+   "n": 11,
+   "pts": [
+    [
+     90,
+     -108.3
+    ],
+    [
+     91.5,
+     -104.5
+    ],
+    [
+     75.9,
+     -98.5
+    ],
+    [
+     73.5,
+     -97.7
+    ],
+    [
+     57,
+     -91.8
+    ],
+    [
+     55.5,
+     -96.6
+    ],
+    [
+     72,
+     -102.2
+    ],
+    [
+     73.7,
+     -102.7
+    ],
+    [
+     77.6,
+     -104.1
+    ],
+    [
+     89.5,
+     -108.1
+    ],
+    [
+     90,
+     -108.3
+    ]
+   ]
+  },
+  {
+   "way": "1169923979",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "11.1"
+   },
+   "centro": [
+    -48,
+    -93
+   ],
+   "dist": 105,
+   "dims": [
+    36.6,
+    6.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 11,
+   "pts": [
+    [
+     -32.4,
+     -101.2
+    ],
+    [
+     -30.3,
+     -94.8
+    ],
+    [
+     -49.2,
+     -88.7
+    ],
+    [
+     -50.1,
+     -92.2
+    ],
+    [
+     -53.3,
+     -91.3
+    ],
+    [
+     -52.2,
+     -87.7
+    ],
+    [
+     -65.1,
+     -83.5
+    ],
+    [
+     -67.2,
+     -89.8
+    ],
+    [
+     -54.3,
+     -94
+    ],
+    [
+     -37.8,
+     -99.4
+    ],
+    [
+     -32.4,
+     -101.2
+    ]
+   ]
+  },
+  {
+   "way": "1169923998",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "11.5"
+   },
+   "centro": [
+    19,
+    -115
+   ],
+   "dist": 117,
+   "dims": [
+    28.8,
+    19.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     24,
+     -112.7
+    ],
+    [
+     14.1,
+     -109.4
+    ],
+    [
+     13.7,
+     -109.3
+    ],
+    [
+     11.3,
+     -108.5
+    ],
+    [
+     9.3,
+     -107.8
+    ],
+    [
+     7.7,
+     -112.2
+    ],
+    [
+     2.8,
+     -126
+    ],
+    [
+     30.1,
+     -135.1
+    ],
+    [
+     35.2,
+     -119.9
+    ],
+    [
+     24.3,
+     -116.3
+    ],
+    [
+     22.9,
+     -115.8
+    ],
+    [
+     23.6,
+     -114
+    ],
+    [
+     24,
+     -112.7
+    ]
+   ]
+  },
+  {
+   "way": "1169925148",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "7.5",
+    "pmfsefin:idedif": "467230"
+   },
+   "centro": [
+    68,
+    -104
+   ],
+   "dist": 124,
+   "dims": [
+    19.2,
+    4.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     72.5,
+     -106.1
+    ],
+    [
+     73.7,
+     -102.7
+    ],
+    [
+     72,
+     -102.2
+    ],
+    [
+     55.5,
+     -96.6
+    ],
+    [
+     54.1,
+     -100.8
+    ],
+    [
+     70.4,
+     -106
+    ],
+    [
+     70.5,
+     -106.1
+    ],
+    [
+     70.8,
+     -105.4
+    ],
+    [
+     72.5,
+     -106.1
+    ]
+   ]
+  },
+  {
+   "way": "1169925149",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.6",
+    "pmfsefin:idedif": "462657"
+   },
+   "centro": [
+    84,
+    -111
+   ],
+   "dist": 139,
+   "dims": [
+    13.1,
+    8.1
+   ],
+   "rumoLadoMaior": 109,
+   "n": 8,
+   "pts": [
+    [
+     87.2,
+     -115.5
+    ],
+    [
+     88.9,
+     -111.3
+    ],
+    [
+     88.4,
+     -111.1
+    ],
+    [
+     89.5,
+     -108.1
+    ],
+    [
+     77.6,
+     -104.1
+    ],
+    [
+     76.4,
+     -107.4
+    ],
+    [
+     75.1,
+     -111.8
+    ],
+    [
+     87.2,
+     -115.5
+    ]
+   ]
+  },
+  {
+   "way": "1169925156",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "11.6"
+   },
+   "centro": [
+    -48,
+    -66
+   ],
+   "dist": 82,
+   "dims": [
+    39.2,
+    15.5
+   ],
+   "rumoLadoMaior": 18,
+   "n": 19,
+   "pts": [
+    [
+     -46.3,
+     -80.9
+    ],
+    [
+     -44.7,
+     -75.7
+    ],
+    [
+     -44.4,
+     -75
+    ],
+    [
+     -43.7,
+     -72.5
+    ],
+    [
+     -37.1,
+     -51.8
+    ],
+    [
+     -34.6,
+     -43.7
+    ],
+    [
+     -34.5,
+     -43.5
+    ],
+    [
+     -42.7,
+     -40.9
+    ],
+    [
+     -48.2,
+     -58
+    ],
+    [
+     -49.6,
+     -62.3
+    ],
+    [
+     -50.9,
+     -66.3
+    ],
+    [
+     -51.3,
+     -66.2
+    ],
+    [
+     -52.2,
+     -69
+    ],
+    [
+     -53.4,
+     -72.5
+    ],
+    [
+     -56.3,
+     -71.7
+    ],
+    [
+     -56.9,
+     -73.9
+    ],
+    [
+     -60,
+     -72.9
+    ],
+    [
+     -61,
+     -76.1
+    ],
+    [
+     -46.3,
+     -80.9
+    ]
+   ]
+  },
+  {
+   "way": "1169925240",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "12.1",
+    "pmfsefin:idedif": "467218"
+   },
+   "centro": [
+    -5,
+    -117
+   ],
+   "dist": 117,
+   "dims": [
+    28,
+    14.6
+   ],
+   "rumoLadoMaior": 109,
+   "n": 7,
+   "pts": [
+    [
+     7.7,
+     -112.2
+    ],
+    [
+     -19.3,
+     -104.5
+    ],
+    [
+     -23.1,
+     -116.5
+    ],
+    [
+     -6.8,
+     -122.3
+    ],
+    [
+     -6.9,
+     -122.7
+    ],
+    [
+     2.8,
+     -126
+    ],
+    [
+     7.7,
+     -112.2
+    ]
+   ]
+  },
+  {
+   "way": "1169925241",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.0"
+   },
+   "centro": [
+    -47,
+    -102
+   ],
+   "dist": 112,
+   "dims": [
+    38.2,
+    14.9
+   ],
+   "rumoLadoMaior": 108,
+   "n": 10,
+   "pts": [
+    [
+     -31,
+     -101.6
+    ],
+    [
+     -32.4,
+     -101.2
+    ],
+    [
+     -37.8,
+     -99.4
+    ],
+    [
+     -54.3,
+     -94
+    ],
+    [
+     -67.2,
+     -89.8
+    ],
+    [
+     -69.6,
+     -97.1
+    ],
+    [
+     -71.8,
+     -103.8
+    ],
+    [
+     -42.3,
+     -113.6
+    ],
+    [
+     -35.5,
+     -115.8
+    ],
+    [
+     -31,
+     -101.6
+    ]
+   ]
+  },
+  {
+   "way": "1169925242",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.6",
+    "pmfsefin:idedif": "463958"
+   },
+   "centro": [
+    -64,
+    -38
+   ],
+   "dist": 74,
+   "dims": [
+    6.2,
+    5.6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 5,
+   "pts": [
+    [
+     -62.1,
+     -40.5
+    ],
+    [
+     -60.4,
+     -35.2
+    ],
+    [
+     -66.3,
+     -33.3
+    ],
+    [
+     -67.9,
+     -38.6
+    ],
+    [
+     -62.1,
+     -40.5
+    ]
+   ]
+  },
+  {
+   "way": "1169925243",
+   "tags": {
+    "building": "yes",
+    "building:levels": "1",
+    "height": "3.1",
+    "pmfsefin:idedif": "467263"
+   },
+   "centro": [
+    -86,
+    -48
+   ],
+   "dist": 99,
+   "dims": [
+    39.2,
+    5.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 6,
+   "pts": [
+    [
+     -90.4,
+     -66.6
+    ],
+    [
+     -78.6,
+     -29.4
+    ],
+    [
+     -79.3,
+     -29.1
+    ],
+    [
+     -84.7,
+     -31.7
+    ],
+    [
+     -95.3,
+     -65.1
+    ],
+    [
+     -90.4,
+     -66.6
+    ]
+   ]
+  },
+  {
+   "way": "1169925544",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "11.9",
+    "pmfsefin:idedif": "355989"
+   },
+   "centro": [
+    -92,
+    -101
+   ],
+   "dist": 137,
+   "dims": [
+    21.1,
+    7.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     -86.7,
+     -98.8
+    ],
+    [
+     -104.3,
+     -93
+    ],
+    [
+     -106.6,
+     -100.3
+    ],
+    [
+     -91,
+     -105.5
+    ],
+    [
+     -86.7,
+     -106.9
+    ],
+    [
+     -85.8,
+     -104.3
+    ],
+    [
+     -88.2,
+     -103.5
+    ],
+    [
+     -86.7,
+     -98.8
+    ]
+   ]
+  },
+  {
+   "way": "1169926270",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "11.5",
+    "pmfsefin:idedif": "462793"
+   },
+   "centro": [
+    72,
+    -85
+   ],
+   "dist": 111,
+   "dims": [
+    18,
+    8.9
+   ],
+   "rumoLadoMaior": 111,
+   "n": 10,
+   "pts": [
+    [
+     78.7,
+     -83
+    ],
+    [
+     63,
+     -76.7
+    ],
+    [
+     61.7,
+     -77.2
+    ],
+    [
+     59.2,
+     -84.8
+    ],
+    [
+     75.5,
+     -91.2
+    ],
+    [
+     76.3,
+     -89.2
+    ],
+    [
+     73.9,
+     -88.2
+    ],
+    [
+     74.4,
+     -87.1
+    ],
+    [
+     76.7,
+     -88
+    ],
+    [
+     78.7,
+     -83
+    ]
+   ]
+  },
+  {
+   "way": "1169927589",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "10.8",
+    "pmfsefin:idedif": "462717"
+   },
+   "centro": [
+    -88,
+    -70
+   ],
+   "dist": 112,
+   "dims": [
+    16.5,
+    8.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     -85,
+     -68.4
+    ],
+    [
+     -90.4,
+     -66.6
+    ],
+    [
+     -95.3,
+     -65.1
+    ],
+    [
+     -97.8,
+     -72.9
+    ],
+    [
+     -82.1,
+     -78
+    ],
+    [
+     -79.6,
+     -70.1
+    ],
+    [
+     -85,
+     -68.4
+    ]
+   ]
+  },
+  {
+   "way": "1169927590",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "4.6"
+   },
+   "centro": [
+    -70,
+    -78
+   ],
+   "dist": 104,
+   "dims": [
+    14,
+    8.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 16,
+   "pts": [
+    [
+     -66.4,
+     -81.1
+    ],
+    [
+     -66.2,
+     -80.6
+    ],
+    [
+     -68.7,
+     -79.7
+    ],
+    [
+     -68,
+     -77.5
+    ],
+    [
+     -66.2,
+     -78.1
+    ],
+    [
+     -65.6,
+     -76.2
+    ],
+    [
+     -64.8,
+     -76.5
+    ],
+    [
+     -64.3,
+     -75.1
+    ],
+    [
+     -67,
+     -74.2
+    ],
+    [
+     -77.5,
+     -70.8
+    ],
+    [
+     -78.5,
+     -73.4
+    ],
+    [
+     -77.5,
+     -73.7
+    ],
+    [
+     -79.1,
+     -78.9
+    ],
+    [
+     -69.5,
+     -82.1
+    ],
+    [
+     -67,
+     -82.9
+    ],
+    [
+     -66.4,
+     -81.1
+    ]
+   ]
+  },
+  {
+   "way": "1169927592",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "7.6",
+    "pmfsefin:idedif": "463947"
+   },
+   "centro": [
+    -108,
+    -29
+   ],
+   "dist": 111,
+   "dims": [
+    19.8,
+    4.9
+   ],
+   "rumoLadoMaior": 107,
+   "n": 7,
+   "pts": [
+    [
+     -100,
+     -32.8
+    ],
+    [
+     -98.6,
+     -28.1
+    ],
+    [
+     -117.5,
+     -22.3
+    ],
+    [
+     -118.8,
+     -26.6
+    ],
+    [
+     -112.5,
+     -28.7
+    ],
+    [
+     -106.2,
+     -30.8
+    ],
+    [
+     -100,
+     -32.8
+    ]
+   ]
+  },
+  {
+   "way": "1169928180",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "8.0",
+    "pmfsefin:idedif": "452355"
+   },
+   "centro": [
+    7,
+    -71
+   ],
+   "dist": 72,
+   "dims": [
+    26.7,
+    9.3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 12,
+   "pts": [
+    [
+     14.1,
+     -61.7
+    ],
+    [
+     14.6,
+     -59.9
+    ],
+    [
+     5.9,
+     -57
+    ],
+    [
+     1.4,
+     -70.9
+    ],
+    [
+     1.7,
+     -70.9
+    ],
+    [
+     -1.8,
+     -82.6
+    ],
+    [
+     2.1,
+     -83.8
+    ],
+    [
+     3.1,
+     -80.5
+    ],
+    [
+     6.8,
+     -81.7
+    ],
+    [
+     9.6,
+     -73.5
+    ],
+    [
+     10.3,
+     -73.7
+    ],
+    [
+     14.1,
+     -61.7
+    ]
+   ]
+  },
+  {
+   "way": "1169928757",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.2",
+    "pmfsefin:idedif": "463583"
+   },
+   "centro": [
+    85,
+    -89
+   ],
+   "dist": 123,
+   "dims": [
+    8.9,
+    4.2
+   ],
+   "rumoLadoMaior": 22,
+   "n": 6,
+   "pts": [
+    [
+     87.9,
+     -86.6
+    ],
+    [
+     84,
+     -85
+    ],
+    [
+     82.8,
+     -88.1
+    ],
+    [
+     80.8,
+     -93.3
+    ],
+    [
+     84.5,
+     -94.8
+    ],
+    [
+     87.9,
+     -86.6
+    ]
+   ]
+  },
+  {
+   "way": "1169928762",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "13.2",
+    "pmfsefin:idedif": "463776"
+   },
+   "centro": [
+    -82,
+    -97
+   ],
+   "dist": 127,
+   "dims": [
+    32,
+    7.2
+   ],
+   "rumoLadoMaior": 108,
+   "n": 9,
+   "pts": [
+    [
+     -74.3,
+     -95.5
+    ],
+    [
+     -102.1,
+     -86.2
+    ],
+    [
+     -104.3,
+     -93
+    ],
+    [
+     -86.7,
+     -98.8
+    ],
+    [
+     -79.6,
+     -101.2
+    ],
+    [
+     -75,
+     -102.7
+    ],
+    [
+     -74,
+     -103
+    ],
+    [
+     -71.8,
+     -96.3
+    ],
+    [
+     -74.3,
+     -95.5
+    ]
+   ]
+  },
+  {
+   "way": "1169928763",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "6.8"
+   },
+   "centro": [
+    -87,
+    -111
+   ],
+   "dist": 141,
+   "dims": [
+    33.5,
+    11.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     -83.5,
+     -108
+    ],
+    [
+     -86.7,
+     -106.9
+    ],
+    [
+     -91,
+     -105.5
+    ],
+    [
+     -106.6,
+     -100.3
+    ],
+    [
+     -109.9,
+     -110.6
+    ],
+    [
+     -94.6,
+     -115.8
+    ],
+    [
+     -80.4,
+     -120.7
+    ],
+    [
+     -78.3,
+     -121.4
+    ],
+    [
+     -76.5,
+     -115.4
+    ],
+    [
+     -75,
+     -110.8
+    ],
+    [
+     -77.4,
+     -110
+    ],
+    [
+     -81.9,
+     -108.5
+    ],
+    [
+     -83.5,
+     -108
+    ]
+   ]
+  },
+  {
+   "way": "1169928766",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "7.4"
+   },
+   "centro": [
+    -110,
+    -22
+   ],
+   "dist": 112,
+   "dims": [
+    33.4,
+    6
+   ],
+   "rumoLadoMaior": 108,
+   "n": 13,
+   "pts": [
+    [
+     -98.6,
+     -28.1
+    ],
+    [
+     -97.8,
+     -25.5
+    ],
+    [
+     -97.9,
+     -24.4
+    ],
+    [
+     -98.1,
+     -23.7
+    ],
+    [
+     -98.7,
+     -22.9
+    ],
+    [
+     -99.3,
+     -22.4
+    ],
+    [
+     -115.8,
+     -17
+    ],
+    [
+     -128.8,
+     -12.7
+    ],
+    [
+     -130.6,
+     -18.4
+    ],
+    [
+     -129,
+     -18.8
+    ],
+    [
+     -119.3,
+     -21.8
+    ],
+    [
+     -117.5,
+     -22.3
+    ],
+    [
+     -98.6,
+     -28.1
+    ]
+   ]
+  },
+  {
+   "way": "1169928964",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "6.6"
+   },
+   "centro": [
+    1,
+    -97
+   ],
+   "dist": 97,
+   "dims": [
+    23.5,
+    7.8
+   ],
+   "rumoLadoMaior": 107,
+   "n": 12,
+   "pts": [
+    [
+     7.7,
+     -96.8
+    ],
+    [
+     4.7,
+     -95.9
+    ],
+    [
+     4.2,
+     -97.7
+    ],
+    [
+     3.3,
+     -97.4
+    ],
+    [
+     3.9,
+     -95.6
+    ],
+    [
+     2.3,
+     -95.1
+    ],
+    [
+     -14.7,
+     -89.7
+    ],
+    [
+     -17,
+     -97.2
+    ],
+    [
+     0.6,
+     -102.3
+    ],
+    [
+     5.3,
+     -103.7
+    ],
+    [
+     6.3,
+     -100.9
+    ],
+    [
+     7.7,
+     -96.8
+    ]
+   ]
+  },
+  {
+   "way": "1170435139",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "12.5",
+    "pmfsefin:idedif": "505711"
+   },
+   "centro": [
+    -99,
+    50
+   ],
+   "dist": 110,
+   "dims": [
+    19.2,
+    11.9
+   ],
+   "rumoLadoMaior": 17,
+   "n": 8,
+   "pts": [
+    [
+     -95.9,
+     56.5
+    ],
+    [
+     -101.4,
+     58.3
+    ],
+    [
+     -106.9,
+     39.9
+    ],
+    [
+     -106.5,
+     39.8
+    ],
+    [
+     -95.6,
+     36.4
+    ],
+    [
+     -90.1,
+     54.4
+    ],
+    [
+     -96,
+     56.4
+    ],
+    [
+     -95.9,
+     56.5
+    ]
+   ]
+  },
+  {
+   "way": "1170435197",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.4",
+    "pmfsefin:idedif": "467228"
+   },
+   "centro": [
+    11,
+    -103
+   ],
+   "dist": 104,
+   "dims": [
+    13,
+    9.9
+   ],
+   "rumoLadoMaior": 109,
+   "n": 14,
+   "pts": [
+    [
+     9.1,
+     -97.3
+    ],
+    [
+     7.7,
+     -96.8
+    ],
+    [
+     6.3,
+     -100.9
+    ],
+    [
+     5.3,
+     -103.7
+    ],
+    [
+     4.5,
+     -106.2
+    ],
+    [
+     9.3,
+     -107.8
+    ],
+    [
+     11.3,
+     -108.5
+    ],
+    [
+     13.7,
+     -109.3
+    ],
+    [
+     14.4,
+     -107.4
+    ],
+    [
+     17.4,
+     -108.4
+    ],
+    [
+     19.3,
+     -102.5
+    ],
+    [
+     16.4,
+     -101.5
+    ],
+    [
+     16.9,
+     -100
+    ],
+    [
+     9.1,
+     -97.3
+    ]
+   ]
+  },
+  {
+   "way": "1170435225",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "9.2",
+    "pmfsefin:idedif": "506017"
+   },
+   "centro": [
+    87,
+    133
+   ],
+   "dist": 159,
+   "dims": [
+    42.4,
+    11.9
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     95.5,
+     146.4
+    ],
+    [
+     84.4,
+     150.1
+    ],
+    [
+     71.7,
+     109.7
+    ],
+    [
+     83,
+     106.1
+    ],
+    [
+     94,
+     141.7
+    ],
+    [
+     95.5,
+     146.4
+    ]
+   ]
+  },
+  {
+   "way": "1170435272",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.9",
+    "pmfsefin:idedif": "505719"
+   },
+   "centro": [
+    -16,
+    79
+   ],
+   "dist": 81,
+   "dims": [
+    36.2,
+    14.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 7,
+   "pts": [
+    [
+     1.9,
+     66.6
+    ],
+    [
+     6.3,
+     80.2
+    ],
+    [
+     -28.1,
+     91.4
+    ],
+    [
+     -28.2,
+     91.2
+    ],
+    [
+     -30.9,
+     82.7
+    ],
+    [
+     -32.5,
+     77.7
+    ],
+    [
+     1.9,
+     66.6
+    ]
+   ]
+  },
+  {
+   "way": "1170435298",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "7.8",
+    "pmfsefin:idedif": "462659"
+   },
+   "centro": [
+    85,
+    -97
+   ],
+   "dist": 128,
+   "dims": [
+    16.7,
+    6.6
+   ],
+   "rumoLadoMaior": 111,
+   "n": 11,
+   "pts": [
+    [
+     84.5,
+     -94.8
+    ],
+    [
+     80.8,
+     -93.3
+    ],
+    [
+     80,
+     -93.3
+    ],
+    [
+     79.3,
+     -95.1
+    ],
+    [
+     77.5,
+     -94.4
+    ],
+    [
+     75.9,
+     -98.5
+    ],
+    [
+     91.5,
+     -104.5
+    ],
+    [
+     93.8,
+     -98.6
+    ],
+    [
+     93.4,
+     -98.5
+    ],
+    [
+     88.6,
+     -96.5
+    ],
+    [
+     84.5,
+     -94.8
+    ]
+   ]
+  },
+  {
+   "way": "1170435347",
+   "tags": {
+    "building:levels": "5",
+    "building:part": "yes",
+    "height": "14.3",
+    "pmfsefin:idedif": "506026"
+   },
+   "centro": [
+    -94,
+    22
+   ],
+   "dist": 97,
+   "dims": [
+    6.5,
+    6.4
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     -90.8,
+     23.7
+    ],
+    [
+     -97,
+     25.2
+    ],
+    [
+     -98.8,
+     19.4
+    ],
+    [
+     -92.8,
+     17.5
+    ],
+    [
+     -90.8,
+     23.7
+    ]
+   ]
+  },
+  {
+   "way": "1170435391",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.4",
+    "pmfsefin:idedif": "505710"
+   },
+   "centro": [
+    -89,
+    45
+   ],
+   "dist": 100,
+   "dims": [
+    19,
+    8.5
+   ],
+   "rumoLadoMaior": 17,
+   "n": 9,
+   "pts": [
+    [
+     -87.3,
+     53.5
+    ],
+    [
+     -90.1,
+     54.4
+    ],
+    [
+     -95.6,
+     36.4
+    ],
+    [
+     -93.1,
+     35.5
+    ],
+    [
+     -91.2,
+     41.7
+    ],
+    [
+     -85.7,
+     40
+    ],
+    [
+     -84.5,
+     43.7
+    ],
+    [
+     -89.7,
+     45.2
+    ],
+    [
+     -87.3,
+     53.5
+    ]
+   ]
+  },
+  {
+   "way": "1170435408",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "10.5",
+    "pmfsefin:idedif": "505707"
+   },
+   "centro": [
+    -119,
+    38
+   ],
+   "dist": 125,
+   "dims": [
+    16.9,
+    10.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 8,
+   "pts": [
+    [
+     -122.4,
+     44.4
+    ],
+    [
+     -122.8,
+     44.6
+    ],
+    [
+     -125.7,
+     34.9
+    ],
+    [
+     -125.4,
+     34.8
+    ],
+    [
+     -113.7,
+     31.3
+    ],
+    [
+     -109.7,
+     30.1
+    ],
+    [
+     -106.8,
+     39.2
+    ],
+    [
+     -122.4,
+     44.4
+    ]
+   ]
+  },
+  {
+   "way": "1170435456",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.3",
+    "pmfsefin:idedif": "467224"
+   },
+   "centro": [
+    23,
+    -107
+   ],
+   "dist": 109,
+   "dims": [
+    23.7,
+    9.8
+   ],
+   "rumoLadoMaior": 109,
+   "n": 13,
+   "pts": [
+    [
+     29.1,
+     -104.2
+    ],
+    [
+     16.9,
+     -100
+    ],
+    [
+     16.4,
+     -101.5
+    ],
+    [
+     19.3,
+     -102.5
+    ],
+    [
+     17.4,
+     -108.4
+    ],
+    [
+     14.4,
+     -107.4
+    ],
+    [
+     13.7,
+     -109.3
+    ],
+    [
+     14.1,
+     -109.4
+    ],
+    [
+     24,
+     -112.7
+    ],
+    [
+     36.2,
+     -116.7
+    ],
+    [
+     39.2,
+     -107.7
+    ],
+    [
+     29.3,
+     -104.3
+    ],
+    [
+     29.1,
+     -104.2
+    ]
+   ]
+  },
+  {
+   "way": "1170435493",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "4.2",
+    "pmfsefin:idedif": "452367"
+   },
+   "centro": [
+    5,
+    -98
+   ],
+   "dist": 98,
+   "dims": [
+    4.4,
+    3.1
+   ],
+   "rumoLadoMaior": 17,
+   "n": 6,
+   "pts": [
+    [
+     4.7,
+     -95.9
+    ],
+    [
+     4.5,
+     -97.8
+    ],
+    [
+     3.8,
+     -100.2
+    ],
+    [
+     6.3,
+     -100.9
+    ],
+    [
+     7.7,
+     -96.8
+    ],
+    [
+     4.7,
+     -95.9
+    ]
+   ]
+  },
+  {
+   "way": "1170435531",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "13.2",
+    "pmfsefin:idedif": "505717"
+   },
+   "centro": [
+    -106,
+    65
+   ],
+   "dist": 124,
+   "dims": [
+    33.8,
+    10.4
+   ],
+   "rumoLadoMaior": 108,
+   "n": 6,
+   "pts": [
+    [
+     -92.9,
+     66.4
+    ],
+    [
+     -124.7,
+     76.9
+    ],
+    [
+     -128,
+     67.1
+    ],
+    [
+     -101.4,
+     58.3
+    ],
+    [
+     -95.9,
+     56.5
+    ],
+    [
+     -92.9,
+     66.4
+    ]
+   ]
+  },
+  {
+   "way": "1170435612",
+   "tags": {
+    "building": "yes",
+    "building:levels": "2",
+    "height": "5.3",
+    "pmfsefin:idedif": "462661"
+   },
+   "centro": [
+    96,
+    -97
+   ],
+   "dist": 137,
+   "dims": [
+    9.1,
+    4.2
+   ],
+   "rumoLadoMaior": 22,
+   "n": 10,
+   "pts": [
+    [
+     98.2,
+     -97.8
+    ],
+    [
+     100.6,
+     -91.6
+    ],
+    [
+     96.8,
+     -90.1
+    ],
+    [
+     93.5,
+     -98.3
+    ],
+    [
+     93.4,
+     -98.5
+    ],
+    [
+     93.8,
+     -98.6
+    ],
+    [
+     93.9,
+     -98.3
+    ],
+    [
+     96.3,
+     -99.5
+    ],
+    [
+     97.3,
+     -100
+    ],
+    [
+     98.2,
+     -97.8
+    ]
+   ]
+  },
+  {
+   "way": "1170435662",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "10.1",
+    "pmfsefin:idedif": "505706"
+   },
+   "centro": [
+    -113,
+    25
+   ],
+   "dist": 115,
+   "dims": [
+    19,
+    4.2
+   ],
+   "rumoLadoMaior": 17,
+   "n": 7,
+   "pts": [
+    [
+     -109.7,
+     30.1
+    ],
+    [
+     -113.7,
+     31.3
+    ],
+    [
+     -119.1,
+     13.1
+    ],
+    [
+     -115.9,
+     12.1
+    ],
+    [
+     -110.4,
+     29.4
+    ],
+    [
+     -109.9,
+     29.3
+    ],
+    [
+     -109.7,
+     30.1
+    ]
+   ]
+  },
+  {
+   "way": "1170435714",
+   "tags": {
+    "building": "yes",
+    "building:levels": "3",
+    "height": "10.3"
+   },
+   "centro": [
+    18,
+    -106
+   ],
+   "dist": 107,
+   "dims": [
+    33.4,
+    9.9
+   ],
+   "rumoLadoMaior": 109,
+   "n": 16,
+   "pts": [
+    [
+     29.3,
+     -104.3
+    ],
+    [
+     29.1,
+     -104.2
+    ],
+    [
+     16.9,
+     -100
+    ],
+    [
+     9.1,
+     -97.3
+    ],
+    [
+     7.7,
+     -96.8
+    ],
+    [
+     6.3,
+     -100.9
+    ],
+    [
+     5.3,
+     -103.7
+    ],
+    [
+     4.5,
+     -106.2
+    ],
+    [
+     9.3,
+     -107.8
+    ],
+    [
+     11.3,
+     -108.5
+    ],
+    [
+     13.7,
+     -109.3
+    ],
+    [
+     14.1,
+     -109.4
+    ],
+    [
+     24,
+     -112.7
+    ],
+    [
+     36.2,
+     -116.7
+    ],
+    [
+     39.2,
+     -107.7
+    ],
+    [
+     29.3,
+     -104.3
+    ]
+   ]
+  },
+  {
+   "way": "1170435746",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "6.6",
+    "pmfsefin:idedif": "452366"
+   },
+   "centro": [
+    0,
+    -98
+   ],
+   "dist": 98,
+   "dims": [
+    23.4,
+    7.8
+   ],
+   "rumoLadoMaior": 107,
+   "n": 11,
+   "pts": [
+    [
+     6.3,
+     -100.9
+    ],
+    [
+     3.8,
+     -100.2
+    ],
+    [
+     4.5,
+     -97.8
+    ],
+    [
+     3.3,
+     -97.4
+    ],
+    [
+     3.9,
+     -95.6
+    ],
+    [
+     2.3,
+     -95.1
+    ],
+    [
+     -14.7,
+     -89.7
+    ],
+    [
+     -17,
+     -97.2
+    ],
+    [
+     0.6,
+     -102.3
+    ],
+    [
+     5.3,
+     -103.7
+    ],
+    [
+     6.3,
+     -100.9
+    ]
+   ]
+  },
+  {
+   "way": "1170435801",
+   "tags": {
+    "building:levels": "6",
+    "building:part": "yes",
+    "height": "19.2",
+    "pmfsefin:idedif": "462637"
+   },
+   "centro": [
+    110,
+    -115
+   ],
+   "dist": 160,
+   "dims": [
+    29.6,
+    14
+   ],
+   "rumoLadoMaior": 116,
+   "n": 10,
+   "pts": [
+    [
+     117.1,
+     -124.7
+    ],
+    [
+     123,
+     -112.2
+    ],
+    [
+     122.6,
+     -112
+    ],
+    [
+     97.3,
+     -100
+    ],
+    [
+     96.3,
+     -99.5
+    ],
+    [
+     90.4,
+     -112
+    ],
+    [
+     109.5,
+     -121.2
+    ],
+    [
+     112.6,
+     -122.7
+    ],
+    [
+     117,
+     -124.8
+    ],
+    [
+     117.1,
+     -124.7
+    ]
+   ]
+  },
+  {
+   "way": "1170435903",
+   "tags": {
+    "building:levels": "5",
+    "building:part": "yes",
+    "height": "13.9",
+    "pmfsefin:idedif": "505705"
+   },
+   "centro": [
+    -101,
+    13
+   ],
+   "dist": 102,
+   "dims": [
+    30.1,
+    29.1
+   ],
+   "rumoLadoMaior": 17,
+   "n": 18,
+   "pts": [
+    [
+     -102.7,
+     7.1
+    ],
+    [
+     -101.9,
+     9.6
+    ],
+    [
+     -100.6,
+     13.8
+    ],
+    [
+     -98.8,
+     19.4
+    ],
+    [
+     -97,
+     25.2
+    ],
+    [
+     -109.9,
+     29.3
+    ],
+    [
+     -110.4,
+     29.4
+    ],
+    [
+     -115.9,
+     12.1
+    ],
+    [
+     -119,
+     2
+    ],
+    [
+     -119.3,
+     1.1
+    ],
+    [
+     -91.6,
+     -7.6
+    ],
+    [
+     -82.6,
+     21.1
+    ],
+    [
+     -90.8,
+     23.7
+    ],
+    [
+     -92.8,
+     17.5
+    ],
+    [
+     -94.5,
+     12
+    ],
+    [
+     -95.8,
+     7.8
+    ],
+    [
+     -96.6,
+     5.2
+    ],
+    [
+     -102.7,
+     7.1
+    ]
+   ]
+  },
+  {
+   "way": "1170435979",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "8.9",
+    "pmfsefin:idedif": "452361"
+   },
+   "centro": [
+    17,
+    -115
+   ],
+   "dist": 117,
+   "dims": [
+    28.8,
+    19.3
+   ],
+   "rumoLadoMaior": 108,
+   "n": 14,
+   "pts": [
+    [
+     10.1,
+     -112
+    ],
+    [
+     11.3,
+     -108.5
+    ],
+    [
+     9.3,
+     -107.8
+    ],
+    [
+     7.7,
+     -112.2
+    ],
+    [
+     2.8,
+     -126
+    ],
+    [
+     30.1,
+     -135.1
+    ],
+    [
+     35.2,
+     -119.9
+    ],
+    [
+     24.3,
+     -116.3
+    ],
+    [
+     22.9,
+     -115.8
+    ],
+    [
+     23.6,
+     -114
+    ],
+    [
+     24,
+     -112.7
+    ],
+    [
+     14.1,
+     -109.4
+    ],
+    [
+     12.9,
+     -113
+    ],
+    [
+     10.1,
+     -112
+    ]
+   ]
+  },
+  {
+   "way": "1170436018",
+   "tags": {
+    "building:levels": "5",
+    "building:part": "yes",
+    "height": "14.0",
+    "pmfsefin:idedif": "505714"
+   },
+   "centro": [
+    -92,
+    41
+   ],
+   "dist": 101,
+   "dims": [
+    40.6,
+    28.6
+   ],
+   "rumoLadoMaior": 18,
+   "n": 20,
+   "pts": [
+    [
+     -82.6,
+     21.1
+    ],
+    [
+     -70.2,
+     58.8
+    ],
+    [
+     -92.9,
+     66.4
+    ],
+    [
+     -95.9,
+     56.5
+    ],
+    [
+     -96,
+     56.4
+    ],
+    [
+     -90.1,
+     54.4
+    ],
+    [
+     -87.3,
+     53.5
+    ],
+    [
+     -81.9,
+     51.7
+    ],
+    [
+     -84.5,
+     43.7
+    ],
+    [
+     -85.7,
+     40
+    ],
+    [
+     -87.7,
+     33.8
+    ],
+    [
+     -93.1,
+     35.5
+    ],
+    [
+     -95.6,
+     36.4
+    ],
+    [
+     -106.5,
+     39.8
+    ],
+    [
+     -106.8,
+     39.2
+    ],
+    [
+     -109.7,
+     30.1
+    ],
+    [
+     -109.9,
+     29.3
+    ],
+    [
+     -97,
+     25.2
+    ],
+    [
+     -90.8,
+     23.7
+    ],
+    [
+     -82.6,
+     21.1
+    ]
+   ]
+  },
+  {
+   "way": "1170436112",
+   "tags": {
+    "building": "yes",
+    "building:levels": "4",
+    "height": "12.7",
+    "pmfsefin:idedif": "356109"
+   },
+   "centro": [
+    122,
+    -106
+   ],
+   "dist": 162,
+   "dims": [
+    37,
+    11.4
+   ],
+   "rumoLadoMaior": 116,
+   "n": 9,
+   "pts": [
+    [
+     133.2,
+     -104.5
+    ],
+    [
+     100.6,
+     -91.6
+    ],
+    [
+     98.2,
+     -97.8
+    ],
+    [
+     124,
+     -108.8
+    ],
+    [
+     122.6,
+     -112
+    ],
+    [
+     123,
+     -112.2
+    ],
+    [
+     129.6,
+     -115.4
+    ],
+    [
+     134.2,
+     -107.2
+    ],
+    [
+     133.2,
+     -104.5
+    ]
+   ]
+  },
+  {
+   "way": "1170436143",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.1",
+    "pmfsefin:idedif": "505704"
+   },
+   "centro": [
+    -97,
+    11
+   ],
+   "dist": 98,
+   "dims": [
+    6.4,
+    4.4
+   ],
+   "rumoLadoMaior": 106,
+   "n": 5,
+   "pts": [
+    [
+     -94.5,
+     12
+    ],
+    [
+     -100.6,
+     13.8
+    ],
+    [
+     -101.9,
+     9.6
+    ],
+    [
+     -95.8,
+     7.8
+    ],
+    [
+     -94.5,
+     12
+    ]
+   ]
+  },
+  {
+   "way": "1170436155",
+   "tags": {
+    "building": "yes",
+    "building:levels": "6",
+    "height": "19.2",
+    "name": "Hotel Catedral",
+    "tourism": "hotel"
+   },
+   "centro": [
+    114,
+    -117
+   ],
+   "dist": 163,
+   "dims": [
+    36.9,
+    14
+   ],
+   "rumoLadoMaior": 116,
+   "n": 12,
+   "pts": [
+    [
+     122.8,
+     -127.6
+    ],
+    [
+     122.9,
+     -127.5
+    ],
+    [
+     129.6,
+     -115.4
+    ],
+    [
+     123,
+     -112.2
+    ],
+    [
+     122.6,
+     -112
+    ],
+    [
+     97.3,
+     -100
+    ],
+    [
+     96.3,
+     -99.5
+    ],
+    [
+     90.4,
+     -112
+    ],
+    [
+     109.5,
+     -121.2
+    ],
+    [
+     112.6,
+     -122.7
+    ],
+    [
+     117,
+     -124.8
+    ],
+    [
+     122.8,
+     -127.6
+    ]
+   ]
+  },
+  {
+   "way": "1170436197",
+   "tags": {
+    "building:levels": "3",
+    "building:part": "yes",
+    "height": "8.9",
+    "pmfsefin:idedif": "506038"
+   },
+   "centro": [
+    74,
+    136
+   ],
+   "dist": 155,
+   "dims": [
+    42.4,
+    13.1
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     84.4,
+     150.1
+    ],
+    [
+     72.1,
+     154.1
+    ],
+    [
+     59.3,
+     113.9
+    ],
+    [
+     71.7,
+     109.7
+    ],
+    [
+     84.4,
+     150.1
+    ]
+   ]
+  },
+  {
+   "way": "1170436216",
+   "tags": {
+    "building:levels": "4",
+    "building:part": "yes",
+    "height": "11.5",
+    "pmfsefin:idedif": "452359"
+   },
+   "centro": [
+    13,
+    -110
+   ],
+   "dist": 111,
+   "dims": [
+    3.8,
+    3
+   ],
+   "rumoLadoMaior": 18,
+   "n": 6,
+   "pts": [
+    [
+     13.7,
+     -109.3
+    ],
+    [
+     11.3,
+     -108.5
+    ],
+    [
+     10.1,
+     -112
+    ],
+    [
+     12.9,
+     -113
+    ],
+    [
+     14.1,
+     -109.4
+    ],
+    [
+     13.7,
+     -109.3
+    ]
+   ]
+  },
+  {
+   "way": "1170436461",
+   "tags": {
+    "building:levels": "2",
+    "building:part": "yes",
+    "height": "5.2",
+    "pmfsefin:idedif": "505133"
+   },
+   "centro": [
+    -32,
+    89
+   ],
+   "dist": 94,
+   "dims": [
+    9,
+    6.7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 5,
+   "pts": [
+    [
+     -28.2,
+     91.2
+    ],
+    [
+     -34.6,
+     93.3
+    ],
+    [
+     -36.8,
+     84.6
+    ],
+    [
+     -30.9,
+     82.7
+    ],
+    [
+     -28.2,
+     91.2
+    ]
+   ]
+  },
+  {
+   "way": "1170436462",
+   "tags": {
+    "building:levels": "1",
+    "building:part": "yes",
+    "height": "3.5",
+    "pmfsefin:idedif": "452357"
+   },
+   "centro": [
+    23,
+    -69
+   ],
+   "dist": 73,
+   "dims": [
+    17.5,
+    4.7
+   ],
+   "rumoLadoMaior": 18,
+   "n": 9,
+   "pts": [
+    [
+     27.4,
+     -65
+    ],
+    [
+     23.7,
+     -63.8
+    ],
+    [
+     23.7,
+     -64.9
+    ],
+    [
+     24.1,
+     -65.4
+    ],
+    [
+     23.6,
+     -66.8
+    ],
+    [
+     22,
+     -66.2
+    ],
+    [
+     17.4,
+     -80.1
+    ],
+    [
+     21.9,
+     -81.6
+    ],
+    [
+     27.4,
+     -65
+    ]
+   ]
+  },
+  {
+   "way": "1185545559",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -176,
+    -51
+   ],
+   "dist": 183,
+   "dims": [
+    127.3,
+    111.8
+   ],
+   "rumoLadoMaior": 107,
+   "n": 13,
+   "pts": [
+    [
+     -247.8,
+     -86
+    ],
+    [
+     -245.7,
+     -89.6
+    ],
+    [
+     -131.3,
+     -124.6
+    ],
+    [
+     -127.9,
+     -124
+    ],
+    [
+     -126.1,
+     -123.2
+    ],
+    [
+     -103.8,
+     -50.7
+    ],
+    [
+     -95.6,
+     -22.8
+    ],
+    [
+     -97.4,
+     -22.2
+    ],
+    [
+     -213.2,
+     17.4
+    ],
+    [
+     -215.5,
+     16.8
+    ],
+    [
+     -216.2,
+     16.1
+    ],
+    [
+     -216.7,
+     15.2
+    ],
+    [
+     -247.8,
+     -86
+    ]
+   ]
+  },
+  {
+   "way": "1185546970",
+   "tags": {
+    "highway": "service",
+    "service": "driveway"
+   },
+   "centro": [
+    -125,
+    -44
+   ],
+   "dist": 133,
+   "dims": [
+    78.7,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 3,
+   "pts": [
+    [
+     -173.9,
+     -29
+    ],
+    [
+     -103.8,
+     -50.7
+    ],
+    [
+     -98.7,
+     -52.3
+    ]
+   ]
+  },
+  {
+   "way": "1185549616",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    71,
+    -138
+   ],
+   "dist": 156,
+   "dims": [
+    107.8,
+    81.9
+   ],
+   "rumoLadoMaior": 19,
+   "n": 12,
+   "pts": [
+    [
+     32,
+     -158.9
+    ],
+    [
+     27.7,
+     -174
+    ],
+    [
+     27.9,
+     -176.2
+    ],
+    [
+     83.4,
+     -195.8
+    ],
+    [
+     85.9,
+     -194.4
+    ],
+    [
+     136,
+     -106.6
+    ],
+    [
+     136.3,
+     -103.9
+    ],
+    [
+     135,
+     -102.3
+    ],
+    [
+     62.1,
+     -74
+    ],
+    [
+     60.4,
+     -74.6
+    ],
+    [
+     38.6,
+     -139.1
+    ],
+    [
+     32,
+     -158.9
+    ]
+   ]
+  },
+  {
+   "way": "1185549620",
+   "tags": {
+    "crossing": "unmarked",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    57,
+    -73
+   ],
+   "dist": 93,
+   "dims": [
+    7.5,
+    0.1
+   ],
+   "rumoLadoMaior": 106,
+   "n": 3,
+   "pts": [
+    [
+     60.4,
+     -74.6
+    ],
+    [
+     56.3,
+     -73.4
+    ],
+    [
+     53.2,
+     -72.4
+    ]
+   ]
+  },
+  {
+   "way": "1185549621",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    15,
+    -115
+   ],
+   "dist": 116,
+   "dims": [
+    110.5,
+    61
+   ],
+   "rumoLadoMaior": 18,
+   "n": 11,
+   "pts": [
+    [
+     50.8,
+     -69.7
+    ],
+    [
+     53.2,
+     -72.4
+    ],
+    [
+     31.8,
+     -137
+    ],
+    [
+     25.4,
+     -157
+    ],
+    [
+     19.2,
+     -172.3
+    ],
+    [
+     17,
+     -173.6
+    ],
+    [
+     -36.2,
+     -156.8
+    ],
+    [
+     -37.6,
+     -154.3
+    ],
+    [
+     -4.5,
+     -52.7
+    ],
+    [
+     -2.6,
+     -51.5
+    ],
+    [
+     50.8,
+     -69.7
+    ]
+   ]
+  },
+  {
+   "way": "1185549622",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -63,
+    -99
+   ],
+   "dist": 117,
+   "dims": [
+    111.3,
+    74.5
+   ],
+   "rumoLadoMaior": 18,
+   "n": 14,
+   "pts": [
+    [
+     -49.8,
+     -153.1
+    ],
+    [
+     -48,
+     -153.3
+    ],
+    [
+     -47.2,
+     -153
+    ],
+    [
+     -46.2,
+     -151.5
+    ],
+    [
+     -13.5,
+     -50.8
+    ],
+    [
+     -13.8,
+     -49
+    ],
+    [
+     -15,
+     -48
+    ],
+    [
+     -80.1,
+     -26.6
+    ],
+    [
+     -82,
+     -27.2
+    ],
+    [
+     -83.7,
+     -27.2
+    ],
+    [
+     -116.4,
+     -126.4
+    ],
+    [
+     -116.6,
+     -129.8
+    ],
+    [
+     -116.2,
+     -131.9
+    ],
+    [
+     -49.8,
+     -153.1
+    ]
+   ]
+  },
+  {
+   "way": "1185549623",
+   "tags": {
+    "button_operated": "no",
+    "crossing": "traffic_signals",
+    "crossing:island": "no",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -90,
+    -25
+   ],
+   "dist": 93,
+   "dims": [
+    12.7,
+    0.1
+   ],
+   "rumoLadoMaior": 110,
+   "n": 3,
+   "pts": [
+    [
+     -83.7,
+     -27.2
+    ],
+    [
+     -90.1,
+     -24.9
+    ],
+    [
+     -95.6,
+     -22.8
+    ]
+   ]
+  },
+  {
+   "way": "1185549624",
+   "tags": {
+    "crossing": "uncontrolled",
+    "crossing:island": "no",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -95,
+    -15
+   ],
+   "dist": 96,
+   "dims": [
+    14.5,
+    0
+   ],
+   "rumoLadoMaior": 18,
+   "n": 3,
+   "pts": [
+    [
+     -97.4,
+     -22.2
+    ],
+    [
+     -95.1,
+     -15
+    ],
+    [
+     -93,
+     -8.4
+    ]
+   ]
+  },
+  {
+   "way": "1185549625",
+   "tags": {
+    "crossing": "uncontrolled",
+    "crossing:island": "no",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -85,
+    -10
+   ],
+   "dist": 85,
+   "dims": [
+    10.5,
+    0.1
+   ],
+   "rumoLadoMaior": 108,
+   "n": 3,
+   "pts": [
+    [
+     -89.8,
+     -8.1
+    ],
+    [
+     -85.1,
+     -9.5
+    ],
+    [
+     -79.8,
+     -11.2
+    ]
+   ]
+  },
+  {
+   "way": "1185549626",
+   "tags": {
+    "button_operated": "no",
+    "crossing": "traffic_signals",
+    "crossing:island": "no",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "surface": "asphalt"
+   },
+   "centro": [
+    -80,
+    -21
+   ],
+   "dist": 83,
+   "dims": [
+    13,
+    0.2
+   ],
+   "rumoLadoMaior": 19,
+   "n": 3,
+   "pts": [
+    [
+     -78,
+     -14.8
+    ],
+    [
+     -79.6,
+     -20.1
+    ],
+    [
+     -82,
+     -27.2
+    ]
+   ]
+  },
+  {
+   "way": "1185737423",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    -150,
+    49
+   ],
+   "dist": 158,
+   "dims": [
+    128.8,
+    74.7
+   ],
+   "rumoLadoMaior": 108,
+   "n": 12,
+   "pts": [
+    [
+     -210.6,
+     32
+    ],
+    [
+     -210.8,
+     30.5
+    ],
+    [
+     -209.9,
+     28.7
+    ],
+    [
+     -93,
+     -8.4
+    ],
+    [
+     -89.8,
+     -8.1
+    ],
+    [
+     -68.8,
+     58.8
+    ],
+    [
+     -69.8,
+     60
+    ],
+    [
+     -71.7,
+     61.2
+    ],
+    [
+     -186.5,
+     99.6
+    ],
+    [
+     -189.2,
+     99.3
+    ],
+    [
+     -191.3,
+     98
+    ],
+    [
+     -210.6,
+     32
+    ]
+   ]
+  },
+  {
+   "way": "1185737425",
+   "tags": {
+    "crossing": "unmarked",
+    "footway": "crossing",
+    "highway": "footway"
+   },
+   "centro": [
+    -64,
+    57
+   ],
+   "dist": 85,
+   "dims": [
+    11.3,
+    0
+   ],
+   "rumoLadoMaior": 107,
+   "n": 3,
+   "pts": [
+    [
+     -68.8,
+     58.8
+    ],
+    [
+     -63.8,
+     57.3
+    ],
+    [
+     -58,
+     55.5
+    ]
+   ]
+  },
+  {
+   "way": "1185746571",
+   "tags": {
+    "footway": "sidewalk",
+    "highway": "footway"
+   },
+   "centro": [
+    21,
+    150
+   ],
+   "dist": 151,
+   "dims": [
+    378.9,
+    87.2
+   ],
+   "rumoLadoMaior": 100,
+   "n": 28,
+   "pts": [
+    [
+     179.8,
+     167.4
+    ],
+    [
+     163,
+     124.7
+    ],
+    [
+     162.3,
+     124.3
+    ],
+    [
+     155.5,
+     118.7
+    ],
+    [
+     150.9,
+     120.4
+    ],
+    [
+     145.1,
+     122
+    ],
+    [
+     139.4,
+     123
+    ],
+    [
+     134.9,
+     121.8
+    ],
+    [
+     132.4,
+     120.8
+    ],
+    [
+     126.9,
+     118.9
+    ],
+    [
+     124.1,
+     117.2
+    ],
+    [
+     120.8,
+     112.4
+    ],
+    [
+     116.7,
+     98.7
+    ],
+    [
+     117.1,
+     93.9
+    ],
+    [
+     118.1,
+     89.7
+    ],
+    [
+     81.2,
+     102.2
+    ],
+    [
+     -30.9,
+     139.1
+    ],
+    [
+     -74.9,
+     155.7
+    ],
+    [
+     -200.2,
+     193.9
+    ],
+    [
+     -196.7,
+     196.2
+    ],
+    [
+     -191,
+     198.4
+    ],
+    [
+     -178.5,
+     204.1
+    ],
+    [
+     -166.6,
+     207.6
+    ],
+    [
+     -157.2,
+     209.5
+    ],
+    [
+     -143.6,
+     209.5
+    ],
+    [
+     -131.2,
+     208.3
+    ],
+    [
+     -91.6,
+     203.6
+    ],
+    [
+     -24.6,
+     195.2
+    ]
+   ]
+  },
+  {
+   "way": "1328552982",
+   "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "maxheight": "4.4",
+    "maxlength": "6.5",
+    "maxspeed": "30",
+    "maxwidth": "2.2",
+    "name": "Rua Barão do Rio Branco",
+    "oneway": "yes",
+    "surface": "paving_stones"
+   },
+   "centro": [
+    -64,
+    51
+   ],
+   "dist": 82,
+   "dims": [
+    131.1,
+    8.6
+   ],
+   "rumoLadoMaior": 20,
+   "n": 8,
+   "pts": [
+    [
+     -87.7,
+     -17.4
+    ],
+    [
+     -85.1,
+     -9.5
+    ],
+    [
+     -76.3,
+     17.9
+    ],
+    [
+     -63.8,
+     57.3
+    ],
+    [
+     -62,
+     62.9
+    ],
+    [
+     -50.2,
+     94.7
+    ],
+    [
+     -45.5,
+     100
+    ],
+    [
+     -37.6,
+     103.8
+    ]
+   ]
+  },
+  {
+   "way": "1482879452",
+   "tags": {
+    "landuse": "grass"
+   },
+   "centro": [
+    61,
+    98
+   ],
+   "dist": 116,
+   "dims": [
+    6.5,
+    6.5
+   ],
+   "rumoLadoMaior": 105,
+   "n": 8,
+   "pts": [
+    [
+     64.8,
+     99.3
+    ],
+    [
+     62.9,
+     93.1
+    ],
+    [
+     58.6,
+     94.3
+    ],
+    [
+     59.6,
+     98.9
+    ],
+    [
+     59.3,
+     99.6
+    ],
+    [
+     58.4,
+     100.4
+    ],
+    [
+     58.5,
+     101
+    ],
+    [
+     64.8,
+     99.3
+    ]
+   ]
+  },
+  {
+   "way": "1482879453",
+   "tags": {
+    "landuse": "grass"
+   },
+   "centro": [
+    154,
+    70
+   ],
+   "dist": 169,
+   "dims": [
+    147.5,
+    5.9
+   ],
+   "rumoLadoMaior": 107,
+   "n": 10,
+   "pts": [
+    [
+     81.4,
+     93.6
+    ],
+    [
+     79.5,
+     88.9
+    ],
+    [
+     169,
+     65.3
+    ],
+    [
+     195.3,
+     57.1
+    ],
+    [
+     221.1,
+     47.8
+    ],
+    [
+     221.5,
+     48.7
+    ],
+    [
+     195.5,
+     58.2
+    ],
+    [
+     169.1,
+     67.1
+    ],
+    [
+     122,
+     80.3
+    ],
+    [
+     81.4,
+     93.6
+    ]
+   ]
+  },
+  {
+   "way": "1482879454",
+   "tags": {
+    "landuse": "grass"
+   },
+   "centro": [
+    95,
+    68
+   ],
+   "dist": 117,
+   "dims": [
+    30,
+    8.2
+   ],
+   "rumoLadoMaior": 101,
+   "n": 7,
+   "pts": [
+    [
+     101.2,
+     70.4
+    ],
+    [
+     99.4,
+     68.4
+    ],
+    [
+     98.6,
+     66
+    ],
+    [
+     98.3,
+     63.8
+    ],
+    [
+     95.8,
+     63.1
+    ],
+    [
+     71.8,
+     76.3
+    ],
+    [
+     101.2,
+     70.4
+    ]
+   ]
+  },
+  {
+   "way": "1482879455",
+   "tags": {
+    "area": "yes",
+    "highway": "pedestrian"
+   },
+   "centro": [
+    73,
+    94
+   ],
+   "dist": 119,
+   "dims": [
+    17.5,
+    6.5
+   ],
+   "rumoLadoMaior": 107,
+   "n": 7,
+   "pts": [
+    [
+     81.4,
+     93.6
+    ],
+    [
+     79.5,
+     88.9
+    ],
+    [
+     65.3,
+     92.7
+    ],
+    [
+     62.9,
+     93.1
+    ],
+    [
+     64.8,
+     99.3
+    ],
+    [
+     78.6,
+     94.7
+    ],
+    [
+     81.4,
+     93.6
+    ]
+   ]
+  }
+ ],
+ "nos": [
+  {
+   "node": "4175124294",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Baobá"
+   },
+   "xy": [
+    -21,
+    -28
+   ]
+  },
+  {
+   "node": "4175124295",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Benjamin"
+   },
+   "xy": [
+    62,
+    -1
+   ]
+  },
+  {
+   "node": "4175124296",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Jucazeiro"
+   },
+   "xy": [
+    30,
+    -39
+   ]
+  },
+  {
+   "node": "4175124297",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Macaúba"
+   },
+   "xy": [
+    -48,
+    -16
+   ]
+  },
+  {
+   "node": "4175124298",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Mungubeira"
+   },
+   "xy": [
+    -28,
+    25
+   ]
+  },
+  {
+   "node": "4175124299",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Mungubeira"
+   },
+   "xy": [
+    7,
+    9
+   ]
+  },
+  {
+   "node": "4175124300",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Oiticica"
+   },
+   "xy": [
+    -38,
+    -5
+   ]
+  },
+  {
+   "node": "4175124301",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Oitizeiro"
+   },
+   "xy": [
+    58,
+    -23
+   ]
+  },
+  {
+   "node": "4175124302",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Pau d'Arco Roxo"
+   },
+   "xy": [
+    17,
+    -27
+   ]
+  },
+  {
+   "node": "4175124303",
+   "tags": {
+    "denotation": "natural_monument",
+    "description": "Declarada como imune ao corte através do Decreto 12.227/97 da Prefeitura Municpal de Fortaleza.",
+    "natural": "tree",
+    "source": "survey",
+    "species:pt": "Timbaúba"
+   },
+   "xy": [
+    36,
+    -48
+   ]
+  },
+  {
+   "node": "5958040891",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    108,
+    -61
+   ]
+  },
+  {
+   "node": "5958040892",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    102,
+    -58
+   ]
+  },
+  {
+   "node": "5958040893",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    96,
+    -57
+   ]
+  },
+  {
+   "node": "5958040894",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    91,
+    -54
+   ]
+  },
+  {
+   "node": "5958040899",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    108,
+    -44
+   ]
+  },
+  {
+   "node": "5958040900",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    103,
+    -42
+   ]
+  },
+  {
+   "node": "5958040901",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    97,
+    -40
+   ]
+  },
+  {
+   "node": "5958040914",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    101,
+    18
+   ]
+  },
+  {
+   "node": "5958040915",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    87,
+    36
+   ]
+  },
+  {
+   "node": "5958040916",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    80,
+    43
+   ]
+  },
+  {
+   "node": "5958040917",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    69,
+    47
+   ]
+  },
+  {
+   "node": "5958040918",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    59,
+    52
+   ]
+  },
+  {
+   "node": "5958129838",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    25,
+    76
+   ]
+  },
+  {
+   "node": "5958129839",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    41,
+    70
+   ]
+  },
+  {
+   "node": "5958129840",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    29,
+    55
+   ]
+  },
+  {
+   "node": "5958129841",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    25,
+    46
+   ]
+  },
+  {
+   "node": "5958129842",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    21,
+    37
+   ]
+  },
+  {
+   "node": "5958129843",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    13,
+    40
+   ]
+  },
+  {
+   "node": "5958129844",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    16,
+    51
+   ]
+  },
+  {
+   "node": "5958129845",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    20,
+    58
+   ]
+  },
+  {
+   "node": "7280527323",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -46,
+    42
+   ]
+  },
+  {
+   "node": "7280527324",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -51,
+    28
+   ]
+  },
+  {
+   "node": "7280527325",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -48,
+    13
+   ]
+  },
+  {
+   "node": "7280527326",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -23,
+    9
+   ]
+  },
+  {
+   "node": "7280527327",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -14,
+    20
+   ]
+  },
+  {
+   "node": "7280527328",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -12,
+    32
+   ]
+  },
+  {
+   "node": "7280527329",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -29,
+    37
+   ]
+  },
+  {
+   "node": "7280527330",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -3,
+    14
+   ]
+  },
+  {
+   "node": "7280527331",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -10,
+    3
+   ]
+  },
+  {
+   "node": "7280527332",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -34,
+    -12
+   ]
+  },
+  {
+   "node": "7280527333",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -16,
+    -8
+   ]
+  },
+  {
+   "node": "7280527334",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -54,
+    4
+   ]
+  },
+  {
+   "node": "7280527335",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -62,
+    -10
+   ]
+  },
+  {
+   "node": "7280527336",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    27,
+    -6
+   ]
+  },
+  {
+   "node": "7280527337",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    20,
+    -37
+   ]
+  },
+  {
+   "node": "7280527338",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    8,
+    -38
+   ]
+  },
+  {
+   "node": "7280527339",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -9,
+    -34
+   ]
+  },
+  {
+   "node": "7280527340",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    10,
+    -9
+   ]
+  },
+  {
+   "node": "7280527341",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    27,
+    18
+   ]
+  },
+  {
+   "node": "7280527342",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    35,
+    14
+   ]
+  },
+  {
+   "node": "7280527343",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    52,
+    5
+   ]
+  },
+  {
+   "node": "7280527344",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    39,
+    -30
+   ]
+  },
+  {
+   "node": "7280527345",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    51,
+    -52
+   ]
+  },
+  {
+   "node": "7280527346",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    54,
+    -38
+   ]
+  },
+  {
+   "node": "7280527347",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    26,
+    -23
+   ]
+  },
+  {
+   "node": "7280527348",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    51,
+    -4
+   ]
+  },
+  {
+   "node": "7280527349",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    42,
+    9
+   ]
+  },
+  {
+   "node": "7280527350",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    70,
+    5
+   ]
+  },
+  {
+   "node": "8390924887",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -10,
+    104
+   ]
+  },
+  {
+   "node": "8390924888",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    -5,
+    103
+   ]
+  },
+  {
+   "node": "8390924889",
+   "tags": {
+    "natural": "tree"
+   },
+   "xy": [
+    2,
+    101
+   ]
+  },
+  {
+   "node": "8685783598",
+   "tags": {
+    "leaf_cycle": "deciduous",
+    "natural": "tree",
+    "protected": "yes",
+    "species": "Adansonia digitata",
+    "start_date": "1910"
+   },
+   "xy": [
+    0,
+    -26
+   ]
+  },
+  {
+   "node": "8685783599",
+   "tags": {
+    "addr:street": "Rua Doutor João Moreira",
+    "amenity": "restaurant",
+    "contact:facebook": "https://www.facebook.com/CafePasseio/",
+    "name": "Café Passeio",
+    "opening_hours": "Mo-Su 09:00-17:00",
+    "opening_hours:covid19": "Mo-Fr 11:30-15:00",
+    "phone": "+55 85 3063 8782",
+    "website": "https://cafepasseio.negocio.site/"
+   },
+   "xy": [
+    42,
+    -3
+   ]
+  },
+  {
+   "node": "12422859938",
+   "tags": {
+    "name": "Baobá",
+    "natural": "tree"
+   },
+   "xy": [
+    -7,
+    -16
+   ]
+  },
+  {
+   "node": "13875479601",
+   "tags": {
+    "addr:housenumber": "143",
+    "addr:postcode": "60030-000",
+    "addr:street": "Rua Doutor João Moreira",
+    "amenity": "restaurant",
+    "check_date": "2026-05-25",
+    "check_date:opening_hours": "2026-05-25",
+    "contact:instagram": "euaconchego",
+    "cuisine": "coffee_shop;regional",
+    "name": "Aconchego",
+    "opening_hours": "Mo 11:30-17:00; Tu-Su 09:00-17:00"
+   },
+   "xy": [
+    33,
+    -70
+   ]
+  },
+  {
+   "node": "14094059301",
+   "tags": {
+    "addr:housenumber": "207",
+    "addr:postcode": "60030-000",
+    "addr:street": "Rua Doutor João Moreira",
+    "amenity": "cafe",
+    "check_date": "2026-08-14",
+    "check_date:opening_hours": "2026-08-14",
+    "contact:instagram": "cafecomercioce",
+    "name": "Café Comércio",
+    "opening_hours": "Mo-Su 07:00-17:00",
+    "phone": "+55 85 99140 9353"
+   },
+   "xy": [
+    -26,
+    -49
+   ]
+  }
+ ]
+}

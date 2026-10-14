@@ -1,0 +1,33 @@
+== marcoZero: 196 vias, 7 nós com nome
+1169502826 20m [-1,-20] 18.9x8.4 rumo 176 {"building":"yes","building:levels":"1","height":"3.4"}
+1226219391 28m [23,-17] 13.2x6.8 rumo 87 {"building":"yes","building:levels":"2"}
+1169502490 30m [-21,-21] 25.1x19 rumo 88 {"building":"yes","building:levels":"1","height":"3.4"}
+1234930265 32m [-30,9] 11x6 rumo 85 {"building":"yes","name":"Mercado Vila do Mar"}
+1234930262 35m [13,33] 31.5x16.1 rumo 178 {"leisure":"pitch"}
+1169502827 40m [-7,-39] 40.5x5.9 rumo 176 {"building":"yes","building:levels":"1","height":"3.0"}
+1169502491 46m [-36,-29] 14.4x7.1 rumo 175 {"building":"yes","building:levels":"1","height":"3.3"}
+1169503938 48m [45,-17] 40.4x5.6 rumo 87 {"building":"yes","building:levels":"1","height":"5.5"}
+1169504222 48m [-30,-38] 3.9x3.5 rumo 179 {"building":"yes","building:levels":"1","height":"2.2"}
+1169500503 50m [-15,-48] 23.6x8.4 rumo 175 {"building":"yes","building:levels":"2","height":"6.5"}
+1169502828 50m [2,-50] 19.9x5.1 rumo 176 {"building":"yes","building:levels":"1","height":"3.0"}
+1234930263 50m [37,33] 31.6x16.1 rumo 178 {"leisure":"pitch"}
+1169499324 51m [26,-45] 27.6x12.7 rumo 176 {"building":"yes","building:levels":"1","height":"3.9"}
+1240815402 56m [-22,52] 11.5x11.5 rumo 49 {"landuse":"grass"}
+1169504223 58m [-28,-51] 10.2x6.8 rumo 0 {"building":"yes","building:levels":"1","height":"3.7"}
+1169499323 61m [38,-48] 15.3x6.3 rumo 86 {"building":"yes","building:levels":"1","height":"3.7"}
+1169503235 63m [-34,-53] 20.4x6.2 rumo 177 {"building":"yes","building:levels":"1","height":"4.0"}
+1169474688 67m [18,64] 17.8x15.4 rumo 112 {"building":"yes","building:levels":"1","height":"3.8"}
+1226219392 69m [14,-68] 8.3x6.2 rumo 174 {"leisure":"swimming_pool"}
+1240815405 73m [-72,15] 8.8x7.7 rumo 89 {"building":"yes"}
+1169499107 76m [33,-69] 19.4x11.9 rumo 178 {"building":"yes","building:levels":"2","height":"6.9"}
+1169474687 77m [-6,77] 15.3x7.4 rumo 34 {"building":"yes","building:levels":"1","height":"3.6"}
+1169499109 79m [13,-78] 5.1x4.7 rumo 174 {"building":"yes","building:levels":"1","height":"3.1"}
+1169474691 80m [72,37] 7.2x6.6 rumo 0 {"building":"yes","building:levels":"1","height":"3.4"}
+1169474689 81m [60,55] 22.8x17.6 rumo 100 {"building":"yes","building:levels":"1","height":"3.9"}
+node 3977332200 [-21,50] {"name":"Cruzeiro de Santiago","tourism":"attraction"}
+node 6366188249 [-22,52] {"access":"yes","historic":"monument","inscription":"Primeiro local onde os navios europeus desembarcaram nessa cidade","name":"Marco Zero de Fortaleza"}
+node 7174252531 [0,0] {"amenity":"bicycle_rental","brand":"Bicicletar","brand:wikidata":"Q20052795","capacity":"16","description":"Rua José Roberto Sales, no início do estacionamento da orla no Marco Zero.","name":"Marco Zero","network":"Bicicletar","operator":"Prefeitura Municipal de Fortaleza","ref":"92","source":"https://www.fortaleza.ce.gov.br/noticias/prefeito-roberto-claudio-inaugura-lote-com-10-novas-estacoes-do-bicicletar-na-regional-i","start_date":"29/01/2020"}
+node 11286899347 [649,-121] {"bus":"yes","highway":"bus_stop","name":"FL-110/140","public_transport":"platform"}
+node 11371369301 [24,-17] {"addr:city":"Fortaleza","addr:housenumber":"420","addr:postcode":"60332-810","addr:street":"Rua José Roberto Sales","addr:suburb":"Barra do Ceará","amenity":"cafe","contact:instagram":"cafedepraia","name":"Café de Praia","opening_hours":"07:00-22:00","outdoor_seating":"yes","phone":"+55 85 98592 2028","website:menu":"https://drive.google.com/file/d/1kKAu8duJkM9M9OlIKHwu4AmWsf4m_xrI/view"}
+node 11371369333 [-63,-75] {"addr:city":"Fortaleza","addr:postcode":"60331-460","addr:street":"Avenida Radialista José Limaverde","addr:suburb":"Barra do Ceará","addr:unit":"Quiosque 13","amenity":"cafe","contact:instagram":"viilacafe","name":"Villa Café","nohousenumber":"yes","opening_hours":"Th-Tu 07:30-11:00, 15:00-22:00","outdoor_seating":"yes"}
+node 12883502001 [-71,18] {"addr:housenumber":"783","addr:street":"Rua José Roberto Sales","amenity":"restaurant","contact:instagram":"barracaskinaobeach","name":"Skinão Beach","opening_hours":"Mo-Su 08:00-20:00","phone":"+55 85 98687 1043"}
