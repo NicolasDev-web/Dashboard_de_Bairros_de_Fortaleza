@@ -257,3 +257,158 @@ alterá-lo e só aumenta o `setDefaultNavigationTimeout` para 300 s; a cena, as 
 **Etiqueta:** sem mudança (topo 15,5 m; `altura: 14`).
 
 ---
+
+## praiaIracema — Praia de Iracema e Ponte dos Ingleses (`Praias.tsx`)
+
+### ANTES (problemas por gravidade)
+- **CRÍTICO:** nenhum; o conjunto cabia no pedestal e passava no controle automático.
+- **ALTO:** 156 nós de malha e 23 materiais sem nome; cidade formada por caixas lisas, sem janelas, lajes ou leitura de pavimentos; coqueiros pareciam postes com copas poliédricas; avenida sem carros, faixas ou iluminação.
+- **MÉDIO:** mar, areia e calçadão eram faixas planas sem transição; Ponte dos Ingleses tinha guarda-corpo e apoios muito esquemáticos; faltavam chanfros e escala humana nos quarteirões.
+- **BAIXO:** pouca variação material na areia; espuma era uma linha reta; monumento e mobiliário tinham acabamento simples.
+
+### DEPOIS (alterações)
+1. A orla foi refeita como faixas recortadas pelo disco: mar fundo/raso, areia molhada/seca, calçadão e avenida, todas no rumo real; três faixas onduladas de espuma eliminam a borda reta.
+2. Cidade consolidada em duas malhas: fachadas com janelas em canvas/UV em metros e cores por vértice, e lajes com chanfro; telhados cerâmicos das casas passaram a instâncias.
+3. Coqueiros com estipes, cocos e oito folhas arqueadas por copa, instanciados e com material de duas faces.
+4. Avenida recebeu carros, eixo tracejado e postes; a areia ganhou variação sutil sem aparência de sujeira.
+5. Ponte dos Ingleses ganhou pilares, deck, corrimãos, montantes, luminárias, quiosques com lanternim, pavilhão de quatro águas e torre de observação; Iracema Guardiã recebeu corpo, braço, arco e corda legíveis.
+6. Todas as malhas e materiais foram nomeados; repetições passaram a `InstancedMesh`.
+
+### IMPACTO
+- **Leitura/realismo:** a seção mar–praia–cidade tornou-se inequívoca; coqueiros, janelas, veículos e postes dão escala.
+- **Qualidade visual:** espuma ondulada, chanfros, telhados e materiais diferenciados criam profundidade nas vistas próxima e superior.
+- **Performance:** apesar de quase triplicar o detalhe geométrico, o GLB caiu de 137 para 102 KB e ficou com 39 malhas no arquivo final.
+- **Organização:** 0 malhas e 0 materiais sem nome.
+
+### Notas (0–10)
+| Critério | Antes | Depois |
+|---|---:|---:|
+| Geometria | 5 | 8 |
+| Topologia | 6 | 8 |
+| Proporções | 7 | 8 |
+| Detalhamento | 4 | 8 |
+| Materiais | 4 | 7 |
+| Texturas | 3 | 7 |
+| Shading | 5 | 8 |
+| Realismo | 5 | 8 |
+| Otimização | 5 | 8 |
+| Apresentação | 6 | 8 |
+
+### Números
+| | Antes (publicado) | Depois (`saida/`) |
+|---|---:|---:|
+| KB | 137 | 102 |
+| Triângulos | 3 086 | 8 894 |
+| Materiais | 23 (sem nome) | 28 (nomeados) |
+| Malhas no GLB | 41 (156 nós sem nome) | 39 (0 sem nome) |
+| Altura | 9,8 m | 9,8 m |
+
+### Checklist (item 27)
+- [x] Proporção · [x] Silhueta · [x] Escala · [x] Geometria limpa · [x] Normais · [x] Shading · [x] Sem clipping · [x] Sem flutuação · [x] Sem faces duplicadas
+- [x] Bevels coerentes · [x] Materiais coerentes · [x] Texturas adequadas (janelas e areia) · [x] UV em metros · [x] Detalhe adequado · [x] Performance · [x] Organização · [x] Nomenclatura · [x] Exportação (`checar` OK)
+
+**Etiqueta:** sem mudança (topo 9,8 m; `altura: 7` atual preservada).
+
+---
+
+## praiaFuturo — Praia do Futuro e mega-barracas (`Praias.tsx`)
+
+### ANTES (problemas por gravidade)
+- **CRÍTICO:** nenhum.
+- **ALTO:** 207 nós e 24 materiais sem nome; barracas eram volumes marrons genéricos cobertos por copas de árvores, sem reconhecer a arquitetura de palha das mega-barracas; cidade sem janelas.
+- **MÉDIO:** praia, mar e avenida chapados; guarda-sóis sem haste; coqueiros simplificados; ausência de piscinas, decks, balcões e mobiliário.
+- **BAIXO:** pouca variação de cor na areia e nenhuma espuma orgânica.
+
+### DEPOIS (alterações)
+1. Reutilização da base de orla aprimorada: espuma ondulada, areia com variação, calçadão, avenida com faixas, carros e postes, cidade com janelas/lajes/telhados e coqueiros completos.
+2. Três mega-barracas reconstruídas com deck de madeira, seis esteios, cobertura de palha texturizada, beiral, balcão, piscina e oito conjuntos de mesas cada; todas as peças repetidas são instâncias.
+3. Fileira de guarda-sóis com hastes e lonas alternando branco, laranja e amarelo; material de lona em duas faces.
+4. Malhas e materiais nomeados, materiais de água/palha/areia com comportamento distinto.
+
+### IMPACTO
+- **Leitura:** as barracas passaram de blocos genéricos a protagonistas reconhecíveis; a sequência de piscinas, palha e guarda-sóis identifica a Praia do Futuro.
+- **Realismo/apresentação:** mobiliário, coqueiros arqueados, tráfego e espuma tornam a vista próxima muito mais rica sem perder o estilo de maquete.
+- **Performance:** 11,9 mil triângulos ainda estão muito abaixo do orçamento; GLB de 108 KB e somente 30 malhas.
+
+### Notas (0–10)
+| Critério | Antes | Depois |
+|---|---:|---:|
+| Geometria | 4 | 8 |
+| Topologia | 6 | 8 |
+| Proporções | 7 | 8 |
+| Detalhamento | 3 | 8 |
+| Materiais | 4 | 8 |
+| Texturas | 3 | 7 |
+| Shading | 5 | 8 |
+| Realismo | 4 | 8 |
+| Otimização | 5 | 8 |
+| Apresentação | 5 | 9 |
+
+### Números
+| | Antes (publicado) | Depois (`saida/`) |
+|---|---:|---:|
+| KB | 115 | 108 |
+| Triângulos | 3 124 | 11 976 |
+| Materiais | 24 (sem nome) | 27 (nomeados) |
+| Malhas no GLB | 43 (207 nós sem nome) | 30 (0 sem nome) |
+| Altura | 5,9 m | 5,9 m |
+
+### Checklist (item 27)
+- [x] Proporção · [x] Silhueta · [x] Escala · [x] Geometria limpa · [x] Normais · [x] Shading · [x] Sem clipping · [x] Sem flutuação · [x] Sem faces duplicadas
+- [x] Bevels coerentes · [x] Materiais coerentes · [x] Texturas adequadas (palha, janelas e areia) · [x] UV em metros · [x] Detalhe adequado · [x] Performance · [x] Organização · [x] Nomenclatura · [x] Exportação (`checar` OK)
+
+**Etiqueta:** sem mudança (topo 5,9 m; `altura: 6`).
+
+---
+
+## cambeba — Centro Administrativo do Cambeba (`Cambeba.tsx`)
+
+### ANTES (problemas por gravidade)
+- **CRÍTICO:** nenhum; implantação OSM, rumo e escala estavam corretos.
+- **ALTO:** 343 nós e 19 materiais sem nome; quatro edifícios principais tinham quinas vivas e grandes fachadas sem tratamento; mata era composta apenas por copas, sem troncos.
+- **MÉDIO:** 34 malhas no GLB publicado e 128 KB apesar da geometria simples; prédios menores eram caixas nuas; escultura da entrada e via interna não tinham organização nominal.
+- **BAIXO:** lago e estacionamento muito discretos; linguagem material pouco diferenciada.
+
+### DEPOIS (alterações)
+1. Prédios de contorno OSM convertidos em prismas com chanfro de 0,10 m; os três blocos retangulares usam caixas chanfradas, preservando posição, dimensão, rumo e altura.
+2. Material de brises verticais recebeu textura em canvas/UV em metros e nome próprio; coberturas mantêm as cores de referência.
+3. Mata continua determinística e densa, mas ganhou troncos hexagonais instanciados sob todas as copas, com quatro tons de folhagem.
+4. Todos os prédios, trechos de via, peças da escultura, terreno, lagoa, estacionamento e coberturas foram nomeados.
+5. A exportação meshopt consolidou o conjunto em 21 malhas finais; o aumento de triângulos vem dos chanfros e troncos visíveis.
+
+### IMPACTO
+- **Qualidade visual:** quinas agora capturam luz e a mata deixa de parecer um tapete de poliedros flutuantes.
+- **Leitura/consistência:** brises distinguem os edifícios administrativos; implantação original e caráter arborizado foram preservados.
+- **Performance:** 74 KB, 14,6 mil triângulos e 21 malhas — ampla margem para WebGL.
+- **Organização:** 343 nós sem nome no publicado passaram a 0 no final.
+
+### Notas (0–10)
+| Critério | Antes | Depois |
+|---|---:|---:|
+| Geometria | 6 | 8 |
+| Topologia | 6 | 8 |
+| Proporções | 8 | 8 |
+| Detalhamento | 5 | 7 |
+| Materiais | 5 | 7 |
+| Texturas | 4 | 6 |
+| Shading | 5 | 8 |
+| Realismo | 5 | 7 |
+| Otimização | 5 | 8 |
+| Apresentação | 6 | 7 |
+
+### Números
+| | Antes (publicado) | Depois (`saida/`) |
+|---|---:|---:|
+| KB | 128 | 74 |
+| Triângulos | 6 894 | 14 566 |
+| Materiais | 19 (sem nome) | 17 (nomeados) |
+| Malhas no GLB | 34 (343 nós sem nome) | 21 (0 sem nome) |
+| Altura | 6,2 m | 6,2 m |
+
+### Checklist (item 27)
+- [x] Proporção · [x] Silhueta · [x] Escala · [x] Geometria limpa · [x] Normais · [x] Shading · [x] Sem clipping · [x] Sem flutuação (troncos sobre o chão) · [x] Sem faces duplicadas
+- [x] Bevels coerentes · [x] Materiais coerentes · [x] Texturas adequadas · [x] UV em metros · [x] Detalhe adequado · [x] Performance · [x] Organização · [x] Nomenclatura · [x] Exportação (`checar` OK)
+
+**Etiqueta:** sem mudança (topo 6,2 m; `altura: 7`).
+
+---

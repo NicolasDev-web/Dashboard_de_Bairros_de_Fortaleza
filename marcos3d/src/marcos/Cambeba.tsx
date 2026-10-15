@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import type { Fabrica } from "../Cena";
+import { caixaChanfrada, prismaDePlanta } from "../util/geometria";
 
 /**
  * Centro Administrativo Governador Virgílio Távora (Cambeba) em miniatura. Posições e contornos do
@@ -75,34 +76,35 @@ function texturaBrises() {
 }
 
 function Predios({ fab }: { fab: Fabrica }) {
-  const { geos, brises } = useMemo(() => {
+  const { geos, caixas, brises } = useMemo(() => {
     const g = COM_CONTORNO.map((p) => {
       const [cx, cz] = emM(p.centro);
-      const forma = new THREE.Shape(p.pts.map(([x, y]) => new THREE.Vector2(cx + x * K * E, -(cz - y * K * E))));
-      return new THREE.ExtrudeGeometry(forma, { depth: p.h, bevelEnabled: false });
+      return prismaDePlanta(p.pts.map(([x, y]): Xy => [cx + x * K * E, cz - y * K * E]), p.h, 0, 0.1);
     });
-    return { geos: g, brises: new THREE.MeshStandardMaterial({ map: texturaBrises(), roughness: 0.9 }) };
+    const caixas = CAIXAS.map(([, , c, l, , h]) => caixaChanfrada(c * K * E, h, l * K * E, 0.1));
+    const brises = new THREE.MeshStandardMaterial({ map: texturaBrises(), roughness: 0.9 });
+    brises.name = "Mat_Concreto_Brises";
+    return { geos: g, caixas, brises };
   }, []);
   useEffect(
     () => () => {
       geos.forEach((g) => g.dispose());
+      caixas.forEach((g) => g.dispose());
       brises.map?.dispose();
       brises.dispose();
     },
-    [geos, brises],
+    [geos, caixas, brises],
   );
   const concreto = fab.cor("#a8a69f", 0.9);
   return (
     <>
       {COM_CONTORNO.map((p, i) => (
-        <mesh key={i} geometry={geos[i]} material={[fab.cor(p.telhado, 0.85), p.brises ? brises : concreto]} rotation-x={-Math.PI / 2} castShadow receiveShadow />
+        <mesh name={`Predio_Contorno_${i + 1}`} key={i} geometry={geos[i]} material={[fab.cor(p.telhado, 0.85), p.brises ? brises : concreto]} castShadow receiveShadow />
       ))}
       {CAIXAS.map(([x, y, c, l, rumo, h, b], i) => {
         const [mx, mz] = emM([x, y]);
         return (
-          <mesh key={i} position={[mx, h / 2, mz]} rotation-y={THREE.MathUtils.degToRad(90 - rumo)} material={b ? brises : concreto} castShadow receiveShadow>
-            <boxGeometry args={[c * K * E, h, l * K * E]} />
-          </mesh>
+          <mesh name={`Predio_Caixa_${i + 1}`} key={i} geometry={caixas[i]} position={[mx, 0, mz]} rotation-y={THREE.MathUtils.degToRad(90 - rumo)} material={b ? brises : concreto} castShadow receiveShadow />
         );
       })}
     </>
@@ -114,14 +116,14 @@ function Escultura({ fab }: { fab: Fabrica }) {
   const [x, z] = emM([-297, 343]);
   return (
     <group position={[x, 0, z]}>
-      <mesh position-y={0.08} material={fab.cor("#7fa35a", 0.95)} receiveShadow>
+      <mesh name="Escultura_Canteiro" position-y={0.08} material={fab.cor("#7fa35a", 0.95)} receiveShadow>
         <cylinderGeometry args={[2.2, 2.2, 0.16, 24]} />
       </mesh>
-      <mesh position-y={0.35} material={fab.cor("#c9c7c0", 0.8)}>
+      <mesh name="Escultura_Base" position-y={0.35} material={fab.cor("#c9c7c0", 0.8)}>
         <boxGeometry args={[0.9, 0.5, 0.9]} />
       </mesh>
       {Array.from({ length: 10 }, (_, i) => (
-        <mesh key={i} position-y={0.8 + i * 0.5} rotation={[0, i * 0.55, Math.PI / 4]} material={fab.cor("#d6d9db", 0.25)} castShadow>
+        <mesh name={`Escultura_Losango_${i + 1}`} key={i} position-y={0.8 + i * 0.5} rotation={[0, i * 0.55, Math.PI / 4]} material={fab.cor("#d6d9db", 0.25)} castShadow>
           <boxGeometry args={[0.5, 0.5, 0.12]} />
         </mesh>
       ))}
@@ -139,7 +141,7 @@ function Via({ fab }: { fab: Fabrica }) {
   return (
     <>
       {trechos.map((t, i) => (
-        <mesh key={i} position={[t.x, 0.07, t.z]} rotation={[-Math.PI / 2, 0, t.giro]} material={fab.cor("#6b6d6e", 0.95)} receiveShadow>
+        <mesh name={`Via_Interna_${i + 1}`} key={i} position={[t.x, 0.07, t.z]} rotation={[-Math.PI / 2, 0, t.giro]} material={fab.cor("#6b6d6e", 0.95)} receiveShadow>
           <planeGeometry args={[t.c + 1, 1.3]} />
         </mesh>
       ))}
@@ -183,6 +185,7 @@ function Mata({ fab }: { fab: Fabrica }) {
     return lista;
   }, []);
   const ref = useRef<THREE.InstancedMesh>(null);
+  const troncos = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => {
     const o = new THREE.Object3D();
     const cor = new THREE.Color();
@@ -193,14 +196,24 @@ function Mata({ fab }: { fab: Fabrica }) {
       o.updateMatrix();
       ref.current!.setMatrixAt(i, o.matrix);
       ref.current!.setColorAt(i, cor.set(tons[i % tons.length]));
+      o.position.set(a.x, a.s * 0.38, a.z);
+      o.scale.set(a.s * 0.14, a.s * 0.76, a.s * 0.14);
+      o.updateMatrix();
+      troncos.current!.setMatrixAt(i, o.matrix);
     });
     ref.current!.instanceMatrix.needsUpdate = true;
     if (ref.current!.instanceColor) ref.current!.instanceColor.needsUpdate = true;
+    troncos.current!.instanceMatrix.needsUpdate = true;
   }, [arvores]);
   return (
-    <instancedMesh ref={ref} args={[undefined, undefined, arvores.length]} castShadow receiveShadow material={fab.cor("#ffffff", 0.9)}>
-      <icosahedronGeometry args={[1, 0]} />
-    </instancedMesh>
+    <>
+      <instancedMesh name="Arvores_Mata" ref={ref} args={[undefined, undefined, arvores.length]} castShadow receiveShadow material={fab.cor("#ffffff", 0.9)}>
+        <icosahedronGeometry args={[1, 0]} />
+      </instancedMesh>
+      <instancedMesh name="Arvores_Mata_Troncos" ref={troncos} args={[undefined, undefined, arvores.length]} castShadow material={fab.cor("#72513a", 0.9)}>
+        <cylinderGeometry args={[1, 1, 1, 6]} />
+      </instancedMesh>
+    </>
   );
 }
 
@@ -214,17 +227,17 @@ export function Cambeba({ fab }: { fab: Fabrica }) {
   const [ex, ez] = emM([-40, 150]);
   return (
     <group>
-      <mesh geometry={chao} rotation-x={-Math.PI / 2} position-y={0.04} material={fab.cor("#6f9450", 0.95)} receiveShadow />
+      <mesh name="Terreno_Cambeba" geometry={chao} rotation-x={-Math.PI / 2} position-y={0.04} material={fab.cor("#6f9450", 0.95)} receiveShadow />
       {/* lagoa e brejo do riacho, alongada norte–sul */}
-      <mesh position={[lx, 0.07, lz]} rotation-x={-Math.PI / 2} scale={[40 * K * 0.9, 150 * K * 0.6, 1]} material={fab.cor("#3f6b62", 0.25)}>
+      <mesh name="Lagoa_Riacho" position={[lx, 0.07, lz]} rotation-x={-Math.PI / 2} scale={[40 * K * 0.9, 150 * K * 0.6, 1]} material={fab.cor("#3f6b62", 0.25)}>
         <circleGeometry args={[1, 24]} />
       </mesh>
       {/* estacionamento do MP com as coberturas azuis de sombreamento */}
-      <mesh position={[ex, 0.06, ez]} rotation-x={-Math.PI / 2} material={fab.cor("#8a8c8c", 0.95)} receiveShadow>
+      <mesh name="Estacionamento_MP" position={[ex, 0.06, ez]} rotation-x={-Math.PI / 2} material={fab.cor("#8a8c8c", 0.95)} receiveShadow>
         <planeGeometry args={[4.2, 3.4]} />
       </mesh>
       {[-1, 0, 1].map((i) => (
-        <mesh key={i} position={[ex, 0.9, ez + i * 1.05]} material={fab.cor("#2e5fb8", 0.5)} castShadow>
+        <mesh name={`Cobertura_Estacionamento_${i + 1}`} key={i} position={[ex, 0.9, ez + i * 1.05]} material={fab.cor("#2e5fb8", 0.5)} castShadow>
           <boxGeometry args={[3.8, 0.08, 0.7]} />
         </mesh>
       ))}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>Revisão das maquetes 3D — Fortaleza</title>
+  <link rel="stylesheet" href="/aprovacao.css" />
+</head>
+<body>
+  <a class="pular" href="#modelos">Ir para os modelos</a>
+
+  <header class="cabecalho">
+    <a class="marca" href="/" aria-label="Voltar à oficina 3D">
+      <span>Fortaleza em miniatura</span>
+      <small>mesa de aprovação</small>
+    </a>
+    <p>Revisão privada — nada desta página é publicado no dashboard.</p>
+  </header>
+
+  <main>
+    <section class="abertura" aria-labelledby="titulo">
+      <div class="abertura-texto">
+        <p class="contexto">30 maquetes · primeira rodada</p>
+        <h1 id="titulo">Olhe como quem caminha em volta do prédio.</h1>
+        <p class="introducao">Compare forma, escala e caráter. Marque o que pode seguir e o que ainda precisa voltar para a oficina.</p>
+      </div>
+      <div class="placar" aria-label="Resumo da revisão">
+        <div><strong id="total-aprovados">0</strong><span>aprovados</span></div>
+        <div><strong id="total-revisar">0</strong><span>para rever</span></div>
+        <div><strong id="total-pendentes">30</strong><span>sem decisão</span></div>
+      </div>
+      <div class="faixa-renders" id="faixa-renders" aria-hidden="true"></div>
+    </section>
+
+    <section class="instrumentos" aria-label="Controles da revisão">
+      <div class="filtros" role="group" aria-label="Filtrar modelos">
+        <button class="filtro ativo" type="button" data-filtro="todos">Todos <span>30</span></button>
+        <button class="filtro" type="button" data-filtro="existente">Aprimorados <span>13</span></button>
+        <button class="filtro" type="button" data-filtro="novo">Novos <span>17</span></button>
+        <button class="filtro" type="button" data-filtro="revisar">Para rever</button>
+      </div>
+      <label class="busca">
+        <span>Buscar</span>
+        <input id="busca" type="search" placeholder="Nome ou bairro" autocomplete="off" />
+      </label>
+      <div class="vistas" role="group" aria-label="Escolher vista">
+        <button type="button" class="vista ativa" data-vista="perspectiva">Perspectiva</button>
+        <button type="button" class="vista" data-vista="frente">Frente</button>
+        <button type="button" class="vista" data-vista="close">Detalhe</button>
+        <button type="button" class="vista" data-vista="topo">Topo</button>
+      </div>
+      <button class="exportar" id="exportar" type="button">Baixar decisões</button>
+    </section>
+
+    <section class="lista" id="modelos" aria-live="polite"></section>
+  </main>
+
+  <template id="modelo-template">
+    <article class="modelo">
+      <header class="modelo-cabecalho">
+        <div>
+          <p class="modelo-tipo"></p>
+          <h2 class="modelo-nome"></h2>
+          <p class="modelo-bairro"></p>
+        </div>
+        <div class="decisao" role="group" aria-label="Decisão sobre o modelo">
+          <button type="button" data-decisao="aprovado">Aprovar</button>
+          <button type="button" data-decisao="revisar">Pedir ajustes</button>
+        </div>
+      </header>
+      <div class="comparacao">
+        <figure class="quadro quadro-antes">
+          <figcaption>Antes</figcaption>
+          <img loading="lazy" alt="" />
+          <p class="imagem-ausente">Sem versão anterior — esta maquete é nova.</p>
+        </figure>
+        <figure class="quadro quadro-depois">
+          <figcaption>Depois</figcaption>
+          <img loading="lazy" alt="" />
+          <p class="imagem-ausente">Render ainda não gerado.</p>
+        </figure>
+        <div class="linha-centro" aria-hidden="true"><span></span></div>
+      </div>
+      <footer class="modelo-rodape">
+        <div class="estado-tecnico"><span class="sinal"></span><span class="estado-texto">Verificando arquivos…</span></div>
+        <details class="diagnostico">
+          <summary>Diagnóstico e notas</summary>
+          <div class="diagnostico-conteudo">Abra a página por <code>npm run dev</code> para carregar o relatório.</div>
+        </details>
+      </footer>
+    </article>
+  </template>
+
+  <script type="module" src="/aprovacao.js"></script>
+</body>
+</html>
