@@ -27,6 +27,12 @@ export const ALTURA_ETIQUETA = 15;
 
 const BASE = "/blender/saida/";
 
+/**
+ * Cor das telhas (o exportador do Blender não leva a cor-base de material com textura): o atlas tem as fiadas em tons
+ * claros e a cor vem daqui. Rosa das pirâmides atuais (fotos 2018–2025), uma pink, barro dos casarões.
+ */
+const COR_TELHA: Record<string, string> = { Mat_Telha_Rosa: "#cf6a82", Mat_Telha_Pink: "#d8336e", Mat_Telha_Barro: "#c4643e" };
+
 type Arvore = [x: number, yBase: number, z: number, r: number];
 type Coqueiro = [x: number, z: number, h: number, giro: number];
 type Pessoa = [x: number, y: number, z: number, giro: number, cor: number];
@@ -165,7 +171,7 @@ function texturaPiso() {
     g.fillStyle = `rgba(0,0,0,${v})`;
     g.fillRect(r() * n, r() * n, 2 + r() * 5, 2 + r() * 5);
   }
-  g.strokeStyle = "rgba(0,0,0,0.10)";
+  g.strokeStyle = "rgba(0,0,0,0.05)";
   g.lineWidth = 7;
   g.beginPath();
   g.moveTo(0, n);
@@ -217,6 +223,7 @@ function PecasBlender() {
           novo = Object.assign(new THREE.MeshStandardMaterial({ map: extras.murais, roughness: 0.7, vertexColors: mat.vertexColors }), { name: "Mat_Murais" });
         } else {
           novo = mat;
+          if (COR_TELHA[mat.name]) mat.color.set(COR_TELHA[mat.name]);
           if (chao) {
             mat.aoMap = ao;
             mat.aoMapIntensity = 1;

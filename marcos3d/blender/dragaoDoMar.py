@@ -476,7 +476,7 @@ def atlas_esquadrias(n=256):
             v = 0.515 + li * 0.06
             r(u, v, u + 0.03, v + 0.032, "#2b2f35")
     # guarda-corpo em X: fundo cinza-azulado (o vazio) com montantes, corrimão e X brancos
-    r(0, 0.25, 0.5, 0.5, "#8d9aa6")
+    r(0, 0.25, 0.5, 0.5, "#c3cbd2")
     for k in range(5):
         u = k * 0.125
         r(max(0, u - 0.006), 0.25, u + 0.006, 0.5, "#f6f5f0")
@@ -487,7 +487,7 @@ def atlas_esquadrias(n=256):
         for k in range(4):
             for uu in (k * 0.125 + t * 0.125, (k + 1) * 0.125 - t * 0.125):
                 x = int(uu * n)
-                for xx in (x - 1, x, x + 1):
+                for xx in (x - 2, x - 1, x, x + 1, x + 2):
                     if 0 <= xx < n // 2:
                         i = (y * n + xx) * 4
                         c = srgb_lin("#f6f5f0")
@@ -549,6 +549,7 @@ def criar_materiais():
     M = {}
     M["piso"] = mat("Mat_Chao_Piso", "#cfcac0", 0.92)
     M["calcadao"] = mat("Mat_Chao_Calcadao", "#bdb6aa", 0.9)
+    M["piso_alto"] = mat("Mat_Piso_Elevado", "#e4e0d8", 0.85)
     M["patio"] = mat("Mat_Chao_Patio", "#a9a39a", 0.9)
     M["grama"] = mat("Mat_Chao_Grama", "#6b9a45", 0.95)
     M["meiofio"] = mat("Mat_Meio_Fio", "#d9d5cc", 0.85)
@@ -561,7 +562,7 @@ def criar_materiais():
     M["cobertura"] = mat("Mat_Cobertura_Laje", "#c9c6bf", 0.85)
     M["vermelho"] = mat("Mat_Trelica_Vermelha", "#c0272d", 0.5, 0.3)
     M["pedra"] = mat("Mat_Pedra_Granito", "#8c817c", 0.55)
-    M["cupula"] = mat("Mat_Cupula_Vidro", "#a8bfd8", 0.22, 0.4)
+    M["cupula"] = mat("Mat_Cupula_Vidro", "#bcd0e6", 0.2, 0.25)
     M["escuro"] = mat("Mat_Vazio_Escuro", "#2a2d33", 0.8)
     M["reboco"] = mat("Mat_Reboco_Casarao", "#ffffff", 0.85)
     M["frisos"] = mat("Mat_Frisos_Brancos", "#f6f3ea", 0.7)
@@ -712,12 +713,17 @@ def museu(M):
     for y0, y1 in ((10.6, 16.0), (16.0, 21.6)):
         volume(P, M, -19.2, y0, -12.8, y1, 6.4)
         piramide(P, M, -19.2, y0, -12.8, y1, Z0 + 6.4, 2.6, rosa)
-    faixa_vaos(P, M, (-12.8, 21.6), (-18.4, 21.6), Z0 + 0.1, Z0 + 2.3, 2, "vidro")
+    faixa_vaos(P, M, (-12.8, 21.6), (-19.2, 21.6), Z0 + 0.1, Z0 + 2.3, 3, "vidro")
+    faixa_vaos(P, M, (-26.2, 18.6), (-26.2, 10.6), Z0 + 0.1, Z0 + 2.4, 3, "vidro", 0.55)
+    faixa_vaos(P, M, (-26.2, 18.6), (-26.2, 10.6), Z0 + 6.4, Z0 + 8.6, 1, "furos", 0.55)
+    triangulos(P, M, (-26.2, 18.6), (-26.2, 10.6), Z0 + 4.2, 5, 0.5)
+    faixa_vaos(P, M, (-23.4, 10.6), (-23.4, 3.6), Z0 + 1.7, Z0 + 3.6, 3, "vidro", 0.55)
+    triangulos(P, M, (-23.4, 10.6), (-23.4, 3.6), Z0 + 4.6, 4, 0.45)
     # pavilhão noroeste, mais baixo
-    volume(P, M, -24.6, 18.6, -18.4, 25.0, 5.4)
-    piramide(P, M, -24.6, 18.6, -18.4, 25.0, Z0 + 5.4, 2.4, rosa)
-    faixa_vaos(P, M, (-18.4, 25.0), (-24.6, 25.0), Z0 + 0.1, Z0 + 2.3, 3, "vidro")
-    faixa_vaos(P, M, (-24.6, 25.0), (-24.6, 18.6), Z0 + 3.0, Z0 + 4.4, 3, "fita")
+    volume(P, M, -23.4, 18.6, -19.2, 23.0, 5.4)
+    piramide(P, M, -23.4, 18.6, -19.2, 23.0, Z0 + 5.4, 2.3, rosa)
+    faixa_vaos(P, M, (-19.2, 23.0), (-23.4, 23.0), Z0 + 0.1, Z0 + 2.3, 2, "vidro")
+    faixa_vaos(P, M, (-23.4, 23.0), (-23.4, 18.6), Z0 + 3.0, Z0 + 4.4, 2, "fita")
     # volume da pirâmide pink com o grafite colorido voltado para o jardim do Planetário (leste)
     volume(P, M, -12.8, 10.6, -7.4, 20.8, 5.2)
     piramide(P, M, -12.8, 10.6, -7.4, 20.8, Z0 + 5.2, 2.4, pink)
@@ -737,14 +743,14 @@ def museu(M):
     P.poli(q, M["murais"], [uv_mural("letreiro", a, b) for a, b in ((0, 0), (1, 0), (1, 1), (0, 1))])
     # aberturas triangulares no alto dos pavilhões (como no Planetário, foto da praça)
     triangulos(P, M, (-23.4, 3.6), (-21.2, 3.6), Z0 + 4.4, 2, 0.5)
-    triangulos(P, M, (-12.8, 21.6), (-18.4, 21.6), Z0 + 4.6, 3, 0.5)
+    triangulos(P, M, (-12.8, 21.6), (-19.2, 21.6), Z0 + 4.6, 4, 0.5)
     # pódio com escadaria do calçadão até o terraço baixo (fotos "Dragão do Mar 10/11")
     pod = ret(-23.4, 0.6, -9.2, 3.6)
-    P.juntar(bm_prisma(pod, Z0, Z0 + 1.5, 0.04, mat_lados=1), [M["calcadao"], M["branco"]])
+    P.juntar(bm_prisma(pod, Z0, Z0 + 1.5, 0.04, mat_lados=1), [M["piso_alto"], M["branco"]])
     reservar(pod, 0.4)
     for k in range(6):
         y0 = Y_FRENTE_MUSEU - 0.4 + k * 0.25
-        P.juntar(bm_prisma(ret(-21.0, y0, -12.0, 0.6), Z0, Z0 + 0.25 * (k + 1), 0.0, mat_lados=1), [M["calcadao"], M["branco"]])
+        P.juntar(bm_prisma(ret(-21.0, y0, -12.0, 0.6), Z0, Z0 + 0.25 * (k + 1), 0.0, mat_lados=1), [M["piso_alto"], M["branco"]])
     # guarda-corpos dos terraços (atlas "grade")
     def grade(p0, p1, z, h=0.55):
         a, b = p0, p1
@@ -759,6 +765,7 @@ def museu(M):
     grade((-13.3, 3.7), (-9.3, 3.7), zt)
     grade((-6.5, 27.3), (-12.7, 27.3), zt)
     reservar(ret(-26.2, 0.0, -6.0, 27.4), 0.4)
+    reservar(ret(-26.2, 18.6, -19.2, 24.0), 0.6)
     return P.criar()
 
 
@@ -772,8 +779,8 @@ def planetario(M):
     """
     P = Peca("Planetario")
     C = PLAN_C
-    R_BAIXO, R_ALTO, R_CUP = 4.7, 3.9, 3.65
-    Z_LAJE, Z_B1, Z_TRI, Z_B2, Z_TOPO_B, Z_TOPO_A = 2.25, 2.45, 3.25, 4.05, 4.9, 6.4
+    R_BAIXO, R_ALTO, R_CUP = 5.05, 4.2, 3.95
+    Z_LAJE, Z_B1, Z_TRI, Z_B2, Z_TOPO_B, Z_TOPO_A = 2.4, 2.6, 3.45, 4.3, 5.2, 6.85
     T = Matrix.Translation((C.x, C.y, 0))
     # piso xadrez (atlas: 4 × 4 casas; o disco repete por setores)
     n = 32
@@ -840,7 +847,7 @@ def planetario(M):
         o = a + Vector((-d.y, d.x, 0)).normalized() * s * 0.75
         barra(P, (o.x, o.y, Z0 + Z_TOPO_B - 0.05), (o.x + d.x, o.y + d.y, Z0 + Z_TOPO_B - 0.05), 0.18, M["vermelho"], 0.35)
     m_ = (a + b) / 2
-    P.juntar(bm_caixa(L, 1.6, 0.12), M["calcadao"], M_em(m_.x, m_.y, Z0 + Z_TOPO_B - 0.05, giro))
+    P.juntar(bm_caixa(L, 1.6, 0.12), M["piso_alto"], M_em(m_.x, m_.y, Z0 + Z_TOPO_B - 0.05, giro))
     for s in (-1, 1):
         o = m_ + Vector((-d.y, d.x, 0)).normalized() * s * 0.8
         P.juntar(bm_caixa(L, 0.05, 0.5), M["frisos"], M_em(o.x, o.y, Z0 + Z_TOPO_B + 0.07, giro))
@@ -922,7 +929,7 @@ def trelica(P, M, a, b, z, larg=2.2, alt=2.0, painel=1.5, deck=True):
     if deck:
         m_ = (a + b) / 2
         giro = math.degrees(math.atan2(t.y, t.x))
-        P.juntar(bm_caixa(L, larg - 0.05, 0.16), M["calcadao"], M_em(m_.x, m_.y, z - 0.16, giro))
+        P.juntar(bm_caixa(L, larg - 0.05, 0.16), M["piso_alto"], M_em(m_.x, m_.y, z - 0.16, giro))
         # vigas transversais sob o piso
         for k in range(n + 1):
             p = a + t * (L * k / n)
@@ -1008,7 +1015,7 @@ def torres_passarelas(M):
             o = q + nrm * sgn * 0.95
             P.juntar(bm_cilindro(0.17, zp - 0.2 - Z0, 10), M["branco"], Matrix.Translation((o.x, o.y, Z0)))
     # toco da passarela sul, que segue sobre a Rua José Avelino (corta na borda do disco)
-    fim = TORRE_SUL + Vector((1.6, -4.0, 0))
+    fim = TORRE_SUL + Vector((1.3, -3.3, 0))
     trelica(P, M, (TORRE_SUL.x + 0.3, TORRE_SUL.y - s), (fim.x, fim.y), zp, painel=1.4)
     for sgn in (-1, 1):
         d = (fim - TORRE_SUL).normalized()
@@ -1040,8 +1047,8 @@ def caminho_rampa(vias):
     res = []
     for x, y in out:
         v = Vector((x, y)) - PLAN_C.xy
-        if v.length < 7.3:
-            v = v.normalized() * 7.3
+        if v.length < 7.6:
+            v = v.normalized() * 7.6
             x, y = PLAN_C.x + v.x, PLAN_C.y + v.y
         if math.hypot(x, y) > RAIO - 2.0:
             break
@@ -1078,7 +1085,7 @@ def rampa(M, vias):
     for i in range(len(eixo) - 1):
         z0, z1 = Z0 + cota(s_acum[i]), Z0 + cota(s_acum[i + 1])
         a0, a1, b0, b1 = esq[i], esq[i + 1], dir_[i], dir_[i + 1]
-        P.poli([(b0.x, b0.y, z0), (b1.x, b1.y, z1), (a1.x, a1.y, z1), (a0.x, a0.y, z0)], M["calcadao"])
+        P.poli([(b0.x, b0.y, z0), (b1.x, b1.y, z1), (a1.x, a1.y, z1), (a0.x, a0.y, z0)], M["piso_alto"])
         P.poli([(a0.x, a0.y, z0 - esp), (a1.x, a1.y, z1 - esp), (b1.x, b1.y, z1 - esp), (b0.x, b0.y, z0 - esp)], M["branco"])
         # bordas (testeiras brancas) e guarda-corpos
         for (p0, p1, zz0, zz1) in ((a1, a0, z1, z0), (b0, b1, z0, z1)):
@@ -1168,31 +1175,95 @@ def casarao(P, M, x0, x1, y, h, cor, friso, prof=4.2, seed=0):
     reservar(ret(x0, yb, x1, y), 0.5)
 
 
+def retangulo_minimo(poli):
+    """Retângulo de menor área que contém o polígono: (centro, giro em graus, largura, profundidade)"""
+    melhor = None
+    for a, b in zip(poli, poli[1:] + poli[:1]):
+        ang = math.atan2(b[1] - a[1], b[0] - a[0])
+        ca, sa = math.cos(-ang), math.sin(-ang)
+        rx = [p[0] * ca - p[1] * sa for p in poli]
+        ry = [p[0] * sa + p[1] * ca for p in poli]
+        ar = (max(rx) - min(rx)) * (max(ry) - min(ry))
+        if melhor is None or ar < melhor[0]:
+            cxr, cyr = (max(rx) + min(rx)) / 2, (max(ry) + min(ry)) / 2
+            c = (cxr * math.cos(ang) - cyr * math.sin(ang), cxr * math.sin(ang) + cyr * math.cos(ang))
+            melhor = (ar, c, math.degrees(ang), max(rx) - min(rx), max(ry) - min(ry))
+    return melhor[1:]
+
+
+def caber_no_disco(c, giro, w, d, folga=0.5):
+    """Encolhe o retângulo (pelos lados que saem) até caber no disco; None se ficar pequeno demais"""
+    u0, u1, v0, v1 = -w / 2, w / 2, -d / 2, d / 2
+    ca, sa = math.cos(math.radians(giro)), math.sin(math.radians(giro))
+    for _ in range(200):
+        fora = False
+        for su in (-1, 1):
+            for sv in (-1, 1):
+                u, v = (u1 if su > 0 else u0), (v1 if sv > 0 else v0)
+                x, y = c[0] + u * ca - v * sa, c[1] + u * sa + v * ca
+                if math.hypot(x, y) > RAIO - folga:
+                    fora = True
+                    if su > 0:
+                        u1 -= 0.2
+                    else:
+                        u0 += 0.2
+                    if sv > 0:
+                        v1 -= 0.2
+                    else:
+                        v0 += 0.2
+        if not fora:
+            break
+        if u1 - u0 < 1.6 or v1 - v0 < 1.6:
+            return None
+    um, vm = (u0 + u1) / 2, (v0 + v1) / 2
+    return (c[0] + um * ca - vm * sa, c[1] + um * sa + vm * ca), u1 - u0, v1 - v0
+
+
+def telhado_girado(P, M, c, giro, w, d, z, h, m, beiral=0.2):
+    """Telhado de quatro águas (com beiral e testeira) sobre um retângulo girado: monta no lugar e transforma"""
+    Ploc = Peca("_tmp_telhado")
+    piramide(Ploc, M, -w / 2, -d / 2, w / 2, d / 2, 0.0, h, m, beiral, ponteira=False)
+    P.juntar(Ploc.bm, Ploc.mats, M_em(c[0], c[1], z, giro))
+
+
 def fundos(P, M, poli, h, telhado, seed):
-    """Corpo de fundos de um lote (planta do OSM levada à miniatura): paredes caiadas e telhado de telha ou fibrocimento"""
-    poli = simplificar(recortar_no_disco(poli, RAIO - 0.4), 0.3)
+    """
+    Corpo de fundos de um lote (planta do OSM levada à miniatura): o retângulo mínimo do lote, paredes caiadas, uma fita
+    de janelas e o telhado de quatro águas de telha ou de fibrocimento (o mar de telhados atrás dos casarões, ref-2).
+    """
     if len(poli) < 3 or abs(area(poli)) < 1.0:
         return
-    xs, ys = [p[0] for p in poli], [p[1] for p in poli]
-    P.juntar(bm_prisma(poli, Z0, Z0 + h, 0.0, mat_lados=1), [M["cobertura"], tinta(M["reboco"], ["#eee9df", "#e6e0d3", "#f0e6d8"][seed % 3])])
-    # telhado: prisma inset (quatro águas aproximado) sobre a planta
-    bm = bmesh.new()
-    vs = [bm.verts.new((x, y, Z0 + h)) for x, y in anti_horario(poli)]
-    f = bm.faces.new(vs)
-    curto = min(max(xs) - min(xs), max(ys) - min(ys))
-    r = bmesh.ops.inset_region(bm, faces=[f], thickness=curto * 0.42, depth=min(1.4, curto * 0.32), use_even_offset=True)
-    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-    for fc in bm.faces:
-        fc.material_index = 0
-    uv = bm.loops.layers.uv.new("UVMap")
-    for fc in bm.faces:
-        n = fc.normal
-        hz = Vector((n.x, n.y)).normalized() if Vector((n.x, n.y)).length > 1e-3 else Vector((1, 0))
-        for l in fc.loops:
-            co = l.vert.co
-            l[uv].uv = uv_reg("telha", ((co.x * -hz.y + co.y * hz.x) / 3.0) % 1.0, ((co.x * -hz.x + co.y * -hz.y) / 1.8) % 1.0)
-    P.juntar(bm, telhado)
-    reservar(poli, 0.3)
+    c, giro, w, d = retangulo_minimo(poli)
+    r = caber_no_disco(c, giro, w * 0.97, d * 0.97)
+    if r is None:
+        return
+    c, w, d = r
+    cor = ["#eee9df", "#e6e0d3", "#f0e6d8", "#e9e2e8"][seed % 4]
+    T = M_em(c[0], c[1], Z0, giro)
+    bm = bm_caixa(w, d, h, 0.04)
+    for f in bm.faces:
+        f.material_index = 0 if f.normal.z > 0.5 else 1
+    P.juntar(bm, [M["cobertura"], tinta(M["reboco"], cor)], T)
+    # fitas de janelas nos lados compridos
+    for s in (-1, 1):
+        if w >= d:
+            a, b = Vector((-w / 2 + 0.4, s * (d / 2 + 0.02), 0)), Vector((w / 2 - 0.4, s * (d / 2 + 0.02), 0))
+        else:
+            a, b = Vector((s * (w / 2 + 0.02), -d / 2 + 0.4, 0)), Vector((s * (w / 2 + 0.02), d / 2 - 0.4, 0))
+        q = [a + Vector((0, 0, h * 0.42)), b + Vector((0, 0, h * 0.42)), b + Vector((0, 0, h * 0.75)), a + Vector((0, 0, h * 0.75))]
+        q = [tuple(T @ v) for v in q]
+        nrm = (Vector(q[1]) - Vector(q[0])).cross(Vector(q[3]) - Vector(q[0]))
+        centro = Vector((c[0], c[1], 0))
+        if nrm.dot(Vector(q[0]) - centro) < 0:
+            q = [q[1], q[0], q[3], q[2]]
+        L = (Vector(q[1]) - Vector(q[0])).length
+        P.quad_uv(q, M["esquadrias"], "fita", (min(1.0, L / 6.0), 1))
+    curto = min(w, d)
+    telhado_girado(P, M, c, giro, w, d, Z0 + h, min(1.6, curto * 0.32), telhado, 0.18)
+    # caixa d'água em alguns
+    if seed % 3 == 0:
+        P.juntar(bm_caixa(0.9, 0.9, 0.7, 0.04), M["branco"], T @ Matrix.Translation((w * 0.2, 0, h + curto * 0.2)))
+    reservar([tuple(T @ Vector((x, y, 0)))[:2] for x, y in ((-w / 2, -d / 2), (w / 2, -d / 2), (w / 2, d / 2), (-w / 2, d / 2))], 0.3)
 
 
 def casaroes(M, vias):
@@ -1223,7 +1294,7 @@ def casaroes(M, vias):
         poli = [(x, min(y, Y_FRENTE_CASAROES - 4.3 if x > -5.6 else Y_FRENTE_CASAROES - 3.1)) for x, y in poli]
         if abs(area(poli)) < 1.5:
             continue
-        h = max(2.6, min(5.6, float(tags.get("height", "6")) * 0.5))
+        h = max(2.4, min(3.8, float(tags.get("height", "6")) * 0.33))
         fundos(P, M, poli, h, telhas[k % len(telhas)], k)
     return P.criar()
 
@@ -1256,6 +1327,10 @@ def anfiteatro(M, vias):
     for a, b in ((alto0, alto1),):
         q = [(a.x, a.y), (b.x, b.y), (b.x - dir_palco.x * 0.3, b.y - dir_palco.y * 0.3), (a.x - dir_palco.x * 0.3, a.y - dir_palco.y * 0.3)]
         P.juntar(bm_prisma(q, Z0, Z0 + 3.4, 0.03, mat_lados=1), [M["branco"], M["branco"]])
+        o = -dir_palco * 0.32
+        a2, b2 = a + t * 0.6 + o, b - t * 0.6 + o
+        P.poli([(b2.x, b2.y, Z0 + 0.4), (a2.x, a2.y, Z0 + 0.4), (a2.x, a2.y, Z0 + 3.1), (b2.x, b2.y, Z0 + 3.1)], M["murais"],
+               [uv_mural("azul", u, v) for u, v in ((0, 0), (1, 0), (1, 1), (0, 1))])
     for a in (alto0, alto1):
         q = [(a.x, a.y), (a.x + dir_palco.x * prof, a.y + dir_palco.y * prof)]
         o = t * (0.25 if a is alto0 else -0.25)
@@ -1264,8 +1339,8 @@ def anfiteatro(M, vias):
         P.juntar(bm_prisma(poli[:1] + poli[3:] + [(a.x - o.x + dir_palco.x * 0.6, a.y - o.y + dir_palco.y * 0.6), (a.x + dir_palco.x * 0.6, a.y + dir_palco.y * 0.6)], Z0, Z0 + 3.4, 0.0, mat_lados=1), [M["branco"], M["branco"]])
     # palco e cobertura abaulada branca (puxados para dentro do disco)
     meio = (alto0 + alto1) / 2 + dir_palco * (prof + 2.2)
-    if meio.length > RAIO - 3.6:
-        meio = meio.normalized() * (RAIO - 3.6)
+    if meio.length > RAIO - 4.1:
+        meio = meio.normalized() * (RAIO - 4.1)
     giro = math.degrees(math.atan2(t.y, t.x))
     P.juntar(bm_caixa(largura * 0.6, 3.0, 0.7, 0.05), M["madeira"], M_em(meio.x, meio.y, Z0, giro))
     P.juntar(bm_caixa(largura * 0.62, 0.3, 3.4, 0.04), M["escuro"], M_em(meio.x + dir_palco.x * 1.4, meio.y + dir_palco.y * 1.4, Z0, giro))
@@ -1274,11 +1349,26 @@ def anfiteatro(M, vias):
             c = meio + t * s * largura * 0.3 + dir_palco * u * 1.3
             P.juntar(bm_cilindro(0.1, 3.3, 8), M["metal"], Matrix.Translation((c.x, c.y, Z0)))
     # cobertura: calota achatada sobre os pilares (lona branca)
-    bm = bm_esfera(1.0, 3)
-    bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.calc_center_median().z < 0.0], context="FACES")
-    for v in bm.verts:
-        v.co.z = max(v.co.z, 0.0)
-    P.juntar(bm, M["lona"], M_em(meio.x, meio.y, Z0 + 3.3, giro) @ Matrix.Diagonal((largura * 0.36, 2.3, 1.0, 1)), liso=True)
+    perfil = []
+    for k in range(13):
+        ang = math.pi * k / 12
+        perfil.append((math.cos(ang), math.sin(ang)))
+    bm = bmesh.new()
+    nseg = 10
+    aneis = []
+    for j in range(nseg + 1):
+        u = -1 + 2 * j / nseg
+        aba = 1 - 0.18 * u * u            # a lona baixa nas pontas
+        aneis.append([bm.verts.new((u * largura * 0.36, py * 2.2 * aba, pz * 1.25 * aba)) for py, pz in perfil])
+    for j in range(nseg):
+        for k in range(12):
+            bm.faces.new([aneis[j][k], aneis[j + 1][k], aneis[j + 1][k + 1], aneis[j][k + 1]])
+    # dois lados: a face de baixo é a mesma lona com a ordem invertida, 4 cm abaixo
+    for j in range(nseg):
+        for k in range(12):
+            vs = [aneis[j][k], aneis[j][k + 1], aneis[j + 1][k + 1], aneis[j + 1][k]]
+            bm.faces.new([bm.verts.new(v.co - Vector((0, 0, 0.04))) for v in vs])
+    P.juntar(bm, M["lona"], M_em(meio.x, meio.y, Z0 + 3.2, giro), liso=True)
     # treliça de luz sob a lona
     a, b = meio - t * largura * 0.32, meio + t * largura * 0.32
     barra(P, (a.x, a.y, Z0 + 3.2), (b.x, b.y, Z0 + 3.2), 0.18, M["metal"])
