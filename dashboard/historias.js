@@ -45,7 +45,7 @@
   const UFU_MESSEJANA = F("Cadernos de História (UFU): a Câmara da Vila de Índios de Messejana", "https://seer.ufu.br/index.php/cdhis/article/view/52158");
 
   window.MARCOS = {
-    centro: { arquivo: "centro-catedral-praca-do-ferreira-mercado.glb", nome: "Catedral, Praça do Ferreira e Mercado Central", rotulo: "Catedral · Praça do Ferreira · Mercado", lat: -3.7252, lng: -38.5255, altura: 19 },
+    centro: { arquivo: "centro-catedral-praca-do-ferreira-mercado.glb", nome: "Catedral, Praça do Ferreira e Mercado Central", rotulo: "Catedral · Praça do Ferreira · Mercado", lat: -3.7252, lng: -38.5255, altura: 21 },
     aeroporto: { arquivo: "aeroporto-pinto-martins.glb", nome: "Aeroporto Internacional Pinto Martins", rotulo: "Aeroporto Pinto Martins", lat: -3.7761, lng: -38.5355, altura: 16 },
     castelao: { arquivo: "arena-castelao.glb", nome: "Arena Castelão", lat: -3.8067, lng: -38.5217, altura: 12 },
     cambeba: { arquivo: "centro-administrativo-do-cambeba.glb", nome: "Centro Administrativo do Cambeba", rotulo: "Centro Administrativo", lat: -3.8122, lng: -38.4875, altura: 7 },
@@ -53,8 +53,8 @@
     northShopping: { arquivo: "north-shopping-fortaleza.glb", nome: "North Shopping Fortaleza", rotulo: "North Shopping", lat: -3.7349, lng: -38.566, altura: 13 },
     riomarFortaleza: { arquivo: "riomar-fortaleza.glb", nome: "Shopping RioMar Fortaleza", rotulo: "RioMar Fortaleza", lat: -3.7411, lng: -38.4726, altura: 22 },
     riomarKennedy: { arquivo: "riomar-kennedy.glb", nome: "RioMar Kennedy", lat: -3.7266, lng: -38.5679, altura: 15 },
-    unifor: { arquivo: "unifor.glb", nome: "Universidade de Fortaleza (Unifor)", rotulo: "Unifor", lat: -3.7687, lng: -38.4777, altura: 7 },
-    iguatemi: { arquivo: "shopping-iguatemi.glb", nome: "Shopping Iguatemi Bosque", rotulo: "Iguatemi Bosque", lat: -3.7554, lng: -38.4888, altura: 9 },
+    unifor: { arquivo: "unifor.glb", nome: "Universidade de Fortaleza (Unifor)", rotulo: "Unifor", lat: -3.7687, lng: -38.4777, altura: 9 },
+    iguatemi: { arquivo: "shopping-iguatemi.glb", nome: "Shopping Iguatemi Bosque", rotulo: "Iguatemi Bosque", lat: -3.7554, lng: -38.4888, altura: 8 },
     praiaIracema: { arquivo: "praia-de-iracema.glb", nome: "Ponte dos Ingleses e Iracema Guardiã", rotulo: "Ponte dos Ingleses", lat: -3.7181, lng: -38.5168, altura: 7 },
     praiaFuturo: { arquivo: "praia-do-futuro.glb", nome: "Praia do Futuro", lat: -3.732, lng: -38.4572, altura: 6 },
     terminalAntonioBezerra: { arquivo: "terminal-antonio-bezerra.glb", nome: "Terminal de Integração Antônio Bezerra", rotulo: "Terminal Antônio Bezerra", lat: -3.7376, lng: -38.5839, altura: 5 },
