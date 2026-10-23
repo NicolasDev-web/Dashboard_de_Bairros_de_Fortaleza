@@ -58,6 +58,8 @@
     praiaIracema: { arquivo: "praia-de-iracema.glb", nome: "Ponte dos Ingleses e Iracema Guardiã", rotulo: "Ponte dos Ingleses", lat: -3.7181, lng: -38.5168, altura: 7 },
     praiaFuturo: { arquivo: "praia-do-futuro.glb", nome: "Praia do Futuro", lat: -3.732, lng: -38.4572, altura: 6 },
     terminalAntonioBezerra: { arquivo: "terminal-antonio-bezerra.glb", nome: "Terminal de Integração Antônio Bezerra", rotulo: "Terminal Antônio Bezerra", lat: -3.7376, lng: -38.5839, altura: 5 },
+    forteAssuncao: { arquivo: "fortaleza-nossa-senhora-da-assuncao.glb", nome: "Fortaleza de Nossa Senhora da Assunção (10ª Região Militar)", rotulo: "Fortaleza da Assunção", lat: -3.7227618, lng: -38.525034, altura: 12 },
+    dragaoDoMar: { arquivo: "centro-dragao-do-mar.glb", nome: "Centro Dragão do Mar de Arte e Cultura", rotulo: "Dragão do Mar", lat: -3.7216677, lng: -38.5201742, altura: 16 },
   };
 
   window.HISTORIAS = {
@@ -71,7 +73,7 @@
         "A miniatura junta três símbolos do Centro, mais próximos do que na realidade. A Catedral Metropolitana levou 40 anos para ficar pronta: as obras começaram em 1938 e ela foi inaugurada em 1978, com lugar para cerca de 5 mil pessoas. É chamada de neogótica, embora arquitetos lembrem que é de concreto, não de pedra.",
         "A Praça do Ferreira homenageia o boticário Antônio Rodrigues Ferreira e é o coração do Centro desde o século XIX; a Coluna da Hora atual é de 1991, refeita no lugar da original. O Mercado Central, que remonta a um mercado de 1809, ganhou o prédio de hoje, na Avenida Alberto Nepomuceno, em 1998.",
       ], [OPOVO_CATEDRAL, DN_FERREIRA, OPOVO_MERCADOS]),
-      ponto("Fortaleza de N. Sra. da Assunção", -3.7227618, -38.525034, "O forte que deu nome à cidade", [
+      marco("forteAssuncao", "O forte que deu nome à cidade", [
         "No lugar do antigo Forte Schoonenborch fica hoje a Fortaleza de Nossa Senhora da Assunção, sede da 10ª Região Militar, ao lado da Catedral. É o ponto de partida da cidade: foi em volta dela que a vila se formou e, em 13 de abril de 1726, foi elevada à categoria de vila.",
       ], [IP(10), ATLAS, OPOVO_10RM, OSM]),
       ponto("Passeio Público", -3.7226365, -38.5263038, "Passeio Público, a Praça dos Mártires", [
@@ -80,7 +82,7 @@
       ponto("Theatro José de Alencar", -3.727786, -38.5317064, "Theatro José de Alencar", [
         "Inaugurado em 17 de junho de 1910, tem a estrutura de ferro fundido feita em Glasgow, na Escócia, e trazida peça por peça. É tombado pelo patrimônio federal e ganhou um jardim de Burle Marx em 1974.",
       ], [OPOVO_TJA, OSM]),
-      ponto("Dragão do Mar", -3.7216677, -38.5201742, "Centro Dragão do Mar de Arte e Cultura", [
+      marco("dragaoDoMar", "Centro Dragão do Mar de Arte e Cultura", [
         "Aberto em 1999, já na beira da Praia de Iracema (pela malha oficial, ainda no Centro), reúne museus, planetário, teatro e cinema. O nome homenageia Francisco José do Nascimento, o Chico da Matilde, jangadeiro que liderou a recusa de levar escravizados aos navios no porto de Fortaleza. O Ceará aboliu a escravidão em 1884, quatro anos antes do Brasil.",
       ], [WIKI_DRAGAO, OSM]),
     ] },
