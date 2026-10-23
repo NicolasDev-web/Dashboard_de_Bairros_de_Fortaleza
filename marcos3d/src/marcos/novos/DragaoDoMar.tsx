@@ -22,8 +22,8 @@ import layout from "../../../blender/saida/dragaoDoMar-layout.json";
  * Metros, base em y = 0, norte em −z; fontes em pesquisa/dragaoDoMar/ficha.md.
  */
 
-/** Altura da etiqueta com o nome no tour (topo da torre sul, ~13,4 m, + ~2 m) */
-export const ALTURA_ETIQUETA = 15;
+/** Altura da etiqueta com o nome no tour (ponteira da torre sul a ~13,9 m, + ~2 m) */
+export const ALTURA_ETIQUETA = 16;
 
 const BASE = "/blender/saida/";
 

@@ -562,7 +562,7 @@ def criar_materiais():
     M["cobertura"] = mat("Mat_Cobertura_Laje", "#c9c6bf", 0.85)
     M["vermelho"] = mat("Mat_Trelica_Vermelha", "#c0272d", 0.5, 0.3)
     M["pedra"] = mat("Mat_Pedra_Granito", "#8c817c", 0.55)
-    M["cupula"] = mat("Mat_Cupula_Vidro", "#bcd0e6", 0.2, 0.25)
+    M["cupula"] = mat("Mat_Cupula_Vidro", "#a6c2e6", 0.2, 0.25)
     M["escuro"] = mat("Mat_Vazio_Escuro", "#2a2d33", 0.8)
     M["reboco"] = mat("Mat_Reboco_Casarao", "#ffffff", 0.85)
     M["frisos"] = mat("Mat_Frisos_Brancos", "#f6f3ea", 0.7)
@@ -1343,7 +1343,7 @@ def anfiteatro(M, vias):
         meio = meio.normalized() * (RAIO - 4.1)
     giro = math.degrees(math.atan2(t.y, t.x))
     P.juntar(bm_caixa(largura * 0.6, 3.0, 0.7, 0.05), M["madeira"], M_em(meio.x, meio.y, Z0, giro))
-    P.juntar(bm_caixa(largura * 0.62, 0.3, 3.4, 0.04), M["escuro"], M_em(meio.x + dir_palco.x * 1.4, meio.y + dir_palco.y * 1.4, Z0, giro))
+    P.juntar(bm_caixa(largura * 0.62, 0.3, 3.4, 0.04), M["fibro"], M_em(meio.x + dir_palco.x * 1.4, meio.y + dir_palco.y * 1.4, Z0, giro))
     for s in (-1, 1):
         for u in (-1, 1):
             c = meio + t * s * largura * 0.3 + dir_palco * u * 1.3
@@ -1456,7 +1456,7 @@ def layout(arvores_osm, gramas, eixo, cotas):
             coqueiros.append((x, y, rnd.uniform(3.6, 4.8), rnd.uniform(0, 360)))
     pessoas = []
     zonas_p = [((6.0, -7.5), 6.0, 12, 0.0), ((16.0, 2.0), 5.0, 7, 0.0), ((-14.0, -5.5), 4.0, 5, 0.0), ((PLAN_C.x, PLAN_C.y), 2.6, 4, 0.0),
-               ((-17.0, 2.1), 1.2, 3, 1.5), ((24.0, -3.0), 3.0, 3, 0.0), ((-2.0, 2.0), 2.0, 2, 0.0)]
+               ((-17.0, 2.1), 1.2, 3, 1.5), ((24.0, -3.0), 3.0, 3, 0.0), ((-2.0, 2.0), 2.0, 2, 0.0), ((-14.0, -21.0), 3.0, 5, 0.0)]
     for (cx, cy), raio, n, z in zonas_p:
         k = 0
         tent = 0
