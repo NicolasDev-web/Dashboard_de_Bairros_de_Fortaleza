@@ -4,3 +4,4 @@ saida/bruto/
 renders/
 pesquisa/*/ref-*
 relatorios/*.png
+__pycache__/

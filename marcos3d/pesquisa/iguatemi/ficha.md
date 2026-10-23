@@ -2,7 +2,7 @@
 
 Especialista Iguatemi, outubro de 2026. Pesquisa para refazer do zero a miniatura `iguatemi` (`src/marcos/Iguatemi.tsx`).
 
-## Limitação desta sessão (importante)
+## Limitação da primeira sessão (já superada; ver "Atualização com rede liberada")
 
 - **Rede:** o proxy desta sessão recusou todo acesso direto: `curl` para `api.openstreetmap.org`, `overpass-api.de`, `upload.wikimedia.org` e `pt.wikipedia.org` deu `403` no CONNECT, e o `WebFetch` não resolveu nenhum desses hosts (`ENOTFOUND`). **Só o `WebSearch` funcionou.**
 - **Consequências:**
@@ -54,7 +54,44 @@ Especialista Iguatemi, outubro de 2026. Pesquisa para refazer do zero a miniatur
   - não achei torre comercial que faça parte da imagem do shopping;
   - os "superprédios" residenciais anunciados para o estacionamento estão com obras previstas para 2026: **não entram** na miniatura.
 
-## Composição escolhida para a miniatura
+
+## Atualização com rede liberada (passada de referências, 23/10/2026)
+
+### Fontes novas
+- **Planta real (OSM, API 0.6):** `https://api.openstreetmap.org/api/0.6/map?bbox=-38.4925,-3.7590,-38.4850,-3.7520` (© colaboradores do OSM, ODbL). O shopping está mapeado em detalhe, com o contorno inteiro (relação 15800212) e ~40 `building:part` com altura vinda do cadastro da Prefeitura (`pmfsefin:idedif`).
+- **Vista aérea (só para olhar, nunca entra no modelo):** mosaico Esri World Imagery (`server.arcgisonline.com/.../World_Imagery/MapServer/tile/{z}/{y}/{x}`, z17–19), alinhado com o OSM (conferido com sobreposição). Recortes salvos como `ref-3/4/5-*.png`.
+- **Wikimedia Commons:** a categoria `Iguatemi_Fortaleza` e as vizinhas (`Interior_of_Iguatemi_Fortaleza`, `UCI_Kinoplex_Iguatemi_Fortaleza`, `Avenida_Washington_Soares`, `Edson_Queiroz_(Fortaleza)`, `Parque_do_Cocó`) **não têm nenhuma foto do exterior**. Só interiores (corredores, cinema) e um feirão de carros no estacionamento. A Wikipédia (pt) do Iguatemi não tem imagem. Observação técnica: miniaturas de 640 px dão erro 400 (tamanho fora da lista padrão); 330, 500 e 960 px funcionam, com pausas de vários segundos entre pedidos para não levar 429.
+- `ref-1.jpg`: `File:Iguatemi_3.JPG` (interior: abóbada de vidro com nervuras brancas sobre um átrio de dois pisos). `ref-2.png`: `File:Feirão_Iguatemi.png` (estacionamento de superfície com árvores).
+
+### O que a planta real mudou (substitui a seção "Planta e rumo" acima)
+Coordenadas em metros em volta de (−3,7554; −38,4888), x = leste, z = sul.
+- **Não é um "L" com ponta arredondada.** O complexo tem ~430 × 450 m e estas peças, todas confirmadas na planta e na vista aérea:
+  1. **Espinha** (galeria original, OSM 13,5 m): barra longa no rumo ~124° (NO → SE), de (−57, −107) a (210, 62). No telhado corre uma **faixa central com nervuras transversais**: a claraboia do corredor (1992).
+  2. **Garden Court (2015):** a cobertura é uma **gota (lágrima)** de ~125 × 55 m, com a ponta para o NNO em (−89, −1) e a parte redonda para o SSE em (−20, 90). Área ≈ 4.500 m², **igual à área declarada da cobertura de madeira**. Vista de cima: um **anel branco opaco** (telha metálica) de ~10 m e, dentro, um **campo bege translúcido** (policarbonato) onde aparecem as linhas da grelha de madeira. A largura interna (~45–50 m) bate com o **vão de 48 m**.
+  3. **Ala curva** (OSM 19,4 m, 6 níveis): faixa curva de ~20 m de largura e ~170 m de comprimento colada no lado oeste da gota, telhado cinza.
+  4. **Proa de vidro:** na ponta sul da ala curva, um **triângulo de ~40 × 60 m com grelha metálica branca** sobre vidro, apontado para o sul (para a praça-jardim e a Washington Soares). É o candidato mais forte para a "fachada de vidro verde em estrutura metálica branca, pé-direito triplo" de 2015.
+  5. **Rotunda oeste:** bloco em **leque (quase um quarto de círculo) de raio ~95 m**, telhado branco liso com um degrau concêntrico ~12 m para dentro da borda. Altura não está no OSM (a sombra indica um bloco alto); usei 15 m. **Uso desconhecido.**
+  6. **Bloco da lente** (OSM 16,5 m): retângulo de 70 × 45 m com uma **claraboia de vidro em forma de lente** (~34 × 13 m) no telhado.
+  7. **Bloco de vidro sudeste** (OSM 21 m): a face sudoeste é um **grande plano de vidro escuro inclinado**, com **aletas brancas triangulares** ao longo da borda e um arco branco na ponta sudeste. Voltado para a Washington Soares, é o candidato para a "fachada de vidro dos anos 1990 voltada para o sul" com a marquise sobre o cone.
+  8. **Bloco do cinema** (OSM 26,2 m, o mais alto; o UCI Kinoplex fica no nível 3).
+  9. **Edifício-garagem** (OSM `parking=multi-storey`, 4 níveis, 12,1 m) a leste do cinema.
+  10. **Miolo sudeste:** blocos de 15–17 m com uma **pirâmide de vidro** (~14 m), uma **cúpula de vidro sobre base octogonal** (~22 m) e claraboias em grelha.
+  11. **Bloco norte** (OSM 8,8–12,3 m): telhados brancos longos com nervuras, entre a espinha e a mata.
+  12. **Embasamento** de 7,6 m (relação 15800223) ligando tudo, com áreas técnicas escuras entre os volumes.
+- **Entorno real:** a **Washington Soares corre a sul**, no rumo ~100° (quase leste–oeste), com duas pistas de 3 faixas. Uma via de serviço contorna a frente sul. Uma **via anelar contorna o norte**, colada à mata. O **grande estacionamento de superfície fica a nordeste**, entre a espinha e a mata, e há outros a leste. A **mata do Cocó cobre o norte e o leste.** Há um **jardim com caminhos curvos e palmeiras** a sudoeste, entre a rotunda e a proa.
+- **Correções da ficha anterior:**
+  - a avenida não corre a 135° pelo sudoeste, e sim ~100° pelo sul;
+  - a "ponta oeste arredondada" é o leque da rotunda;
+  - o Garden Court não fica no meio de um "L", e sim entre a ala curva, o bloco da lente e o miolo sudeste.
+
+### Dúvidas que continuam (sem foto do exterior)
+1. Cor e acabamento das fachadas externas: ficaram neutras (branco quente, juntas de painel discretas).
+2. Uso e altura da rotunda oeste.
+3. Se a proa é a entrada de 2015 e onde exatamente fica o cone dos anos 1990: pus a marquise no meio da face sudoeste do bloco de vidro sudeste, de frente para a via de serviço.
+4. O letreiro: posição e logotipo não verificados, então **não modelei letreiro**.
+5. Desenho exato da grelha de madeira: modelei uma malha de arcos transversais e terças longitudinais, desenhada na própria superfície (vista através do policarbonato).
+
+## Composição escolhida na primeira passada (sem planta real; substituída, ver relatório)
 
 - O complexo real tem ~420 m e não cabe com detalhe num disco de 67 m. Em K ≈ 0,075, tudo vira um tapete de lajes brancas, e esse era o defeito do modelo antigo.
 - **Escolhi condensar:** manter a topologia real (anel de galerias em "L + loop" em volta do Garden Court) e o rumo real, encolhendo a planta (~420 → 58 m) mais do que as alturas (galerias de 7 m, abóbada de 11,5 m).

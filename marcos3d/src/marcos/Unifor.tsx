@@ -1,421 +1,421 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import type { Fabrica } from "../Cena";
-import { aleatorio, caixaChanfrada, placaDePlanta, posicionar, prismaDePlanta, texturaJanelas, texturaManchada } from "../util/geometria";
+import { aleatorio, texturaManchada } from "../util/geometria";
+import layout from "../../blender/saida/unifor-layout.json";
 
 /**
- * Campus da Unifor em miniatura. As posições vêm do OpenStreetMap (pesquisa/marcos/unifor/ficha.md),
- * em metros reais com x = leste, y = norte e a origem no centro do campus; `K` encolhe o campus de
- * ~1 km para caber na base. Os edifícios-chave crescem `E` vezes além disso para lerem de longe.
- * Metros, norte em −z.
+ * Unifor (Universidade de Fortaleza): a frente do campus vista da Av. Washington Soares.
+ * As peças estáticas (chão, avenida, Reitoria verde com arcos, Biblioteca, Centro de Convivência, blocos, jardim) vêm do
+ * Blender (`blender/unifor.py` → `blender/saida/unifor-campus.glb`), com a oclusão de ambiente assada nas cores de vértice
+ * dos prédios e numa imagem do chão. Aqui entram o que é repetido (mata, palmeiras imperiais, coqueiros, carros), os
+ * letreiros desenhados em canvas e a água comum dos marcos. Posições em `blender/saida/unifor-layout.json`.
+ * Metros, norte em −z; fontes em pesquisa/unifor/ficha.md.
  */
-type Xy = [number, number];
 
-const K = 0.058;
-const E = 1.7;
-const CENTRO: Xy = [30, 10];
-const emM = ([x, y]: Xy): Xy => [(x - CENTRO[0]) * K, -(y - CENTRO[1]) * K];
-/** Raio útil do pedestal: nada passa daqui (o pedestal tem 34 m) */
-const RAIO_UTIL = 33.2;
+const BASE = "/blender/saida/";
 
-const CAMPUS: Xy[] = [
-  [-328, 80], [-461, 68], [-422, -280], [367, -215], [415, -113], [529, 48], [460, 76], [456, 192], [390, 183], [322, 231], [277, 242], [105, 208], [98, 301], [-337, 262],
-];
-const REITORIA: Xy[] = [[-7, -7], [38, -19], [42, 5], [-4, 9], [-11, 41], [-24, 36], [-20, 20], [-21, 2], [-27, -13], [-35, -26], [-25, -35], [-16, -23], [-10, -9]];
-const BIBLIOTECA: Xy[] = [[-5, -39], [7, -34], [8, -37], [22, -31], [20, -27], [32, -22], [4, 40], [-32, 24]];
-
-/** Barras de aula: centro, comprimento × largura (m reais) e rumo do eixo maior; o Bloco M fica à parte */
-const BLOCOS: [x: number, y: number, c: number, l: number, rumo: number][] = [
-  [-170, 140, 78, 19, 65], [-150, 112, 78, 19, 65], [-130, 84, 78, 19, 65],
-  [-291, -189, 119, 45, 155], [-30, 60, 86, 22, 155], [20, 120, 80, 20, 65], [-10, -110, 84, 22, 155],
-  [-120, -160, 80, 20, 65], [-240, 130, 70, 20, 155], [-250, -95, 76, 20, 155], [140, -20, 80, 20, 155],
-  [-60, -210, 84, 20, 65], [180, -170, 76, 20, 65], [60, 200, 70, 20, 65], [-210, 220, 70, 20, 65],
-];
-
-function dentro([x, y]: Xy, p: Xy[]) {
-  let d = false;
-  for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
-    const [xi, yi] = p[i];
-    const [xj, yj] = p[j];
-    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) d = !d;
-  }
-  return d;
-}
+type Arvore = [x: number, yBase: number, z: number, r: number];
+type Imperial = [x: number, z: number, h: number];
+type Coqueiro = [x: number, z: number, h: number, giro: number];
+type Carro = [x: number, z: number, giro: number, cor: number];
+type Pessoa = [x: number, z: number, giro: number, cor: number];
+const L = layout as { arvores: Arvore[]; imperiais: Imperial[]; coqueiros: Coqueiro[]; carros: Carro[]; pessoas: Pessoa[]; chao: { lado: number; z0: number } };
+const Z0 = L.chao.z0;
 
 /**
- * Junta várias geometrias numa malha só, com um grupo por material. `mapa[i]` diz para qual material vai o
- * grupo i da peça (nas extrusões, 0 = tampas e 1 = paredes; nos cilindros, 0 = lado e 1/2 = tampas).
+ * Atlas dos letreiros (512 × 256, mesmas regiões de `LETREIROS` no unifor.py): faixa "UNIVERSIDADE DE FORTALEZA" do
+ * pórtico do Convivência, placa da Fundação Edson Queiroz, totem "Reitoria" e o mural colorido (composição abstrata:
+ * a foto só mostra que é colorido e tem uma figura).
  */
-function fundir(pecas: [THREE.BufferGeometry, number[]?][]) {
-  const planas = pecas.map(([g, mapa]): [THREE.BufferGeometry, number[] | undefined] => [g.index ? g.toNonIndexed() : g, mapa]);
-  const destino = (gr: { materialIndex?: number }, mapa?: number[]) => (mapa ? mapa[gr.materialIndex ?? 0] ?? mapa[mapa.length - 1] : gr.materialIndex ?? 0);
-  const nMat = Math.max(1, ...planas.flatMap(([g, mapa]) => (g.groups.length ? g.groups : [{ materialIndex: 0 }]).map((gr) => destino(gr, mapa) + 1)));
-  const pos: number[] = [], nor: number[] = [], uv: number[] = [];
-  const saida = new THREE.BufferGeometry();
-  for (let m = 0; m < nMat; m++) {
-    const ini = pos.length / 3;
-    for (const [g, mapa] of planas) {
-      const P = g.attributes.position, N = g.attributes.normal, U = g.attributes.uv;
-      const grupos = g.groups.length ? g.groups : [{ start: 0, count: P.count, materialIndex: 0 }];
-      for (const gr of grupos) {
-        if (destino(gr, mapa) !== m) continue;
-        for (let i = gr.start, fim = Math.min(gr.start + gr.count, P.count); i < fim; i++) {
-          pos.push(P.getX(i), P.getY(i), P.getZ(i));
-          nor.push(N.getX(i), N.getY(i), N.getZ(i));
-          uv.push(U ? U.getX(i) : 0, U ? U.getY(i) : 0);
-        }
-      }
-    }
-    if (pos.length / 3 > ini) saida.addGroup(ini, pos.length / 3 - ini, m);
-  }
-  saida.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
-  saida.setAttribute("normal", new THREE.Float32BufferAttribute(nor, 3));
-  saida.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
-  for (const [g] of planas) g.dispose();
-  for (const [g] of pecas) g.dispose();
-  return saida;
-}
-
-/** Gira em torno do eixo vertical e leva para (x, y, z): para montar peças antes de `fundir` */
-function por(g: THREE.BufferGeometry, x: number, y: number, z: number, giro = 0) {
-  return g.rotateY(giro).translate(x, y, z);
-}
-
-/**
- * Faixa reta de rua centrada em (cx, cz), na direção (dx, dz), cortada pelo círculo do pedestal: cada canto
- * vai até onde a sua borda cruza o raio útil, então a ponta acompanha a curva da base.
- */
-function faixaNoDisco(cx: number, cz: number, dx: number, dz: number, largura: number, r = RAIO_UTIL): Xy[] {
-  const nx = -dz, nz = dx, w = largura / 2;
-  const alcance = (sentido: number, lado: number) => {
-    const ox = cx + lado * w * nx, oz = cz + lado * w * nz;
-    let t = 0;
-    while (Math.hypot(ox + sentido * (t + 0.05) * dx, oz + sentido * (t + 0.05) * dz) < r && t < 60) t += 0.05;
-    return [ox + sentido * t * dx, oz + sentido * t * dz] as Xy;
-  };
-  return [alcance(-1, -1), alcance(1, -1), alcance(1, 1), alcance(-1, 1)];
-}
-
-/** Texto sobre faixa (letreiro do Convivência) ou sobre o telhado claro (Bloco M) */
-function texturaTexto(texto: string, fundo: string, cor: string, largura: number, altura = 96) {
+function texturaLetreiros() {
   const cv = document.createElement("canvas");
-  cv.width = largura;
-  cv.height = altura;
+  cv.width = 512;
+  cv.height = 256;
   const g = cv.getContext("2d")!;
-  g.fillStyle = fundo;
-  g.fillRect(0, 0, largura, altura);
-  g.fillStyle = cor;
-  g.textAlign = "center";
-  g.textBaseline = "middle";
-  let tamanho = altura * 0.75;
-  g.font = `800 ${tamanho}px system-ui, sans-serif`;
-  while (g.measureText(texto).width > largura * 0.9 && tamanho > 12) g.font = `800 ${(tamanho -= 2)}px system-ui, sans-serif`;
-  g.fillText(texto, largura / 2, altura * 0.54);
+  const texto = (t: string, x: number, y: number, larg: number, alt: number, cor: string, peso = 800) => {
+    let tam = alt;
+    g.font = `${peso} ${tam}px system-ui, sans-serif`;
+    while (g.measureText(t).width > larg && tam > 6) g.font = `${peso} ${(tam -= 1)}px system-ui, sans-serif`;
+    g.fillStyle = cor;
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+    g.fillText(t, x, y);
+  };
+  // faixa azul do pórtico
+  g.fillStyle = "#1f3f8c";
+  g.fillRect(0, 0, 512, 64);
+  texto("UNIVERSIDADE DE FORTALEZA", 256, 34, 480, 40, "#ffffff");
+  // placa da Fundação: fundo cinza-claro, letras cinza-escuras e o selo à esquerda
+  g.fillStyle = "#dcdcd8";
+  g.fillRect(0, 64, 256, 64);
+  g.fillStyle = "#6d7176";
+  g.fillRect(10, 76, 34, 40);
+  g.fillStyle = "#dcdcd8";
+  g.fillRect(17, 84, 20, 24);
+  texto("FUNDAÇÃO EDSON QUEIROZ", 148, 86, 196, 17, "#4a4e53");
+  texto("UNIVERSIDADE DE FORTALEZA", 148, 106, 196, 14, "#5d6166", 600);
+  // totem "Reitoria": azul com a ponta verde-água em chevron, texto na vertical
+  g.fillStyle = "#1d4fa0";
+  g.fillRect(256, 64, 64, 192);
+  g.fillStyle = "#19a59a";
+  g.beginPath();
+  g.moveTo(256, 256);
+  g.lineTo(256, 222);
+  g.lineTo(288, 238);
+  g.lineTo(320, 222);
+  g.lineTo(320, 256);
+  g.fill();
+  g.save();
+  g.translate(290, 150);
+  g.rotate(-Math.PI / 2);
+  texto("Reitoria", 0, 0, 140, 34, "#ffffff", 700);
+  g.restore();
+  // mural: blocos de cor, um sol, padrões em triângulo e uma figura de perfil
+  const mx = 320, my = 64;
+  const cores = ["#2f8f5b", "#1e66b5", "#f2c230", "#e0593a", "#7a3fa0", "#25a7c9"];
+  const r = aleatorio(52);
+  g.fillStyle = "#2f8f5b";
+  g.fillRect(mx, my, 192, 192);
+  for (let i = 0; i < 14; i++) {
+    g.fillStyle = cores[Math.floor(r() * cores.length)];
+    const x = mx + r() * 170, y = my + r() * 170, s = 20 + r() * 50;
+    g.beginPath();
+    g.moveTo(x, y + s);
+    g.lineTo(x + s / 2, y);
+    g.lineTo(x + s, y + s);
+    g.fill();
+  }
+  g.fillStyle = "#f2c230";
+  g.beginPath();
+  g.arc(mx + 150, my + 46, 22, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = "#1e66b5";
+  g.fillRect(mx, my + 150, 192, 42);
+  g.fillStyle = "#8a5236";
+  g.beginPath();
+  g.ellipse(mx + 78, my + 92, 36, 50, -0.15, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = "#2a1c18";
+  g.beginPath();
+  g.ellipse(mx + 70, my + 52, 42, 26, -0.2, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = "#c2412f";
+  g.fillRect(mx + 46, my + 132, 66, 60);
   const t = new THREE.CanvasTexture(cv);
   t.colorSpace = THREE.SRGBColorSpace;
+  t.flipY = false; // UV do glTF: v = 0 no alto da imagem
   t.anisotropy = 4;
   return t;
 }
 
-/** Materiais feitos à mão (vidro, metal, painéis, texturas), todos nomeados */
-function criarMateriais() {
-  // fita de janelas com brises: parede branca (o material tinge) e vidro escuro; módulo de 1,2 × 1,0 m
-  const janelas = texturaJanelas({ parede: "#ffffff", janela: "#3a4a5d", moldura: "#d9d9d4", pilastra: "#e6e6e1", colunas: 2, linhas: 1, larguraJanela: 0.86, alturaJanela: 0.46 });
-  janelas.repeat.set(1 / 2.4, 1);
-  const grama = texturaManchada("#7fa35a", 0.07, 7, 64);
-  grama.repeat.set(1 / 9, 1 / 9);
-  const m = (nome: string, p: THREE.MeshStandardMaterialParameters) => Object.assign(new THREE.MeshStandardMaterial(p), { name: nome });
-  return {
-    fachadaBlocos: m("Mat_Fachada_Blocos", { map: janelas, color: "#f1f1ec", roughness: 0.85 }),
-    fachadaReitoria: m("Mat_Fachada_Reitoria", { map: janelas, color: "#cfcca8", roughness: 0.85 }),
-    gramado: m("Mat_Gramado_Campus", { map: grama, roughness: 0.95 }),
-    vidro: m("Mat_Vidro_Azul", { color: "#3f6595", roughness: 0.12, metalness: 0.22 }),
-    vidroEscuro: m("Mat_Vidro_Escuro", { color: "#22303f", roughness: 0.1, metalness: 0.3 }),
-    metal: m("Mat_Metal_Cobertura", { color: "#d3d7da", roughness: 0.4, metalness: 0.35 }),
-    painel: m("Mat_Painel_Solar", { color: "#1f2c4a", roughness: 0.22, metalness: 0.45 }),
-    aco: m("Mat_Aco_Estrutura", { color: "#9aa0a3", roughness: 0.45, metalness: 0.4 }),
-    copa: m("Mat_Copa_Arvore", { roughness: 0.9, flatShading: true }),
-    letreiro: m("Mat_Letreiro_Unifor", { map: texturaTexto("UNIVERSIDADE DE FORTALEZA", "#1e3a6e", "#ffffff", 512, 48), roughness: 0.55 }),
-    telhadoM: m("Mat_Telhado_Bloco_M", { map: texturaTexto("UNIFOR", "#c9cdcb", "#ffffff", 256, 64), roughness: 0.8 }),
-  };
-}
-type Materiais = ReturnType<typeof criarMateriais>;
-
-/** Edifício extrudado a partir do contorno local do OSM, com o tamanho exagerado `E` e as quinas chanfradas */
-function Extrudado({ nome, local, em, altura, paredes, telhado }: { nome: string; local: Xy[]; em: Xy; altura: number; paredes: THREE.Material; telhado: THREE.Material }) {
-  const geo = useMemo(() => {
-    const [cx, cz] = emM(em);
-    return prismaDePlanta(local.map(([x, y]): Xy => [cx + x * K * E, cz - y * K * E]), altura, 0, 0.12);
-  }, [local, em, altura]);
-  useEffect(() => () => geo.dispose(), [geo]);
-  return <mesh name={nome} geometry={geo} material={[telhado, paredes]} castShadow receiveShadow />;
-}
-
-/** Centro de Convivência: tambor branco sobre a faixa de vidro, cúpula baixa, torres de vidro azul e o pórtico */
-function CentroDeConvivencia({ fab, mat }: { fab: Fabrica; mat: Materiais }) {
-  const [x, z] = emM([-195, -42]);
-  const r = 27 * K * E;
-  const geo = useMemo(() => {
-    // perfil do tambor com a cornija chanfrada no alto (r, y)
-    const perfil = [[r * 0.9, 1.05], [r, 1.05], [r, 2.8], [r + 0.14, 2.88], [r + 0.14, 3.06], [r * 0.82, 3.06]].map(([a, b]) => new THREE.Vector2(a, b));
-    return { tambor: new THREE.LatheGeometry(perfil, 40), parede: caixaChanfrada(0.32, 2.8, r * 0.9, 0.06), portico: caixaChanfrada(4.4, 3.2, 0.5, 0.1) };
-  }, [r]);
-  useEffect(() => () => Object.values(geo).forEach((g) => g.dispose()), [geo]);
-  return (
-    <group name="Centro_Convivencia" position={[x, 0, z]}>
-      <mesh name="Convivencia_Faixa_Vidro" position-y={0.53} material={mat.vidroEscuro} castShadow receiveShadow>
-        <cylinderGeometry args={[r * 0.9, r * 0.9, 1.06, 32]} />
-      </mesh>
-      <mesh name="Convivencia_Tambor" geometry={geo.tambor} material={fab.cor("#edede8", 0.8)} castShadow receiveShadow />
-      {/* cúpula branca baixa, o ícone do campus */}
-      <mesh name="Convivencia_Cupula" position-y={3.04} scale={[1, 0.62, 1]} material={fab.cor("#f6f6f3", 0.45)} castShadow receiveShadow>
-        <sphereGeometry args={[r * 0.86, 32, 12, 0, Math.PI * 2, 0, Math.PI / 2]} />
-      </mesh>
-      {/* torres cilíndricas de vidro azul (com anel de laje no topo) e a parede azul-petróleo, a oeste */}
-      {[-1, 1].map((s) => (
-        <group key={s} position={[-r * 0.92, 0, s * r * 0.55]}>
-          <mesh name={`Torre_Vidro_${s < 0 ? "Norte" : "Sul"}`} position-y={2.6} material={mat.vidro} castShadow receiveShadow>
-            <cylinderGeometry args={[0.55, 0.55, 5.2, 16]} />
-          </mesh>
-          <mesh name={`Torre_Anel_${s < 0 ? "Norte" : "Sul"}`} position-y={5.2} material={fab.cor("#f2f2ef", 0.6)} castShadow>
-            <cylinderGeometry args={[0.64, 0.64, 0.18, 16]} />
-          </mesh>
-        </group>
-      ))}
-      <mesh name="Convivencia_Parede_Petroleo" position={[-r - 0.5, 0, 0]} geometry={geo.parede} material={fab.cor("#3f7c8a", 0.55)} castShadow receiveShadow />
-      {/* pórtico branco com o letreiro, virado para a praça a oeste */}
-      <group position={[-r - 1.7, 0, 0]} rotation-y={-Math.PI / 2}>
-        <mesh name="Portico_Convivencia" geometry={geo.portico} material={fab.cor("#f2f2ef", 0.6)} castShadow receiveShadow />
-        <mesh name="Letreiro_Universidade" position={[0, 2.55, 0.252]} material={mat.letreiro}>
-          <planeGeometry args={[4.1, 0.42]} />
-        </mesh>
-      </group>
-    </group>
-  );
-}
-
-/** Ginásio: base com janelas, abóbada metálica de hangar (geratriz leste–oeste) e as nervuras da estrutura */
-function Ginasio({ fab, mat }: { fab: Fabrica; mat: Materiais }) {
-  const [x, z] = emM([67, -106]);
-  const lado = 80 * K * 1.4;
-  const R = lado * 0.47;
-  const geo = useMemo(() => {
-    const base = caixaChanfrada(lado, 1.6, lado * 0.94, 0.1);
-    // meia-casca de cima: θ de 0 a π dá y ≥ 0 depois de deitar o cilindro no eixo x
-    const abobada = new THREE.CylinderGeometry(R, R, lado, 28, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).translate(0, 1.6, 0);
-    const nervuras = fundir(
-      [1, 2, 3, 4, 5].map((i): [THREE.BufferGeometry] => [new THREE.TorusGeometry(R + 0.04, 0.07, 4, 24, Math.PI).rotateY(Math.PI / 2).translate(-lado / 2 + (i * lado) / 6, 1.6, 0)]),
-    );
-    return { base, abobada, nervuras };
-  }, [lado, R]);
-  useEffect(() => () => Object.values(geo).forEach((g) => g.dispose()), [geo]);
-  return (
-    <group name="Ginasio" position={[x, 0, z]}>
-      <mesh name="Ginasio_Base" geometry={geo.base} material={[fab.cor("#e2e3df", 0.85), mat.fachadaBlocos]} castShadow receiveShadow />
-      <mesh name="Ginasio_Abobada" geometry={geo.abobada} material={[mat.metal, fab.cor("#edede8", 0.8), fab.cor("#edede8", 0.8)]} castShadow receiveShadow />
-      <mesh name="Ginasio_Nervuras" geometry={geo.nervuras} material={mat.aco} castShadow />
-    </group>
-  );
-}
-
-/** Pista de atletismo com o campo e a arquibancada coberta; estacionamento coberto por painéis solares */
-function PistaEEstacionamentoSolar({ fab, mat }: { fab: Fabrica; mat: Materiais }) {
-  const [px, pz] = emM([270, 0]);
-  const [sx, sz] = emM([113, 114]);
-  const largura = 158 * K;
-  const fundo = 147 * K;
-  const compArq = 191 * K * 0.6;
-  const arquibancada = useMemo(() => {
-    // degraus descendo para o leste (para a pista), muro de fundo e a laje da cobertura
-    const s = new THREE.Shape([[0, 0], [1.2, 0], [1.2, 0.35], [0.8, 0.35], [0.8, 0.7], [0.4, 0.7], [0.4, 1.05], [0, 1.05]].map(([a, b]) => new THREE.Vector2(a, b)));
-    const degraus = new THREE.ExtrudeGeometry(s, { depth: compArq, bevelEnabled: false }).translate(-0.6, 0, -compArq / 2);
-    const muro = caixaChanfrada(0.16, 2.1, compArq, 0.04).translate(-0.62, 0, 0);
-    const laje = caixaChanfrada(1.7, 0.12, compArq + 0.3, 0.04).translate(0.1, 2.06, 0);
-    return fundir([[degraus, [1, 1]], [muro, [1, 1]], [laje, [0, 0]]]);
-  }, [compArq]);
-  useEffect(() => () => arquibancada.dispose(), [arquibancada]);
-
-  const paineis = useRef<THREE.InstancedMesh>(null);
-  const postes = useRef<THREE.InstancedMesh>(null);
-  useLayoutEffect(() => {
-    const filas = Array.from({ length: 6 }, (_, i) => sz - fundo / 2 + (i + 0.5) * (fundo / 6));
-    const o = new THREE.Object3D();
-    filas.forEach((fz, i) => {
-      o.position.set(sx, 0.72, fz);
-      o.rotation.set(-0.22, 0, 0);
-      o.updateMatrix();
-      paineis.current!.setMatrixAt(i, o.matrix);
-    });
-    paineis.current!.instanceMatrix.needsUpdate = true;
-    paineis.current!.computeBoundingSphere();
-    posicionar(postes.current!, filas.flatMap((fz) => [-0.36, 0, 0.36].map((t): [number, number, number] => [sx + t * largura, 0.34, fz])));
-  }, [sx, sz, largura, fundo]);
-
-  return (
-    <>
-      {/* pista oval vermelha com a faixa branca e o campo, eixo quase norte–sul */}
-      <group position={[px, 0.11, pz]} rotation-x={-Math.PI / 2}>
-        <mesh name="Pista_Atletismo" scale={[121 * K * 0.55, 191 * K * 0.55, 1]} material={fab.cor("#b5675f", 0.9)} receiveShadow>
-          <circleGeometry args={[1, 48]} />
-        </mesh>
-        <mesh name="Pista_Faixa_Interna" position-z={0.01} scale={[121 * K * 0.44, 191 * K * 0.47, 1]} material={fab.cor("#f1efe8", 0.8)} receiveShadow>
-          <circleGeometry args={[1, 48]} />
-        </mesh>
-        <mesh name="Campo_Futebol" position-z={0.02} scale={[121 * K * 0.42, 191 * K * 0.45, 1]} material={fab.cor("#4e8f3a", 0.9)} receiveShadow>
-          <circleGeometry args={[1, 48]} />
-        </mesh>
-      </group>
-      <mesh name="Arquibancada_Pista" geometry={arquibancada} position={[px - 121 * K * 0.62, 0, pz]} material={[fab.cor("#f2f2ef", 0.6), fab.cor("#e2e3df", 0.85)]} castShadow receiveShadow />
-      {/* estacionamento solar: piso de asfalto, fileiras de painéis azul-escuros sobre pilares de aço */}
-      <mesh name="Estacionamento_Solar_Piso" position={[sx, 0.11, sz]} rotation-x={-Math.PI / 2} material={fab.cor("#7e8182", 0.95)} receiveShadow>
-        <planeGeometry args={[largura, fundo]} />
-      </mesh>
-      <instancedMesh name="Paineis_Solares" ref={paineis} args={[undefined, undefined, 6]} material={mat.painel} castShadow receiveShadow>
-        <boxGeometry args={[largura * 0.92, 0.08, fundo / 6 - 0.35]} />
-      </instancedMesh>
-      <instancedMesh name="Pilares_Paineis" ref={postes} args={[undefined, undefined, 18]} material={mat.aco} castShadow>
-        <cylinderGeometry args={[0.08, 0.08, 0.68, 6]} />
-      </instancedMesh>
-    </>
-  );
-}
-
-/** Barras de aula (uma malha só, chanfradas e com a fita de janelas) e a mata que cobre o resto do campus */
-function BlocosEMata({ fab, mat }: { fab: Fabrica; mat: Materiais }) {
-  const { blocos, arvores, geo } = useMemo(() => {
-    const b = BLOCOS.map(([x, y, c, l, rumo]) => {
-      const [mx, mz] = emM([x, y]);
-      return { x: mx, z: mz, c: c * K * 1.25, l: l * K * 1.5, giro: -THREE.MathUtils.degToRad(rumo - 90) };
-    });
-    // áreas sem árvores: em volta de cada edifício e da pista (em metros da miniatura)
-    const livres: [number, number, number][] = [
-      ...b.map((q): [number, number, number] => [q.x, q.z, q.c / 2 + 0.8]),
-      [...emM([-403, -18]), 4.8], [...emM([-309, -2]), 3.8], [...emM([-195, -42]), 4.5], [...emM([-81, -5]), 4.2],
-      [...emM([67, -106]), 4.6], [...emM([270, 0]), 7], [...emM([113, 114]), 5.6], [...emM([312, 294]), 8],
-    ];
-    const campus = CAMPUS.map(emM);
-    const rnd = aleatorio(31);
-    const a: [number, number, number, number, number][] = [];
-    const cores: string[] = [];
-    const tons = ["#2f5a2a", "#4a7a3a", "#3a6a30", "#2a5226", "#56813f"];
-    for (let x = -30; x <= 30; x += 1.5) {
-      for (let z = -30; z <= 30; z += 1.5) {
-        const px = x + (rnd() - 0.5) * 1.1;
-        const pz = z + (rnd() - 0.5) * 1.1;
-        if (Math.hypot(px, pz) > 30 || !dentro([px, pz], campus)) continue;
-        if (livres.some(([lx, lz, r]) => Math.hypot(px - lx, pz - lz) < r)) continue;
-        if (rnd() < 0.25) continue;
-        const s = 0.7 + rnd() * 0.5;
-        // a copa encosta no chão (o icosaedro tem meia altura de 0,85 × 0,8 da escala)
-        a.push([px, s * 0.62, pz, s, rnd() * Math.PI]);
-        cores.push(tons[Math.floor(rnd() * tons.length)]);
-      }
-    }
-    // as barras: caixa chanfrada (paredes com janelas) e a laje de cobertura um pouco recuada, mais cinza
-    const pecas: [THREE.BufferGeometry, number[]?][] = [];
-    for (const q of b) {
-      pecas.push([por(caixaChanfrada(q.c, 2.2, q.l, 0.12), q.x, 0, q.z, q.giro), [0, 1]]);
-      pecas.push([por(caixaChanfrada(q.c - 0.5, 0.14, q.l - 0.5, 0.04), q.x, 2.2, q.z, q.giro), [2, 2]]);
-    }
-    return { blocos: b, arvores: { itens: a, cores }, geo: fundir(pecas) };
+/** Peças do Blender: sombras, nomes por material, água comum, oclusão no chão e letreiros */
+function PecasBlender({ fab }: { fab: Fabrica }) {
+  const gltf = useLoader(GLTFLoader, `${BASE}unifor-campus.glb`);
+  const ao = useLoader(THREE.TextureLoader, `${BASE}unifor-ao-chao.jpg`);
+  const extras = useMemo(() => {
+    const letreiros = texturaLetreiros();
+    const grama = texturaManchada("#ffffff", 0.08, 11, 64);
+    grama.repeat.set(9, 9);
+    return { letreiros, grama };
   }, []);
-  useEffect(() => () => geo.dispose(), [geo]);
+  useEffect(() => () => { extras.letreiros.dispose(); extras.grama.dispose(); }, [extras]);
+  const cena = useMemo(() => {
+    ao.flipY = false;
+    ao.colorSpace = THREE.NoColorSpace;
+    ao.userData.mimeType = "image/jpeg"; // o GLTFExporter regrava em JPEG em vez de PNG
+    ao.needsUpdate = true;
+    const raiz = gltf.scene.clone(true);
+    raiz.name = "Pecas_Campus";
+    const trocas = new Map<THREE.Material, THREE.Material>();
+    raiz.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const mat = m.material as THREE.MeshStandardMaterial;
+      const pai = m.parent && m.parent !== raiz ? m.parent.name : m.name;
+      m.name = `${pai}_${mat.name.replace(/^Mat_/, "")}`;
+      const chao = mat.name.startsWith("Mat_Chao_") || mat.name === "Mat_Agua";
+      m.castShadow = !chao;
+      m.receiveShadow = true;
+      let novo = trocas.get(mat);
+      if (!novo) {
+        if (mat.name === "Mat_Agua") novo = fab.agua();
+        else if (mat.name === "Mat_Letreiros") {
+          novo = Object.assign(new THREE.MeshStandardMaterial({ map: extras.letreiros, roughness: 0.55, vertexColors: mat.vertexColors }), { name: "Mat_Letreiros" });
+        } else {
+          novo = mat;
+          if (mat.name.startsWith("Mat_Chao_")) {
+            mat.aoMap = ao;
+            mat.aoMapIntensity = 1;
+            if (mat.name === "Mat_Chao_Grama" || mat.name === "Mat_Chao_Grama_Canteiro") mat.map = extras.grama;
+            mat.needsUpdate = true;
+          }
+        }
+        trocas.set(mat, novo);
+      }
+      m.material = novo;
+    });
+    return raiz;
+  }, [gltf, ao, fab, extras]);
+  return <primitive object={cena} />;
+}
 
-  const copas = useRef<THREE.InstancedMesh>(null);
+/**
+ * Folha de palmeira: tira em "V" raso que sobe um pouco e cai em arco, afinando na ponta (a mesma ideia do Messejana).
+ * Base na origem, correndo em +z; material de dois lados.
+ */
+function geometriaFolha(comp: number, queda: number) {
+  const pos: number[] = [];
+  const idx: number[] = [];
+  const n = 7;
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    const y = 0.5 * t - queda * t * t;
+    const w = t < 0.15 ? 0.06 + t * 1.6 : 0.3 * (1 - t) + 0.03;
+    const z = comp * t;
+    pos.push(-w, y - 0.07, z, 0, y, z, w, y - 0.07, z);
+  }
+  for (let i = 0; i < n; i++) {
+    const a = i * 3, b = a + 3;
+    idx.push(a, b, a + 1, a + 1, b, b + 1, a + 1, b + 1, a + 2, a + 2, b + 1, b + 2);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  return g;
+}
+
+/** Mata do campus: copas largas e baixas em vários verdes, com tronco (a aérea mostra a copa quase contínua) */
+function Mata({ fab }: { fab: Fabrica }) {
+  const copa = useRef<THREE.InstancedMesh>(null);
+  const tronco = useRef<THREE.InstancedMesh>(null);
+  const n = L.arvores.length;
   useLayoutEffect(() => {
-    const m = copas.current!;
-    posicionar(m, arvores.itens.map(([x, y, z, s, g]) => [x, y, z, s, g]), arvores.cores);
-    // achata a copa (0,8 em y) sem perder o giro de cada uma
-    const o = new THREE.Matrix4(), e = new THREE.Matrix4().makeScale(1, 0.8, 1);
-    for (let i = 0; i < m.count; i++) {
-      m.getMatrixAt(i, o);
-      m.setMatrixAt(i, o.multiply(e));
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const r = aleatorio(7);
+    const tons = ["#2f5a2b", "#3d6b33", "#4c7a3a", "#2a4f27", "#5a8541", "#355f2e"];
+    L.arvores.forEach(([x, yb, z, raio], i) => {
+      o.position.set(x, yb + raio * 0.82, z);
+      o.scale.set(raio, raio * 0.8, raio * (0.9 + r() * 0.2));
+      o.rotation.set(0, r() * Math.PI * 2, 0);
+      o.updateMatrix();
+      copa.current!.setMatrixAt(i, o.matrix);
+      copa.current!.setColorAt(i, cor.set(tons[Math.floor(r() * tons.length)]));
+      o.position.set(x, Z0, z);
+      o.scale.set(1, yb - Z0 + 0.35, 1);
+      o.rotation.set(0, 0, 0);
+      o.updateMatrix();
+      tronco.current!.setMatrixAt(i, o.matrix);
+    });
+    for (const m of [copa.current!, tronco.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
     }
-    m.instanceMatrix.needsUpdate = true;
-  }, [arvores]);
-
+  }, []);
+  const geo = useMemo(() => ({ tronco: new THREE.CylinderGeometry(0.13, 0.2, 1, 6).translate(0, 0.5, 0) }), []);
+  useEffect(() => () => geo.tronco.dispose(), [geo]);
   return (
     <>
-      <mesh name="Blocos_Aula" geometry={geo} material={[fab.cor("#e2e3df", 0.85), mat.fachadaBlocos, fab.cor("#cfd1cf", 0.9)]} castShadow receiveShadow />
-      <instancedMesh name="Arvores_Mata" ref={copas} args={[undefined, undefined, arvores.itens.length]} material={mat.copa} castShadow receiveShadow>
-        <icosahedronGeometry args={[1, 0]} />
+      <instancedMesh name="Mata_Copas" ref={copa} args={[undefined, undefined, n]} castShadow receiveShadow>
+        <icosahedronGeometry args={[1, 1]} />
+        <meshStandardMaterial name="Mat_Copa_Arvore" roughness={0.9} flatShading />
       </instancedMesh>
+      <instancedMesh name="Mata_Troncos" ref={tronco} args={[geo.tronco, undefined, n]} castShadow material={fab.cor("#6e5a45")} />
     </>
   );
 }
 
-/** Bloco M com o "UNIFOR" pintado em branco no telhado, legível do alto */
-function BlocoM({ fab, mat }: { fab: Fabrica; mat: Materiais }) {
-  const [x, z] = emM([-81, -5]);
-  const c = 70 * K * E;
-  const l = 41 * K * E;
-  const geo = useMemo(() => caixaChanfrada(c, 3, l, 0.14), [c, l]);
-  useEffect(() => () => geo.dispose(), [geo]);
-  // lido de norte para sul no satélite: o texto corre ao longo do eixo maior, a 156°
+const FOLHAS_IMPERIAL = 11;
+const FOLHAS_COQUEIRO = 8;
+
+/**
+ * Palmeiras imperiais do jardim da Reitoria (fotos ref-2 e ref-4): estipe liso cinza-claro, bem mais alto que o prédio,
+ * palmito verde no alto e coroa de folhas arqueadas. Coqueiros (estipe mais escuro e inclinado) na Praça Central.
+ */
+function Palmeiras({ fab }: { fab: Fabrica }) {
+  const estipe = useRef<THREE.InstancedMesh>(null);
+  const palmito = useRef<THREE.InstancedMesh>(null);
+  const folhaImp = useRef<THREE.InstancedMesh>(null);
+  const estipeCoq = useRef<THREE.InstancedMesh>(null);
+  const folhaCoq = useRef<THREE.InstancedMesh>(null);
+  const cocos = useRef<THREE.InstancedMesh>(null);
+  const recursos = useMemo(() => {
+    const folhas = Object.assign(new THREE.MeshStandardMaterial({ color: "#5f9440", roughness: 0.8, side: THREE.DoubleSide }), { name: "Mat_Folha_Palmeira" });
+    return {
+      folhas,
+      folhaImp: geometriaFolha(2.3, 1.15),
+      folhaCoq: geometriaFolha(2.3, 1.4),
+      estipe: new THREE.CylinderGeometry(0.11, 0.16, 1, 8).translate(0, 0.5, 0),
+      palmito: new THREE.CylinderGeometry(0.12, 0.15, 1, 8).translate(0, 0.5, 0),
+      estipeCoq: new THREE.CylinderGeometry(0.1, 0.15, 1, 6).translate(0, 0.5, 0),
+    };
+  }, []);
+  useEffect(() => () => { Object.values(recursos).forEach((x) => x.dispose()); }, [recursos]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const r = aleatorio(19);
+    L.imperiais.forEach(([x, z, h], i) => {
+      const hp = 0.85; // palmito
+      o.position.set(x, Z0, z);
+      o.rotation.set(0, 0, 0);
+      o.scale.set(1, h - hp, 1);
+      o.updateMatrix();
+      estipe.current!.setMatrixAt(i, o.matrix);
+      o.position.set(x, Z0 + h - hp, z);
+      o.scale.set(1, hp, 1);
+      o.updateMatrix();
+      palmito.current!.setMatrixAt(i, o.matrix);
+      const giro = r() * Math.PI * 2;
+      for (let f = 0; f < FOLHAS_IMPERIAL; f++) {
+        const a = giro + (f / FOLHAS_IMPERIAL) * Math.PI * 2;
+        // coroa em leque: folhas de cima erguidas, as de baixo caídas
+        o.rotation.set(f % 3 === 0 ? -0.85 : f % 3 === 1 ? -0.4 : -0.05, a, 0, "YXZ");
+        o.position.set(x, Z0 + h - 0.05, z);
+        o.scale.setScalar(f % 3 === 0 ? 0.8 : 1);
+        o.updateMatrix();
+        folhaImp.current!.setMatrixAt(i * FOLHAS_IMPERIAL + f, o.matrix);
+        folhaImp.current!.setColorAt(i * FOLHAS_IMPERIAL + f, cor.set(f % 3 ? "#ffffff" : "#dfe9c9"));
+      }
+    });
+    L.coqueiros.forEach(([x, z, h, g], i) => {
+      // estipe inclinado ~8° para o lado `g`
+      const inc = 0.14;
+      o.position.set(x, Z0, z);
+      o.rotation.set(inc, g, 0, "YXZ");
+      o.scale.set(1, h, 1);
+      o.updateMatrix();
+      estipeCoq.current!.setMatrixAt(i, o.matrix);
+      const topo = new THREE.Vector3(0, h, 0).applyEuler(new THREE.Euler(inc, g, 0, "YXZ")).add(new THREE.Vector3(x, Z0, z));
+      o.position.copy(topo).add(new THREE.Vector3(0, -0.2, 0));
+      o.rotation.set(0, 0, 0);
+      o.scale.set(1, 1, 1);
+      o.updateMatrix();
+      cocos.current!.setMatrixAt(i, o.matrix);
+      for (let f = 0; f < FOLHAS_COQUEIRO; f++) {
+        const a = g + (f / FOLHAS_COQUEIRO) * Math.PI * 2;
+        o.rotation.set(f % 2 ? -0.3 : 0.1, a, 0, "YXZ");
+        o.position.copy(topo);
+        o.scale.setScalar(f % 2 ? 0.85 : 1);
+        o.updateMatrix();
+        folhaCoq.current!.setMatrixAt(i * FOLHAS_COQUEIRO + f, o.matrix);
+        folhaCoq.current!.setColorAt(i * FOLHAS_COQUEIRO + f, cor.set(f % 3 ? "#ffffff" : "#d9e6c4"));
+      }
+    });
+    for (const m of [estipe, palmito, folhaImp, estipeCoq, folhaCoq, cocos].map((x) => x.current!)) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const ni = L.imperiais.length, nc = L.coqueiros.length;
   return (
-    <group name="Bloco_M" position={[x, 0, z]} rotation-y={-THREE.MathUtils.degToRad(156 - 90)}>
-      <mesh name="Bloco_M_Volume" geometry={geo} material={[fab.cor("#e2e3df", 0.85), mat.fachadaBlocos]} castShadow receiveShadow />
-      <mesh name="Bloco_M_Telhado_Letreiro" position-y={3.012} rotation-x={-Math.PI / 2} material={mat.telhadoM} receiveShadow>
-        <planeGeometry args={[c * 0.94, l * 0.88]} />
-      </mesh>
-    </group>
+    <>
+      <instancedMesh name="Imperiais_Estipes" ref={estipe} args={[recursos.estipe, undefined, ni]} castShadow material={fab.cor("#c8c1b2", 0.8)} />
+      <instancedMesh name="Imperiais_Palmitos" ref={palmito} args={[recursos.palmito, undefined, ni]} castShadow material={fab.cor("#7f9d48", 0.7)} />
+      <instancedMesh name="Imperiais_Folhas" ref={folhaImp} args={[recursos.folhaImp, recursos.folhas, ni * FOLHAS_IMPERIAL]} castShadow />
+      <instancedMesh name="Coqueiros_Estipes" ref={estipeCoq} args={[recursos.estipeCoq, undefined, nc]} castShadow material={fab.cor("#6e5a45")} />
+      <instancedMesh name="Coqueiros_Cachos" ref={cocos} args={[undefined, undefined, nc]} castShadow material={fab.cor("#7f9d48", 0.7)}>
+        <icosahedronGeometry args={[0.3, 0]} />
+      </instancedMesh>
+      <instancedMesh name="Coqueiros_Folhas" ref={folhaCoq} args={[recursos.folhaCoq, recursos.folhas, nc * FOLHAS_COQUEIRO]} castShadow />
+    </>
+  );
+}
+
+/** Carros na Washington Soares (a pista do lado do campus segue para o norte, a outra para o sul) e no estacionamento */
+function Carros({ fab }: { fab: Fabrica }) {
+  const corpo = useRef<THREE.InstancedMesh>(null);
+  const cabine = useRef<THREE.InstancedMesh>(null);
+  const geo = useMemo(() => {
+    const c = new THREE.BoxGeometry(1.9, 0.42, 0.86).translate(0, 0.3, 0);
+    const k = new THREE.BoxGeometry(1.0, 0.34, 0.76).translate(-0.12, 0.66, 0);
+    return { c, k };
+  }, []);
+  useEffect(() => () => { geo.c.dispose(); geo.k.dispose(); }, [geo]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const tons = ["#f2f2ef", "#c8ccd0", "#2b2f36", "#8e959c", "#b33a32", "#f2f2ef", "#1f4e8c", "#d9d4c4"];
+    L.carros.forEach(([x, z, g, k], i) => {
+      o.position.set(x, Z0, z);
+      o.rotation.set(0, g, 0);
+      o.updateMatrix();
+      corpo.current!.setMatrixAt(i, o.matrix);
+      cabine.current!.setMatrixAt(i, o.matrix);
+      corpo.current!.setColorAt(i, cor.set(tons[k % tons.length]));
+    });
+    for (const m of [corpo.current!, cabine.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.carros.length;
+  return (
+    <>
+      <instancedMesh name="Carros_Carroceria" ref={corpo} args={[geo.c, undefined, n]} castShadow receiveShadow>
+        <meshStandardMaterial name="Mat_Carroceria" roughness={0.45} metalness={0.2} />
+      </instancedMesh>
+      <instancedMesh name="Carros_Cabine" ref={cabine} args={[geo.k, undefined, n]} castShadow material={fab.cor("#2c3540", 0.3)} />
+    </>
+  );
+}
+
+/** Gente na Praça Central, no largo da fonte e no eixo (exageradas como os carros, para darem escala na vista de perto) */
+function Pessoas({ fab }: { fab: Fabrica }) {
+  const corpo = useRef<THREE.InstancedMesh>(null);
+  const cabeca = useRef<THREE.InstancedMesh>(null);
+  const pernas = useRef<THREE.InstancedMesh>(null);
+  const rec = useMemo(() => ({
+    corpo: new THREE.CylinderGeometry(0.1, 0.12, 0.36, 7).translate(0, 0.5, 0),
+    cabeca: new THREE.IcosahedronGeometry(0.085, 1).translate(0, 0.77, 0),
+    pernas: new THREE.CylinderGeometry(0.08, 0.07, 0.34, 6).translate(0, 0.17, 0),
+    mat: Object.assign(new THREE.MeshStandardMaterial({ roughness: 0.8 }), { name: "Mat_Pessoas" }),
+  }), []);
+  useEffect(() => () => { Object.values(rec).forEach((x) => x.dispose()); }, [rec]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const camisas = ["#f2f2ee", "#2f5fa8", "#e0b23a", "#c8463c", "#3d8a5a", "#1e2a44"];
+    const peles = ["#c99a74", "#8d5e3c", "#e3bf9b", "#a8714b"];
+    L.pessoas.forEach(([x, z, g, k], i) => {
+      o.position.set(x, Z0, z);
+      o.rotation.set(0, g, 0);
+      o.updateMatrix();
+      for (const m of [corpo.current!, cabeca.current!, pernas.current!]) m.setMatrixAt(i, o.matrix);
+      corpo.current!.setColorAt(i, cor.set(camisas[k % camisas.length]));
+      cabeca.current!.setColorAt(i, cor.set(peles[(i * 3 + k) % peles.length]));
+    });
+    for (const m of [corpo.current!, cabeca.current!, pernas.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.pessoas.length;
+  return (
+    <>
+      <instancedMesh name="Pessoas_Corpo" ref={corpo} args={[rec.corpo, rec.mat, n]} castShadow />
+      <instancedMesh name="Pessoas_Cabeca" ref={cabeca} args={[rec.cabeca, rec.mat, n]} castShadow />
+      <instancedMesh name="Pessoas_Pernas" ref={pernas} args={[rec.pernas, undefined, n]} castShadow material={fab.cor("#2c3540", 0.3)} />
+    </>
   );
 }
 
 export function Unifor({ fab }: { fab: Fabrica }) {
-  const mat = useMemo(criarMateriais, []);
-  useEffect(
-    () => () => {
-      for (const m of Object.values(mat)) {
-        m.map?.dispose();
-        m.dispose();
-      }
-    },
-    [mat],
-  );
-  const { chao, avenida, canteiro } = useMemo(() => {
-    // Av. Washington Soares na borda oeste, levemente inclinada (6°) e cortada pela borda do pedestal
-    const [wx] = emM([-470, 0]);
-    const d = THREE.MathUtils.degToRad(6);
-    return {
-      // gramado como uma laje fina de 10 cm com a borda chanfrada: o campus ganha uma aresta nítida sobre a base
-      chao: prismaDePlanta(CAMPUS.map(emM), 0.1, 0, 0.03),
-      avenida: placaDePlanta(faixaNoDisco(wx - 0.9, 0, Math.sin(d), -Math.cos(d), 2.4), 0.02),
-      canteiro: placaDePlanta(faixaNoDisco(wx - 0.9, 0, Math.sin(d), -Math.cos(d), 0.28, RAIO_UTIL - 0.4), 0.05),
-    };
-  }, []);
-  useEffect(
-    () => () => {
-      chao.dispose();
-      avenida.dispose();
-      canteiro.dispose();
-    },
-    [chao, avenida, canteiro],
-  );
-  const [lx, lz] = emM([312, 294]);
-  const giroLago = -THREE.MathUtils.degToRad(107 - 90);
   return (
     <group name="Unifor">
-      <mesh name="Gramado_Campus" geometry={chao} material={[mat.gramado, fab.cor("#6d8a4a", 0.95)]} receiveShadow />
-      <mesh name="Av_Washington_Soares" geometry={avenida} material={fab.cor("#5c5f61", 0.95)} receiveShadow />
-      <mesh name="Av_Washington_Soares_Canteiro" geometry={canteiro} material={fab.cor("#d8d4c8", 0.9)} receiveShadow />
-      {/* laguinho, fora da cerca no nordeste, com a margem de areia */}
-      <group position={[lx, 0, lz]} rotation={[-Math.PI / 2, 0, giroLago]}>
-        <mesh name="Lago_Margem" position-z={0.045} scale={[284 * K * 0.54, 115 * K * 0.58, 1]} material={fab.cor("#cfc6a6", 0.95)} receiveShadow>
-          <circleGeometry args={[1, 32]} />
-        </mesh>
-        <mesh name="Lago_Agua" position-z={0.07} scale={[284 * K * 0.5, 115 * K * 0.5, 1]} material={fab.agua()} receiveShadow>
-          <circleGeometry args={[1, 32]} />
-        </mesh>
-      </group>
-
-      <Extrudado nome="Reitoria" local={REITORIA} em={[-403, -18]} altura={3.2} paredes={mat.fachadaReitoria} telhado={fab.cor("#e9e8df", 0.8)} />
-      <Extrudado nome="Biblioteca" local={BIBLIOTECA} em={[-309, -2]} altura={2.6} paredes={mat.fachadaBlocos} telhado={fab.cor("#e2e3df", 0.85)} />
-      <CentroDeConvivencia fab={fab} mat={mat} />
-      <BlocoM fab={fab} mat={mat} />
-      <Ginasio fab={fab} mat={mat} />
-      <PistaEEstacionamentoSolar fab={fab} mat={mat} />
-      <BlocosEMata fab={fab} mat={mat} />
+      <PecasBlender fab={fab} />
+      <Mata fab={fab} />
+      <Palmeiras fab={fab} />
+      <Carros fab={fab} />
+      <Pessoas fab={fab} />
     </group>
   );
 }
