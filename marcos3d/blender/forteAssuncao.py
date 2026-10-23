@@ -41,10 +41,10 @@ R_PLATO = 31.4       # até aqui o chão da cidade é plano; daí cai num talude
 
 # ——— níveis (m, já na miniatura): o forte fica no alto da colina, sobre a Leste-Oeste
 Z_BAIXO = 0.10       # Av. Pres. Castelo Branco (Leste-Oeste), ao pé das muralhas
-Z_RUA = 1.40         # ruas do Centro (Dr. João Moreira, Floriano Peixoto, Alberto Nepomuceno) e o Passeio Público
-Z_MEIO = 1.70        # bateria inferior do baluarte (gramado com coqueiros)
-Z_ESP = 2.15         # esplanada de fora, no alto da rampa, junto ao portão
-Z_ALTO = 2.40        # platô do forte: pátio de estacionamento, pátio interno, terraço do espelho d'água
+Z_RUA = 1.50         # ruas do Centro (Dr. João Moreira, Floriano Peixoto, Alberto Nepomuceno) e o Passeio Público
+Z_MEIO = 2.00        # bateria inferior do baluarte (gramado com coqueiros)
+Z_ESP = 2.45         # esplanada de fora, no alto da rampa, junto ao portão
+Z_ALTO = 2.70        # platô do forte: pátio de estacionamento, pátio interno, terraço do espelho d'água
 
 # ——— quartel
 H_PAV = 2.95         # pé-direito de cada um dos dois pavimentos (os altos pés-direitos das fotos, exagerados)
@@ -294,6 +294,7 @@ R_JOAO_MOREIRA = [(43, -108), (32, -102), (18, -95), (3, -88), (-83, -54), (-147
 R_BEZERRIL = [(3, -88), (-1, -95), (-22, -134)]
 R_FLORIANO = [(-90, -75), (-83, -54), (-80, -45), (-70, -18), (-57, 18)]
 AV_NEPOMUCENO = [(118, 25), (107, 4), (80, -43), (50, -94), (47, -101), (43, -108)]
+PISTA_ESPLANADA = [(30, -62), (35, -51), (41, -37), (45, -26), (47, -23), (57, -11), (65, 0), (73, 11), (77, 14), (83, 15), (102, 13)]
 AV_CASTELO = [(-120, 100), (-82, 87), (-76, 85), (-31, 60), (-5, 48), (24, 40), (48, 37), (76, 34), (108, 24), (116, 19)]
 
 
@@ -503,11 +504,13 @@ def bm_barra(a, b, r):
     u.normalize()
     w = d.cross(u).normalized()
     bm = bmesh.new()
-    cs = [(-1, -1), (1, -1), (1, 1), (-1, 1)]
+    # barras finas (gradis) em seção triangular: 6 triângulos em vez de 8
+    cs = [(-1, -1), (1, -1), (1, 1), (-1, 1)] if r > 0.02 else [(0, 1.3), (-1.1, -0.7), (1.1, -0.7)]
+    k = len(cs)
     va = [bm.verts.new(a + (u * x + w * y) * r) for x, y in cs]
     vb = [bm.verts.new(b + (u * x + w * y) * r) for x, y in cs]
-    for i in range(4):
-        bm.faces.new([va[i], va[(i + 1) % 4], vb[(i + 1) % 4], vb[i]])
+    for i in range(k):
+        bm.faces.new([va[i], va[(i + 1) % k], vb[(i + 1) % k], vb[i]])
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     for f in bm.faces:   # recalc em malha aberta pode errar: confere contra o eixo
         c = f.calc_center_median()
@@ -678,7 +681,7 @@ def chao(M):
     for i in range(96):
         a, b = c[i], c[(i + 1) % 96]
         base.poli([(a[0], a[1], 0.0), (b[0], b[1], 0.0), (b[0], b[1], Z_BAIXO), (a[0], a[1], Z_BAIXO)], M["corte"], para=(a[0] + b[0], a[1] + b[1], 0))
-    base.criar(grade=(2.0,))
+    base.criar(grade=(3.2,))
 
     cid = regiao_cidade()
     P = Peca("Chao_Colina")
@@ -696,7 +699,7 @@ def chao(M):
         for k, viz in ((i, dentro[i - 1]), (j, dentro[j])):
             if not viz:   # ponta do talude: fecha com um triângulo de terra
                 P.poli([(ci[k][0], ci[k][1], Z_RUA), (ce[k][0], ce[k][1], Z_BAIXO), (ci[k][0], ci[k][1], Z_BAIXO)], M["corte"])
-    P.criar(grade=(1.3,))
+    P.criar(grade=(2.2,))
 
     def placa_nivel(nome, poli, z, m, z_corte):
         """Topo de um nível recortado no disco; onde o recorte encontra a borda, a face de corte desce até z_corte"""
@@ -714,7 +717,7 @@ def chao(M):
     alto.criar(grade=(1.2,))
     meio = placa_nivel("Chao_Bateria", regiao_meio(), Z_MEIO, M["grama"], Z_RUA)
     meio.criar(grade=(1.2,))
-    esp = placa_nivel("Chao_Esplanada", ccw(TT(ESPLANADA)), Z_ESP, M["asfalto"], Z_RUA)
+    esp = placa_nivel("Chao_Esplanada", ccw(TT(ESPLANADA)), Z_ESP, M["calcada"], Z_RUA)
     # borda da esplanada para a praça e a Alberto Nepomuceno: arrimo caiado
     for tr in recortar_linha(TT(ESPLANADA)[7:11], R_PLATO):
         for a, b in zip(tr, tr[1:]):
@@ -777,6 +780,11 @@ def ruas(M):
     rua("nepomuceno", AV_NEPOMUCENO, 3.1, Z_RUA, calcada=0.6)
     rua("castelo", AV_CASTELO, 2.6, Z_BAIXO, calcada=0.7, raio=RAIO - 0.15)
 
+    # pista da esplanada, ao longo do muro (via 276754773), sobre a calçada
+    pista = recortar_no_disco(faixa_poligono(TT(PISTA_ESPLANADA), 1.7), R_PLATO - 0.05)
+    if len(pista) >= 3:
+        P.poli([(x, y, Z_ESP + 0.014) for x, y in pista], M["asfalto"], para=(0, 0, 1))
+    traj["esplanada"] = TT(PISTA_ESPLANADA)
     # rampa: sobe da Dr. João Moreira ao portão, encostada ao muro do pátio
     r = TT(RAMPA)
     zs = [Z_RUA, Z_RUA + 0.08, Z_ESP, Z_ESP, Z_RUA]
@@ -787,7 +795,7 @@ def ruas(M):
         n_ = direita(a, b)          # o contorno da rampa é horário: fora fica à esquerda
         P.poli([(a[0], a[1], Z_RUA), (b[0], b[1], Z_RUA), (b[0], b[1], zs[j] + 0.014), (a[0], a[1], zs[i] + 0.014)], M["muralha"], para=(-n_[0], -n_[1], 0))
     reservar(r, 0.1)
-    P.criar(grade=(1.3,))
+    P.criar(grade=(1.8,))
     return traj
 
 
@@ -857,15 +865,15 @@ def pilarete(P, M, x, y, z, giro, alto=0.72):
     P.juntar(bm_caixa(0.26, 0.26, alto), M["muralha"], M_em(x, y, z, giro))
     P.juntar(bm_caixa(0.34, 0.34, 0.07), M["muralha"], M_em(x, y, z + alto, giro))
     P.juntar(bm_caixa(0.18, 0.18, 0.08), M["muralha"], M_em(x, y, z + alto + 0.07, giro))
-    P.juntar(bm_esfera(0.1, 8, 5), M["muralha"], Matrix.Translation((x, y, z + alto + 0.24)))
+    P.juntar(bm_esfera(0.1, 6, 4), M["muralha"], Matrix.Translation((x, y, z + alto + 0.24)))
 
 
 def grade_entre(P, M, a, b, z, alto=0.6):
     """Gradil preto entre dois pilaretes: três travessas e montantes finos"""
-    for zz in (0.08, alto * 0.55, alto):
+    for zz in (0.08, alto):
         P.juntar(bm_barra((a[0], a[1], z + zz), (b[0], b[1], z + zz), 0.018), M["grade"])
     l = math.hypot(b[0] - a[0], b[1] - a[1])
-    k = max(1, int(l / 0.32))
+    k = max(1, int(l / 0.55))
     for i in range(1, k):
         p = lerp(a, b, i / k)
         P.juntar(bm_barra((p[0], p[1], z + 0.08), (p[0], p[1], z + alto), 0.012), M["grade"])
@@ -1012,7 +1020,7 @@ def janela(P, M, F, u, v0, vm, hw, reg, sacada=False, moldura=0.075):
             P.juntar(bm_barra(F.p(u + s * (hw + 0.15), v0 + 0.44, 0.02), F.p(u + s * (hw + 0.15), v0 + 0.44, 0.34), 0.016), M["grade"])
         P.juntar(bm_barra(F.p(u - hw - 0.15, v0 + 0.44, 0.34), F.p(u + hw + 0.15, v0 + 0.44, 0.34), 0.018), M["grade"])
         P.juntar(bm_barra(F.p(u - hw - 0.15, v0 + 0.1, 0.34), F.p(u + hw + 0.15, v0 + 0.1, 0.34), 0.014), M["grade"])
-        k = 5
+        k = 3
         for i in range(1, k):
             uu = u - hw - 0.15 + (2 * hw + 0.3) * i / k
             P.juntar(bm_barra(F.p(uu, v0, 0.34), F.p(uu, v0 + 0.44, 0.34), 0.012), M["grade"])
@@ -1387,7 +1395,7 @@ def casario(M):
 
     def m(n):
         return ((float(n.get("lon")) - LNG0) * math.cos(math.radians(LAT0)) * 111320, (float(n.get("lat")) - LAT0) * 110540)
-    tons = ["#efe2c4", "#dfe6e4", "#f2d9c9", "#e9e3d6", "#d9e2ef", "#f1e9b8"]
+    tons = ["#e9c98f", "#bfd3c8", "#e3b39e", "#d8cbb0", "#b7c8de", "#ead98c"]
     CORES.clear()
     k = 0
     for w in tree.iter("way"):
@@ -1398,13 +1406,13 @@ def casario(M):
         if len(pts) > 2 and pts[0] == pts[-1]:
             pts = pts[:-1]
         mp = ccw(TT(pts))
-        if min(math.hypot(*q) for q in mp) > 29.0:
+        if min(math.hypot(*q) for q in mp) > 28.0:
             continue
         p = recortar_no_disco(mp, R_PLATO - 0.3)
         if len(p) < 3 or abs(area2(p)) < 1.0:
             continue
         h = float(tags.get("height", 6.0))
-        H = min(3.4, 1.0 + 0.2 * h)
+        H = min(2.2, 0.8 + 0.1 * h)
         tom = tons[k % len(tons)]
         k += 1
         ini = len(P.bm.faces)
@@ -1447,8 +1455,8 @@ def passeio(M):
             if i:
                 for zz in (0.12, 0.85):
                     P.juntar(bm_barra((pts[i - 1][0], pts[i - 1][1], Z_RUA + zz), (x, y, Z_RUA + zz), 0.02), M["grade"])
-                for k in range(1, 6):
-                    p = lerp(pts[i - 1][:2], (x, y), k / 6)
+                for k in range(1, 3):
+                    p = lerp(pts[i - 1][:2], (x, y), k / 3)
                     P.juntar(bm_barra((p[0], p[1], Z_RUA + 0.12), (p[0], p[1], Z_RUA + 0.85), 0.011), M["grade"])
     return P.criar()
 
@@ -1554,6 +1562,16 @@ def layout(traj, leste, torre_xy):
             if dist_borda((cx, cy), TT(MURO_LESTE), False) < 0.6 or any(math.hypot(cx - c[0], cy - c[1]) < 0.9 for c in carros):
                 continue
             carros.append((cx, cy, Z_ALTO, math.atan2(n_[1], n_[0]), rnd.randrange(8)))
+    # vagas da esplanada de fora (relação 8778671), à direita da pista
+    espl = ccw(TT(ESPLANADA))
+    for x, y, a in amostrar(traj["esplanada"], 0.95, 0.5):
+        n_ = (math.sin(a), -math.cos(a))
+        cx, cy = x + n_[0] * 1.75, y + n_[1] * 1.75
+        if rnd.random() < 0.35 or not ponto_no_poligono((cx, cy), espl) or math.hypot(cx, cy) > R_PLATO - 1.0:
+            continue
+        if any(math.hypot(cx - c[0], cy - c[1]) < 0.9 for c in carros):
+            continue
+        carros.append((cx, cy, Z_ESP, math.atan2(n_[1], n_[0]), rnd.randrange(8)))
     # faixas amarelas das vagas
     # ruas: Dr. João Moreira (para oeste), Alberto Nepomuceno (para o sul), Castelo Branco (para leste)
     for nome, sentido, z, passo in (("joao_moreira", 1, Z_RUA, (3.5, 7.0)), ("nepomuceno", 1, Z_RUA, (3.0, 6.0)), ("castelo", 1, Z_BAIXO, (3.0, 6.5))):
@@ -1593,7 +1611,7 @@ def faixas_vagas(M, carros):
     """Faixas amarelas das vagas do pátio murado (ref-2), uma de cada lado de cada carro"""
     P = Peca("Patio_Faixas")
     for x, y, z, g, _ in carros:
-        if abs(z - Z_ALTO) > 0.01:
+        if abs(z - Z_ALTO) > 0.01 and abs(z - Z_ESP) > 0.01:
             continue
         u = (math.cos(g), math.sin(g))
         v = (-u[1], u[0])
@@ -1601,7 +1619,7 @@ def faixas_vagas(M, carros):
             cx, cy = x + v[0] * s * 0.5, y + v[1] * s * 0.5
             q = [(cx - u[0] * 0.9 - v[0] * 0.03, cy - u[1] * 0.9 - v[1] * 0.03), (cx + u[0] * 0.9 - v[0] * 0.03, cy + u[1] * 0.9 - v[1] * 0.03),
                  (cx + u[0] * 0.9 + v[0] * 0.03, cy + u[1] * 0.9 + v[1] * 0.03), (cx - u[0] * 0.9 + v[0] * 0.03, cy - u[1] * 0.9 + v[1] * 0.03)]
-            P.poli([(a, b, Z_ALTO + 0.012) for a, b in q], M["amarela"], para=(0, 0, 1))
+            P.poli([(a, b, z + (0.012 if z > Z_ESP + 0.01 else 0.02)) for a, b in q], M["amarela" if z > Z_ESP + 0.01 else "faixa"], para=(0, 0, 1))
     return P.criar()
 
 
