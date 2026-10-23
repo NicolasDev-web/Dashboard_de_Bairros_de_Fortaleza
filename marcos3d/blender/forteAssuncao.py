@@ -1535,7 +1535,9 @@ def layout(traj, leste, torre_xy):
         x, y = rnd.uniform(-RAIO, RAIO), rnd.uniform(-RAIO, RAIO)
         r = rnd.uniform(1.1, 1.6)
         no_passeio = ponto_no_poligono((x, y), ccw(TT(PASSEIO)))
-        no_norte = nivel(x, y) == Z_BAIXO and math.hypot(x, y) > 27.0
+        # na Leste-Oeste, poucas árvores e longe do pé da muralha: a face caiada é o que identifica o forte (ref-3)
+        no_norte = (nivel(x, y) == Z_BAIXO and math.hypot(x, y) > 28.5 and dist_borda((x, y), TT(L_FORA), False) > 3.0
+                    and sum(1 for a in arvores if a[2] == Z_BAIXO) < 5)
         if not (no_passeio or no_norte):
             continue
         if not livre(x, y, r):
@@ -1543,7 +1545,7 @@ def layout(traj, leste, torre_xy):
         if any(math.hypot(x - a[0], y - a[1]) < 0.8 * (r + a[3]) for a in arvores):
             continue
         arvores.append((x, y, nivel(x, y), r, rnd.uniform(1.2, 1.8)))
-        if sum(1 for a in arvores if a[2] == Z_BAIXO) > 9 and sum(1 for a in arvores if ponto_no_poligono(a[:2], ccw(TT(PASSEIO)))) > 12:
+        if sum(1 for a in arvores if a[2] == Z_BAIXO) >= 5 and sum(1 for a in arvores if ponto_no_poligono(a[:2], ccw(TT(PASSEIO)))) > 12:
             break
 
     carros = []
