@@ -422,7 +422,7 @@ def criar_materiais():
     M["calcada"] = mat("Mat_Chao_Calcada", "#bdbab2", 0.9)
     M["asfalto"] = mat("Mat_Chao_Asfalto", "#55595d", 0.95)
     M["faixa"] = mat("Mat_Chao_Faixa", "#efeee6", 0.8)
-    M["verde"] = mat("Mat_Verde_Reitoria", "#80a548", 0.7)
+    M["verde"] = mat("Mat_Verde_Reitoria", "#7c9c45", 0.7)
     M["pastilha"] = mat("Mat_Pastilha_Bege", "#d8cfb5", 0.85)
     M["esquadrias"] = mat("Mat_Esquadrias", "#ffffff", 0.35, 0.0, atlas)
     M["cobertura"] = mat("Mat_Cobertura_Clara", "#c6c8c2", 0.7)
@@ -542,7 +542,7 @@ def reitoria(M):
     P = Peca("Reitoria")
     A = Arco((-31.5, 0.6), 12.7, 16.3, math.radians(-31), math.radians(31))
     NB = 9
-    H1, H2, HP = 2.4, 4.75, 5.35      # topo do térreo, topo da parede, topo da platibanda verde
+    H1, H2, HP = 2.4, 4.75, 5.55      # topo do térreo, topo da parede, topo da platibanda verde
     seg = NB * 2
     ang = [A.a0 + (A.a1 - A.a0) * i / seg for i in range(seg + 1)]
 
@@ -557,8 +557,8 @@ def reitoria(M):
         P.poli([A.p(r_out, b, z0), A.p(r_in, b, z0), A.p(r_in, b, z1), A.p(r_out, b, z1)], mlado)
     anel(A.r1, A.r2, Z0, Z0 + H2, M["pastilha"], M["pastilha"], M["cobertura"], M["pastilha"], ang)
     # platibanda: mureta verde na frente e nas pontas, concreto claro nos fundos
-    anel(A.r1 - 0.02, A.r1 + 0.2, Z0 + H2, Z0 + HP, M["verde"], M["verde"], M["verde"], M["verde"], ang)
-    anel(A.r2 - 0.18, A.r2, Z0 + H2, Z0 + HP - 0.12, M["concreto"], M["concreto"], M["concreto"], M["concreto"], ang)
+    anel(A.r1 - 0.02, A.r1 + 0.42, Z0 + H2, Z0 + HP, M["verde"], M["verde"], M["verde"], M["verde"], ang)
+    anel(A.r2 - 0.36, A.r2, Z0 + H2, Z0 + HP - 0.12, M["verde"], M["verde"], M["verde"], M["verde"], ang)
     for a in (A.a0, A.a1):
         x, y, _ = A.p((A.r1 + A.r2) / 2, a, 0)
         P.juntar(bm_caixa(A.r2 - A.r1, 0.2, HP - H2, 0.03), M["verde"], M_em(x, y, Z0 + H2, math.degrees(a) + GIRO_FRENTE))
@@ -573,6 +573,8 @@ def reitoria(M):
         n_ = Vector((u_.y, -u_.x, 0)) * (-s)          # para fora da ponta
         E = lambda u, v, w: tuple(o + u_ * u + Vector((0, 0, v)) + n_ * w)
         ordem = (lambda q: q) if s < 0 else (lambda q: [q[1], q[0], q[3], q[2]])
+        q = ordem([(0.0, 0.0), (lw, 0.0), (lw, 4.4), (0.0, 4.4)])
+        P.poli([E(u, v, 0.012) for u, v in q], M["verde"])
         for (v0, v1, reg) in ((2.85, 4.25, "A"), (0.85, 1.95, "B")):
             q = ordem([(0.45, v0), (lw - 0.45, v0), (lw - 0.45, v1), (0.45, v1)])
             uvq = ordem([(0, 0), (1, 0), (1, 1), (0, 1)])
@@ -592,7 +594,13 @@ def reitoria(M):
     for i in range(NB):
         am = A.a0 + (A.a1 - A.a0) * (i + 0.5) / NB
         Q = quadro(am, A.r1)
-        hw = larg_vao / 2 - 0.15                       # meia largura livre entre pilastras
+        hw = larg_vao / 2 - 0.2                        # meia largura livre entre pilastras
+        if i in (0, NB - 1):
+            for QQ, w, ordem in ((Q, 0.012, 1), (quadro(am, A.r2), -0.012, -1)):
+                q = [(-larg_vao / 2, 0.0), (larg_vao / 2, 0.0), (larg_vao / 2, H2), (-larg_vao / 2, H2)]
+                if ordem < 0:
+                    q = [q[1], q[0], q[3], q[2]]
+                P.poli([QQ(u, v, w) for u, v in q], M["verde"])
         # janela do 2º pavimento com o topo acompanhando o arco abatido (caixilho do atlas A)
         nseg = 10
         v_base, v_mola, v_topo = 2.85, 3.95, 4.5
@@ -630,7 +638,7 @@ def reitoria(M):
     # pilastras verdes nos limites dos vãos, frente e fundos
     for i in range(NB + 1):
         a = A.a0 + (A.a1 - A.a0) * i / NB
-        for r, w, hh in ((A.r1 - 0.08, 0.32, HP + 0.02), (A.r2 + 0.06, 0.26, HP - 0.1)):
+        for r, w, hh in ((A.r1 - 0.08, 0.42, HP + 0.02), (A.r2 + 0.06, 0.34, HP - 0.1)):
             x, y, _ = A.p(r, a, 0)
             giro = math.degrees(a) + GIRO_FRENTE
             P.juntar(bm_caixa(0.2, w, hh, 0.03), M["verde"], M_em(x, y, Z0, giro))
