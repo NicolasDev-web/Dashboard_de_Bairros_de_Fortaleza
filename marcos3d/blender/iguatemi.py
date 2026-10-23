@@ -304,11 +304,11 @@ MATERIAIS = {
     "Mat_Asfalto_Estacionamento": ("#606368", 0.92, 0.0),
     "Mat_Faixa_Branca": ("#f1f1ec", 0.6, 0.0),
     "Mat_Canteiro": ("#c9c3b5", 0.9, 0.0),
-    "Mat_Fachada_Galerias": ("#f5ecdc", 0.85, 0.0),
+    "Mat_Fachada_Galerias": ("#f8ead3", 0.85, 0.0),
     "Mat_Platibanda_Branca": ("#f7f5ef", 0.7, 0.0),
     "Mat_Telhado_Branco": ("#efede7", 0.75, 0.0),
     "Mat_Telhado_Bege": ("#ddd5c6", 0.85, 0.0),
-    "Mat_Laje_Tecnica": ("#bab3a5", 0.95, 0.0),
+    "Mat_Laje_Tecnica": ("#aea697", 0.95, 0.0),
     "Mat_Telhado_Metalico_Cinza": ("#9da3a8", 0.55, 0.25),
     "Mat_Vidro_Verde_Fachada": ("#4f8e7d", 0.12, 0.1),
     "Mat_Vidro_Escuro": ("#2d4257", 0.1, 0.2),
@@ -773,7 +773,7 @@ Y_EMBASAMENTO = H(7.6)
 VOLUMES_PLANTA = []
 
 
-def volume(nome, p, y_topo, telhado="Mat_Telhado_Branco", y0=0.0, parapeito=0.16, esp=0.09, chanfro=0.07, giro_uv=0.0, fachada=FACHADA, grade=1.5):
+def volume(nome, p, y_topo, telhado="Mat_Telhado_Branco", y0=0.0, parapeito=0.16, esp=0.09, chanfro=0.07, giro_uv=0.0, fachada=FACHADA, grade=2.0):
     """Volume de galeria: paredes, platibanda chanfrada (pega a luz no contorno) e laje de cobertura recuada.
     Devolve o contorno interno do telhado (para pôr máquinas e claraboias em cima)."""
     p = ccw(chanfrar_cantos(ccw(p), 0.07))
@@ -781,7 +781,7 @@ def volume(nome, p, y_topo, telhado="Mat_Telhado_Branco", y0=0.0, parapeito=0.16
         VOLUMES_PLANTA.append(p)
     paredes = malha(nome + "_Fachadas", fachada)
     plat = malha(nome + "_Platibanda", PLATIBANDA)
-    tel = malha(nome + "_Telhado", telhado, grade=grade)
+    tel = malha(nome + "_Telhado", telhado, grade=None if nome.startswith("Miolo") else grade)
     yp = y_topo + parapeito
     paredes.paredes(p, y0, yp - chanfro)
     c1 = deslocar(p, -chanfro)
