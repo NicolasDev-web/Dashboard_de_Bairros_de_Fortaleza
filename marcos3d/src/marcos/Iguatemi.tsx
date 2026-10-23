@@ -4,7 +4,6 @@ import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import type { Fabrica } from "../Cena";
-import { caixaChanfrada } from "../util/geometria";
 import dados from "../../blender/saida/iguatemi-dados.json";
 
 /**
@@ -189,7 +188,7 @@ function Arvores({ fab }: { fab: Fabrica }) {
     copa.current!.computeBoundingSphere();
     tronco.current!.computeBoundingSphere();
   }, []);
-  const geoTronco = useMemo(() => new THREE.CylinderGeometry(0.1, 0.15, 1, 6).translate(0, 0.5, 0), []);
+  const geoTronco = useMemo(() => new THREE.CylinderGeometry(0.1, 0.15, 1, 5, 1, true).translate(0, 0.5, 0), []);
   return (
     <>
       <instancedMesh name="Arvores_Copas" ref={copa} args={[undefined, undefined, n]} castShadow receiveShadow>
@@ -201,13 +200,13 @@ function Arvores({ fab }: { fab: Fabrica }) {
   );
 }
 
-const FOLHAS = 7;
+const FOLHAS = 6;
 
 /** Folha de palmeira (mesma do Messejana.tsx): tira em "V" raso que sobe e cai em arco; base na origem, em +z */
 function geometriaFolha(comp = 1.5) {
   const pos: number[] = [];
   const idx: number[] = [];
-  const n = 5;
+  const n = 4;
   for (let i = 0; i <= n; i++) {
     const t = i / n;
     const y = 0.3 * t - 0.8 * t * t;
@@ -234,7 +233,7 @@ function Palmeiras({ fab }: { fab: Fabrica }) {
   const recursos = useMemo(() => {
     const folhas = new THREE.MeshStandardMaterial({ color: "#6b9b3f", roughness: 0.8, side: THREE.DoubleSide });
     folhas.name = "Mat_Folha_Palmeira";
-    return { folhas, geo: geometriaFolha(), geoCaule: new THREE.CylinderGeometry(0.06, 0.1, 1, 6).translate(0, 0.5, 0) };
+    return { folhas, geo: geometriaFolha(), geoCaule: new THREE.CylinderGeometry(0.06, 0.1, 1, 5, 1, true).translate(0, 0.5, 0) };
   }, []);
   useLayoutEffect(() => {
     const o = new THREE.Object3D();
@@ -273,10 +272,10 @@ function Palmeiras({ fab }: { fab: Fabrica }) {
 
 const CORES_CARROS = ["#e9ebec", "#2d3136", "#b8bdc2", "#a3262a", "#e9ebec", "#5b6772", "#1f4f8f"];
 
-/** Carro: caixa chanfrada com a cabine recuada (0,3 × 0,64 m: um pouco acima da escala, para ler de longe) */
+/** Carro: carroceria e cabine recuada, 24 triângulos (0,3 × 0,64 m: um pouco acima da escala, para ler de longe) */
 function Carros({ fab }: { fab: Fabrica }) {
   const ref = useRef<THREE.InstancedMesh>(null);
-  const geo = useMemo(() => mergeGeometries([caixaChanfrada(0.3, 0.13, 0.64, 0.035), caixaChanfrada(0.26, 0.11, 0.34, 0.03).translate(0, 0.12, 0.03)]), []);
+  const geo = useMemo(() => mergeGeometries([new THREE.BoxGeometry(0.3, 0.13, 0.64).translate(0, 0.065, 0), new THREE.BoxGeometry(0.25, 0.1, 0.34).translate(0, 0.18, 0.03)]), []);
   useLayoutEffect(() => {
     const o = new THREE.Object3D();
     const cor = new THREE.Color();

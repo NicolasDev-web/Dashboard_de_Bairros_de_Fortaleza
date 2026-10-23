@@ -304,7 +304,7 @@ MATERIAIS = {
     "Mat_Asfalto_Estacionamento": ("#606368", 0.92, 0.0),
     "Mat_Faixa_Branca": ("#f1f1ec", 0.6, 0.0),
     "Mat_Canteiro": ("#c9c3b5", 0.9, 0.0),
-    "Mat_Fachada_Galerias": ("#f0e9dc", 0.85, 0.0),
+    "Mat_Fachada_Galerias": ("#f5ecdc", 0.85, 0.0),
     "Mat_Platibanda_Branca": ("#f7f5ef", 0.7, 0.0),
     "Mat_Telhado_Branco": ("#efede7", 0.75, 0.0),
     "Mat_Telhado_Bege": ("#ddd5c6", 0.85, 0.0),
@@ -518,7 +518,7 @@ Y_CHAO = 0.05
 
 def chao():
     """Disco de calçada clara com borda chanfrada; o resto do chão são placas finas por cima"""
-    m = malha("Chao_Calcada", "Mat_Chao_Calcada", grade=1.25)
+    m = malha("Chao_Calcada", "Mat_Chao_Calcada", grade=2.0)
     borda = [(x, z) for x, z in DISCO]
     m.paredes(borda, 0.0, Y_CHAO - 0.015)
     m.anel(ccw(borda), ccw([(x * (RAIO_UTIL - 0.015) / RAIO_UTIL, z * (RAIO_UTIL - 0.015) / RAIO_UTIL) for x, z in DISCO]), Y_CHAO - 0.015, Y_CHAO)
@@ -537,7 +537,7 @@ def mata():
     global MATA_M
     p = no_disco(planta(MATA_REAL, 0.05))
     MATA_M = p
-    m = malha("Chao_Mata_Coco", "Mat_Chao_Mata", grade=1.25)
+    m = malha("Chao_Mata_Coco", "Mat_Chao_Mata", grade=1.6)
     m.placa(p, Y_CHAO + 0.012)
     # árvores: amostragem com distância mínima (Poisson simples), copas grandes e juntas, como a mata vista de cima
     r = aleatorio(11)
@@ -589,7 +589,7 @@ MATA_M = None
 
 
 def ruas():
-    asf = malha("Ruas_Asfalto", "Mat_Asfalto", grade=1.25)
+    asf = malha("Ruas_Asfalto", "Mat_Asfalto", grade=1.6)
     fx = malha("Ruas_Faixas", "Mat_Faixa_Branca", suave=False)
     can = malha("Ruas_Canteiro", "Mat_Canteiro")
     y = Y_CHAO + 0.02
@@ -606,8 +606,8 @@ def ruas():
                 asf.fita(t2, 1.6, y)
             for off in (-0.27, 0.27):
                 for t2 in aparar_linha(paralela(pista, off), RAIO_UTIL - 0.3):
-                    for (q, d) in amostrar_linha(t2, 0.55):
-                        fx.fita([q, (q[0] + d[0] * 0.28, q[1] + d[1] * 0.28)], 0.05, y + 0.006)
+                    for (q, d) in amostrar_linha(t2, 0.85):
+                        fx.fita([q, (q[0] + d[0] * 0.4, q[1] + d[1] * 0.4)], 0.05, y + 0.006)
             for off in (-0.72, 0.72):
                 for t2 in aparar_linha(paralela(pista, off), RAIO_UTIL - 0.15):
                     fx.fita(t2, 0.04, y + 0.006)
@@ -627,8 +627,8 @@ def ruas():
             asf.fita(trecho, larg, y - 0.002)
             RUAS.append((trecho, larg / 2))
             if larg >= 0.85:
-                for (q, d) in amostrar_linha(trecho, 0.6):
-                    fx.fita([q, (q[0] + d[0] * 0.3, q[1] + d[1] * 0.3)], 0.035, y + 0.002)
+                for (q, d) in amostrar_linha(trecho, 0.9):
+                    fx.fita([q, (q[0] + d[0] * 0.4, q[1] + d[1] * 0.4)], 0.035, y + 0.002)
 
 
 def paralela(pts, off):
@@ -660,7 +660,7 @@ def reamostrar(pts, n):
 
 def estacionamentos():
     """Estacionamentos de superfície (OSM), com vagas pintadas, ilhas de árvores e carros"""
-    asf = malha("Estacionamento_Piso", "Mat_Asfalto_Estacionamento", grade=1.25)
+    asf = malha("Estacionamento_Piso", "Mat_Asfalto_Estacionamento", grade=1.6)
     fx = malha("Estacionamento_Vagas", "Mat_Faixa_Branca", suave=False)
     r = aleatorio(23)
     y = Y_CHAO + 0.014
@@ -687,7 +687,7 @@ def estacionamentos():
                         fx.fita([a, b], 0.035, y + 0.006)
                         # carro na vaga ao lado (65 % ocupadas)
                         c = (base[0] + nrm[0] * 0.33 * lado + eixo[0] * 0.18, base[1] + nrm[1] * 0.33 * lado + eixo[1] * 0.18)
-                        if r() < 0.4 and dentro(c, p) and dist_poligono(c, p) > 0.3:
+                        if r() < 0.24 and dentro(c, p) and dist_poligono(c, p) > 0.3:
                             giro = math.atan2(nrm[0], nrm[1])
                             DADOS["carros"].append([round(c[0], 3), round(y, 3), round(c[1], 3), round(giro + (math.pi if r() < 0.5 else 0), 3), int(r() * CORES_CARROS)])
                 s += 0.36
@@ -704,8 +704,8 @@ def estacionamentos():
 
 def jardim():
     """Praça-jardim a sudoeste (entre a rotunda e a proa): piso claro, canteiros de grama do OSM e palmeiras"""
-    g = malha("Jardim_Grama", "Mat_Grama_Jardim", grade=1.25)
-    cam = malha("Jardim_Caminhos", "Mat_Caminho_Jardim", grade=1.25)
+    g = malha("Jardim_Grama", "Mat_Grama_Jardim", grade=1.6)
+    cam = malha("Jardim_Caminhos", "Mat_Caminho_Jardim", grade=1.6)
     r = aleatorio(41)
     y = Y_CHAO + 0.022
     # a praça inteira (vista aérea): piso de caminhos avermelhados, com os canteiros de grama do OSM por cima
@@ -758,7 +758,7 @@ def vizinhos():
         if any(na_rua(q, 0.0) for q in p):
             continue
         yt = max(0.55, H(h) * 0.9)
-        p = ccw(chanfrar_cantos(p, 0.04))
+        p = ccw(p)
         par.paredes(p, 0.0, yt)
         (cer if r() < 0.65 else laj).placa(p, yt)
 
@@ -790,7 +790,7 @@ def volume(nome, p, y_topo, telhado="Mat_Telhado_Branco", y0=0.0, parapeito=0.16
     plat.anel(c1, c2, yp, yp)
     plat.paredes(c2, y_topo, yp, para_dentro=True)
     tel.placa(c2, y_topo, giro_uv)
-    if nome != "Embasamento" and y_topo > Y_EMBASAMENTO + 0.8:
+    if not nome.startswith(("Embasamento", "Miolo")) and y_topo > Y_EMBASAMENTO + 0.8:
         # friso branco na linha da laje do embasamento: amarra os volumes altos ao corpo do shopping
         fr = deslocar(p, 0.05)
         plat.paredes(fr, Y_EMBASAMENTO - 0.12, Y_EMBASAMENTO)
@@ -851,7 +851,7 @@ def claraboia_longa(pts, y, larg, alt):
         for lado in (1, -1):
             e = (c[0] + nrm[0] * lado * (larg / 2 - 0.04), c[1] + nrm[1] * lado * (larg / 2 - 0.04))
             est.tubo((e[0], yb, e[1]), (c[0], yb + alt, c[1]), 0.025, 4)
-        k += 0.9
+        k += 1.4
 
 
 def bloco_lente():
@@ -1287,7 +1287,8 @@ def garagem():
     yt = H(12.1)
     niveis = 4
     hn = yt / niveis
-    conc = malha("Garagem_Lajes", "Mat_Garagem_Concreto", grade=1.5)
+    conc = malha("Garagem_Lajes", "Mat_Garagem_Concreto")
+    cob = malha("Garagem_Cobertura", "Mat_Garagem_Concreto", grade=1.6)
     vao = malha("Garagem_Interior", "Mat_Garagem_Interior")
     nucleo = deslocar(p, -0.35)
     vao.paredes(nucleo, 0.0, yt)
@@ -1304,14 +1305,14 @@ def garagem():
     for i in range(n):
         a, b = p[i], p[(i + 1) % n]
         L = dist(a, b)
-        m = max(1, int(L / 1.4))
+        m = max(1, int(L / 2.1))
         for k in range(m):
             q = lerp2(a, b, k / m)
             qi = lerp2(q, centro_de(p), 0.12 / max(0.12, dist(q, centro_de(p))))
             conc.caixa(qi[0], qi[1], 0.14, 0.14, 0.0, yt - 0.3, giro=math.atan2(b[1] - a[1], b[0] - a[0]))
     # cobertura: estacionamento descoberto com vagas, e uma cobertura branca sobre parte (vista aérea)
     topo = deslocar(p, -0.36)
-    conc.placa(topo, yt + 0.04)
+    cob.placa(topo, yt + 0.04)
     fx = malha("Garagem_Vagas", "Mat_Faixa_Branca", suave=False)
     u = (0.776, 0.630)
     nrm = (-u[1], u[0])
@@ -1328,7 +1329,7 @@ def garagem():
                 if dentro(a, topo) and dentro(b, topo) and dist_poligono(b, topo) > 0.1:
                     fx.fita([a, b], 0.03, yt + 0.05)
                     c = (a[0] + nrm[0] * 0.3 * lado + u[0] * 0.17, a[1] + nrm[1] * 0.3 * lado + u[1] * 0.17)
-                    if r() < 0.45 and dentro(c, topo) and dist_poligono(c, topo) > 0.25:
+                    if r() < 0.3 and dentro(c, topo) and dist_poligono(c, topo) > 0.25:
                         DADOS["carros"].append([round(c[0], 3), round(yt + 0.04, 3), round(c[1], 3), round(math.atan2(nrm[0], nrm[1]) + (math.pi if r() < 0.5 else 0), 3), int(r() * CORES_CARROS)])
             s += 0.34
         o += 1.9
@@ -1435,7 +1436,7 @@ def maquinas(tetos):
             if feitas >= n:
                 break
             q = (min(xs) + r() * (max(xs) - min(xs)), min(zs) + r() * (max(zs) - min(zs)))
-            k = 3 + int(r() * 4)
+            k = 2 + int(r() * 3)
             comp = k * 0.34
             fim = (q[0] + cs * comp, q[1] + sn * comp)
             if not (dentro(q, poly) and dentro(fim, poly)) or min(dist_poligono(q, poly), dist_poligono(fim, poly)) < 0.4:
@@ -1444,10 +1445,9 @@ def maquinas(tetos):
                 continue
             # base de concreto e as unidades em fila
             meio = lerp2(q, fim, 0.5)
-            maq.caixa(meio[0], meio[1], comp + 0.12, 0.42, y, y + 0.05, giro)
             for j in range(k):
                 c = (q[0] + cs * (0.17 + j * 0.34), q[1] + sn * (0.17 + j * 0.34))
-                maq.caixa(c[0], c[1], 0.28, 0.3, y + 0.05, y + 0.25, giro)
+                maq.caixa(c[0], c[1], 0.28, 0.3, y, y + 0.22, giro)
             feitas += 1
 
 
@@ -1501,13 +1501,17 @@ def montar():
         tetos.append((poly, y, 1 if abs(area(poly)) > 6 else 0))
     pecas_de_vidro()
     entradas_osm()
-    tetos.append((deslocar(ccw(CONTORNO_M), -0.2), Y_EMBASAMENTO, 22))
+    tetos.append((deslocar(ccw(CONTORNO_M), -0.2), Y_EMBASAMENTO, 16))
     maquinas(tetos)
     vizinhos()
 
 
 def espinha_telhado():
     return espinha()
+
+
+# materiais que recebem textura de canvas no Iguatemi.tsx (só esses precisam de UV)
+COM_TEXTURA = {"Mat_Fachada_Galerias", "Mat_Vidro_Verde_Fachada", "Mat_Vidro_Escuro", "Mat_Policarbonato_Madeira"}
 
 
 def para_objetos():
@@ -1534,6 +1538,8 @@ def para_objetos():
         bm.normal_update()
         if base.grade:
             subdividir_grade(bm, base.grade)
+        if base.mat not in COM_TEXTURA:
+            bm.loops.layers.uv.remove(bm.loops.layers.uv["UVMap"])
         me = bpy.data.meshes.new(nome)
         bm.to_mesh(me)
         bm.free()
@@ -1574,10 +1580,10 @@ def assar_oclusao(objs):
     cena = bpy.context.scene
     cena.render.engine = "CYCLES"
     cena.cycles.device = "CPU"
-    cena.cycles.samples = 96
+    cena.cycles.samples = 160
     if cena.world is None:
         cena.world = bpy.data.worlds.new("Mundo")
-    cena.world.light_settings.distance = 2.2
+    cena.world.light_settings.distance = 1.3
     cena.render.bake.target = "VERTEX_COLORS"
     for ob in objs:
         me = ob.data
@@ -1594,13 +1600,21 @@ def assar_oclusao(objs):
     bpy.ops.object.bake(type="AO", target="VERTEX_COLORS")
     for ob in objs:
         attr = ob.data.color_attributes["AO"]
-        forca = 0.62 if ob.name.startswith(("Chao", "Ruas", "Estacionamento", "Jardim")) else 0.5
+        forca = 0.55 if ob.name.startswith(("Chao", "Ruas", "Estacionamento", "Jardim")) else 0.38
         dados = [0.0] * (len(attr.data) * 4)
         attr.data.foreach_get("color", dados)
-        for i in range(0, len(dados), 4):
-            ao = dados[i]
+        # média por vértice (tira o ruído do bake entre os cantos que se encontram) e degraus de 1/40:
+        # fica limpo à vista e comprime muito melhor no meshopt
+        me = ob.data
+        soma, cont = {}, {}
+        for lp in me.loops:
+            soma[lp.vertex_index] = soma.get(lp.vertex_index, 0.0) + dados[lp.index * 4]
+            cont[lp.vertex_index] = cont.get(lp.vertex_index, 0) + 1
+        for lp in me.loops:
+            ao = soma[lp.vertex_index] / cont[lp.vertex_index]
             v = 1.0 - forca * (1.0 - ao) ** 1.15
-            dados[i:i + 4] = [v, v, v, 1.0]
+            v = round(v * 40) / 40
+            dados[lp.index * 4:lp.index * 4 + 4] = [v, v, v, 1.0]
         attr.data.foreach_set("color", dados)
 
 
