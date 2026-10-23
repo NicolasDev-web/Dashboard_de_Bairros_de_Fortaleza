@@ -7,6 +7,21 @@ import { caixaChanfrada, placaDePlanta, prismaDePlanta } from "../../util/geomet
 export const ALTURA_ETIQUETA = 13;
 
 type Item = [number, number, number, number?, number?, number?, number?];
+
+/** Telhado de duas águas facetado; a cumeeira acompanha o comprimento da ala. */
+function telhadoDuasAguas(largura: number, altura: number, comprimento: number, eixoX: boolean) {
+  const forma = new THREE.Shape([
+    new THREE.Vector2(-largura / 2, 0),
+    new THREE.Vector2(largura / 2, 0),
+    new THREE.Vector2(0, altura),
+  ]);
+  const geometria = new THREE.ExtrudeGeometry(forma, { depth: comprimento, bevelEnabled: false });
+  geometria.translate(0, 0, -comprimento / 2);
+  if (eixoX) geometria.rotateY(Math.PI / 2);
+  geometria.computeVertexNormals();
+  return geometria;
+}
+
 function Instancias({ nome, geo, mat, itens }: { nome: string; geo: THREE.BufferGeometry; mat: THREE.Material; itens: Item[] }) {
   const ref = useRef<THREE.InstancedMesh>(null);
   useLayoutEffect(() => { const o = new THREE.Object3D(), m = ref.current!; itens.forEach(([x,y,z,sx=1,sy=1,sz=1,a=0],i)=>{o.position.set(x,y,z);o.rotation.set(0,a,0);o.scale.set(sx,sy,sz);o.updateMatrix();m.setMatrixAt(i,o.matrix);});m.instanceMatrix.needsUpdate=true;m.computeBoundingSphere(); }, [itens]);
@@ -28,7 +43,8 @@ export function ForteAssuncao({ fab }: { fab: Fabrica }) {
     const bastiao=prismaDePlanta([[0,-6],[6,0],[0,6],[-6,0]],4.8,0,0.16);
     return { disco, bastiao, cortinaX:caixaChanfrada(34,4.8,4.6,0.18), cortinaZ:caixaChanfrada(4.6,4.8,34,0.18),
       parapeitoX:caixaChanfrada(34,1.0,1.2,0.09), parapeitoZ:caixaChanfrada(1.2,1.0,34,0.09), patio:placaDePlanta([[-17,-17],[17,-17],[17,17],[-17,17]],0.06),
-      alaX:caixaChanfrada(31,5.5,6.2,0.14), alaZ:caixaChanfrada(6.2,5.5,25,0.14), telhadoX:new THREE.ConeGeometry(17.2,2.2,4), telhadoZ:new THREE.ConeGeometry(14,2.2,4),
+      alaX:caixaChanfrada(31,5.5,6.2,0.14), alaZ:caixaChanfrada(6.2,5.5,25,0.14),
+      telhadoX:telhadoDuasAguas(6.8,2.2,32,true), telhadoZ:telhadoDuasAguas(6.8,2.2,26,false),
       porta:caixaChanfrada(1.35,2.7,0.18,0.06), janela:caixaChanfrada(0.85,1.45,0.16,0.04), ameia:caixaChanfrada(0.8,0.7,0.7,0.06),
       guarita:new THREE.CylinderGeometry(1.2,1.05,2.8,8), cupula:new THREE.ConeGeometry(1.4,1.5,8), bandeira:new THREE.PlaneGeometry(2.4,1.25), mastro:new THREE.CylinderGeometry(0.08,0.1,8,8),
     };
@@ -51,8 +67,8 @@ export function ForteAssuncao({ fab }: { fab: Fabrica }) {
     <Instancias nome="Muralhas_Ameias" geo={geos.ameia} mat={fab.cor("#ead9ad",0.88)} itens={ameias} />
     <mesh name="Quartel_Ala_Norte" geometry={geos.alaX} material={fab.cor("#efd98e",0.9)} position={[0,0,-14]} castShadow receiveShadow />
     <mesh name="Quartel_Ala_Oeste" geometry={geos.alaZ} material={fab.cor("#efd98e",0.9)} position={[-14,0,0]} castShadow receiveShadow />
-    <mesh name="Quartel_Telhado_Norte" geometry={geos.telhadoX} material={fab.cor("#ba573a",0.8)} position={[0,5.5,-14]} rotation-y={Math.PI/4} scale={[1,1,0.2]} castShadow />
-    <mesh name="Quartel_Telhado_Oeste" geometry={geos.telhadoZ} material={fab.cor("#ba573a",0.8)} position={[-14,5.5,0]} rotation-y={Math.PI/4} scale={[1,1,0.23]} castShadow />
+    <mesh name="Quartel_Telhado_Norte" geometry={geos.telhadoX} material={fab.cor("#ba573a",0.8)} position={[0,5.5,-14]} castShadow />
+    <mesh name="Quartel_Telhado_Oeste" geometry={geos.telhadoZ} material={fab.cor("#ba573a",0.8)} position={[-14,5.5,0]} castShadow />
     <Instancias nome="Quartel_Portas_Verdes" geo={geos.porta} mat={fab.cor("#365d43",0.72)} itens={portas} />
     <Instancias nome="Quartel_Janelas" geo={geos.janela} mat={fab.cor("#33484a",0.42)} itens={janelas} />
     <mesh name="Guarita_Nordeste" geometry={geos.guarita} material={fab.cor("#dfcc9d",0.9)} position={[21,5.9,-21]} castShadow />
