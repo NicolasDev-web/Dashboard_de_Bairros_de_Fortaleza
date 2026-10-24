@@ -36,3 +36,24 @@ Recorte "a Reitoria vista da Av. da Universidade":
 4. atrás, o pátio de trás e a **Concha Acústica** com a arquibancada, entre mangueiras grandes (o campus).
 
 Composição girada para o pátio da frente olhar para as câmeras (ver `GIRO` no script).
+
+## 4. Rodadas (registro parcial, atualizado a cada etapa)
+1. **R1** (GIRO −8°, o pátio da frente olhando para as câmeras):
+   - Perspectiva e frente boas: o H inteiro com o pátio, as carnaúbas, o gradil e a avenida.
+   - **Crítico:** no `close` o palacete e o torreão saíam cortados na borda esquerda. Com zoom 0,38, o close só
+     enquadra ±18 m em volta do centro, e o H tem 51 m de largura. O primeiro plano era a ponta lisa da ala sudoeste.
+   - Também: duas casas do outro lado da avenida pareciam caixotes e tapavam a `frente`; carnaúbas demais diante da
+     fachada; telhado saturado; gramado em quadrados.
+2. **R2** (GIRO +62°):
+   - Calculei o giro que põe o torreão dentro do close: com o pátio virado ~62° para leste, o lado nordeste (varanda
+     externa e torreão) fica de frente para a perspectiva e a `frente`, e o close (az +24°) pega o pórtico e o pátio a
+     ~40°. É a vista da foto 05 da ficha, tirada a nordeste do prédio.
+   - Tirei as casas, reduzi as carnaúbas, baixei a saturação do telhado e o contraste do gramado.
+   - Export: 482 KB, mas 133 mil triângulos (com instâncias) e 7.804 degenerados (polos dos tornos).
+3. **R3:**
+   - Tornos sem polo (balaústres e fustes), balaústre de 5 lados, passo de 0,34 m → 69 mil triângulos, 0 degenerados.
+   - As copas das mangueiras passavam da borda (raio 34,3 m com o pedestal): reposicionei as árvores e limitei o raio
+     da copa pela distância à borda → raio 34,0 m.
+   - Flor-de-lis redesenhada: as pétalas laterais saíam como chifres. Conferida num close do Blender.
+   - Árvores na frente do lado nordeste encobriam a colunata: viraram oitis menores nas pontas.
+   - Canteiros de flores (discos coloridos de brinquedo) viraram topiarias de sebe.
