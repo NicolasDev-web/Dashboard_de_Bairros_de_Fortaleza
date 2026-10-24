@@ -1,588 +1,505 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import type { Fabrica } from "../../Cena";
-import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { aleatorio, caixaChanfrada, placaDePlanta } from "../../util/geometria";
+import { aleatorio, texturaManchada } from "../../util/geometria";
+import layout from "../../../blender/saida/theatroJoseDeAlencar-layout.json";
 
 /**
- * Theatro José de Alencar (Centro; -3.727786, -38.5317064), inaugurado em 1910 (pesquisa/theatroJoseDeAlencar/ficha.md).
- * Planta do OSM: eixo longo a 18° (NNE), fachada eclética olhando para a Praça José de Alencar, pátio interno com a
- * fachada de ferro (Walter MacFarlane, Glasgow) da sala, sala com cobertura metálica, caixa cênica mais alta atrás e o
- * jardim de Burle Marx a leste. Referencial local: −z = rumo da fachada (18°), +x = leste do prédio (108°).
- * Escala: planta K = 0,6; alturas V = 0,84 (1,4 × K). Metros, base em y = 0.
+ * Theatro José de Alencar (Centro; −3,727786, −38,5317064), inaugurado em 17/06/1910.
+ * As peças estáticas vêm do Blender (`blender/theatroJoseDeAlencar.py` → `blender/saida/theatroJoseDeAlencar-pecas.glb`),
+ * com a oclusão de ambiente assada nas cores de vértice e numa imagem do chão:
+ * - a fachada eclética verde-clara e branca: corpo central de 2 pavimentos, entrada de 3 arcos entre colunas, alas térreas
+ *   com terraço de balaustrada, coroamento com brasão, pinhas e estátuas douradas;
+ * - as galerias do pátio interno e, no fundo do pátio, a fachada de ferro art nouveau (Glasgow) com os vitrais;
+ * - a sala de espetáculos, a caixa cênica alta e o fundo do palco;
+ * - o jardim de Burle Marx ao lado, a Rua Liberato Barroso e a Praça José de Alencar com o monumento.
+ * Aqui entram os vitrais desenhados em canvas (com um leve brilho próprio, como à noite), o piso das calçadas, as cores
+ * das chapas do telhado e o que se repete (árvores, palmeiras, gente e carros). Posições em
+ * `blender/saida/theatroJoseDeAlencar-layout.json`. Metros, base em y = 0; a composição é girada para a fachada olhar
+ * para a câmera (ver `GIRO` no script e o relatório). Fontes em pesquisa/theatroJoseDeAlencar/ficha.md.
  */
-/** Altura da etiqueta com o nome no tour (topo da caixa cênica + ~2 m) */
-export const ALTURA_ETIQUETA = 17.5;
 
-const K = 0.6, V = 0.84;
-const RUMO = 18;
-/** Eixo do prédio (u, metros reais a partir do centro do OSM, + para a praça) para z local da miniatura */
-const zDe = (u: number) => -(u - 9.5) * K + 3.4;
-const X0 = -5; // o teatro fica a oeste do centro do disco para caber o jardim a leste
-const MEIA_LARGURA = 12.85 * K; // 25,7 m de frente
-const Z_FRENTE = zDe(43.5), Z_FUNDO_FACHADA = zDe(36), Z_SALA = zDe(19.3), Z_PALCO = zDe(-5.4), Z_FIM_PALCO = zDe(-19.2), Z_FUNDO = zDe(-24.6);
+/** Altura da etiqueta com o nome no tour (cumeeira da caixa cênica a ~15,8 m, + ~2 m) */
+export const ALTURA_ETIQUETA = 18;
 
-const COR = {
-  reboco: "#d3dcae",
-  rebocoSombra: "#c3cd9c",
-  branco: "#f3f1e8",
-  verdePorta: "#3f5a3c",
-  ouro: "#c9a34a",
-  telhaMetal: "#8d9397",
-  calcada: "#d8d3c8",
-  praca: "#cfcac0",
-  asfalto: "#5d6062",
-  grama: "#6f9a4c",
-  ocre: "#d8b25a",
-};
+const BASE = "/blender/saida/";
 
-/** Canvas → textura sRGB com repetição */
-function tela(w: number, h: number, desenhar: (g: CanvasRenderingContext2D) => void, repetir: [number, number] = [1, 1]) {
+/** Cor das telhas (o exportador do Blender não leva a cor-base de material com textura): chapa metálica e barro */
+const COR_TELHA: Record<string, string> = { Mat_Telha_Metalica: "#8e9296", Mat_Telha_Barro: "#b9603c" };
+
+type Arvore = [x: number, yBase: number, z: number, r: number];
+type Palmeira = [x: number, z: number, h: number, giro: number];
+type Pessoa = [x: number, y: number, z: number, giro: number, cor: number];
+type Carro = [x: number, z: number, giro: number, cor: number];
+type Barra = [x: number, z: number, yBase: number, h: number];
+const L = layout as { arvores: Arvore[]; palmeiras: Palmeira[]; pessoas: Pessoa[]; carros: Carro[]; barras: Barra[]; chao: { lado: number; z0: number } };
+const Z0 = L.chao.z0;
+
+const VITRAL = ["#2d6fb8", "#e0a63a", "#c0392b", "#3c9a5a", "#f2d06b", "#7a4fa0", "#e0a63a", "#2d6fb8"];
+const FERRO = "#2f5a45";
+const CHUMBO = "#1b2a22";
+const OURO = "#d8b04e";
+
+/**
+ * Atlas dos vitrais (512 × 256, regiões iguais a `VITRAIS` no script):
+ * - ferro (0–376 × 0–256): elevação da fachada de ferro do pátio, 14,4 × 9,8 m, 5 vãos (2,6 + 2,6 + 4 + 2,6 + 2,6 m) em
+ *   3 níveis: portas em arco com bandeira em leque, janelas de vitral em grade e janelas altas em arco no último nível,
+ *   com ornatos dourados e volutas art nouveau entre os arcos. O ferro é verde-escuro e os vitrais azul, âmbar,
+ *   vermelho, verde e amarelo (as fontes citam verde, vermelho e azul; o desenho exato é interpretação);
+ * - leque (376–512 × 0–68): meia-lua do coroamento, em raios coloridos;
+ * - brasão (376–512 × 68–256): cartela branca com escudo dourado (relevo pintado; o desenho é neutro, sem heráldica).
+ */
+function texturaVitrais() {
   const cv = document.createElement("canvas");
-  cv.width = w; cv.height = h;
-  desenhar(cv.getContext("2d")!);
+  cv.width = 512;
+  cv.height = 256;
+  const g = cv.getContext("2d")!;
+  const r = aleatorio(1908);
+  const PX = 376 / 14.4, PY = 256 / 9.76;
+  const X = (m: number) => m * PX;
+  const Y = (z: number) => 256 - (z - 0.04) * PY;
+  const cor = () => VITRAL[Math.floor(r() * VITRAL.length)];
+
+  /** Grade de vidros coloridos dentro de um retângulo (em pixels) */
+  const grade = (x0: number, y0: number, x1: number, y1: number, cols: number, lins: number) => {
+    const w = (x1 - x0) / cols, h = (y1 - y0) / lins;
+    for (let i = 0; i < cols; i++) for (let j = 0; j < lins; j++) {
+      g.fillStyle = cor();
+      g.fillRect(x0 + i * w, y0 + j * h, w, h);
+    }
+    g.strokeStyle = CHUMBO;
+    g.lineWidth = 1;
+    for (let i = 0; i <= cols; i++) { g.beginPath(); g.moveTo(x0 + i * w, y0); g.lineTo(x0 + i * w, y1); g.stroke(); }
+    for (let j = 0; j <= lins; j++) { g.beginPath(); g.moveTo(x0, y0 + j * h); g.lineTo(x1, y0 + j * h); g.stroke(); }
+  };
+  /** Leque de raios coloridos numa meia-lua de centro (cx, cy) e raio rr */
+  const leque = (cx: number, cy: number, rr: number, n: number, miolo: number) => {
+    for (let k = 0; k < n; k++) {
+      g.fillStyle = VITRAL[(k * 3 + 1) % 6];
+      g.beginPath();
+      g.moveTo(cx, cy);
+      g.arc(cx, cy, rr, Math.PI + (k / n) * Math.PI, Math.PI + ((k + 1) / n) * Math.PI);
+      g.closePath();
+      g.fill();
+    }
+    g.strokeStyle = CHUMBO;
+    g.lineWidth = 1.2;
+    for (let k = 0; k <= n; k++) {
+      const a = Math.PI + (k / n) * Math.PI;
+      g.beginPath(); g.moveTo(cx, cy); g.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); g.stroke();
+    }
+    g.beginPath(); g.arc(cx, cy, rr * 0.62, Math.PI, 0); g.stroke();
+    g.fillStyle = OURO;
+    g.beginPath(); g.arc(cx, cy, miolo, Math.PI, 0); g.fill();
+  };
+  /** Janela alta em arco: grade de vidros embaixo e leque no arco */
+  const janelaArco = (x0: number, x1: number, yTop: number, yBase: number, cols: number) => {
+    const rr = (x1 - x0) / 2, cx = (x0 + x1) / 2, yArco = yTop + rr;
+    g.fillStyle = "#5f8f6a";
+    g.fillRect(x0 - 2, yArco, x1 - x0 + 4, yBase - yArco + 2);
+    g.beginPath(); g.arc(cx, yArco, rr + 2, Math.PI, 0); g.fill();
+    grade(x0, yArco, x1, yBase, cols, Math.max(2, Math.round((yBase - yArco) / ((x1 - x0) / cols))));
+    leque(cx, yArco, rr, 7, rr * 0.28);
+    g.strokeStyle = OURO;
+    g.lineWidth = 1.5;
+    g.beginPath(); g.arc(cx, yArco, rr + 3, Math.PI, 0); g.stroke();
+  };
+  /** Voluta art nouveau (chicote) dourada ou verde-clara */
+  const voluta = (x: number, y: number, s: number, esp: number, c: string) => {
+    g.strokeStyle = c;
+    g.lineWidth = esp;
+    g.beginPath();
+    g.moveTo(x, y);
+    g.bezierCurveTo(x + 6 * s, y - 10, x + 14 * s, y + 2, x + 9 * s, y + 7);
+    g.bezierCurveTo(x + 5 * s, y + 10, x + 2 * s, y + 4, x + 6 * s, y + 3);
+    g.stroke();
+  };
+
+  // ferro de fundo e frisos verde-claros dos níveis
+  g.fillStyle = FERRO;
+  g.fillRect(0, 0, 376, 256);
+  const vaos: [number, number][] = [[0, 2.6], [2.6, 5.2], [5.2, 9.2], [9.2, 11.8], [11.8, 14.4]];
+  for (const [a, b] of vaos) {
+    const x0 = X(a + 0.22), x1 = X(b - 0.22);
+    const largo = b - a > 3;
+    // térreo: portas em arco (vidro escuro embaixo, bandeira em leque)
+    const xm0 = largo ? X(a + 0.6) : x0 + 4, xm1 = largo ? X(b - 0.6) : x1 - 4;
+    const rr = (xm1 - xm0) / 2, cx = (xm0 + xm1) / 2, ya = Y(3.3) + rr;
+    g.fillStyle = "#24302c";
+    g.fillRect(xm0, ya, xm1 - xm0, Y(0.05) - ya);
+    g.strokeStyle = "#5f8f6a";
+    g.lineWidth = 1.5;
+    for (let k = 1; k < (largo ? 4 : 2); k++) { const xx = xm0 + ((xm1 - xm0) * k) / (largo ? 4 : 2); g.beginPath(); g.moveTo(xx, ya); g.lineTo(xx, Y(0.05)); g.stroke(); }
+    leque(cx, ya, rr, largo ? 9 : 6, rr * 0.25);
+    // nível 1: vitral em grade com bandeira de vidros quadrados
+    grade(x0, Y(6.2), x1, Y(3.78), largo ? 9 : 5, 6);
+    g.fillStyle = OURO;
+    g.fillRect(x0, Y(5.25), x1 - x0, 2);
+    // nível 2: janela alta em arco
+    janelaArco(x0 + 3, x1 - 3, Y(9.35), Y(6.62), largo ? 8 : 4);
+  }
+  // ornamentos: frisos dourados nas vigas e volutas entre os arcos do último nível
+  g.fillStyle = OURO;
+  for (const z of [3.5, 6.42, 9.62]) g.fillRect(0, Y(z) - 1, 376, 2);
+  for (const [a, b] of vaos) {
+    voluta(X(a) + 3, Y(9.2), 1, 1.6, OURO);
+    voluta(X(b) - 3, Y(9.2), -1, 1.6, OURO);
+    voluta(X(a) + 4, Y(6.0), 1, 1.2, "#7fb08a");
+    voluta(X(b) - 4, Y(6.0), -1, 1.2, "#7fb08a");
+  }
+
+  // leque do coroamento
+  g.fillStyle = FERRO;
+  g.fillRect(376, 0, 136, 68);
+  leque(444, 68, 66, 13, 16);
+  g.strokeStyle = OURO;
+  g.lineWidth = 2;
+  g.beginPath(); g.arc(444, 68, 66, Math.PI, 0); g.stroke();
+
+  // brasão: cartela branca, escudo com borda e ornato dourados
+  g.fillStyle = "#f4f2ea";
+  g.fillRect(376, 68, 136, 188);
+  const bx = 444, by = 80;
+  g.fillStyle = OURO;
+  g.beginPath();
+  g.moveTo(bx - 46, by + 12); g.lineTo(bx + 46, by + 12); g.lineTo(bx + 46, by + 100);
+  g.quadraticCurveTo(bx + 44, by + 150, bx, by + 168); g.quadraticCurveTo(bx - 44, by + 150, bx - 46, by + 100); g.closePath();
+  g.fill();
+  g.fillStyle = "#e9e3cf";
+  g.beginPath();
+  g.moveTo(bx - 36, by + 22); g.lineTo(bx + 36, by + 22); g.lineTo(bx + 36, by + 98);
+  g.quadraticCurveTo(bx + 34, by + 138, bx, by + 154); g.quadraticCurveTo(bx - 34, by + 138, bx - 36, by + 98); g.closePath();
+  g.fill();
+  g.strokeStyle = OURO;
+  g.lineWidth = 5;
+  g.beginPath(); g.arc(bx, by + 84, 22, 0, Math.PI * 2); g.stroke();
+  g.beginPath(); g.moveTo(bx, by + 30); g.lineTo(bx, by + 140); g.stroke();
+
   const t = new THREE.CanvasTexture(cv);
   t.colorSpace = THREE.SRGBColorSpace;
-  t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.repeat.set(...repetir);
+  t.flipY = false; // UV do glTF: v = 0 no alto da imagem
   t.anisotropy = 4;
   return t;
 }
 
-/** Arco de porta/janela no canvas: retângulo com topo em semicírculo */
-function arco(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number) {
-  g.beginPath();
-  g.moveTo(x, y + h); g.lineTo(x, y + w / 2); g.arc(x + w / 2, y + w / 2, w / 2, Math.PI, 0); g.lineTo(x + w, y + h); g.closePath();
+/** Piso das calçadas e da praça (concreto claro em placas com juntas); em cinza, a cor vem de cada material do chão */
+function texturaPiso(semente: number, quadros: number) {
+  const n = 128;
+  const cv = document.createElement("canvas");
+  cv.width = cv.height = n;
+  const g = cv.getContext("2d")!;
+  g.fillStyle = "#f4f4f4";
+  g.fillRect(0, 0, n, n);
+  const r = aleatorio(semente);
+  const q = n / quadros;
+  for (let i = 0; i < quadros; i++) for (let j = 0; j < quadros; j++) {
+    g.fillStyle = `rgba(0,0,0,${r() * 0.07})`;
+    g.fillRect(i * q, j * q, q, q);
+  }
+  g.strokeStyle = "rgba(0,0,0,0.26)";
+  g.lineWidth = quadros > 4 ? 1.5 : 2;
+  for (let i = 0; i <= quadros; i++) {
+    g.beginPath(); g.moveTo(i * q, 0); g.lineTo(i * q, n); g.stroke();
+    g.beginPath(); g.moveTo(0, i * q); g.lineTo(n, i * q); g.stroke();
+  }
+  const t = new THREE.CanvasTexture(cv);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
+
+/** Peças do Blender: sombras, nomes por material, vitrais em canvas, telhas, oclusão e piso no chão */
+function PecasBlender() {
+  const gltf = useLoader(GLTFLoader, `${BASE}theatroJoseDeAlencar-pecas.glb`);
+  const ao = useLoader(THREE.TextureLoader, `${BASE}theatroJoseDeAlencar-ao-chao.jpg`);
+  const extras = useMemo(() => {
+    const vitrais = texturaVitrais();
+    const piso = texturaPiso(31, 2);
+    piso.repeat.set(L.chao.lado / 3, L.chao.lado / 3);
+    // paralelepípedo da Rua Liberato Barroso: o mesmo desenho, bem miúdo
+    const rua = texturaPiso(47, 8);
+    rua.repeat.set(L.chao.lado / 2.4, L.chao.lado / 2.4);
+    const grama = texturaManchada("#ffffff", 0.08, 11, 64);
+    grama.repeat.set(9, 9);
+    return { vitrais, piso, rua, grama };
+  }, []);
+  useEffect(() => () => { Object.values(extras).forEach((x) => x.dispose()); }, [extras]);
+  const cena = useMemo(() => {
+    ao.flipY = false;
+    ao.colorSpace = THREE.NoColorSpace;
+    ao.userData.mimeType = "image/jpeg"; // o GLTFExporter regrava em JPEG em vez de PNG
+    ao.needsUpdate = true;
+    const raiz = gltf.scene.clone(true);
+    raiz.name = "Pecas_Theatro";
+    const trocas = new Map<THREE.Material, THREE.Material>();
+    raiz.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const mat = m.material as THREE.MeshStandardMaterial;
+      const pai = m.parent && m.parent !== raiz ? m.parent.name : m.name;
+      m.name = `${pai}_${mat.name.replace(/^Mat_/, "")}`;
+      const chao = mat.name.startsWith("Mat_Chao_");
+      m.castShadow = !chao;
+      m.receiveShadow = true;
+      let novo = trocas.get(mat);
+      if (!novo) {
+        if (mat.name === "Mat_Vitrais") {
+          // vitrais com um leve brilho próprio: na sombra do pátio continuam coloridos (como com as luzes acesas)
+          novo = Object.assign(new THREE.MeshStandardMaterial({
+            map: extras.vitrais, emissiveMap: extras.vitrais, emissive: "#ffffff", emissiveIntensity: 0.32,
+            roughness: 0.35, vertexColors: mat.vertexColors,
+          }), { name: "Mat_Vitrais" });
+        } else {
+          novo = mat;
+          if (COR_TELHA[mat.name]) mat.color.set(COR_TELHA[mat.name]);
+          if (chao) {
+            mat.aoMap = ao;
+            mat.aoMapIntensity = 1;
+            mat.map = mat.name === "Mat_Chao_Grama" ? extras.grama : mat.name === "Mat_Chao_Rua" ? extras.rua : extras.piso;
+            mat.needsUpdate = true;
+          }
+        }
+        trocas.set(mat, novo);
+      }
+      m.material = novo;
+    });
+    return raiz;
+  }, [gltf, ao, extras]);
+  return <primitive object={cena} />;
+}
+
+/** Oitis e outras árvores de copa densa da praça, do jardim e do lote vizinho (verde-escuro, como os oitis do Centro) */
+function Arvores({ fab }: { fab: Fabrica }) {
+  const copa = useRef<THREE.InstancedMesh>(null);
+  const tronco = useRef<THREE.InstancedMesh>(null);
+  const n = L.arvores.length;
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const r = aleatorio(7);
+    const tons = ["#2f5a2b", "#3d6b33", "#2a4f27", "#4c7a3a", "#355f2e", "#5a8541"];
+    L.arvores.forEach(([x, yb, z, raio], i) => {
+      o.position.set(x, yb + raio * 0.78, z);
+      o.scale.set(raio, raio * 0.82, raio * (0.9 + r() * 0.2));
+      o.rotation.set(0, r() * Math.PI * 2, 0);
+      o.updateMatrix();
+      copa.current!.setMatrixAt(i, o.matrix);
+      copa.current!.setColorAt(i, cor.set(tons[Math.floor(r() * tons.length)]));
+      o.position.set(x, Z0, z);
+      o.scale.set(1, yb - Z0 + 0.4, 1);
+      o.rotation.set(0, 0, 0);
+      o.updateMatrix();
+      tronco.current!.setMatrixAt(i, o.matrix);
+    });
+    for (const m of [copa.current!, tronco.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const geo = useMemo(() => ({ tronco: new THREE.CylinderGeometry(0.16, 0.24, 1, 6).translate(0, 0.5, 0) }), []);
+  useEffect(() => () => geo.tronco.dispose(), [geo]);
+  return (
+    <>
+      <instancedMesh name="Arvores_Copas" ref={copa} args={[undefined, undefined, n]} castShadow receiveShadow>
+        <icosahedronGeometry args={[1, 1]} />
+        <meshStandardMaterial name="Mat_Copa_Arvore" roughness={0.9} flatShading />
+      </instancedMesh>
+      <instancedMesh name="Arvores_Troncos" ref={tronco} args={[geo.tronco, undefined, n]} castShadow material={fab.cor("#6e5a45")} />
+    </>
+  );
 }
 
 /**
- * Atlas da fachada (256 × 256): metade de cima é o pavimento superior central (10,2 × 5,1 m de miniatura), metade de
- * baixo o térreo inteiro (15,4 × 5,5 m). Portas, janelas, frontões e o almofadado em leque desenhados a partir da ref-3.
+ * Folha de palmeira: tira em "V" raso que sobe um pouco e cai em arco, afinando na ponta (a mesma da Unifor).
+ * Base na origem, correndo em +z; material de dois lados.
  */
-function texturaFachada() {
-  return tela(256, 256, (g) => {
-    // ——— pavimento superior (y 0..128), 10,2 m de largura
-    const sx = 256 / 10.2, sy = 128 / 5.1;
-    const X = (m: number) => m * sx, Y = (m: number) => 128 - m * sy; // m a partir do piso do pavimento
-    g.fillStyle = COR.reboco; g.fillRect(0, 0, 256, 128);
-    g.fillStyle = "rgba(0,0,0,.05)"; for (let y = 6; y < 128; y += 9) g.fillRect(0, y, 256, 1); // juntas leves do reboco
-    const janela = (cx: number, w: number, base: number, alt: number, folhas = 2) => {
-      g.fillStyle = COR.branco; g.fillRect(X(cx - w / 2) - 3, Y(base + alt) - 3, X(w) + 6, alt * sy + 6);
-      g.fillStyle = "#2c3638"; g.fillRect(X(cx - w / 2), Y(base + alt), X(w), alt * sy);
-      g.fillStyle = "rgba(255,255,255,.14)"; g.fillRect(X(cx - w / 2), Y(base + alt), X(w), alt * sy * 0.3);
-      g.fillStyle = COR.branco;
-      for (let i = 1; i < folhas; i++) g.fillRect(X(cx - w / 2 + (w * i) / folhas) - 1, Y(base + alt), 2, alt * sy);
-      g.fillRect(X(cx - w / 2), Y(base + alt * 0.62), X(w), 2);
-    };
-    // pilastras brancas nas divisas dos panos
-    g.fillStyle = COR.branco;
-    for (const m of [0, 2.6, 3.9, 6.3, 7.6, 10.2]) g.fillRect(X(m) - 4, 0, 8, 128);
-    // pavilhões das pontas: duas janelas, sacadinha de ferro e o arco ornamental por cima
-    for (const p of [0, 7.6]) {
-      janela(p + 0.85, 0.66, 1.2, 1.9); janela(p + 1.75, 0.66, 1.2, 1.9);
-      g.fillStyle = "#4a3f2e"; g.fillRect(X(p + 0.35), Y(1.25), X(1.9), 0.45 * sy); // sacada de ferro
-      g.strokeStyle = COR.branco; g.lineWidth = 4;
-      g.beginPath(); g.arc(X(p + 1.3), Y(3.3), X(1.15), Math.PI * 1.08, Math.PI * 1.92); g.stroke();
-      g.fillStyle = COR.branco; g.fillRect(X(p + 1.1), Y(4.15), X(0.4), 0.5 * sy); // cartela
-    }
-    // panos de uma janela com frontão triangular
-    for (const c of [3.25, 6.95]) {
-      janela(c, 0.72, 1.1, 2.0);
-      g.fillStyle = COR.branco;
-      g.beginPath(); g.moveTo(X(c - 0.6), Y(3.35)); g.lineTo(X(c), Y(3.9)); g.lineTo(X(c + 0.6), Y(3.35)); g.closePath(); g.fill();
-    }
-    // centro: janela tripla com frontão em arco pleno e cartela
-    janela(5.1, 1.8, 1.0, 2.15, 3);
-    g.strokeStyle = COR.branco; g.lineWidth = 5;
-    g.beginPath(); g.arc(X(5.1), Y(3.35), X(1.1), Math.PI, 0); g.stroke();
-    g.fillStyle = COR.branco; g.beginPath(); g.arc(X(5.1), Y(3.7), X(0.32), 0, Math.PI * 2); g.fill();
-    g.fillStyle = "rgba(0,0,0,.12)"; g.fillRect(0, 124, 256, 4);
-
-    // ——— térreo (y 128..256), 15,4 m de largura
-    const tx = 256 / 15.4, ty = 128 / 5.5;
-    const A = (m: number) => m * tx, B = (m: number) => 256 - m * ty;
-    g.fillStyle = COR.reboco; g.fillRect(0, 128, 256, 128);
-    // almofadado horizontal leve
-    g.fillStyle = "rgba(255,255,255,.18)"; for (let m = 0.6; m < 5.2; m += 0.42) g.fillRect(0, B(m), 256, 1);
-    g.fillStyle = COR.branco; g.fillRect(0, B(0.4), 256, 0.4 * ty); // embasamento
-    // nichos cegos das alas
-    for (const c of [1.25, 14.15]) {
-      g.fillStyle = COR.branco; arco(g, A(c - 0.72), B(4.0), A(1.44), 3.2 * ty); g.fill();
-      g.fillStyle = "#c7d1a0"; arco(g, A(c - 0.55), B(3.85), A(1.1), 2.95 * ty); g.fill();
-      g.fillStyle = "rgba(0,0,0,.10)"; g.fillRect(A(c - 0.55), B(1.0), A(1.1), 3);
-    }
-    // portas de grade dos panos laterais, com leque por cima
-    for (const c of [3.35, 4.65, 10.75, 12.05]) {
-      g.strokeStyle = "rgba(255,255,255,.55)"; g.lineWidth = 1;
-      for (let i = 0; i <= 8; i++) { const a = Math.PI + (i * Math.PI) / 8; g.beginPath(); g.moveTo(A(c), B(3.3)); g.lineTo(A(c) + Math.cos(a) * A(0.85), B(3.3) + Math.sin(a) * A(0.85)); g.stroke(); }
-      g.fillStyle = COR.branco; arco(g, A(c - 0.52), B(3.6), A(1.04), 3.2 * ty); g.fill();
-      g.fillStyle = "#33372f"; arco(g, A(c - 0.42), B(3.45), A(0.84), 3.05 * ty); g.fill();
-      g.strokeStyle = "rgba(170,170,150,.55)"; g.lineWidth = 1;
-      for (let i = 1; i < 4; i++) { g.beginPath(); g.moveTo(A(c - 0.42 + i * 0.21), B(3.2)); g.lineTo(A(c - 0.42 + i * 0.21), B(0.4)); g.stroke(); }
-      for (let m = 0.9; m < 3.2; m += 0.5) { g.beginPath(); g.moveTo(A(c - 0.42), B(m)); g.lineTo(A(c + 0.42), B(m)); g.stroke(); }
-    }
-    // as três portas verdes da entrada, em arco
-    for (const c of [6.05, 7.7, 9.35]) {
-      g.fillStyle = COR.branco; arco(g, A(c - 0.66), B(4.1), A(1.32), 3.75 * ty); g.fill();
-      g.fillStyle = COR.verdePorta; arco(g, A(c - 0.56), B(3.95), A(1.12), 3.6 * ty); g.fill();
-      g.fillStyle = "rgba(0,0,0,.25)"; g.fillRect(A(c) - 1, B(3.4), 2, 3.0 * ty);
-      g.fillStyle = "rgba(255,255,255,.10)"; g.fillRect(A(c - 0.5), B(2.2), A(1.0), 2);
-    }
-    // pilastras e faixa de cornija
-    g.fillStyle = COR.branco;
-    for (const m of [0, 2.45, 5.2, 10.2, 12.95, 15.4]) g.fillRect(A(m) - 4, 128, 8, 128);
-    g.fillRect(0, 128, 256, 5);
-  });
-}
-
-/** Fachada de ferro da sala (a que dá para o pátio): ferro verde-escuro, arcos e vitrais coloridos */
-function texturaVitral() {
-  return tela(128, 256, (g) => {
-    g.fillStyle = "#2e4a40"; g.fillRect(0, 0, 128, 256);
-    const r = aleatorio(1910);
-    const cores = ["#d9a43a", "#3d6fb0", "#b8433a", "#5f9b55", "#e7d8a0", "#7a4f9a"];
-    const vitral = (x: number, y: number, w: number, h: number) => {
-      for (let i = x; i < x + w; i += 4) for (let j = y; j < y + h; j += 4) { g.fillStyle = cores[Math.floor(r() * cores.length)]; g.fillRect(i, j, 4, 4); }
-    };
-    // térreo: três arcos de entrada; meio: galeria com colunetas; alto: lunetas com vitral em leque
-    for (let i = 0; i < 3; i++) {
-      const x = 8 + i * 40;
-      g.save(); arco(g, x, 170, 32, 80); g.clip(); vitral(x, 170, 32, 80); g.restore();
-      g.fillStyle = "#1f2f29"; g.fillRect(x + 6, 205, 20, 45);
-    }
-    g.fillStyle = "#3f6155"; g.fillRect(0, 150, 128, 12); // balcão de ferro
-    for (let i = 0; i < 6; i++) { const x = 4 + i * 21; g.save(); arco(g, x, 70, 17, 72); g.clip(); vitral(x, 70, 17, 72); g.restore(); }
-    g.save(); g.beginPath(); g.arc(64, 64, 58, Math.PI, 0); g.closePath(); g.clip(); vitral(6, 4, 116, 62); g.restore();
-    g.strokeStyle = "#2e4a40"; g.lineWidth = 3;
-    for (let i = 0; i <= 8; i++) { const a = Math.PI + (i * Math.PI) / 8; g.beginPath(); g.moveTo(64, 64); g.lineTo(64 + Math.cos(a) * 60, 64 + Math.sin(a) * 60); g.stroke(); }
-    g.fillStyle = "#c9a34a"; g.fillRect(0, 64, 128, 4); g.fillRect(0, 146, 128, 3); // frisos dourados
-    for (let x = 0; x <= 128; x += 21) { g.fillStyle = "#24392f"; g.fillRect(x - 2, 66, 4, 190); }
-  });
-}
-
-/** Paredes laterais da sala e das galerias: reboco verde-claro, pilastra branca e janela alta em arco (módulo 3 × 5 m) */
-function texturaLateral() {
-  return tela(64, 128, (g) => {
-    g.fillStyle = COR.reboco; g.fillRect(0, 0, 64, 128);
-    g.fillStyle = "rgba(255,255,255,.16)"; for (let y = 6; y < 128; y += 8) g.fillRect(0, y, 64, 1);
-    g.fillStyle = COR.branco; g.fillRect(0, 0, 6, 128); g.fillRect(58, 0, 6, 128); g.fillRect(0, 0, 64, 6);
-    g.fillStyle = COR.branco; arco(g, 18, 26, 28, 84); g.fill();
-    g.fillStyle = "#33413b"; arco(g, 21, 29, 22, 80); g.fill();
-    g.fillStyle = "rgba(220,190,120,.35)"; g.fillRect(21, 40, 22, 2); g.fillRect(31, 29, 2, 80);
-  }, [1, 1]);
-}
-
-/** Tapete de piso diante da entrada: placas claras com círculos entrelaçados (UV em metros, módulo de ~3,3 m) */
-function texturaPraca() {
-  return tela(128, 128, (g) => {
-    g.fillStyle = COR.praca; g.fillRect(0, 0, 128, 128);
-    g.strokeStyle = "rgba(0,0,0,.10)"; g.lineWidth = 1;
-    for (let i = 0; i <= 128; i += 32) { g.beginPath(); g.moveTo(i, 0); g.lineTo(i, 128); g.moveTo(0, i); g.lineTo(128, i); g.stroke(); }
-    g.strokeStyle = "rgba(90,90,85,.55)"; g.lineWidth = 2;
-    for (let i = 0; i <= 128; i += 32) for (let j = 0; j <= 128; j += 32) { g.beginPath(); g.arc(i, j, 16, 0, Math.PI * 2); g.stroke(); }
-  }, [0.3, 0.3]);
-}
-
-/** Plano com UV em metros (para texturas que repetem por módulo) */
-function planoMetros(w: number, h: number, modulo: [number, number]) {
-  const g = new THREE.PlaneGeometry(w, h);
-  const uv = g.attributes.uv as THREE.BufferAttribute;
-  for (let i = 0; i < uv.count; i++) uv.setXY(i, (uv.getX(i) * w) / modulo[0], (uv.getY(i) * h) / modulo[1]);
-  return g;
-}
-
-/** Plano que mostra só um retângulo do atlas (u0, v0, u1, v1 em 0..1, v de baixo para cima) */
-function planoAtlas(w: number, h: number, [u0, v0, u1, v1]: [number, number, number, number]) {
-  const g = new THREE.PlaneGeometry(w, h);
-  const uv = g.attributes.uv as THREE.BufferAttribute;
-  for (let i = 0; i < uv.count; i++) uv.setXY(i, u0 + uv.getX(i) * (u1 - u0), v0 + uv.getY(i) * (v1 - v0));
-  return g;
-}
-
-/** Telhado de quatro águas (largura em x, fundo em z), base em y = 0; a cumeeira ocupa `cumeeira` do fundo */
-function telhadoQuatroAguas(largura: number, fundo: number, altura: number, cumeeira = 0.4, beiral = 0.3) {
-  const w = largura / 2 + beiral, d = fundo / 2 + beiral, c = (fundo * cumeeira) / 2;
-  const p = [[-w, 0, -d], [w, 0, -d], [w, 0, d], [-w, 0, d], [0, altura, -c], [0, altura, c]];
-  const f = [[0, 4, 1], [1, 4, 5], [1, 5, 2], [2, 5, 3], [3, 5, 4], [3, 4, 0]];
+function geometriaFolha(comp: number, queda: number) {
   const pos: number[] = [];
-  for (const t of f) for (const i of t) pos.push(...p[i]);
+  const idx: number[] = [];
+  const n = 7;
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    const y = 0.5 * t - queda * t * t;
+    const w = t < 0.15 ? 0.06 + t * 1.6 : 0.3 * (1 - t) + 0.03;
+    const z = comp * t;
+    pos.push(-w, y - 0.07, z, 0, y, z, w, y - 0.07, z);
+  }
+  for (let i = 0; i < n; i++) {
+    const a = i * 3, b = a + 3;
+    idx.push(a, b, a + 1, a + 1, b, b + 1, a + 1, b + 1, a + 2, a + 2, b + 1, b + 2);
+  }
   const g = new THREE.BufferGeometry();
   g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx);
   g.computeVertexNormals();
   return g;
 }
 
-type Item = [x: number, y: number, z: number, sx?: number, sy?: number, sz?: number, giro?: number];
+const FOLHAS = 10;
 
-/** InstancedMesh a partir de uma lista de [x, y, z, escalas, giro]; cores opcionais por instância */
-function Instancias({ nome, geo, mat, itens, cores, sombra = true }: { nome: string; geo: THREE.BufferGeometry; mat: THREE.Material; itens: Item[]; cores?: string[]; sombra?: boolean }) {
-  const ref = useRef<THREE.InstancedMesh>(null);
-  useLayoutEffect(() => {
-    const m = ref.current!, o = new THREE.Object3D(), c = new THREE.Color();
-    itens.forEach(([x, y, z, sx = 1, sy = 1, sz = 1, giro = 0], i) => {
-      o.position.set(x, y, z); o.rotation.set(0, giro, 0); o.scale.set(sx, sy, sz); o.updateMatrix();
-      m.setMatrixAt(i, o.matrix);
-      if (cores) m.setColorAt(i, c.set(cores[i % cores.length]));
-    });
-    m.instanceMatrix.needsUpdate = true;
-    if (m.instanceColor) m.instanceColor.needsUpdate = true;
-    m.computeBoundingSphere();
-  }, [itens, cores]);
-  return <instancedMesh ref={ref} name={nome} args={[geo, mat, itens.length]} castShadow={sombra} receiveShadow />;
-}
-
-/** Geometrias e materiais com textura, criados uma vez e descartados ao desmontar */
-function useRecursos() {
-  const r = useMemo(() => {
-    const mat = (name: string, map: THREE.Texture, roughness: number, extra: Partial<THREE.MeshStandardMaterialParameters> = {}) => new THREE.MeshStandardMaterial({ name, map, roughness, ...extra });
-    const fachada = texturaFachada(), vitral = texturaVitral(), lateral = texturaLateral(), praca = texturaPraca();
-    return {
-      matFachada: mat("Mat_Fachada_Theatro", fachada, 0.85),
-      matVitral: mat("Mat_Fachada_Ferro_Vitral", vitral, 0.45, { metalness: 0.35 }),
-      matLateral: mat("Mat_Parede_Lateral_Janelas", lateral, 0.88),
-      matPraca: mat("Mat_Piso_Praca", praca, 0.95),
-      matMetal: new THREE.MeshStandardMaterial({ name: "Mat_Cobertura_Metalica", color: COR.telhaMetal, roughness: 0.5, metalness: 0.45 }),
-      matOuro: new THREE.MeshStandardMaterial({ name: "Mat_Dourado_Estatuas", color: COR.ouro, roughness: 0.4, metalness: 0.6 }),
-      matFerro: new THREE.MeshStandardMaterial({ name: "Mat_Ferro_Fundido", color: "#2b3a33", roughness: 0.55, metalness: 0.5 }),
-      texturas: [fachada, vitral, lateral, praca],
-    };
-  }, []);
-  useEffect(() => () => { r.texturas.forEach((t) => t.dispose()); [r.matFachada, r.matVitral, r.matLateral, r.matPraca, r.matMetal, r.matOuro, r.matFerro].forEach((m) => m.dispose()); }, [r]);
-  return r;
-}
-
-/** Bloco da fachada: térreo inteiro, pavimento superior central, alas com terraço, colunas, cornijas e coroamento */
-function Fachada({ fab, r }: { fab: Fabrica; r: ReturnType<typeof useRecursos> }) {
-  const reboco = fab.cor(COR.reboco, 0.88), branco = fab.cor(COR.branco, 0.7);
-  const L = MEIA_LARGURA * 2, fundo = Z_FUNDO_FACHADA - Z_FRENTE, zc = (Z_FRENTE + Z_FUNDO_FACHADA) / 2;
-  const T = 5.5, S = 5.1, LS = 10.2; // térreo, pavimento superior, largura do bloco superior
-  const geos = useMemo(() => ({
-    terreo: caixaChanfrada(L, T, fundo, 0.12),
-    superior: caixaChanfrada(LS, S, fundo - 0.1, 0.12),
-    pilastra: caixaChanfrada(0.34, 1, 0.2, 0.05),
-    entablamento: caixaChanfrada(6.0, 0.55, 1.0, 0.08),
-    cornijaT: caixaChanfrada(L + 0.5, 0.42, fundo + 0.5, 0.12),
-    cornijaS: caixaChanfrada(LS + 0.5, 0.5, fundo + 0.1, 0.14),
-    atico: caixaChanfrada(3.4, 0.95, 1.2, 0.1),
-    terraco: caixaChanfrada(L + 0.1, 0.03, fundo + 0.1, 0.01),
-    coberturaPiso: caixaChanfrada(LS + 0.1, 0.03, fundo - 0.1, 0.01),
-    base: caixaChanfrada(L + 0.3, 0.45, fundo + 0.3, 0.1),
-    frenteT: planoAtlas(L, T, [0, 0, 1, 0.5]),
-    frenteS: planoAtlas(LS, S, [0, 0.5, 1, 1]),
-    coluna: new THREE.CylinderGeometry(0.24, 0.28, 1, 12),
-    capitel: caixaChanfrada(0.72, 0.32, 0.72, 0.06),
-    balaustre: new THREE.CylinderGeometry(0.07, 0.1, 1, 6),
-    corrimao: caixaChanfrada(1, 0.14, 0.26, 0.04),
-    pinha: new THREE.SphereGeometry(0.26, 10, 8),
-    pedestal: caixaChanfrada(0.5, 0.6, 0.5, 0.05),
-    escada: caixaChanfrada(6.4, 0.18, 1.2, 0.04),
-    corpo: new THREE.CapsuleGeometry(0.2, 0.75, 4, 8),
-    cabeca: new THREE.SphereGeometry(0.15, 8, 6),
-    brasao: (() => {
-      // cartela recortada do brasão central: base reta, ombros em voluta e topo em ponta
-      const s = new THREE.Shape();
-      s.moveTo(-1.2, 0); s.lineTo(1.2, 0); s.quadraticCurveTo(1.25, 0.55, 0.75, 0.6); s.quadraticCurveTo(0.6, 1.15, 0.2, 1.2);
-      s.lineTo(0, 1.55); s.lineTo(-0.2, 1.2); s.quadraticCurveTo(-0.6, 1.15, -0.75, 0.6); s.quadraticCurveTo(-1.25, 0.55, -1.2, 0);
-      const g = new THREE.ExtrudeGeometry(s, { depth: 0.3, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 1, curveSegments: 6 });
-      g.translate(0, 0, -0.15);
-      return g;
-    })(),
-  }), [L, fundo]);
-  useEffect(() => () => Object.values(geos).forEach((g) => g.dispose()), [geos]);
-
-  const yS = T + 0.42; // piso do pavimento superior (sobre a cornija do térreo)
-  const yTopo = yS + S; // cornija de cima
-  const zf = Z_FRENTE;
-  // colunas do pórtico e balaústres
-  const colunas: Item[] = [-2.45, -0.85, 0.85, 2.45].map((x) => [x, 0.45 + 2.3, zf - 0.55, 1, 4.6, 1]);
-  const capiteis: Item[] = colunas.flatMap(([x]) => [[x, 0.45 + 4.6, zf - 0.55], [x, 0.45, zf - 0.55, 1, 0.9, 1]] as Item[]);
-  // pilastras brancas em relevo: térreo (divisas dos panos) e pavimento superior (divisas dos pavilhões)
-  const pilastras: Item[] = [
-    ...[-7.7, -5.25, -2.5, 2.5, 5.25, 7.7].map((x) => [x * 0.985, 0.45, zf - 0.08, 1, T - 0.45, 1] as Item),
-    ...[-5.1, -2.5, -1.2, 1.2, 2.5, 5.1].map((x) => [x * 0.98, yS, zf + 0.0, 1, S, 1] as Item),
-  ];
-  const balaustres: Item[] = [];
-  const corrimaos: Item[] = [];
-  const pinhas: Item[] = [], pedestais: Item[] = [];
-  for (const s of [-1, 1]) {
-    // terraço das alas: frente e lateral
-    const x0 = s * (LS / 2 + 0.15), x1 = s * (L / 2 - 0.1);
-    for (let x = Math.min(x0, x1) + 0.2; x < Math.max(x0, x1); x += 0.3) balaustres.push([x, yS + 0.31, zf + 0.2, 1, 0.62, 1]);
-    for (let z = zf + 0.45; z < Z_FUNDO_FACHADA - 0.1; z += 0.3) balaustres.push([x1 - s * 0.05, yS + 0.31, z, 1, 0.62, 1]);
-    corrimaos.push([(x0 + x1) / 2, yS + 0.62, zf + 0.2, Math.abs(x1 - x0), 1, 1]);
-    corrimaos.push([x1 - s * 0.05, yS + 0.62, (zf + Z_FUNDO_FACHADA) / 2, 0.3, 1, (Z_FUNDO_FACHADA - zf) / 0.26]);
-    pedestais.push([x1 - s * 0.1, yS, zf + 0.2], [x0 + s * 0.15, yS, zf + 0.2]);
-    pinhas.push([x1 - s * 0.1, yS + 0.86, zf + 0.2], [x0 + s * 0.15, yS + 0.86, zf + 0.2]);
-    // pinhas do coroamento ao lado do ático
-    pinhas.push([s * 2.2, yTopo + 1.36, zf + 0.35]);
-    pedestais.push([s * 2.2, yTopo + 0.5, zf + 0.35]);
-    pedestais.push([s * (LS / 2 - 0.25), yTopo + 0.5, zf + 0.35]);
-  }
-  // balcão da janela central, sobre o entablamento do pórtico
-  for (let x = -1.15; x <= 1.15; x += 0.3) balaustres.push([x, yS + 0.28, zf - 0.6, 1, 0.55, 1]);
-  corrimaos.push([0, yS + 0.55, zf - 0.6, 2.6, 1, 1]);
-
-  return (
-    <group position={[0, 0, zc]}>
-      <group position={[0, 0, -zc]}>
-        <mesh name="Fachada_Embasamento" geometry={geos.base} material={branco} position={[0, 0, zc]} castShadow receiveShadow />
-        <mesh name="Fachada_Terreo" geometry={geos.terreo} material={reboco} position={[0, 0.02, zc]} castShadow receiveShadow />
-        <mesh name="Fachada_Terreo_Frente" geometry={geos.frenteT} material={r.matFachada} position={[0, T / 2 + 0.02, zf - 0.015]} rotation-y={Math.PI} receiveShadow />
-        <mesh name="Fachada_Cornija_Terreo" geometry={geos.cornijaT} material={branco} position={[0, T, zc]} castShadow receiveShadow />
-        <mesh name="Fachada_Superior" geometry={geos.superior} material={reboco} position={[0, yS, zc + 0.05]} castShadow receiveShadow />
-        <mesh name="Fachada_Superior_Frente" geometry={geos.frenteS} material={r.matFachada} position={[0, yS + S / 2, zf + 0.1 - 0.015]} rotation-y={Math.PI} receiveShadow />
-        <Instancias nome="Fachada_Pilastras" geo={geos.pilastra} mat={branco} itens={pilastras} />
-        <mesh name="Fachada_Entablamento_Portico" geometry={geos.entablamento} material={branco} position={[0, 5.37, zf - 0.5]} castShadow receiveShadow />
-        <mesh name="Fachada_Cornija_Topo" geometry={geos.cornijaS} material={branco} position={[0, yTopo, zc + 0.05]} castShadow receiveShadow />
-        {/* pisos dos terraços (alas e cobertura) em cimentado cinza, dentro das cornijas brancas */}
-        <mesh name="Fachada_Terracos_Piso" geometry={geos.terraco} material={fab.cor("#bdb8ad", 0.95)} position={[0, yS, zc]} receiveShadow />
-        <mesh name="Fachada_Cobertura_Piso" geometry={geos.coberturaPiso} material={fab.cor("#bdb8ad", 0.95)} position={[0, yTopo + 0.5, zc + 0.05]} receiveShadow />
-        <mesh name="Fachada_Atico_Central" geometry={geos.atico} material={reboco} position={[0, yTopo + 0.5, zf + 0.75]} castShadow />
-        <mesh name="Fachada_Brasao" geometry={geos.brasao} material={branco} position={[0, yTopo + 0.5, zf + 0.2]} castShadow />
-        <mesh name="Fachada_Escadaria" geometry={geos.escada} material={fab.cor("#b9b5ab", 0.9)} position={[0, 0, zf - 0.7]} receiveShadow />
-        <Instancias nome="Fachada_Colunas_Portico" geo={geos.coluna} mat={branco} itens={colunas} />
-        <Instancias nome="Fachada_Capiteis_Bases" geo={geos.capitel} mat={branco} itens={capiteis} />
-        <Instancias nome="Fachada_Balaustres" geo={geos.balaustre} mat={branco} itens={balaustres} sombra={false} />
-        <Instancias nome="Fachada_Corrimaos" geo={geos.corrimao} mat={branco} itens={corrimaos} />
-        <Instancias nome="Fachada_Pedestais" geo={geos.pedestal} mat={branco} itens={pedestais} />
-        <Instancias nome="Fachada_Pinhas" geo={geos.pinha} mat={r.matOuro} itens={pinhas} />
-        {/* as duas estátuas douradas nas quinas do coroamento */}
-        <Instancias nome="Fachada_Estatuas_Corpo" geo={geos.corpo} mat={r.matOuro} itens={[[-(LS / 2 - 0.25), yTopo + 1.68, zf + 0.35], [LS / 2 - 0.25, yTopo + 1.68, zf + 0.35]]} />
-        <Instancias nome="Fachada_Estatuas_Cabeca" geo={geos.cabeca} mat={r.matOuro} itens={[[-(LS / 2 - 0.25), yTopo + 2.35, zf + 0.35], [LS / 2 - 0.25, yTopo + 2.35, zf + 0.35]]} />
-      </group>
-    </group>
-  );
-}
-
-/** Galerias em volta do pátio, a fachada de ferro com vitrais, a sala com a cobertura metálica e a caixa cênica */
-function Corpo({ fab, r }: { fab: Fabrica; r: ReturnType<typeof useRecursos> }) {
-  const reboco = fab.cor(COR.reboco, 0.88), branco = fab.cor(COR.branco, 0.7), sombra = fab.cor(COR.rebocoSombra, 0.9);
-  const L = MEIA_LARGURA * 2;
-  const G = 3; // largura das galerias
-  const alturaSala = 10.4, alturaPalco = 14.7, alturaGaleria = 6;
-  const fundoGaleria = Z_SALA - Z_FUNDO_FACHADA;
-  const fundoSala = Z_FIM_PALCO - Z_SALA;
-  const geos = useMemo(() => ({
-    galeria: caixaChanfrada(G, alturaGaleria, fundoGaleria, 0.1),
-    telhadoGaleria: telhadoQuatroAguas(G, fundoGaleria, 0.9, 0.7, 0.25),
-    lateralTorre: planoMetros(Z_FIM_PALCO - Z_PALCO - 0.3, alturaPalco - alturaSala - 0.3, [2.75, 4.6]),
-    fundoTorre: planoMetros(7.6, alturaPalco - alturaSala - 0.3, [2.53, 4.6]),
-    fundoPalco: planoMetros(7.6, alturaSala - 0.6, [2.53, 9.8]),
-    sala: caixaChanfrada(L, alturaSala, fundoSala, 0.15),
-    friso: caixaChanfrada(L + 0.3, 0.35, fundoSala + 0.3, 0.08),
-    palco: caixaChanfrada(7.9, alturaPalco - alturaSala, Z_FIM_PALCO - Z_PALCO, 0.12),
-    palcoBase: caixaChanfrada(7.9, alturaSala, Z_FUNDO - Z_FIM_PALCO, 0.12),
-    telhado: telhadoQuatroAguas(L, Z_PALCO - Z_SALA, 2.3, 0.35, 0.35),
-    telhadoPalco: telhadoQuatroAguas(7.9, Z_FIM_PALCO - Z_PALCO, 1.1, 0.5, 0.2),
-    lanternim: caixaChanfrada(2.2, 0.7, 3.6, 0.08),
-    vitral: planoAtlas(L - 2 * G, alturaSala - 0.2, [0, 0, 1, 1]),
-    lateralSala: planoMetros(fundoSala - 0.4, alturaSala - 1.2, [3, 9.2]),
-    lateralGaleria: planoMetros(fundoGaleria - 0.4, alturaGaleria - 0.6, [3, 5.4]),
-    patio: placaDePlanta([[-(L / 2 - G), Z_FUNDO_FACHADA], [L / 2 - G, Z_FUNDO_FACHADA], [L / 2 - G, Z_SALA], [-(L / 2 - G), Z_SALA]], 0.06),
-    canteiro: caixaChanfrada(1.6, 0.4, 1.6, 0.08),
-    coluneta: new THREE.CylinderGeometry(0.12, 0.12, 1, 8),
-    arbusto: new THREE.IcosahedronGeometry(0.9, 1),
-  }), [L, fundoGaleria, fundoSala]);
-  useEffect(() => () => Object.values(geos).forEach((g) => g.dispose()), [geos]);
-  const zG = (Z_FUNDO_FACHADA + Z_SALA) / 2, zS = (Z_SALA + Z_FIM_PALCO) / 2;
-  // colunetas de ferro da varanda das galerias voltada para o pátio
-  const colunetas: Item[] = [];
-  for (const s of [-1, 1]) for (let z = Z_FUNDO_FACHADA + 0.8; z < Z_SALA - 0.3; z += 1.6) colunetas.push([s * (L / 2 - G - 0.2), alturaGaleria / 2, z, 1, alturaGaleria, 1]);
-  return (
-    <group>
-      {[-1, 1].map((s) => (
-        <group key={s} position={[s * (L / 2 - G / 2), 0, zG]}>
-          <mesh name={`Galeria_${s < 0 ? "Oeste" : "Leste"}`} geometry={geos.galeria} material={reboco} castShadow receiveShadow />
-          <mesh name={`Galeria_${s < 0 ? "Oeste" : "Leste"}_Telhado`} geometry={geos.telhadoGaleria} material={r.matMetal} position-y={alturaGaleria} castShadow receiveShadow />
-          <mesh name={`Galeria_${s < 0 ? "Oeste" : "Leste"}_Janelas`} geometry={geos.lateralGaleria} material={r.matLateral} position={[s * (G / 2 + 0.02), alturaGaleria / 2 - 0.1, 0]} rotation-y={(s * Math.PI) / 2} receiveShadow />
-        </group>
-      ))}
-      <Instancias nome="Patio_Colunetas_Ferro" geo={geos.coluneta} mat={r.matFerro} itens={colunetas} />
-      <mesh name="Patio_Piso" geometry={geos.patio} material={fab.cor("#e2ddd2", 0.9)} receiveShadow />
-      <Instancias nome="Patio_Canteiros" geo={geos.canteiro} mat={fab.cor("#bdb6a6", 0.9)} itens={[[-2, 0, (Z_FUNDO_FACHADA + Z_SALA) / 2], [2, 0, (Z_FUNDO_FACHADA + Z_SALA) / 2]]} />
-      <Instancias nome="Patio_Arbustos" geo={geos.arbusto} mat={fab.cor("#4f7d3a", 0.9)} itens={[[-2, 1.1, (Z_FUNDO_FACHADA + Z_SALA) / 2, 1, 0.9, 1], [2, 1.1, (Z_FUNDO_FACHADA + Z_SALA) / 2, 1, 0.9, 1]]} />
-      {/* sala de espetáculos */}
-      <mesh name="Sala_Volume" geometry={geos.sala} material={reboco} position={[0, 0, zS]} castShadow receiveShadow />
-      <mesh name="Sala_Fachada_Ferro_Vitral" geometry={geos.vitral} material={r.matVitral} position={[0, (alturaSala - 0.2) / 2, Z_SALA - 0.02]} rotation-y={Math.PI} receiveShadow />
-      {[-1, 1].map((s) => (
-        <mesh key={s} name={`Sala_Lateral_${s < 0 ? "Oeste" : "Leste"}`} geometry={geos.lateralSala} material={r.matLateral} position={[s * (L / 2 + 0.02), (alturaSala - 1.2) / 2 + 0.4, zS]} rotation-y={(s * Math.PI) / 2} receiveShadow />
-      ))}
-      <mesh name="Sala_Friso_Cornija" geometry={geos.friso} material={branco} position={[0, alturaSala - 0.2, zS]} castShadow receiveShadow />
-      <mesh name="Sala_Cobertura_Metalica" geometry={geos.telhado} material={r.matMetal} position={[0, alturaSala + 0.15, (Z_SALA + Z_PALCO) / 2]} castShadow receiveShadow />
-      <mesh name="Sala_Lanternim" geometry={geos.lanternim} material={r.matMetal} position={[0, alturaSala + 1.9, (Z_SALA + Z_PALCO) / 2]} castShadow />
-      {/* caixa cênica e o fundo do palco */}
-      <mesh name="Palco_Caixa_Cenica" geometry={geos.palco} material={sombra} position={[0.1, alturaSala, (Z_PALCO + Z_FIM_PALCO) / 2]} castShadow receiveShadow />
-      <mesh name="Palco_Cobertura" geometry={geos.telhadoPalco} material={r.matMetal} position={[0.1, alturaPalco, (Z_PALCO + Z_FIM_PALCO) / 2]} castShadow />
-      <mesh name="Palco_Fundo" geometry={geos.palcoBase} material={sombra} position={[0.1, 0, (Z_FIM_PALCO + Z_FUNDO) / 2]} castShadow receiveShadow />
-      {[-1, 1].map((s) => (
-        <mesh key={s} name={`Palco_Torre_Janelas_${s < 0 ? "Oeste" : "Leste"}`} geometry={geos.lateralTorre} material={r.matLateral} position={[0.1 + s * (3.95 + 0.02), (alturaSala + alturaPalco) / 2, (Z_PALCO + Z_FIM_PALCO) / 2]} rotation-y={(s * Math.PI) / 2} receiveShadow />
-      ))}
-      <mesh name="Palco_Torre_Janelas_Fundo" geometry={geos.fundoTorre} material={r.matLateral} position={[0.1, (alturaSala + alturaPalco) / 2, Z_FIM_PALCO + 0.02]} receiveShadow />
-      <mesh name="Palco_Fundo_Janelas" geometry={geos.fundoPalco} material={r.matLateral} position={[0.1, alturaSala / 2, Z_FUNDO + 0.02]} receiveShadow />
-    </group>
-  );
-}
-
-/** Copa de palmeira: oito folhas compridas saindo do topo do estipe e caindo para fora */
-function copaPalmeira() {
-  const folhas = Array.from({ length: 8 }, (_, i) => {
-    const f = new THREE.BoxGeometry(1.9, 0.05, 0.42);
-    f.translate(0.95, 0, 0); f.rotateZ(-0.38 - (i % 2) * 0.22); f.rotateY((i * Math.PI) / 4 + (i % 2) * 0.3);
-    return f;
-  });
-  const g = mergeGeometries(folhas)!;
-  folhas.forEach((f) => f.dispose());
-  return g;
-}
-
-/** Copas e troncos de árvores e palmeiras (jardim de Burle Marx e praça) */
-function Vegetacao({ fab, arvores, palmeiras }: { fab: Fabrica; arvores: [number, number, number][]; palmeiras: [number, number][] }) {
-  const geos = useMemo(() => ({
-    copa: new THREE.IcosahedronGeometry(1, 1),
-    tronco: new THREE.CylinderGeometry(0.14, 0.2, 1, 6),
-    estipe: new THREE.CylinderGeometry(0.12, 0.17, 1, 6),
-    folhas: copaPalmeira(),
+/** Palmeiras do jardim de Burle Marx: estipe liso cinza-claro, palmito verde e coroa de folhas arqueadas */
+function Palmeiras({ fab }: { fab: Fabrica }) {
+  const estipe = useRef<THREE.InstancedMesh>(null);
+  const palmito = useRef<THREE.InstancedMesh>(null);
+  const folhas = useRef<THREE.InstancedMesh>(null);
+  const rec = useMemo(() => ({
+    mat: Object.assign(new THREE.MeshStandardMaterial({ color: "#5f9440", roughness: 0.8, side: THREE.DoubleSide }), { name: "Mat_Folha_Palmeira" }),
+    folha: geometriaFolha(2.6, 1.2),
+    estipe: new THREE.CylinderGeometry(0.13, 0.19, 1, 8).translate(0, 0.5, 0),
+    palmito: new THREE.CylinderGeometry(0.14, 0.17, 1, 8).translate(0, 0.5, 0),
   }), []);
-  useEffect(() => () => Object.values(geos).forEach((g) => g.dispose()), [geos]);
-  const tons = ["#4f7d3a", "#5b8a3f", "#46733a", "#62913f"];
-  return (
-    <>
-      <Instancias nome="Arvores_Troncos" geo={geos.tronco} mat={fab.cor("#6b5440", 0.9)} itens={arvores.map(([x, z, e]) => [x, e * 1.1, z, e, e * 2.2, e])} />
-      <Instancias nome="Arvores_Copas" geo={geos.copa} mat={fab.cor("#ffffff", 0.9)} cores={tons} itens={arvores.map(([x, z, e], i) => [x, e * 3.1, z, e * 1.9, e * 1.5, e * 1.9, i])} />
-      <Instancias nome="Palmeiras_Estipes" geo={geos.estipe} mat={fab.cor("#9c9282", 0.9)} itens={palmeiras.map(([x, z], i) => [x, 3.4 + (i % 3) * 0.4, z, 1, 6.8 + (i % 3) * 0.8, 1])} />
-      <Instancias nome="Palmeiras_Copas" geo={geos.folhas} mat={fab.cor("#4d7f3c", 0.85)} itens={palmeiras.map(([x, z], i) => [x, 6.9 + (i % 3) * 0.8, z, 1, 1, 1, i * 0.7])} />
-    </>
-  );
-}
-
-/** Canteiros sinuosos (contorno de bolha com ondulações) */
-function bolha(cx: number, cz: number, rx: number, rz: number, semente: number, n = 22): [number, number][] {
-  const rnd = aleatorio(semente), f1 = 2 + Math.floor(rnd() * 2), fase = rnd() * 6;
-  return Array.from({ length: n }, (_, i) => {
-    const a = (i / n) * Math.PI * 2, k = 1 + 0.18 * Math.sin(a * f1 + fase);
-    return [cx + Math.cos(a) * rx * k, cz + Math.sin(a) * rz * k] as [number, number];
-  });
-}
-
-/** Retângulo [x0, x1] × [z0, z1] recortado pelo disco de raio R (polígono convexo, ordenado pelo ângulo) */
-function retanguloNoDisco(x0: number, x1: number, z0: number, z1: number, R: number): [number, number][] {
-  const pts: [number, number][] = [];
-  for (let i = 0; i < 160; i++) {
-    const a = (i / 160) * Math.PI * 2, x = Math.cos(a) * R, z = Math.sin(a) * R;
-    if (x >= x0 && x <= x1 && z >= z0 && z <= z1) pts.push([x, z]);
-  }
-  const borda: [number, number][] = [[x0, z0], [x1, z0], [x1, z1], [x0, z1]];
-  for (let k = 0; k < 4; k++) {
-    const [ax, az] = borda[k], [bx, bz] = borda[(k + 1) % 4];
-    for (let t = 0; t <= 1; t += 1 / 64) { const x = ax + (bx - ax) * t, z = az + (bz - az) * t; if (Math.hypot(x, z) <= R) pts.push([x, z]); }
-  }
-  const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length, cz = pts.reduce((s, p) => s + p[1], 0) / pts.length;
-  return pts.sort((a, b) => Math.atan2(a[1] - cz, a[0] - cx) - Math.atan2(b[1] - cz, b[0] - cx));
-}
-
-/** Entorno: calçada, Praça José de Alencar em frente, jardim de Burle Marx a leste, Rua 24 de Maio e casario a oeste */
-function Entorno({ fab, r }: { fab: Fabrica; r: ReturnType<typeof useRecursos> }) {
-  const xJ0 = MEIA_LARGURA + X0 + 1.2, zJ0 = Z_FUNDO_FACHADA - 2, xJ1 = 23.5;
-  const geos = useMemo(() => {
-    const disco = new THREE.CircleGeometry(32.6, 64);
-    disco.rotateX(-Math.PI / 2); disco.translate(0, 0.03, 0);
-    const deitar = (formas: [number, number][][], y: number) => {
-      const g = new THREE.ShapeGeometry(formas.map((p) => new THREE.Shape(p.map(([x, z]) => new THREE.Vector2(x, -z)))));
-      g.rotateX(-Math.PI / 2); g.translate(0, y, 0);
-      return g;
-    };
-    // canteiros orgânicos de Burle Marx no gramado do jardim
-    const canteiros = [bolha(9, -6, 3, 2.2, 3), bolha(16, 1, 2.6, 3.4, 7), bolha(8.5, 8, 2.4, 3, 11), bolha(17.5, 11, 2.2, 1.8, 13), bolha(14.5, -9.5, 2.4, 1.4, 17)];
-    const flores = [bolha(11.5, -2, 1.1, 0.8, 21), bolha(13, 7.5, 1.0, 1.3, 23), bolha(20, -6, 1.2, 0.9, 29)];
-    // caminho sinuoso de pedra no gramado
-    const curva = new THREE.CatmullRomCurve3([new THREE.Vector3(6, 0, -13.5), new THREE.Vector3(12.5, 0, -5), new THREE.Vector3(11.5, 0, 3), new THREE.Vector3(16, 0, 7.5), new THREE.Vector3(21, 0, 14)]);
-    const esq: [number, number][] = [], dir: [number, number][] = [];
-    curva.getPoints(40).forEach((p, i) => {
-      const t = curva.getTangent(i / 40), nx = -t.z, nz = t.x;
-      esq.push([p.x + nx * 0.65, p.z + nz * 0.65]); dir.push([p.x - nx * 0.65, p.z - nz * 0.65]);
+  useEffect(() => () => { Object.values(rec).forEach((x) => x.dispose()); }, [rec]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    L.palmeiras.forEach(([x, z, h, giro], i) => {
+      const hp = 0.9;
+      o.position.set(x, Z0, z);
+      o.rotation.set(0, 0, 0);
+      o.scale.set(1, h - hp, 1);
+      o.updateMatrix();
+      estipe.current!.setMatrixAt(i, o.matrix);
+      o.position.set(x, Z0 + h - hp, z);
+      o.scale.set(1, hp, 1);
+      o.updateMatrix();
+      palmito.current!.setMatrixAt(i, o.matrix);
+      for (let f = 0; f < FOLHAS; f++) {
+        const a = giro + (f / FOLHAS) * Math.PI * 2;
+        o.rotation.set(f % 3 === 0 ? -0.8 : f % 3 === 1 ? -0.35 : 0.0, a, 0, "YXZ");
+        o.position.set(x, Z0 + h - 0.05, z);
+        o.scale.setScalar(f % 3 === 0 ? 0.8 : 1);
+        o.updateMatrix();
+        folhas.current!.setMatrixAt(i * FOLHAS + f, o.matrix);
+        folhas.current!.setColorAt(i * FOLHAS + f, cor.set(f % 3 ? "#ffffff" : "#dfe9c9"));
+      }
     });
-    return {
-      disco,
-      praca: placaDePlanta(retanguloNoDisco(-40, 40, -40, Z_FRENTE - 0.2, 32.6), 0.07),
-      rua: placaDePlanta(retanguloNoDisco(-19.4, -14.6, Z_FRENTE - 0.2, 40, 32.6), 0.05),
-      jardim: placaDePlanta(retanguloNoDisco(xJ0, xJ1, zJ0, 22, 32.4), 0.1),
-      canteiros: deitar(canteiros, 0.14),
-      flores: deitar(flores, 0.17),
-      caminho: placaDePlanta([...esq, ...dir.reverse()], 0.13),
-      mureta: caixaChanfrada(1, 0.6, 0.35, 0.06),
-      pilar: caixaChanfrada(0.55, 1.9, 0.55, 0.06),
-      grade: new THREE.BoxGeometry(0.05, 1, 0.05),
-      trilho: new THREE.BoxGeometry(1, 0.06, 0.07),
-      tapete: placaDePlanta([[X0 - 5, Z_FRENTE - 1.4], [X0 + 5, Z_FRENTE - 1.4], [X0 + 5, Z_FRENTE - 7.4], [X0 - 5, Z_FRENTE - 7.4]], 0.09),
-      baliza: new THREE.CylinderGeometry(0.12, 0.12, 1, 8),
-      faixa: new THREE.CylinderGeometry(0.125, 0.125, 1, 8),
-      casa: caixaChanfrada(1, 1, 1, 0.08),
-      telhaCasa: telhadoQuatroAguas(1, 1, 0.5, 0.2, 0.05),
-    };
-  }, [xJ0, zJ0]);
-  useEffect(() => () => Object.values(geos).forEach((g) => g.dispose()), [geos]);
-
-  // mureta ocre com gradil preto e pilares: frente do jardim (lado da praça) e lado da Rua General Sampaio
-  const muretas: Item[] = [], grades: Item[] = [], trilhos: Item[] = [], pilares: Item[] = [];
-  for (let x = xJ0; x < xJ1 - 0.5; x += 3) {
-    const w = Math.min(3, xJ1 - x);
-    muretas.push([x + w / 2, 0, zJ0, w, 1, 1]); trilhos.push([x + w / 2, 1.5, zJ0, w, 1, 1]); pilares.push([x, 0, zJ0]);
-    for (let b = 0.3; b < w - 0.1; b += 0.3) grades.push([x + b, 1.05, zJ0, 1, 0.9, 1]);
-  }
-  for (let z = zJ0; z < 15; z += 3) {
-    muretas.push([xJ1, 0, z + 1.5, 3, 1, 1, Math.PI / 2]); trilhos.push([xJ1, 1.5, z + 1.5, 3, 1, 1, Math.PI / 2]); pilares.push([xJ1, 0, z]);
-    for (let b = 0.3; b < 2.9; b += 0.3) grades.push([xJ1, 1.05, z + b, 1, 0.9, 1]);
-  }
-  // balizadores pretos e brancos ao longo da praça, diante da fachada
-  const balizas: Item[] = [], faixas: Item[] = [];
-  for (let x = -18; x <= 22; x += 1.6) {
-    if (Math.abs(x - X0) < 3.4) continue;
-    balizas.push([x, 0.5, Z_FRENTE - 2.8]);
-    faixas.push([x, 0.55, Z_FRENTE - 2.8, 1, 0.22, 1], [x, 0.9, Z_FRENTE - 2.8, 1, 0.12, 1]);
-  }
-  // casario térreo do outro lado da Rua 24 de Maio, a oeste
-  const casas: Item[] = [], telhas: Item[] = [], cores: string[] = [];
-  const rnd = aleatorio(24);
-  for (let z = -13.8; z < 14; z += 5.2) {
-    const h = 2.8 + rnd() * 1.6;
-    casas.push([-23.3, 0, z, 6, h, 4.8]);
-    telhas.push([-23.3, h, z, 6, 1.6, 4.8]);
-    cores.push(["#e9dcc3", "#f0e6d4", "#d9cba8", "#e6d2bd", "#cfd8c6"][Math.floor(rnd() * 5)]);
-  }
-  const arvores: [number, number, number][] = [[-15, -25, 1.1], [10, -25.5, 1.05], [16.5, -22.5, 1.1], [21.5, -17.5, 0.95], [22, 4, 1.1], [7.5, 15, 1.2], [19.5, 18.5, 0.9], [8, 2.5, 0.85], [-16.8, 18, 0.8]];
-  const palmeiras: [number, number][] = [[-18, -21.5], [-21, -17.8], [12.5, -2.5], [10.5, -7.5], [18.5, -2], [15, 13], [6.5, -10], [21, 8.5]];
+    for (const m of [estipe.current!, palmito.current!, folhas.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.palmeiras.length;
   return (
     <>
-      <mesh name="Chao_Calcada" geometry={geos.disco} material={fab.cor(COR.calcada, 0.95)} receiveShadow />
-      <mesh name="Praca_Jose_de_Alencar_Piso" geometry={geos.praca} material={fab.cor("#cdc8bd", 0.95)} receiveShadow />
-      <mesh name="Praca_Tapete_Circulos" geometry={geos.tapete} material={r.matPraca} receiveShadow />
-      <mesh name="Rua_24_de_Maio" geometry={geos.rua} material={fab.cor(COR.asfalto, 0.95)} receiveShadow />
-      <mesh name="Jardim_Burle_Marx_Gramado" geometry={geos.jardim} material={fab.cor(COR.grama, 0.95)} receiveShadow />
-      <mesh name="Jardim_Burle_Marx_Canteiros" geometry={geos.canteiros} material={fab.cor("#3f6e33", 0.95)} receiveShadow />
-      <mesh name="Jardim_Burle_Marx_Flores" geometry={geos.flores} material={fab.cor("#c8513c", 0.85)} receiveShadow />
-      <mesh name="Jardim_Burle_Marx_Caminho" geometry={geos.caminho} material={fab.cor("#e4dccb", 0.9)} receiveShadow />
-      <Instancias nome="Jardim_Mureta" geo={geos.mureta} mat={fab.cor(COR.ocre, 0.85)} itens={muretas} />
-      <Instancias nome="Jardim_Gradil_Barras" geo={geos.grade} mat={r.matFerro} itens={grades} sombra={false} />
-      <Instancias nome="Jardim_Gradil_Trilhos" geo={geos.trilho} mat={r.matFerro} itens={trilhos} sombra={false} />
-      <Instancias nome="Jardim_Pilares" geo={geos.pilar} mat={fab.cor(COR.ocre, 0.85)} itens={pilares} />
-      <Instancias nome="Praca_Balizadores" geo={geos.baliza} mat={fab.cor("#f1f0ea", 0.6)} itens={balizas} sombra={false} />
-      <Instancias nome="Praca_Balizadores_Faixas" geo={geos.faixa} mat={fab.cor("#1e1f22", 0.6)} itens={faixas} sombra={false} />
-      <Instancias nome="Casario_Oeste" geo={geos.casa} mat={fab.cor("#ffffff", 0.9)} itens={casas} cores={cores} />
-      <Instancias nome="Casario_Oeste_Telhados" geo={geos.telhaCasa} mat={fab.cor("#b8603a", 0.85)} itens={telhas} />
-      <Vegetacao fab={fab} arvores={arvores} palmeiras={palmeiras} />
+      <instancedMesh name="Palmeiras_Estipes" ref={estipe} args={[rec.estipe, undefined, n]} castShadow material={fab.cor("#c8c1b2", 0.8)} />
+      <instancedMesh name="Palmeiras_Palmitos" ref={palmito} args={[rec.palmito, undefined, n]} castShadow material={fab.cor("#7f9d48", 0.7)} />
+      <instancedMesh name="Palmeiras_Folhas" ref={folhas} args={[rec.folha, rec.mat, n * FOLHAS]} castShadow />
     </>
   );
+}
+
+/** Gente na calçada da entrada, na praça, no pátio e no caminho do jardim (na escala do prédio, ~1,4 m) */
+function Pessoas({ fab }: { fab: Fabrica }) {
+  const corpo = useRef<THREE.InstancedMesh>(null);
+  const cabeca = useRef<THREE.InstancedMesh>(null);
+  const pernas = useRef<THREE.InstancedMesh>(null);
+  const rec = useMemo(() => ({
+    corpo: new THREE.CylinderGeometry(0.16, 0.19, 0.58, 7).translate(0, 0.8, 0),
+    cabeca: new THREE.IcosahedronGeometry(0.135, 1).translate(0, 1.24, 0),
+    pernas: new THREE.CylinderGeometry(0.13, 0.11, 0.54, 6).translate(0, 0.27, 0),
+    mat: Object.assign(new THREE.MeshStandardMaterial({ roughness: 0.8 }), { name: "Mat_Pessoas" }),
+  }), []);
+  useEffect(() => () => { Object.values(rec).forEach((x) => x.dispose()); }, [rec]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const camisas = ["#f2f2ee", "#2f5fa8", "#e0b23a", "#c8463c", "#3d8a5a", "#1e2a44"];
+    const peles = ["#c99a74", "#8d5e3c", "#e3bf9b", "#a8714b"];
+    L.pessoas.forEach(([x, y, z, g, k], i) => {
+      o.position.set(x, y, z);
+      o.rotation.set(0, g, 0);
+      o.updateMatrix();
+      for (const m of [corpo.current!, cabeca.current!, pernas.current!]) m.setMatrixAt(i, o.matrix);
+      corpo.current!.setColorAt(i, cor.set(camisas[k % camisas.length]));
+      cabeca.current!.setColorAt(i, cor.set(peles[(i * 3 + k) % peles.length]));
+    });
+    for (const m of [corpo.current!, cabeca.current!, pernas.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.pessoas.length;
+  return (
+    <>
+      <instancedMesh name="Pessoas_Corpo" ref={corpo} args={[rec.corpo, rec.mat, n]} castShadow />
+      <instancedMesh name="Pessoas_Cabeca" ref={cabeca} args={[rec.cabeca, rec.mat, n]} castShadow />
+      <instancedMesh name="Pessoas_Pernas" ref={pernas} args={[rec.pernas, undefined, n]} castShadow material={fab.cor("#2c3540", 0.3)} />
+    </>
+  );
+}
+
+/** Carros estacionados na Rua Liberato Barroso, do lado da praça, e um passando (na escala do prédio, ~3,7 m) */
+function Carros({ fab }: { fab: Fabrica }) {
+  const corpo = useRef<THREE.InstancedMesh>(null);
+  const cabine = useRef<THREE.InstancedMesh>(null);
+  const geo = useMemo(() => ({
+    c: new THREE.BoxGeometry(3.7, 0.72, 1.62).translate(0, 0.52, 0),
+    k: new THREE.BoxGeometry(1.95, 0.58, 1.42).translate(-0.2, 1.17, 0),
+  }), []);
+  useEffect(() => () => { geo.c.dispose(); geo.k.dispose(); }, [geo]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const tons = ["#f2f2ef", "#c8ccd0", "#2b2f36", "#8e959c", "#b33a32", "#1f4e8c", "#d9d4c4"];
+    L.carros.forEach(([x, z, g, k], i) => {
+      o.position.set(x, Z0, z);
+      o.rotation.set(0, g, 0);
+      o.updateMatrix();
+      corpo.current!.setMatrixAt(i, o.matrix);
+      cabine.current!.setMatrixAt(i, o.matrix);
+      corpo.current!.setColorAt(i, cor.set(tons[k % tons.length]));
+    });
+    for (const m of [corpo.current!, cabine.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.carros.length;
+  return (
+    <>
+      <instancedMesh name="Carros_Carroceria" ref={corpo} args={[geo.c, undefined, n]} castShadow receiveShadow>
+        <meshStandardMaterial name="Mat_Carroceria" roughness={0.45} metalness={0.2} />
+      </instancedMesh>
+      <instancedMesh name="Carros_Cabine" ref={cabine} args={[geo.k, undefined, n]} castShadow material={fab.cor("#2c3540", 0.3)} />
+    </>
+  );
+}
+
+/** Barras de ferro verde-escuro dos gradis do jardim e do lote vizinho e dos guarda-corpos dos balcões da fachada de ferro */
+function Barras({ fab }: { fab: Fabrica }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const geo = useMemo(() => new THREE.BoxGeometry(0.035, 1, 0.035).translate(0, 0.5, 0), []);
+  useEffect(() => () => geo.dispose(), [geo]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    L.barras.forEach(([x, z, y, h], i) => {
+      o.position.set(x, y, z);
+      o.scale.set(1, h, 1);
+      o.updateMatrix();
+      ref.current!.setMatrixAt(i, o.matrix);
+    });
+    ref.current!.instanceMatrix.needsUpdate = true;
+    ref.current!.computeBoundingSphere();
+  }, []);
+  return <instancedMesh name="Gradis_Barras" ref={ref} args={[geo, undefined, L.barras.length]} castShadow material={fab.cor("#2f5a45", 0.5)} />;
 }
 
 export function TheatroJoseDeAlencar({ fab }: { fab: Fabrica }) {
-  const r = useRecursos();
   return (
-    <group rotation-y={-THREE.MathUtils.degToRad(RUMO)}>
-      <Entorno fab={fab} r={r} />
-      <group position-x={X0}>
-        <Fachada fab={fab} r={r} />
-        <Corpo fab={fab} r={r} />
-      </group>
+    <group name="Theatro_Jose_de_Alencar">
+      <PecasBlender />
+      <Arvores fab={fab} />
+      <Palmeiras fab={fab} />
+      <Pessoas fab={fab} />
+      <Carros fab={fab} />
+      <Barras fab={fab} />
     </group>
   );
 }
