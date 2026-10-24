@@ -64,8 +64,8 @@ leste, v para o mar/norte; m):
   Teresa & Jorge), fora do disco ou atrás das câmeras.
 
 ## Dúvidas (não confirmadas: ficaram neutras no modelo)
-1. **Cores:** nenhuma fonte de texto cita a cor das paredes, frisos ou esquadrias. Paredes em **branco-gelo** neutro,
-   frisos brancos, esquadrias em madeira escura. O placeholder antigo dizia "amarelo", também sem fonte.
+1. **Cores:** nenhuma fonte de texto cita a cor das paredes, frisos ou esquadrias. Paredes em **branco quente**
+   neutro (`#fdebc4`, que na sombra azulada do site sai branco), frisos brancos, esquadrias em madeira escura. O placeholder antigo dizia "amarelo", também sem fonte.
 2. **Forma da torre:** só se sabe que existe e tem 11,1 m (OSM). Mirante com vãos em arco e telhado piramidal de
    telha marselha é uma interpretação neocolonial.
 3. **Varandas:** onde ficam e como são (arcadas, colunas, guarda-corpo de balaústres ou de ferro) não foi confirmado.
