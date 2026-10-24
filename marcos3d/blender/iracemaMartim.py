@@ -20,7 +20,7 @@ reais (avenida a ~18 m, areia a ~40 m) foram comprimidas para a areia caber no d
 
 A escultura (concreto armado pintado, Corbiniano Lins, 1965): a família partindo numa jangada. A jangada fica ao longo
 do eixo do canteiro, proa para és-nordeste (interpretação), e as figuras ficam de perfil para as câmeras do sul.
-Escala exagerada de propósito: Martim tem 9,4 m (≈ 5,9 vezes as pessoas de 1,6 m da cena).
+Escala exagerada de propósito: Martim tem 10,8 m (≈ 6,8 vezes as pessoas de 1,6 m da cena).
 Referencial: x = leste, y = norte, z = cima (Blender); o three recebe (x, z, −y).
 """
 import json
@@ -708,7 +708,7 @@ def orla(M):
             continue
         ang = math.degrees(math.atan(AV_INC))
         P.juntar(bm_caixa(2.42, 0.35, 0.7), M["mureta"], T(xm, ys(xm), Z0 + 0.13, ang))
-        P.juntar(bm_caixa(2.42, 1.1, 0.95 + 0.12 * (i % 3), 0.22), M["arbusto"], T(xm, ys(xm) - 0.85, Z0 + 0.1, ang))
+        P.juntar(bm_caixa(2.42, 1.0, 0.7 + 0.08 * (i % 3), 0.2), M["arbusto"], T(xm, ys(xm) - 0.85, Z0 + 0.1, ang))
     reservar(faixa_av(lambda x: ys(x) - 2.5, 2.8), 0.0)
     # quiosque do calçadão junto da areia (OSM: "Thomas Bar", amenity=bar no Calçadão da Beira Mar; forma neutra) com
     # mesas e guarda-sóis
@@ -762,7 +762,7 @@ def layout():
         return True
 
     coqueiros = []   # calçadão (fileira junto da areia), canto da praça e calçada sul
-    for x, y in ((-26.5, 8.2), (-19.5, 10.4), (19.5, 10.6), (26.5, 7.6), (-16.0, -8.6), (16.5, -7.4),
+    for x, y in ((-19.5, 10.4), (19.5, 10.6), (-16.0, -8.6), (16.5, -7.4),
                  (-22.0, -10.5), (22.5, -9.0), (-24.0, 11.6), (24.0, 11.0)):
         if livre(x, y, 0.3) and math.hypot(x, y) + 3.8 < RAIO:   # a coroa (folhas de 3 m) também fica no disco
             coqueiros.append((x, y, rnd.uniform(6.6, 8.4), rnd.uniform(0, 360), rnd.uniform(0.05, 0.17)))
