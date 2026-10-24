@@ -161,11 +161,11 @@ function finalizar(ms: THREE.InstancedMesh[]) {
   }
 }
 
-/** Copa em nuvem: cinco bolas de icosaedro coladas (raio 1), mais larga que alta, para o bosque não parecer de bolinhas */
+/** Copa em nuvem: quatro bolas de icosaedro coladas (raio 1), mais larga que alta, para o bosque não parecer de bolinhas */
 function geometriaCopa() {
   const partes: THREE.BufferGeometry[] = [];
   const r = aleatorio(5);
-  const bolas: [number, number, number, number][] = [[0, 0.05, 0, 0.72], [0.48, -0.08, 0.18, 0.55], [-0.42, -0.05, 0.3, 0.56], [0.1, -0.1, -0.5, 0.55], [-0.2, 0.3, -0.12, 0.5]];
+  const bolas: [number, number, number, number][] = [[0, 0.08, 0, 0.74], [0.5, -0.08, 0.2, 0.56], [-0.45, -0.05, 0.3, 0.57], [0.05, -0.08, -0.52, 0.57]];
   for (const [x, y, z, s] of bolas) {
     const g = new THREE.IcosahedronGeometry(s, 1);
     const p = g.attributes.position;
@@ -260,7 +260,7 @@ function geometriaFolha(tipo: number) {
   return g;
 }
 
-const FOLHAS = 11;
+const FOLHAS = 14;
 
 /** Carnaúbas da homenagem aos revolucionários (fileira junto ao gradil sul) e a macaúba tombada: estipe reto e coroa */
 function Palmeiras({ fab }: { fab: Fabrica }) {
@@ -289,10 +289,10 @@ function Palmeiras({ fab }: { fab: Fabrica }) {
         for (let f = 0; f < FOLHAS; f++) {
           const a = g + (f / FOLHAS) * Math.PI * 2;
           // carnaúba: leques em várias alturas, inclinados para cima; macaúba: folhas em arco
-          const sobe = tipo === 0 ? (f % 3 === 0 ? -0.9 : f % 3 === 1 ? -0.45 : 0.05) : f % 2 ? -0.35 : 0.1;
+          const sobe = tipo === 0 ? (f % 3 === 0 ? -1.15 : f % 3 === 1 ? -0.6 : -0.1) : f % 2 ? -0.35 : 0.1;
           o.position.set(x, y + h - (tipo === 0 ? (f % 3) * 0.12 : 0), z);
           o.rotation.set(sobe, a, 0, "YXZ");
-          o.scale.setScalar(tipo === 0 ? 1.05 : 1);
+          o.scale.setScalar(tipo === 0 ? 0.85 : 1);
           o.updateMatrix();
           refs[tipo].current!.setMatrixAt(i * FOLHAS + f, o.matrix);
           refs[tipo].current!.setColorAt(i * FOLHAS + f, cor.set(tipo === 0 ? (f % 2 ? "#7f9f63" : "#8aa96d") : f % 3 ? "#5f9440" : "#7aa257"));

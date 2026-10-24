@@ -862,7 +862,12 @@ def chao(M):
     # platô do forte (a leste da Floriano Peixoto), com o embasamento cinza para a rua e a muralha caiada sobre a avenida
     F = Peca("Chao_Plato_Forte")
     LIM = RAIO - 0.15           # o platô vai até a borda: o quartel é cortado como numa maquete
-    p = placa(F, R["forte"], Z_FORTE, M["calcada"], Z_AV, M["corte"], r=LIM)
+    p = placa(F, R["forte"], Z_FORTE, M["calcada"], Z_AV, M["caiado"], r=LIM)
+    # cordão de pedra no alto do corte caiado (a muralha do forte vista da borda)
+    for a, b in zip(p, p[1:] + p[:1]):
+        if abs(math.hypot(*a) - LIM) < 0.05 and abs(math.hypot(*b) - LIM) < 0.05:
+            ka, kb = 1 + 0.08 / LIM, 1 + 0.08 / LIM
+            F.poli([(a[0] * ka, a[1] * ka, Z_FORTE - 0.16), (b[0] * kb, b[1] * kb, Z_FORTE - 0.16), (b[0] * kb, b[1] * kb, Z_FORTE + 0.02), (a[0] * ka, a[1] * ka, Z_FORTE + 0.02)], M["cordao"], para=(a[0] + b[0], a[1] + b[1], 0))
     ny = REG["borda_norte"][-1][1]
     for tr in recortar_linha([(27.0, -45.0), (27.0, ny)], LIM):
         parede_linha(F, tr, Z_RUA, Z_FORTE, M["base"], -1)          # embasamento cinza para a Floriano (oeste)
@@ -1488,9 +1493,10 @@ def santa_casa(M):
             for v0 in (0.45, 2.05):
                 q = [(u - 0.24, v0), (u + 0.24, v0), (u + 0.24, v0 + 1.0), (u - 0.24, v0 + 1.0)]
                 P.poli([F.p(xx, yy, 0.015) for xx, yy in q], M["esquadrias"], [uv_reg("B", (xx - u + 0.24) / 0.48, (yy - v0) / 1.0) for xx, yy in q], para=tuple(F.n))
-    anel_friso(P, p, z, z + 0.3, 0.04, M["base"])
-    anel_friso(P, p, z + 1.78, z + 1.9, 0.05, M["creme"])
-    anel_friso(P, p, z + H - 0.1, z + H + 0.3, 0.1, M["creme"])
+    # frisos no mesmo material das paredes (a cor vem da tinta nas cores de vértice): uma malha a menos por material
+    anel_friso(P, p, z, z + 0.3, 0.04, M["casario"])
+    anel_friso(P, p, z + 1.78, z + 1.9, 0.05, M["casario"])
+    anel_friso(P, p, z + H - 0.1, z + H + 0.3, 0.1, M["casario"])
     po = offset_poli(p, -0.15)
     for i in range(4):
         j = (i + 1) % 4
@@ -1673,7 +1679,7 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
     arvores = []    # x, y, z, raio da copa, altura do tronco, tipo (0 redonda, 1 larga, 2 Benjamin)
     palmeiras = []  # x, y, z, altura, giro, tipo (0 carnaúba, 1 macaúba)
     # protagonistas não recebem árvore em cima
-    protegidos = [(FONTE, R_FONTE_ANEL[1] + 0.6), (BAOBA, 5.0)] + [((x, y), 0.9) for x, y, _, _ in pos_estatuas] + [((x, y), 0.7) for x, y, _ in pos_bustos]
+    protegidos = [(FONTE, R_FONTE_ANEL[1] + 2.2), (BAOBA, 5.0)]     # clareira em volta da fonte e do baobá + [((x, y), 0.9) for x, y, _, _ in pos_estatuas] + [((x, y), 0.7) for x, y, _ in pos_bustos]
     protegidos += [(quiosque[0], quiosque[1] + 0.9)]
 
     def perto_protegido(x, y, r):
@@ -1698,7 +1704,7 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
                 d = math.hypot(cx - q[0], cy - q[1])
                 q = (q[0] + (cx - q[0]) / d * 1.2, q[1] + (cy - q[1]) / d * 1.2)
             tipo = TOMBADAS.get(esp, 0)
-            r = {0: rnd.uniform(2.0, 2.5), 1: rnd.uniform(2.5, 2.9), 2: 3.3}[tipo] if esp else rnd.uniform(1.75, 2.35)
+            r = {0: rnd.uniform(2.4, 2.9), 1: rnd.uniform(2.8, 3.2), 2: 3.7}[tipo] if esp else rnd.uniform(2.1, 2.7)
             h = rnd.uniform(3.2, 4.0) if tipo != 2 else 3.0
             q = empurrar(*q, 0.35)
             if perto_protegido(q[0], q[1], r):
@@ -1715,10 +1721,10 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
         x, y = rnd.uniform(-24, 24), rnd.uniform(-19, 10)
         if not ponto_no_poligono((x, y), dentro):
             continue
-        r = rnd.uniform(1.7, 2.3)
+        r = rnd.uniform(2.0, 2.6)
         if not longe_dos_caminhos(x, y, 0.35) or perto_protegido(x, y, r):
             continue
-        if any(math.hypot(x - a[0], y - a[1]) < 0.95 * (r + a[3]) for a in arvores if a[2] == Z_PRACA):
+        if any(math.hypot(x - a[0], y - a[1]) < 0.85 * (r + a[3]) for a in arvores if a[2] == Z_PRACA):
             continue
         if dist_borda((x, y), REG["borda_norte"][1:4], False) < 1.6:
             continue        # deixa a Caio Prado aberta para a vista
@@ -1728,7 +1734,7 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
     # carnaúbas (obra de 2020: placas e carnaúbas em homenagem aos revolucionários): fileira junto ao gradil sul
     sul = TT(GRADIL_REAL)[2:5]
     linha = offset_linha(sul, -2.5)
-    for s in (30.0, 32.6, 35.2, 37.8):
+    for s in (37.0, 39.4, 41.8, 44.2):
         x, y, a = no_comprimento(linha, s)
         if longe_dos_caminhos(x, y, 0.3) and not perto_protegido(x, y, 0.6):
             palmeiras.append((x, y, Z_PRACA, rnd.uniform(5.2, 6.0), rnd.uniform(0, 6.28), 0))
