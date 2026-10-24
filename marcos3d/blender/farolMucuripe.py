@@ -1051,10 +1051,13 @@ def casario(M, casas_osm, ruas, eixo_av, recinto_m):
     def tenta(mx, my, w, d, ang, alt):
         cs = cantos(mx, my, w, d, ang)
         if any(math.hypot(*p) > RAIO - 0.5 for p in cs) or any(dist_mar(*p) > D_AREIA - 0.2 for p in cs):
+            motivo["f_disco"] = motivo.get("f_disco", 0) + 1
             return False
         if not all(livre(p[0], p[1]) for p in cs + [(mx, my)]):
+            motivo["f_res"] = motivo.get("f_res", 0) + 1
             return False
         if any(sobrepoe(cs, c["cantos"]) for c in escolhidas):
+            motivo["f_viz"] = motivo.get("f_viz", 0) + 1
             return False
         escolhidas.append({"c": (mx, my), "L": w, "W": d, "ang": ang, "h": alt, "cantos": cs})
         return True
@@ -1081,7 +1084,7 @@ def casario(M, casas_osm, ruas, eixo_av, recinto_m):
                     c = va + t * (s + w / 2) + nl * (lado * off)
                     tenta(c.x, c.y, w, d, ang, alt)
                     s += w + rnd.choice((0.0, 0.0, 0.05, 0.6))
-    print(f"casas: {n_osm} do OSM e {len(escolhidas) - n_osm} completando as quadras")
+    print(f"casas: {n_osm} do OSM e {len(escolhidas) - n_osm} completando as quadras; {motivo}")
     if os.environ.get("FAROL_DEPURAR"):
         with open(os.environ["FAROL_DEPURAR"], "w") as fh:
             json.dump({"livre": [[p, f] for p, f in LIVRE], "casas": [c["cantos"] for c in escolhidas], "frentes": [[a, b] for a, b, _ in frentes]}, fh)
