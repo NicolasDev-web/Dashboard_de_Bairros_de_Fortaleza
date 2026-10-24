@@ -838,6 +838,12 @@ def chao(M):
     ys = [9.0 + (19.9 - 9.0) * k / 10 for k in range(11)]
     for ya, yb in zip(ys, ys[1:]):
         quad = [(x0, ya, zs(ya) + 0.012), (x1, ya, zs(ya) + 0.012), (x1, yb, zs(yb) + 0.012), (x0, yb, zs(yb) + 0.012)]
+        if max(math.hypot(q_[0], q_[1]) for q_ in quad) > RAIO - 0.1:
+            quad = recortar_3d(quad, RAIO - 0.1)
+            if len(quad) < 3:
+                continue
+            Rm.poli(quad, M["pedra"], para=(0, 0, 1))
+            continue
         Rm.poli(quad, M["pedra"], para=(0, 0, 1))
         # leste: 2º plano (até v = 18) e avenida depois; oeste: alto da colina (até 15,5) e avenida depois
         for x, lado in ((x1, 1), (x0, -1)):
@@ -856,7 +862,7 @@ def chao(M):
     # platô do forte (a leste da Floriano Peixoto), com o embasamento cinza para a rua e a muralha caiada sobre a avenida
     F = Peca("Chao_Plato_Forte")
     LIM = RAIO - 0.15           # o platô vai até a borda: o quartel é cortado como numa maquete
-    p = placa(F, R["forte"], Z_FORTE, M["calcada"], Z_AV, M["caiado"], r=LIM)
+    p = placa(F, R["forte"], Z_FORTE, M["calcada"], Z_AV, M["corte"], r=LIM)
     ny = REG["borda_norte"][-1][1]
     for tr in recortar_linha([(27.0, -45.0), (27.0, ny)], LIM):
         parede_linha(F, tr, Z_RUA, Z_FORTE, M["base"], -1)          # embasamento cinza para a Floriano (oeste)
@@ -1122,8 +1128,8 @@ def baoba(M):
     cx, cy = BAOBA
     z = Z_PRACA
     # tronco: base larga com raízes, barriga, afina até a forquilha
-    perfil = [(0.0, -0.05), (1.32, -0.05), (1.3, 0.12), (1.18, 0.35), (1.15, 0.9), (1.18, 1.6), (1.12, 2.3), (0.98, 3.0),
-              (0.82, 3.6), (0.7, 4.0), (0.62, 4.3), (0.0, 4.5)]
+    perfil = [(0.0, -0.05), (1.55, -0.05), (1.5, 0.15), (1.38, 0.4), (1.36, 1.0), (1.4, 1.8), (1.33, 2.6), (1.17, 3.4),
+              (0.96, 4.1), (0.8, 4.6), (0.7, 4.9), (0.0, 5.1)]
     bm = bm_torno(perfil, 18)
     # irregularidade: gomos verticais leves (casca do baobá) e achatamento
     rnd = random.Random(1910)
@@ -1137,11 +1143,11 @@ def baoba(M):
     pontas = []
     for i in range(6):
         a = i * math.pi / 3 + rnd.uniform(-0.25, 0.25)
-        inc = rnd.uniform(0.35, 0.6)                    # elevação do galho
-        L = rnd.uniform(2.3, 3.0)
-        o = (cx + math.cos(a) * 0.35, cy + math.sin(a) * 0.35, z + 4.0 + rnd.uniform(-0.15, 0.2))
+        inc = rnd.uniform(0.3, 0.55)                    # elevação do galho
+        L = rnd.uniform(2.7, 3.4)
+        o = (cx + math.cos(a) * 0.4, cy + math.sin(a) * 0.4, z + 4.5 + rnd.uniform(-0.15, 0.2))
         f = (o[0] + math.cos(a) * L * math.cos(inc), o[1] + math.sin(a) * L * math.cos(inc), o[2] + L * math.sin(inc))
-        P.juntar(bm_cone_entre(o, f, 0.36, 0.17, 7), M["tronco_baoba"], liso=True)
+        P.juntar(bm_cone_entre(o, f, 0.42, 0.2, 7), M["tronco_baoba"], liso=True)
         for s in (-1, 1):
             a2 = a + s * rnd.uniform(0.35, 0.7)
             L2 = rnd.uniform(1.0, 1.5)
@@ -1152,9 +1158,9 @@ def baoba(M):
         pontas.append(f)
     # tufos ralos de folhas (copa aberta, deixa ver os galhos)
     for i, p in enumerate(pontas):
-        r = 0.75 if i % 3 == 2 else rnd.uniform(0.85, 1.15)
+        r = 0.55 if i % 3 == 2 else rnd.uniform(0.62, 0.85)
         bm = bm_icosfera(1.0, 1)
-        bm.transform(Matrix.Diagonal((r * 1.15, r, r * 0.6, 1)))
+        bm.transform(Matrix.Diagonal((r * 1.2, r, r * 0.55, 1)))
         P.juntar(bm, M["copa_baoba"], M_em(p[0], p[1], p[2] + 0.25, rnd.uniform(0, 6.28)))
     reservar_circulo(BAOBA, 1.6, 0.4)
     return P.criar(), pontas
@@ -1221,7 +1227,7 @@ def estatuas(M, pos):
     P = Peca("Estatuas_Marmore")
     for x, y, giro, var in pos:
         zt = pedestal(P, M, x, y, Z_PRACA, giro)
-        figura(P, M["marmore"], x, y, zt, giro, var)
+        figura(P, M["marmore"], x, y, zt, giro, var, 1.3)
         reservar_circulo((x, y), 0.55, 0.25)
     return P.criar()
 
@@ -1405,109 +1411,89 @@ def recortar_3d(pts3, r):
 def quartel(M):
     """
     A beira do quartel do Comando da 10ª Região Militar (Forte de N. S. da Assunção), do outro lado da Floriano Peixoto:
-    a fachada oeste da ala que encosta no Passeio, com as mesmas cores e janelas em arco do modelo do Forte (rosa-antigo,
-    cordão e cimalha creme, folhas verdes, telhado cerâmico). O disco corta a ala no meio do telhado, como numa maquete.
+    a ala que encosta no Passeio, com as mesmas cores e janelas em arco do modelo do Forte (rosa-antigo, cordão e cimalha
+    creme, folhas verdes, telhado cerâmico). Para caber inteira no disco, a ala vai do canto noroeste real (v = 10) até
+    v = −12,4 e fecha em quatro águas; a face leste é a do pátio interno.
     """
     P = Peca("Quartel_Forte")
     Rt = Peca("Quartel_Forte_Telhado")
     q = REG["quartel_oeste"]
-    W = q[0][0] + 0.05                          # face oeste (u ≈ 27,6)
-    S, N = q[0][1], q[1][1]
-    E = 31.7                                    # face do pátio interno (relação 15829081)
+    W, E = q[0][0] + 0.05, 30.7
+    S, N = -12.4, q[1][1]
     H_PAV, H = 2.45, 5.0
     zb = Z_FORTE
-    lim = RAIO - 0.15
-    S = max(S, -math.sqrt(lim * lim - (W - 0.3) ** 2) + 0.05)
-    # parede oeste (rosa) com frisos, pilastras e janelas em arco nos dois pavimentos
-    P.poli([(W, S, zb), (W, N, zb), (W, N, zb + H), (W, S, zb + H)], M["rosa"], para=(-1, 0, 0))
-    F = Fachada((W, N), (W, S), zb)             # olhando do Passeio (de oeste), a esquerda é o sul
-    for v0, v1, av, m in ((0.0, 0.38, 0.05, "base"), (H_PAV - 0.02, H_PAV + 0.14, 0.07, "creme"), (H - 0.32, H, 0.13, "creme")):
-        P.poli([F.p(0, v0, av), F.p(F.L, v0, av), F.p(F.L, v1, av), F.p(0, v1, av)], M[m], para=(-1, 0, 0))
-        P.poli([F.p(0, v1, 0), F.p(F.L, v1, 0), F.p(F.L, v1, av), F.p(0, v1, av)], M[m], para=(0, 0, 1))
-        P.poli([F.p(0, v0, 0), F.p(F.L, v0, 0), F.p(F.L, v0, av), F.p(0, v0, av)], M[m], para=(0, 0, -1))
-    nb = max(1, round(F.L / 1.42))
-    for k in range(nb):
-        u = (k + 0.5) * F.L / nb
-        janela(P, M, F, u, 0.55, 1.6, 0.27, "B")
-        janela(P, M, F, u, H_PAV + 0.3, H_PAV + 1.75, 0.27, "A")
-    P.juntar(bm_caixa(0.5, 0.5, H - 0.05), M["creme"], F.M(0.0, 0.0, 0.0))
-    # face norte (quina da ala noroeste), até o disco
-    for x0, x1 in ((W, min(E, math.sqrt(max(lim * lim - N * N, 0.0)))),):
-        P.poli([(x0, N, zb), (x1, N, zb), (x1, N, zb + H), (x0, N, zb + H)], M["rosa"], para=(0, 1, 0))
-        P.poli([(x0, N + 0.13, zb + H - 0.32), (x1, N + 0.13, zb + H - 0.32), (x1, N + 0.13, zb + H), (x0, N + 0.13, zb + H)], M["creme"], para=(0, 1, 0))
-        P.poli([(x0, N, zb + H), (x1, N, zb + H), (x1, N + 0.13, zb + H), (x0, N + 0.13, zb + H)], M["creme"], para=(0, 0, 1))
-        F2 = Fachada((x1, N), (x0, N), zb)
-        for k in range(max(1, int(F2.L / 1.42))):
-            u = (k + 0.5) * 1.42
-            if u < F2.L - 0.4:
-                janela(P, M, F2, u, 0.55, 1.6, 0.27, "B")
-                janela(P, M, F2, u, H_PAV + 0.3, H_PAV + 1.75, 0.27, "A")
-    # telhado em duas águas com espigão ao norte (beiral 0,28 m), recortado no disco; fechamentos no corte
-    zt, zr = zb + H, zb + H + 1.45
-    xr = (W + E) / 2
+    caixa = [(W, S), (E, S), (E, N), (W, N)]          # anti-horário
+    for i in range(4):
+        a, b = caixa[i], caixa[(i + 1) % 4]
+        n_ = direita(a, b)
+        P.poli([(a[0], a[1], zb), (b[0], b[1], zb), (b[0], b[1], zb + H), (a[0], a[1], zb + H)], M["rosa"], para=(n_[0], n_[1], 0))
+        F = Fachada(a, b, zb)
+        nb = max(1, round(F.L / 1.42))
+        for k in range(nb):
+            u = (k + 0.5) * F.L / nb
+            janela(P, M, F, u, 0.55, 1.6, 0.27, "B")
+            janela(P, M, F, u, H_PAV + 0.3, H_PAV + 1.75, 0.27, "A")
+        P.juntar(bm_caixa(0.5, 0.5, H - 0.05), M["creme"], F.M(0.0, 0.0, 0.0))
+    anel_friso(P, caixa, zb, zb + 0.38, 0.05, M["base"])
+    anel_friso(P, caixa, zb + H_PAV - 0.02, zb + H_PAV + 0.14, 0.07, M["creme"])
+    anel_friso(P, caixa, zb + H - 0.32, zb + H, 0.13, M["creme"])
+    # telhado de quatro águas com beiral, cumeeira e espigões em telha clara
     B = 0.28
-    aguas = [
-        [(W - B, S - 3.0, zt), (W - B, N + B, zt), (xr, N + B - (xr - W + B) * 0.0 - (E - W) / 2, zr), (xr, S - 3.0, zr)],
-        [(xr, S - 3.0, zr), (xr, N + B - (E - W) / 2, zr), (E + B, N + B, zt), (E + B, S - 3.0, zt)],
-        [(W - B, N + B, zt), (E + B, N + B, zt), (xr, N + B - (E - W) / 2, zr)],
-    ]
-
-    def uv_telha(p3):
-        return (p3[1] / 1.6, (p3[0] - xr) / 1.2)
-    for ag in aguas:
-        c = recortar_3d(ag, lim)
-        if len(c) >= 3:
-            Rt.poli(c, M["telha"], [uv_telha(p) for p in c], para=(0, 0, 1))
-            for a, b in zip(c, c[1:] + c[:1]):
-                if abs(math.hypot(a[0], a[1]) - lim) < 0.03 and abs(math.hypot(b[0], b[1]) - lim) < 0.03:
-                    P.poli([(a[0], a[1], zb), (b[0], b[1], zb), (b[0], b[1], b[2]), (a[0], a[1], a[2])], M["rosa"], para=(a[0] + b[0], a[1] + b[1], 0))
-    # testeira e forro do beiral oeste
-    Rt.poli([(W - B, S, zt - 0.12), (W - B, N + B, zt - 0.12), (W - B, N + B, zt + 0.01), (W - B, S, zt + 0.01)], M["telha"], para=(-1, 0, 0))
-    Rt.poli([(W, S, zt - 0.12), (W, N, zt - 0.12), (W - B, N + B, zt - 0.12), (W - B, S, zt - 0.12)], M["creme"], para=(0, 0, -1))
-    # cumeeira e espigões em telha clara
-    for a, b in (((xr, S - 3.0, zr + 0.03), (xr, N + B - (E - W) / 2, zr + 0.03)), ((W - B, N + B, zt + 0.03), (xr, N + B - (E - W) / 2, zr + 0.03)),
-                 ((E + B, N + B, zt + 0.03), (xr, N + B - (E - W) / 2, zr + 0.03))):
-        if math.hypot(a[0], a[1]) < lim and math.hypot(b[0], b[1]) < lim:
-            Rt.juntar(bm_barra(a, b, 0.07), M["cumeeira"])
+    e = offset_poli(caixa, B)
+    zt, zr = zb + H, zb + H + 1.45
+    meia = (E - W) / 2 + B
+    xr = (W + E) / 2
+    r1, r2 = (xr, e[0][1] + meia), (xr, e[2][1] - meia)
+    for i in range(4):
+        k = (i + 1) % 4
+        ra = r1 if e[i][1] < (S + N) / 2 else r2
+        rb = r1 if e[k][1] < (S + N) / 2 else r2
+        if ra == rb:
+            pts = [(e[i][0], e[i][1], zt), (e[k][0], e[k][1], zt), (ra[0], ra[1], zr)]
         else:
-            for tr in recortar_linha([(a[0], a[1]), (b[0], b[1])], lim - 0.05):
-                (x0, y0), (x1, y1) = tr[0], tr[-1]
-                L0 = math.hypot(b[0] - a[0], b[1] - a[1]) or 1
-                t0 = math.hypot(x0 - a[0], y0 - a[1]) / L0
-                t1 = math.hypot(x1 - a[0], y1 - a[1]) / L0
-                Rt.juntar(bm_barra((x0, y0, a[2] + (b[2] - a[2]) * t0), (x1, y1, a[2] + (b[2] - a[2]) * t1), 0.07), M["cumeeira"])
-    reservar([(W - 0.4, S - 3), (40, S - 3), (40, N + 0.6), (W - 0.4, N + 0.6)], 0.2)
+            pts = [(e[i][0], e[i][1], zt), (e[k][0], e[k][1], zt), (rb[0], rb[1], zr), (ra[0], ra[1], zr)]
+        Rt.poli(pts, M["telha"], [(p_[1] / 1.6 if abs(e[k][0] - e[i][0]) < 0.01 else p_[0] / 1.6, p_[2] / 0.75) for p_ in pts], para=(0, 0, 1))
+        n_ = direita(e[i], e[k])
+        Rt.poli([(e[i][0], e[i][1], zt - 0.12), (e[k][0], e[k][1], zt - 0.12), (e[k][0], e[k][1], zt + 0.01), (e[i][0], e[i][1], zt + 0.01)], M["telha"], para=(n_[0], n_[1], 0))
+        Rt.poli([(caixa[i][0], caixa[i][1], zt - 0.12), (caixa[k][0], caixa[k][1], zt - 0.12), (e[k][0], e[k][1], zt - 0.12), (e[i][0], e[i][1], zt - 0.12)], M["creme"], para=(0, 0, -1))
+        rr = r1 if e[i][1] < (S + N) / 2 else r2
+        Rt.juntar(bm_barra((e[i][0], e[i][1], zt + 0.03), (rr[0], rr[1], zr + 0.03), 0.06), M["cumeeira"])
+    Rt.juntar(bm_barra((r1[0], r1[1], zr + 0.03), (r2[0], r2[1], zr + 0.03), 0.07), M["cumeeira"])
+    reservar(caixa, 0.5)
     return P.criar(grade=(1.5, False)), Rt.criar()
 
 
 def santa_casa(M):
-    """Santa Casa de Misericórdia (relação 15829054), do outro lado da Barão do Rio Branco: volume claro neutro (sem foto)"""
+    """
+    Santa Casa de Misericórdia (relação 15829054), do outro lado da Barão do Rio Branco: sem foto, fica um volume claro
+    neutro de dois pavimentos, com janelas e platibanda, recortado no comprimento para caber inteiro no disco.
+    """
     P = Peca("Santa_Casa")
     f = TT(SANTA_CASA_REAL)
-    x = min(p[0] for p in f) - 0.1
-    poli = ccw([(x, -30.0), (x, 30.0), (-45.0, 30.0), (-45.0, -30.0)])
-    p = recortar_no_disco(poli, R_PLATO - 0.2)
-    H = 3.7
+    x0 = min(p[0] for p in f) - 0.1
+    x1 = x0 - 2.1
+    y0 = math.sqrt((R_PLATO - 0.15) ** 2 - x1 * x1)
+    p = [(x0, -y0), (x0, y0), (x1, y0), (x1, -y0)]
+    H = 3.5
     z = Z_RUA
     P.poli([(a, b, z + H) for a, b in p], M["laje"], para=(0, 0, 1))
-    for i in range(len(p)):
-        a, b = p[i], p[(i + 1) % len(p)]
+    for i in range(4):
+        a, b = p[i], p[(i + 1) % 4]
         n_ = direita(a, b)
         P.poli([(a[0], a[1], z), (b[0], b[1], z), (b[0], b[1], z + H + 0.3), (a[0], a[1], z + H + 0.3)], M["casario"], para=(n_[0], n_[1], 0))
-        if abs(a[0] - x) < 0.01 and abs(b[0] - x) < 0.01:
-            F = Fachada(a, b, z)
-            nb = max(1, round(F.L / 1.15))
-            for k in range(nb):
-                u = (k + 0.5) * F.L / nb
-                for v0 in (0.45, 2.15):
-                    q = [(u - 0.24, v0), (u + 0.24, v0), (u + 0.24, v0 + 1.05), (u - 0.24, v0 + 1.05)]
-                    P.poli([F.p(xx, yy, 0.015) for xx, yy in q], M["esquadrias"], [uv_reg("B", (xx - u + 0.24) / 0.48, (yy - v0) / 1.05) for xx, yy in q], para=tuple(F.n))
-            for v0, v1, av in ((0.0, 0.3, 0.04), (1.8, 1.92, 0.05), (H - 0.1, H + 0.3, 0.1)):
-                P.poli([F.p(0, v0, av), F.p(F.L, v0, av), F.p(F.L, v1, av), F.p(0, v1, av)], M["creme" if v0 > 0 else "base"], para=tuple(F.n))
-                P.poli([F.p(0, v1, 0), F.p(F.L, v1, 0), F.p(F.L, v1, av), F.p(0, v1, av)], M["creme" if v0 > 0 else "base"], para=(0, 0, 1))
+        F = Fachada(a, b, z)
+        nb = max(1, round(F.L / 1.15))
+        for k in range(nb):
+            u = (k + 0.5) * F.L / nb
+            for v0 in (0.45, 2.05):
+                q = [(u - 0.24, v0), (u + 0.24, v0), (u + 0.24, v0 + 1.0), (u - 0.24, v0 + 1.0)]
+                P.poli([F.p(xx, yy, 0.015) for xx, yy in q], M["esquadrias"], [uv_reg("B", (xx - u + 0.24) / 0.48, (yy - v0) / 1.0) for xx, yy in q], para=tuple(F.n))
+    anel_friso(P, p, z, z + 0.3, 0.04, M["base"])
+    anel_friso(P, p, z + 1.78, z + 1.9, 0.05, M["creme"])
+    anel_friso(P, p, z + H - 0.1, z + H + 0.3, 0.1, M["creme"])
     po = offset_poli(p, -0.15)
-    for i in range(len(p)):
-        j = (i + 1) % len(p)
+    for i in range(4):
+        j = (i + 1) % 4
         P.poli([(p[i][0], p[i][1], z + H + 0.3), (p[j][0], p[j][1], z + H + 0.3), (po[j][0], po[j][1], z + H + 0.3), (po[i][0], po[i][1], z + H + 0.3)], M["casario"], para=(0, 0, 1))
     CORES.append((0, len(P.bm.faces), "#ece4d2"))
     reservar(p, 0.3)
@@ -1687,7 +1673,7 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
     arvores = []    # x, y, z, raio da copa, altura do tronco, tipo (0 redonda, 1 larga, 2 Benjamin)
     palmeiras = []  # x, y, z, altura, giro, tipo (0 carnaúba, 1 macaúba)
     # protagonistas não recebem árvore em cima
-    protegidos = [(FONTE, R_FONTE_ANEL[1] + 0.6), (BAOBA, 3.2)] + [((x, y), 0.9) for x, y, _, _ in pos_estatuas] + [((x, y), 0.7) for x, y, _ in pos_bustos]
+    protegidos = [(FONTE, R_FONTE_ANEL[1] + 0.6), (BAOBA, 5.0)] + [((x, y), 0.9) for x, y, _, _ in pos_estatuas] + [((x, y), 0.7) for x, y, _ in pos_bustos]
     protegidos += [(quiosque[0], quiosque[1] + 0.9)]
 
     def perto_protegido(x, y, r):
@@ -1713,7 +1699,7 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
                 q = (q[0] + (cx - q[0]) / d * 1.2, q[1] + (cy - q[1]) / d * 1.2)
             tipo = TOMBADAS.get(esp, 0)
             r = {0: rnd.uniform(2.0, 2.5), 1: rnd.uniform(2.5, 2.9), 2: 3.3}[tipo] if esp else rnd.uniform(1.75, 2.35)
-            h = rnd.uniform(3.6, 4.6) if tipo != 2 else 3.4
+            h = rnd.uniform(3.2, 4.0) if tipo != 2 else 3.0
             q = empurrar(*q, 0.35)
             if perto_protegido(q[0], q[1], r):
                 continue
@@ -1736,8 +1722,8 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
             continue
         if dist_borda((x, y), REG["borda_norte"][1:4], False) < 1.6:
             continue        # deixa a Caio Prado aberta para a vista
-        arvores.append((x, y, Z_PRACA, r, rnd.uniform(3.6, 4.6), rnd.choice((0, 0, 1))))
-        if sum(1 for a in arvores if a[2] == Z_PRACA) >= 40:
+        arvores.append((x, y, Z_PRACA, r, rnd.uniform(3.2, 4.0), rnd.choice((0, 0, 1))))
+        if sum(1 for a in arvores if a[2] == Z_PRACA) >= 33:
             break
     # carnaúbas (obra de 2020: placas e carnaúbas em homenagem aos revolucionários): fileira junto ao gradil sul
     sul = TT(GRADIL_REAL)[2:5]
@@ -1806,8 +1792,8 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
             break
 
     carros = []
-    for nome, z, passo, desl in (("joao_moreira", Z_RUA, (3.0, 6.0), (-0.55, 0.55)), ("ligacao", Z_AV, (3.0, 6.5), (-0.55, 0.55)),
-                                 ("principal", Z_AV, (2.8, 6.0), (-0.55, 0.55)), ("norte", Z_AV, (3.2, 7.0), (-0.55, 0.55)),
+    for nome, z, passo, desl in (("joao_moreira", Z_RUA, (3.0, 6.0), (-0.55, 0.55)), ("ligacao", Z_AV, (4.5, 9.0), (-0.55, 0.55)),
+                                 ("principal", Z_AV, (4.0, 8.5), (-0.55, 0.55)), ("norte", Z_AV, (4.5, 9.5), (-0.55, 0.55)),
                                  ("barao", None, (3.5, 6.5), (-0.5, 0.5))):
         eixo = traj[nome]
         for d_ in desl:
@@ -2006,8 +1992,6 @@ def principal():
     sul = ccw([(-45, -45), (45, -45), (45, -21.5), (-45, -21.5)])
     predios_osm(M, "Casario_Vizinho", None, sul, Z_RUA, 2.4, tons)
     predios_osm(M, "Predios_Exercito", set(EXERCITO), REG["segundo"], Z_2P, 1.5, ["#eeece4", "#e6e3d8"], minimo=31.0)
-    norte = ccw([(-45, 29.5), (45, 29.5), (45, 45), (-45, 45)])
-    predios_osm(M, "Predios_Avenida", None, norte, Z_AV, 2.4, ["#d8cbb0", "#bfd3c8"], recorte=RAIO - 0.3, minimo=33.0)
     quadra_esportes(M)
     arvores, palmeiras, postes, bancos, mesas, carros, pessoas = layout(traj, cafe_base, quiosque, pe, pb, pontas)
     print(f"árvores {len(arvores)}, palmeiras {len(palmeiras)}, postes {len(postes)}, bancos {len(bancos)}, mesas {len(mesas)}, carros {len(carros)}, pessoas {len(pessoas)}")

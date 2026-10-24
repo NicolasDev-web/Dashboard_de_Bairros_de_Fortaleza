@@ -204,7 +204,7 @@ function Arvores({ fab }: { fab: Fabrica }) {
       const lista = tons[tipo] ?? tons[0];
       copa.current!.setColorAt(i, cor.set(lista[Math.floor(r() * lista.length)]));
       o.position.set(x, y, z);
-      const grosso = tipo === 2 ? 2.1 : raio > 2.3 ? 1.5 : 1.15;
+      const grosso = tipo === 2 ? 2.7 : raio > 2.3 ? 2.0 : 1.6;
       o.scale.set(grosso, h + raio * achatar * 0.4, grosso);
       o.rotation.set(0, 0, 0);
       o.updateMatrix();
@@ -231,7 +231,7 @@ function geometriaFolha(tipo: number) {
   const idx: number[] = [];
   if (tipo === 0) {
     // leque: pecíolo curto e lâmina em semicírculo pregueado
-    const n = 9, R = 1.05, l0 = 0.35;
+    const n = 9, R = 0.78, l0 = 0.22;
     pos.push(0, 0, 0);
     for (let i = 0; i <= n; i++) {
       const a = -Math.PI * 0.42 + (Math.PI * 0.84 * i) / n;
