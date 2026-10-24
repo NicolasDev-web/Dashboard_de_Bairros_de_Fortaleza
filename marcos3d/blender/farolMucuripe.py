@@ -1082,6 +1082,9 @@ def casario(M, casas_osm, ruas, eixo_av, recinto_m):
                     tenta(c.x, c.y, w, d, ang, alt)
                     s += w + rnd.choice((0.0, 0.0, 0.05, 0.6))
     print(f"casas: {n_osm} do OSM e {len(escolhidas) - n_osm} completando as quadras")
+    if os.environ.get("FAROL_DEPURAR"):
+        with open(os.environ["FAROL_DEPURAR"], "w") as fh:
+            json.dump({"livre": [[p, f] for p, f in LIVRE], "casas": [c["cantos"] for c in escolhidas], "frentes": [[a, b] for a, b, _ in frentes]}, fh)
 
     P = Peca("Casario_Serviluz")
     for i, c in enumerate(escolhidas):
