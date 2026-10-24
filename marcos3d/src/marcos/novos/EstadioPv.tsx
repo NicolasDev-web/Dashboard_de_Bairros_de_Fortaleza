@@ -1,132 +1,334 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import type { Fabrica } from "../../Cena";
-import { caixaChanfrada } from "../../util/geometria";
+import { aleatorio, texturaManchada } from "../../util/geometria";
+import layout from "../../../blender/saida/estadioPv-layout.json";
 
 /**
- * Estádio Presidente Vargas, no Benfica (pesquisa/estadioPv/ficha.md).
- * Planta OSM way/179073475, 190,5 × 254,7 m: K ≈ 0,20 e eixo longo a 167° do norte.
- * Miniatura estilizada: 42 × 50 m, base em y=0, norte em −z.
+ * Estádio Presidente Vargas, o "PV" (Benfica; −3,7459909, −38,5368948), inaugurado em 14/09/1941.
+ * As peças estáticas vêm do Blender (`blender/estadioPv.py` → `blender/saida/estadioPv-pecas.glb`), com a oclusão de
+ * ambiente assada nas cores de vértice e numa imagem do chão:
+ * - o anel de arquibancadas em dois lances com o corredor dos vomitórios, o vidro na divisa com o campo (reforma da Copa)
+ *   e as cadeiras azuis da tribuna;
+ * - a tribuna coberta do lado oeste: cobertura metálica em arco, cabines de rádio, portal, elevadores e rampas;
+ * - as quatro torres de iluminação treliçadas;
+ * - a fachada externa com os portões dos setores, as bilheterias, o gradil do lote, as quatro ruas (a Rua Marechal
+ *   Deodoro a oeste) e o casario baixo do Benfica.
+ * Aqui entram o gramado com as marcações desenhado em canvas, os pisos, as cores das telhas e o que se repete (árvores,
+ * gente, carros e as barras do gradil). Posições em `blender/saida/estadioPv-layout.json`. Metros, base em y = 0, no
+ * rumo real (eixo longo 13° a oeste do norte). Fontes em pesquisa/estadioPv/ficha.md.
  */
-const GIRO = THREE.MathUtils.degToRad(13);
 
-/** Altura da etiqueta: topo das torres de iluminação + margem. */
-export const ALTURA_ETIQUETA = 17;
+/** Altura da etiqueta com o nome no tour (topo dos painéis das torres de iluminação a 20,4 m, + ~1,5 m) */
+export const ALTURA_ETIQUETA = 22;
 
-type Item = [x: number, y: number, z: number, sx?: number, sy?: number, sz?: number, giro?: number];
+const BASE = "/blender/saida/";
 
-/** Instancia peças repetidas do estádio com transformação determinística. */
-function Instancias({ nome, geo, mat, itens, sombra = true }: { nome: string; geo: THREE.BufferGeometry; mat: THREE.Material; itens: Item[]; sombra?: boolean }) {
-  const ref = useRef<THREE.InstancedMesh>(null);
-  useLayoutEffect(() => {
-    const m = ref.current!, o = new THREE.Object3D();
-    itens.forEach(([x, y, z, sx = 1, sy = 1, sz = 1, giro = 0], i) => {
-      o.position.set(x, y, z); o.rotation.set(0, giro, 0); o.scale.set(sx, sy, sz); o.updateMatrix();
-      m.setMatrixAt(i, o.matrix);
+/** Cor-base dos materiais com textura (o exportador do Blender não leva a cor-base de material com textura) */
+const COR_TEXTURADO: Record<string, string> = {
+  Mat_Telha_Barro: "#b35b39",
+  Mat_Cobertura_Aluminio: "#d3d8da",
+  Mat_Esquadrias: "#ffffff",
+};
+
+type Arvore = [x: number, yBase: number, z: number, r: number];
+type Pessoa = [x: number, y: number, z: number, giro: number, cor: number];
+type Carro = [x: number, z: number, giro: number, cor: number];
+type Barra = [x: number, z: number, yBase: number, h: number];
+const L = layout as { arvores: Arvore[]; pessoas: Pessoa[]; carros: Carro[]; barras: Barra[]; chao: { lado: number; z0: number; ze: number } };
+const ZE = L.chao.ze;
+
+/** Área coberta pelo canvas do gramado (a borda do campo no Blender: 2 × 9,7 m por 2 × 13 m) */
+const CAMPO = { w: 19.4, h: 26 };
+const K_CAMPO = 0.2; // campo oficial de 105 × 68 m
+
+/** Gramado com faixas de corte, linhas brancas oficiais, áreas, meias-luas e marcas do pênalti (canvas 388 × 520) */
+function texturaGramado() {
+  const px = 20;
+  const cv = document.createElement("canvas");
+  cv.width = Math.round(CAMPO.w * px);
+  cv.height = Math.round(CAMPO.h * px);
+  const g = cv.getContext("2d")!;
+  const m = (metros: number) => metros * K_CAMPO * px;
+  const larg = m(68), comp = m(105);
+  const x0 = (cv.width - larg) / 2, y0 = (cv.height - comp) / 2;
+  g.fillStyle = "#3f873a";
+  g.fillRect(0, 0, cv.width, cv.height);
+  // faixas de corte atravessando o campo, continuando um pouco além das linhas
+  const faixas = 14;
+  for (let i = 0; i < faixas; i++) {
+    g.fillStyle = i % 2 ? "#4c9a43" : "#438e3c";
+    g.fillRect(x0 - m(3), y0 + (i * comp) / faixas, larg + m(6), comp / faixas + 0.5);
+  }
+  g.strokeStyle = "#f3f5ef";
+  g.lineWidth = 2.6;
+  g.strokeRect(x0, y0, larg, comp);
+  g.beginPath(); g.moveTo(x0, y0 + comp / 2); g.lineTo(x0 + larg, y0 + comp / 2); g.stroke();
+  g.beginPath(); g.arc(cv.width / 2, cv.height / 2, m(9.15), 0, Math.PI * 2); g.stroke();
+  g.fillStyle = "#f3f5ef";
+  g.beginPath(); g.arc(cv.width / 2, cv.height / 2, 2.2, 0, Math.PI * 2); g.fill();
+  for (const lado of [0, 1]) {
+    const yl = lado ? y0 + comp : y0;
+    const s = lado ? -1 : 1;
+    g.strokeRect(cv.width / 2 - m(20.16), lado ? yl - m(16.5) : yl, m(40.32), m(16.5));
+    g.strokeRect(cv.width / 2 - m(9.16), lado ? yl - m(5.5) : yl, m(18.32), m(5.5));
+    const ang = Math.acos(5.5 / 9.15);
+    g.beginPath();
+    if (lado) g.arc(cv.width / 2, yl - m(11), m(9.15), -Math.PI / 2 - ang, -Math.PI / 2 + ang);
+    else g.arc(cv.width / 2, yl + m(11), m(9.15), Math.PI / 2 - ang, Math.PI / 2 + ang);
+    g.stroke();
+    g.beginPath(); g.arc(cv.width / 2, yl + s * m(11), 2.2, 0, Math.PI * 2); g.fill();
+    // arcos de canto
+    for (const xc of [x0, x0 + larg]) {
+      g.beginPath(); g.arc(xc, yl, m(1), 0, Math.PI * 2); g.stroke();
+    }
+  }
+  const t = new THREE.CanvasTexture(cv);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.flipY = false; // UV do glTF: v = 0 no alto da imagem
+  t.anisotropy = 4;
+  return t;
+}
+
+/** Piso em placas com juntas (esplanada e calçadas); em cinza claro, a cor vem de cada material do chão */
+function texturaPiso(semente: number, quadros: number) {
+  const n = 128;
+  const cv = document.createElement("canvas");
+  cv.width = cv.height = n;
+  const g = cv.getContext("2d")!;
+  g.fillStyle = "#f4f4f4";
+  g.fillRect(0, 0, n, n);
+  const r = aleatorio(semente);
+  const q = n / quadros;
+  for (let i = 0; i < quadros; i++) for (let j = 0; j < quadros; j++) {
+    g.fillStyle = `rgba(0,0,0,${r() * 0.07})`;
+    g.fillRect(i * q, j * q, q, q);
+  }
+  g.strokeStyle = "rgba(0,0,0,0.24)";
+  g.lineWidth = quadros > 4 ? 1.5 : 2;
+  for (let i = 0; i <= quadros; i++) {
+    g.beginPath(); g.moveTo(i * q, 0); g.lineTo(i * q, n); g.stroke();
+    g.beginPath(); g.moveTo(0, i * q); g.lineTo(n, i * q); g.stroke();
+  }
+  const t = new THREE.CanvasTexture(cv);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
+
+/** Peças do Blender: sombras, nomes por material, gramado em canvas, cores das texturas, vidro, oclusão e pisos */
+function PecasBlender() {
+  const gltf = useLoader(GLTFLoader, `${BASE}estadioPv-pecas.glb`);
+  const ao = useLoader(THREE.TextureLoader, `${BASE}estadioPv-ao-chao.jpg`);
+  const extras = useMemo(() => {
+    const gramado = texturaGramado();
+    const piso = texturaPiso(41, 2);
+    piso.repeat.set(L.chao.lado / 2.4, L.chao.lado / 2.4);
+    const calcada = texturaPiso(19, 4);
+    calcada.repeat.set(L.chao.lado / 3, L.chao.lado / 3);
+    const asfalto = texturaManchada("#ffffff", 0.06, 23, 64);
+    asfalto.repeat.set(10, 10);
+    const grama = texturaManchada("#ffffff", 0.08, 11, 64);
+    grama.repeat.set(9, 9);
+    return { gramado, piso, calcada, asfalto, grama };
+  }, []);
+  useEffect(() => () => { Object.values(extras).forEach((x) => x.dispose()); }, [extras]);
+  const cena = useMemo(() => {
+    ao.flipY = false;
+    ao.colorSpace = THREE.NoColorSpace;
+    ao.userData.mimeType = "image/jpeg"; // o GLTFExporter regrava em JPEG em vez de PNG
+    ao.needsUpdate = true;
+    const raiz = gltf.scene.clone(true);
+    raiz.name = "Pecas_Estadio_PV";
+    const feitos = new Set<THREE.Material>();
+    const mapaChao: Record<string, THREE.Texture> = {
+      Mat_Chao_Rua: extras.asfalto, Mat_Chao_Piso: extras.piso, Mat_Chao_Calcada: extras.calcada, Mat_Chao_Grama: extras.grama,
+    };
+    raiz.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const mat = m.material as THREE.MeshStandardMaterial;
+      const pai = m.parent && m.parent !== raiz ? m.parent.name : m.name;
+      m.name = `${pai}_${mat.name.replace(/^Mat_/, "")}`;
+      const chao = mat.name.startsWith("Mat_Chao_");
+      m.castShadow = !chao && mat.name !== "Mat_Faixa_Viaria" && mat.name !== "Mat_Gramado_Campo";
+      m.receiveShadow = true;
+      if (feitos.has(mat)) return;
+      feitos.add(mat);
+      if (COR_TEXTURADO[mat.name]) mat.color.set(COR_TEXTURADO[mat.name]);
+      if (mat.name === "Mat_Gramado_Campo") {
+        mat.map = extras.gramado;
+        mat.color.set("#ffffff");
+      } else if (mat.name === "Mat_Vidro_Divisa") {
+        mat.transparent = true;
+        mat.opacity = 0.42;
+        mat.depthWrite = false;
+        mat.side = THREE.DoubleSide;
+      } else if (chao) {
+        mat.aoMap = ao;
+        mat.aoMapIntensity = 1;
+        mat.map = mapaChao[mat.name] ?? null;
+      }
+      mat.needsUpdate = true;
     });
-    m.instanceMatrix.needsUpdate = true;
-    m.computeBoundingSphere();
-  }, [itens]);
-  return <instancedMesh ref={ref} name={nome} args={[geo, mat, itens.length]} castShadow={sombra} receiveShadow />;
+    return raiz;
+  }, [gltf, ao, extras]);
+  return <primitive object={cena} />;
 }
 
-/** Plano horizontal em x/z, com a normal voltada para cima. */
-function plano(largura: number, fundo: number) {
-  const g = new THREE.PlaneGeometry(largura, fundo);
-  g.rotateX(-Math.PI / 2);
-  return g;
-}
-
-/** Recursos geométricos compartilhados pelas arquibancadas, acessos, gols e torres. */
-function useGeometrias() {
-  const g = useMemo(() => ({
-    chao: new THREE.CircleGeometry(32.6, 64),
-    campo: plano(24, 38),
-    faixaCampo: plano(24, 3.8),
-    linhaLonga: caixaChanfrada(0.10, 0.035, 38, 0.015),
-    linhaCurta: caixaChanfrada(24, 0.035, 0.10, 0.015),
-    degrauLateral: caixaChanfrada(1, 0.65, 1, 0.07),
-    degrauFundo: caixaChanfrada(1, 0.65, 1, 0.07),
-    muro: caixaChanfrada(1, 1, 1, 0.12),
-    acesso: caixaChanfrada(1, 1, 1, 0.08),
-    cabine: caixaChanfrada(5.2, 2.2, 2.4, 0.12),
-    coberturaCabine: caixaChanfrada(6, 0.22, 3.1, 0.08),
-    poste: new THREE.CylinderGeometry(0.16, 0.24, 1, 8),
-    travessa: caixaChanfrada(1, 0.11, 0.11, 0.03),
-    refletor: caixaChanfrada(0.65, 0.48, 0.22, 0.06),
-    placa: caixaChanfrada(5.4, 2.4, 0.22, 0.08),
-    arvoreTronco: new THREE.CylinderGeometry(0.12, 0.18, 1, 6),
-    arvoreCopa: new THREE.IcosahedronGeometry(1, 1),
+/** Oitis e outras árvores de copa densa nas calçadas, nos canteiros das cabeceiras e nos quintais */
+function Arvores({ fab }: { fab: Fabrica }) {
+  const copa = useRef<THREE.InstancedMesh>(null);
+  const tronco = useRef<THREE.InstancedMesh>(null);
+  const n = L.arvores.length;
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const r = aleatorio(41);
+    const tons = ["#2f5a2b", "#3d6b33", "#2a4f27", "#4c7a3a", "#355f2e", "#5a8541"];
+    L.arvores.forEach(([x, yb, z, raio], i) => {
+      o.position.set(x, yb + raio * 0.78, z);
+      o.scale.set(raio, raio * 0.82, raio * (0.9 + r() * 0.2));
+      o.rotation.set(0, r() * Math.PI * 2, 0);
+      o.updateMatrix();
+      copa.current!.setMatrixAt(i, o.matrix);
+      copa.current!.setColorAt(i, cor.set(tons[Math.floor(r() * tons.length)]));
+      o.position.set(x, ZE, z);
+      o.scale.set(1, yb - ZE + 0.4, 1);
+      o.rotation.set(0, 0, 0);
+      o.updateMatrix();
+      tronco.current!.setMatrixAt(i, o.matrix);
+    });
+    for (const m of [copa.current!, tronco.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const rec = useMemo(() => ({
+    tronco: new THREE.CylinderGeometry(0.11, 0.17, 1, 6).translate(0, 0.5, 0),
+    copa: new THREE.IcosahedronGeometry(1, 1),
+    mat: Object.assign(new THREE.MeshStandardMaterial({ roughness: 0.9, flatShading: true }), { name: "Mat_Copa_Arvore" }),
   }), []);
-  useEffect(() => () => Object.values(g).forEach((x) => x.dispose()), [g]);
-  return g;
-}
-
-/** Uma lateral da arquibancada, em cinco patamares crescentes para fora do campo. */
-function ArquibancadaLateral({ lado, geo, mat }: { lado: -1 | 1; geo: THREE.BufferGeometry; mat: THREE.Material }) {
-  const itens: Item[] = [];
-  for (let i = 0; i < 5; i++) itens.push([lado * (14.8 + i * 0.72), 0.35 + i * 0.56, 0, 1.35, (0.65 + i * 0.58) / 0.65, 38 - i * 0.55]);
-  return <Instancias nome={`Arquibancada_${lado < 0 ? "Oeste" : "Leste"}_Patamares`} geo={geo} mat={mat} itens={itens} />;
-}
-
-/** Uma cabeceira da arquibancada, com degraus fechando o anel. */
-function ArquibancadaFundo({ lado, geo, mat }: { lado: -1 | 1; geo: THREE.BufferGeometry; mat: THREE.Material }) {
-  const itens: Item[] = [];
-  for (let i = 0; i < 5; i++) itens.push([0, 0.35 + i * 0.56, lado * (20.1 + i * 0.72), 28.6 - i * 0.5, (0.65 + i * 0.58) / 0.65, 1.35]);
-  return <Instancias nome={`Arquibancada_${lado < 0 ? "Norte" : "Sul"}_Patamares`} geo={geo} mat={mat} itens={itens} />;
-}
-
-/** Torre de iluminação com poste, travessa e oito refletores. */
-function Torre({ x, z, geo, metal, luz, indice }: { x: number; z: number; geo: ReturnType<typeof useGeometrias>; metal: THREE.Material; luz: THREE.Material; indice: number }) {
-  const refletores: Item[] = [];
-  for (let c = -1.5; c <= 1.5; c += 1) for (let l = 0; l < 2; l++) refletores.push([x + c * 0.72, 13.1 + l * 0.62, z]);
+  useEffect(() => () => { Object.values(rec).forEach((x) => x.dispose()); }, [rec]);
   return (
     <>
-      <mesh name={`Torre_${indice}_Mastro`} geometry={geo.poste} material={metal} position={[x, 6.2, z]} scale={[1, 12.4, 1]} castShadow />
-      <mesh name={`Torre_${indice}_Travessa`} geometry={geo.travessa} material={metal} position={[x, 13.0, z]} scale={[5.8, 1, 1]} castShadow />
-      <Instancias nome={`Torre_${indice}_Refletores`} geo={geo.refletor} mat={luz} itens={refletores} />
+      <instancedMesh name="Arvores_Copas" ref={copa} args={[rec.copa, rec.mat, n]} castShadow receiveShadow />
+      <instancedMesh name="Arvores_Troncos" ref={tronco} args={[rec.tronco, undefined, n]} castShadow material={fab.cor("#6e5a45")} />
     </>
   );
 }
 
-/** Miniatura completa do PV: campo, arquibancadas, acessos, cabine e iluminação. */
-export function EstadioPv({ fab }: { fab: Fabrica }) {
-  const g = useGeometrias();
-  const concreto = fab.cor("#d8d4c9", 0.9), concretoEscuro = fab.cor("#8f948f", 0.92);
-  const azul = fab.cor("#24639a", 0.78), amarelo = fab.cor("#e3b93c", 0.78), laranja = fab.cor("#d96a32", 0.8);
-  const grama = fab.cor("#4f8e42", 0.96), gramaClara = fab.cor("#64a34e", 0.96), branco = fab.cor("#f4f2e8", 0.65);
-  const metal = useMemo(() => new THREE.MeshStandardMaterial({ name: "Mat_Metal_Torres", color: "#555d63", roughness: 0.48, metalness: 0.58 }), []);
-  const luz = useMemo(() => new THREE.MeshStandardMaterial({ name: "Mat_Refletores", color: "#f2efe0", roughness: 0.25, metalness: 0.25 }), []);
-  useEffect(() => () => { metal.dispose(); luz.dispose(); }, [metal, luz]);
-  const faixas: Item[] = Array.from({ length: 10 }, (_, i) => [0, 0.075, -17.1 + i * 3.8]);
-  const acessosLaterais: Item[] = [-13, -6.5, 0, 6.5, 13].flatMap((z) => [[-20.25, 0, z, 1.15, 2.4, 2.2], [20.25, 0, z, 1.15, 2.4, 2.2]] as Item[]);
-  const acessosFundos: Item[] = [-10, -3.3, 3.3, 10].flatMap((x) => [[x, 0, -24.25, 2.1, 2.4, 1.2], [x, 0, 24.25, 2.1, 2.4, 1.2]] as Item[]);
-  const arvores: Item[] = [[-26, 0, -8], [-25, 0, 6], [25, 0, -7], [26, 0, 8], [-14, 0, 26], [14, 0, -26]];
+/** Gente no portal, nos portões, nas filas das bilheterias e nas calçadas (~0,8 m: exagero para ler na escala do estádio) */
+function Pessoas({ fab }: { fab: Fabrica }) {
+  const corpo = useRef<THREE.InstancedMesh>(null);
+  const cabeca = useRef<THREE.InstancedMesh>(null);
+  const pernas = useRef<THREE.InstancedMesh>(null);
+  const rec = useMemo(() => ({
+    corpo: new THREE.CylinderGeometry(0.095, 0.11, 0.33, 7).translate(0, 0.46, 0),
+    cabeca: new THREE.IcosahedronGeometry(0.078, 1).translate(0, 0.71, 0),
+    pernas: new THREE.CylinderGeometry(0.075, 0.065, 0.3, 6).translate(0, 0.15, 0),
+    mat: Object.assign(new THREE.MeshStandardMaterial({ roughness: 0.8 }), { name: "Mat_Pessoas" }),
+  }), []);
+  useEffect(() => () => { Object.values(rec).forEach((x) => x.dispose()); }, [rec]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    // camisas: brancas, pretas, azuis, vermelhas, amarelas e cinza (torcidas variadas; nenhuma cor de clube dominando)
+    const camisas = ["#f2f2ee", "#1f2226", "#2f5fa8", "#c8463c", "#e0b23a", "#8e959c", "#3d8a5a"];
+    const peles = ["#c99a74", "#8d5e3c", "#e3bf9b", "#a8714b"];
+    L.pessoas.forEach(([x, y, z, g, k], i) => {
+      o.position.set(x, y, z);
+      o.rotation.set(0, g, 0);
+      o.updateMatrix();
+      for (const m of [corpo.current!, cabeca.current!, pernas.current!]) m.setMatrixAt(i, o.matrix);
+      corpo.current!.setColorAt(i, cor.set(camisas[k % camisas.length]));
+      cabeca.current!.setColorAt(i, cor.set(peles[(i * 3 + k) % peles.length]));
+    });
+    for (const m of [corpo.current!, cabeca.current!, pernas.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.pessoas.length;
   return (
-    <group rotation-y={GIRO}>
-      <mesh name="Entorno_Piso" geometry={g.chao} material={concretoEscuro} rotation-x={-Math.PI / 2} receiveShadow />
-      <mesh name="Campo_Gramado" geometry={g.campo} material={grama} position-y={0.06} receiveShadow />
-      <Instancias nome="Campo_Faixas_Claras" geo={g.faixaCampo} mat={gramaClara} itens={faixas.filter((_, i) => i % 2 === 0)} sombra={false} />
-      <Instancias nome="Campo_Linhas_Laterais" geo={g.linhaLonga} mat={branco} itens={[[-12, 0.10, 0], [12, 0.10, 0], [0, 0.10, 0]]} sombra={false} />
-      <Instancias nome="Campo_Linhas_Fundo" geo={g.linhaCurta} mat={branco} itens={[[0, 0.10, -19], [0, 0.10, 19]]} sombra={false} />
-      <mesh name="Campo_Circulo_Central" position-y={0.105} rotation-x={-Math.PI / 2} receiveShadow>
-        <ringGeometry args={[3.2, 3.3, 32]} />
-        <primitive object={branco} attach="material" />
-      </mesh>
-      <ArquibancadaLateral lado={-1} geo={g.degrauLateral} mat={azul} />
-      <ArquibancadaLateral lado={1} geo={g.degrauLateral} mat={amarelo} />
-      <ArquibancadaFundo lado={-1} geo={g.degrauFundo} mat={laranja} />
-      <ArquibancadaFundo lado={1} geo={g.degrauFundo} mat={azul} />
-      <Instancias nome="Fachada_Muros_Laterais" geo={g.muro} mat={concreto} itens={[[-20.7, 0, 0, 1.1, 4.8, 43], [20.7, 0, 0, 1.1, 4.8, 43]]} />
-      <Instancias nome="Fachada_Muros_Cabeceiras" geo={g.muro} mat={concreto} itens={[[0, 0, -24.7, 36, 4.8, 1.1], [0, 0, 24.7, 36, 4.8, 1.1]]} />
-      <Instancias nome="Fachada_Acessos_Laterais" geo={g.acesso} mat={concretoEscuro} itens={acessosLaterais} />
-      <Instancias nome="Fachada_Acessos_Cabeceiras" geo={g.acesso} mat={concretoEscuro} itens={acessosFundos} />
-      <mesh name="Cabine_Imprensa" geometry={g.cabine} material={concreto} position={[18.1, 6.0, 0]} castShadow receiveShadow />
-      <mesh name="Cabine_Imprensa_Cobertura" geometry={g.coberturaCabine} material={concretoEscuro} position={[18.1, 8.2, 0]} castShadow />
-      <mesh name="Placar_Eletronico" geometry={g.placa} material={metal} position={[0, 5.8, -24.9]} castShadow />
-      {[[-20, -23], [20, -23], [-20, 23], [20, 23]].map(([x, z], i) => <Torre key={i} x={x} z={z} geo={g} metal={metal} luz={luz} indice={i + 1} />)}
-      <Instancias nome="Entorno_Arvores_Troncos" geo={g.arvoreTronco} mat={fab.cor("#70543c", 0.9)} itens={arvores.map(([x, , z]) => [x, 1.4, z, 1, 2.8, 1])} />
-      <Instancias nome="Entorno_Arvores_Copas" geo={g.arvoreCopa} mat={fab.cor("#447a39", 0.9)} itens={arvores.map(([x, , z]) => [x, 4.0, z, 2.1, 1.7, 2.1])} />
+    <>
+      <instancedMesh name="Pessoas_Corpo" ref={corpo} args={[rec.corpo, rec.mat, n]} castShadow />
+      <instancedMesh name="Pessoas_Cabeca" ref={cabeca} args={[rec.cabeca, rec.mat, n]} castShadow />
+      <instancedMesh name="Pessoas_Pernas" ref={pernas} args={[rec.pernas, undefined, n]} castShadow material={fab.cor("#2c3540", 0.3)} />
+    </>
+  );
+}
+
+/** Carros estacionados junto aos meios-fios e passando nas quatro ruas (~2,2 m) */
+function Carros({ fab }: { fab: Fabrica }) {
+  const corpo = useRef<THREE.InstancedMesh>(null);
+  const cabine = useRef<THREE.InstancedMesh>(null);
+  const geo = useMemo(() => ({
+    c: new THREE.BoxGeometry(2.2, 0.42, 0.98).translate(0, 0.31, 0),
+    k: new THREE.BoxGeometry(1.18, 0.34, 0.86).translate(-0.12, 0.69, 0),
+  }), []);
+  useEffect(() => () => { geo.c.dispose(); geo.k.dispose(); }, [geo]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const cor = new THREE.Color();
+    const tons = ["#f2f2ef", "#c8ccd0", "#2b2f36", "#8e959c", "#b33a32", "#1f4e8c", "#d9d4c4", "#5d6b4a"];
+    L.carros.forEach(([x, z, g, k], i) => {
+      o.position.set(x, L.chao.z0, z);
+      o.rotation.set(0, g, 0);
+      o.updateMatrix();
+      corpo.current!.setMatrixAt(i, o.matrix);
+      cabine.current!.setMatrixAt(i, o.matrix);
+      corpo.current!.setColorAt(i, cor.set(tons[k % tons.length]));
+    });
+    for (const m of [corpo.current!, cabine.current!]) {
+      m.instanceMatrix.needsUpdate = true;
+      if (m.instanceColor) m.instanceColor.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
+  const n = L.carros.length;
+  return (
+    <>
+      <instancedMesh name="Carros_Carroceria" ref={corpo} args={[geo.c, undefined, n]} castShadow receiveShadow>
+        <meshStandardMaterial name="Mat_Carroceria" roughness={0.45} metalness={0.2} />
+      </instancedMesh>
+      <instancedMesh name="Carros_Cabine" ref={cabine} args={[geo.k, undefined, n]} castShadow material={fab.cor("#2c3540", 0.3)} />
+    </>
+  );
+}
+
+/** Barras grafite do gradil do lote nas cabeceiras */
+function Barras({ fab }: { fab: Fabrica }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const geo = useMemo(() => new THREE.BoxGeometry(0.04, 1, 0.04).translate(0, 0.5, 0), []);
+  useEffect(() => () => geo.dispose(), [geo]);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    L.barras.forEach(([x, z, y, h], i) => {
+      o.position.set(x, y, z);
+      o.scale.set(1, h, 1);
+      o.updateMatrix();
+      ref.current!.setMatrixAt(i, o.matrix);
+    });
+    ref.current!.instanceMatrix.needsUpdate = true;
+    ref.current!.computeBoundingSphere();
+  }, []);
+  return <instancedMesh name="Gradil_Barras" ref={ref} args={[geo, undefined, L.barras.length]} castShadow material={fab.cor("#2f3438", 0.5)} />;
+}
+
+export function EstadioPv({ fab }: { fab: Fabrica }) {
+  return (
+    <group name="Estadio_Presidente_Vargas">
+      <PecasBlender />
+      <Arvores fab={fab} />
+      <Pessoas fab={fab} />
+      <Carros fab={fab} />
+      <Barras fab={fab} />
     </group>
   );
 }
