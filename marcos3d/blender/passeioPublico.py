@@ -1749,7 +1749,7 @@ def layout(traj, cafe_base, quiosque, pos_estatuas, pos_bustos, pontas_baoba):
         for k, (x, y, a) in enumerate(amostrar(e, passo, passo / 2)):
             s = 1 if k % 2 == 0 else -1
             if vid == "937444724":
-                s = -1    # junto à mureta, deixando a beira sul para os bancos
+                s = 1     # na beira sul, entre os bancos (do lado norte a mureta encosta no caminho)
             px, py = x + math.sin(a) * s * (l / 2 + 0.3), y - math.cos(a) * s * (l / 2 + 0.3)
             if not ponto_no_poligono((px, py), dentro if vid != "937444724" else pr) or perto_protegido(px, py, 0.0):
                 continue
