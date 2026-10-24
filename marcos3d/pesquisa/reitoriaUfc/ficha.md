@@ -55,3 +55,33 @@
 - https://diariodonordeste.verdesmares.com.br/ceara/pintura-do-seculo-xix-e-descoberta-em-paredes-da-reitoria-da-ufc-durante-reforma-veja-imagens-1.3389905
 - https://repositorio.ufc.br/ri/bitstream/riufc/2693/1/A%20Universidade%20e%20a%20cidade.pdf (compra do palacete de José Gentil em 1956)
 - Fotos: https://commons.wikimedia.org/wiki/File:Reitoria_da_UFC_02.jpg (ref-1), File:Reitoria_da_UFC_03.jpg (ref-2), File:Reitoria_da_UFC_05.jpg (ref-3)
+
+## Rodada do especialista (24/10/2026)
+**Rede:** Wikimedia, Wikipédia, OSM e Esri bloqueados (403); `WebFetch` sem DNS para `www.ufc.br`. Só o `WebSearch`
+respondeu, então não há fotos novas: a aparência continua vindo das fotos 02/03/05 olhadas na rodada anterior.
+
+**Confirmado em texto (WebSearch):**
+- palacete da família Gentil, de 1918, comprado em 1956 pela imobiliária Frota Gentil e adaptado para a Reitoria, que
+  continua lá (ANPUH; Diário do Nordeste; repositório da UFC);
+- endereço: Av. da Universidade, 2853, Benfica; o quarteirão vai até a Av. Treze de Maio;
+- Salão Dourado restaurado em 2023, com pinturas parietais (flor-de-lis) ligadas ao ecletismo;
+- a Concha Acústica faz parte do conjunto do prédio histórico ("pavilhão auricular" e arquibancada nas obras de 2023);
+- os **anexos** da Reitoria são modernistas (José Liberal de Castro e Neudson Braga, 1967) e estão em estudo de
+  tombamento municipal (O Povo, 25/07/2026). Não entraram no modelo.
+
+**Fontes novas:**
+- https://anpuh.org.br/uploads/anais-simposios/pdf/2019-01/1548875180_b6a2a9f1cabec8eb706cc5ee40f3713a.pdf
+- https://ufcinforma.ufc.br/wp-content/uploads/2023/07/portfolio-de-obras-ufc-2023-6-30-compressed-1.pdf
+- https://www.opovo.com.br/noticias/fortaleza/2026/07/25/parte-do-complexo-arquitetonico-da-ufc-pode-ser-tombada.html
+- https://pdi.ufc.br/wp-content/uploads/2022/12/pdi-ufc-2007-2011.pdf (endereço da sede)
+
+**Sem confirmação (ficou como interpretação no modelo):**
+- cor exata do reboco e das venezianas (só as fotos da rodada anterior; nenhum texto descreve a fachada);
+- o pórtico do palacete voltado para a frente (avenida) e não para o lado nordeste (a foto 05 foi tirada a nordeste e
+  mostra as duas faces);
+- desenho do frontão (volutas, flor-de-lis, cartela oval) e dos pináculos;
+- telhados: de barro, em quatro águas, escondidos atrás das platibandas (não aparecem nas fotos);
+- gradil na Av. da Universidade (pilares rosa com capa branca e grade escura), portões e via interna em U;
+- Concha Acústica: forma (casca em quarto de esfera), tamanho, posição e orientação;
+- a bandeira da UFC (desenho simplificado);
+- número de faixas da Av. da Universidade (4, com faixa dupla amarela).
