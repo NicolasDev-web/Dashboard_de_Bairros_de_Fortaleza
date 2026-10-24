@@ -60,6 +60,8 @@
     terminalAntonioBezerra: { arquivo: "terminal-antonio-bezerra.glb", nome: "Terminal de Integração Antônio Bezerra", rotulo: "Terminal Antônio Bezerra", lat: -3.7376, lng: -38.5839, altura: 5 },
     forteAssuncao: { arquivo: "fortaleza-nossa-senhora-da-assuncao.glb", nome: "Fortaleza de Nossa Senhora da Assunção (10ª Região Militar)", rotulo: "Fortaleza da Assunção", lat: -3.7227618, lng: -38.525034, altura: 12 },
     dragaoDoMar: { arquivo: "centro-dragao-do-mar.glb", nome: "Centro Dragão do Mar de Arte e Cultura", rotulo: "Dragão do Mar", lat: -3.7216677, lng: -38.5201742, altura: 16 },
+    passeioPublico: { arquivo: "passeio-publico.glb", nome: "Passeio Público (Praça dos Mártires)", rotulo: "Passeio Público", lat: -3.7226365, lng: -38.5263038, altura: 11 },
+    theatroJoseDeAlencar: { arquivo: "theatro-jose-de-alencar.glb", nome: "Theatro José de Alencar", rotulo: "Theatro José de Alencar", lat: -3.727786, lng: -38.5317064, altura: 18 },
   };
 
   window.HISTORIAS = {
@@ -76,10 +78,10 @@
       marco("forteAssuncao", "O forte que deu nome à cidade", [
         "No lugar do antigo Forte Schoonenborch fica hoje a Fortaleza de Nossa Senhora da Assunção, sede da 10ª Região Militar, ao lado da Catedral. É o ponto de partida da cidade: foi em volta dela que a vila se formou e, em 13 de abril de 1726, foi elevada à categoria de vila.",
       ], [IP(10), ATLAS, OPOVO_10RM, OSM]),
-      ponto("Passeio Público", -3.7226365, -38.5263038, "Passeio Público, a Praça dos Mártires", [
+      marco("passeioPublico", "Passeio Público, a Praça dos Mártires", [
         "É a praça mais antiga de Fortaleza. Em 1825, ali foram fuzilados líderes cearenses da Confederação do Equador, o movimento contra o autoritarismo de D. Pedro I, entre eles o Padre Mororó. Por isso, desde 1879, ela também se chama oficialmente Praça dos Mártires.",
       ], [OPOVO_PASSEIO, OSM]),
-      ponto("Theatro José de Alencar", -3.727786, -38.5317064, "Theatro José de Alencar", [
+      marco("theatroJoseDeAlencar", "Theatro José de Alencar", [
         "Inaugurado em 17 de junho de 1910, tem a estrutura de ferro fundido feita em Glasgow, na Escócia, e trazida peça por peça. É tombado pelo patrimônio federal e ganhou um jardim de Burle Marx em 1974.",
       ], [OPOVO_TJA, OSM]),
       marco("dragaoDoMar", "Centro Dragão do Mar de Arte e Cultura", [
