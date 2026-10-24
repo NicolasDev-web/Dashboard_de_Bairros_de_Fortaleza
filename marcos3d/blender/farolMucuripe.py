@@ -5,6 +5,7 @@ Farol do Mucuripe (Farol Velho, 1840–1846) em miniatura: gera as peças estát
 Uso (o Python do Blender 5.x com o módulo bpy; nada de .blend: o modelo sai sempre daqui):
     <python-com-bpy> marcos3d/blender/farolMucuripe.py              # modela, assa a oclusão e exporta
     <python-com-bpy> marcos3d/blender/farolMucuripe.py --sem-bake   # rápido, sem oclusão (para conferir forma)
+    FAROL_DEPURAR=<arquivo.json> ...                                 # grava reservas, casas e frentes (planta de conferência)
 
 Saídas em marcos3d/blender/saida/ (o FarolMucuripe.tsx carrega as três):
     farolMucuripe-pecas.glb     chão, platô murado com a escadaria, farol, casario do Serviluz, praia com pedras e
@@ -57,8 +58,8 @@ R_CORPO = 6.7        # raio do octógono do corpo (circunscrito): 12,4 m entre f
 H_SOCO = 0.8
 H_CORPO = 6.55       # topo do corpo = piso do terraço com as ameias
 R_TORRE0, R_TORRE1 = 2.706, 2.381   # torre octogonal afunilando: 5,0 → 4,4 m entre faces (OSM parte central ~3,2 m)
-H_TORRE = 14.6
-H_GALERIA = 15.12    # piso da varanda da lanterna
+H_TORRE = 15.4
+H_GALERIA = 15.92    # piso da varanda da lanterna
 R_GALERIA = 3.15
 
 
@@ -401,7 +402,8 @@ def barra(P, a, b, esp, m, esp2=None):
 
 # ———————————————————————————————————————————————— atlas de esquadrias (256 px, gerado aqui)
 
-COR_AMARELO = "#eec25a"    # reboco amarelo do farol restaurado (ficha: "amarelo e branco", legenda de foto de 2025)
+COR_AMARELO = "#ffd23f"    # reboco amarelo do farol restaurado (ficha: "amarelo e branco", legenda de foto de 2025);
+#                            saturado de propósito: o chão azul da luz de hemisfério do site puxa as paredes para oliva
 COR_BRANCO = "#f6f3ea"
 COR_MADEIRA = "#8a3a2c"    # esquadrias de madeira vermelho-escura (não confirmado; ficha)
 COR_VIDRO = "#2f3d48"
@@ -549,7 +551,7 @@ def criar_materiais():
     M["calcada"] = mat("Mat_Chao_Calcada", "#d3cdc1", 0.9)
     M["areia"] = mat("Mat_Chao_Areia", "#f0e1b6", 0.95)
     M["molhada"] = mat("Mat_Chao_Areia_Molhada", "#cdb98c", 0.6)
-    M["grama"] = mat("Mat_Chao_Grama", "#79a64c", 0.95)
+    M["grama"] = mat("Mat_Chao_Grama", "#86ab58", 0.95)
     M["piso"] = mat("Mat_Chao_Piso", "#e3d8c2", 0.9)
     M["agua"] = mat("Mat_Agua_Mar", "#41b1dc", 0.1)          # o .tsx troca por fab.agua()
     M["espuma"] = mat("Mat_Espuma", "#f4f7f6", 0.6)
@@ -558,7 +560,7 @@ def criar_materiais():
     M["amarelo"] = mat("Mat_Reboco_Amarelo", COR_AMARELO, 0.85)
     M["branco"] = mat("Mat_Frisos_Brancos", COR_BRANCO, 0.7)
     M["soco"] = mat("Mat_Soco_Pedra", "#bdb3a1", 0.9)
-    M["terraco"] = mat("Mat_Piso_Terraco", "#c9b49a", 0.9)
+    M["terraco"] = mat("Mat_Piso_Terraco", "#ddd0bb", 0.9)
     M["esquadrias"] = mat("Mat_Esquadrias", "#ffffff", 0.6, 0.0, atlas)
     M["ferro"] = mat("Mat_Ferro_Grafite", "#2e3437", 0.5, 0.35)
     M["vidro"] = mat("Mat_Vidro_Lanterna", "#f3e7b8", 0.2)   # o .tsx põe o brilho da luz acesa
@@ -721,12 +723,14 @@ def chao(M, recinto_m, vias_m):
         if d.length < 1e-3:
             continue
         d.normalize()
-        nl = Vector((-d.y, d.x))   # para leste (lado do farol)
+        nl = Vector((d.y, -d.x))   # para leste (lado do farol; a avenida corre de sul para norte)
         for (o0, o1, m, z) in ((-3.0, 3.0, M["asfalto"], 0.008), (3.0, 5.0, M["calcada"], 0.13), (-4.2, -3.0, M["calcada"], 0.13)):
             q = [(a[0] + nl.x * o0 - d.x * 0.05, a[1] + nl.y * o0 - d.y * 0.05), (b[0] + nl.x * o0 + d.x * 0.05, b[1] + nl.y * o0 + d.y * 0.05),
                  (b[0] + nl.x * o1 + d.x * 0.05, b[1] + nl.y * o1 + d.y * 0.05), (a[0] + nl.x * o1 - d.x * 0.05, a[1] + nl.y * o1 - d.y * 0.05)]
             placa(q, m, z)
             reservar(q, 0.15)
+        porto_q = [(a[0] - nl.x * 4.2, a[1] - nl.y * 4.2), (b[0] - nl.x * 4.2, b[1] - nl.y * 4.2), (b[0] - nl.x * 16, b[1] - nl.y * 16), (a[0] - nl.x * 16, a[1] - nl.y * 16)]
+        reservar(porto_q, 0.1)
         # faixas tracejadas entre as 3 pistas
         for off in (-1.0, 1.0):
             L = math.hypot(b[0] - a[0], b[1] - a[1])
@@ -782,7 +786,7 @@ def plato(M, recinto_m):
     P = Peca("Recinto_Murado")
     poli = anti_horario(recinto_m)
     # muro de arrimo (lados do platô)
-    P.juntar(bm_prisma(poli, Z0 - 0.02, ZP - 0.002, 0.0, mat_lados=1), [M["muro"], M["muro"]])
+    P.juntar(bm_prisma(poli, Z0 - 0.02, ZP - 0.09, 0.0, mat_lados=1), [M["muro"], M["muro"]])   # topo abaixo da grama (sem briga de profundidade)
     # mureta em volta (0,9 m), com capa branca, aberta no portão oeste
     alvo = comprimir(-31.0, -1.0)
     portao = min(poli, key=lambda p: math.hypot(p[0] - alvo[0], p[1] - alvo[1]))
@@ -840,6 +844,14 @@ def plato(M, recinto_m):
     P.juntar(bm_caixa(0.28, 2.5, 0.9), M["muro"], T(x0 + 0.14, yw, ZP))
     P.juntar(bm_caixa(0.36, 2.5, 0.08), M["branco"], T(x0 + 0.14, yw, ZP + 0.9))
     barra(P, (x0 + 0.14, yb, Z0 + 0.95), (x0 + 0.14, y_patamar0, ZP + 0.95), 0.36, M["branco"], 0.08)
+    # postes de ferro com globo em volta da calçada do farol e no portão (a restauração de 2025 trouxe iluminação
+    # externa; o desenho dos postes não foi confirmado)
+    postes = [octogono(R_CORPO + 1.75, 0.0)[k] for k in (0, 2, 3, 5, 6)] + [(xw + 1.0, yw + 1.5), (xw + 1.0, yw - 1.5)]
+    for x, y in postes:
+        P.juntar(bm_cilindro(0.13, 0.3, 8), M["ferro"], T(x, y, ZP - 0.02))
+        P.juntar(bm_cilindro(0.05, 2.7, 6, r2=0.04), M["ferro"], T(x, y, ZP + 0.28))
+        P.juntar(bm_cilindro(0.1, 0.1, 8), M["ferro"], T(x, y, ZP + 2.95))
+        P.juntar(bm_esfera(0.2, 1), M["branco"], T(x, y, ZP + 3.2), liso=True)
     reservar(ret(x0 - 0.6, yb - 1.2, x1, yw + 1.3), 0.2)
     reservar(poli, 0.5)
     return P.criar(), (xw, yw), (x0, x1, yb, y_patamar0)
@@ -849,7 +861,7 @@ def topo_plato(M, recinto_m, portao):
     """Topo do platô: grama, caminho do portão até a porta oeste do farol e a calçada octogonal em volta dele"""
     P = Peca("Chao_Plato")
     poli = anti_horario(recinto_m)
-    P.juntar(bm_prisma(poli, ZP - 0.05, ZP, 0.0, mat_lados=0), M["grama"])
+    P.juntar(bm_prisma(poli, ZP - 0.1, ZP, 0.0, mat_lados=0), M["grama"])
     # calçada em volta do farol
     P.juntar(bm_prisma(octogono(R_CORPO + 1.9), ZP - 0.02, ZP + 0.02, 0.0, mat_lados=0), M["piso"])
     # caminho do portão (oeste) até a porta, e um caminho em cruz para leste, norte e sul (acessos ao gramado)
@@ -937,15 +949,16 @@ def farol(M):
         p1 = (math.cos(a0) * (R_TORRE1 + 0.02), math.sin(a0) * (R_TORRE1 + 0.02), z(H_TORRE))
         barra(P, p0, p1, 0.36, B, 0.14)
     # cintas brancas da torre (base, meio e alto)
-    for h0, h1, sal in ((H_CORPO, H_CORPO + 0.35, 0.12), (10.55, 10.8, 0.08), (13.7, 13.95, 0.09)):
+    for h0, h1, sal in ((H_CORPO, H_CORPO + 0.35, 0.12), (10.95, 11.2, 0.08), (14.45, 14.7, 0.09)):
         P.juntar(bm_tronco(octogono(rz(h0) + sal), octogono(rz(h1) + sal), z(h0), z(h1)), [B, B])
     # porta da torre para o terraço (oeste) e janelas de verga reta em espiral
     vao_oct(P, M, 4, R_TORRE0, R_TORRE1, z(H_CORPO), z(H_TORRE), 1.25, z(H_CORPO + 0.35), z(H_CORPO + 2.5), "reta_farol")
     for k in range(8):
-        h0 = 11.7 if k == 4 else 7.75 + 0.55 * ((k - 5) % 8)
-        if h0 < 10.85 and h0 + 1.05 > 10.5:
-            h0 = 10.9
-        vao_oct(P, M, k, R_TORRE0, R_TORRE1, z(H_CORPO), z(H_TORRE), 0.82, z(h0), z(h0 + 1.05), "reta_farol")
+        # janelas em espiral (acompanham a escada helicoidal), abaixo e acima da cinta do meio
+        h0 = 7.7 + 0.42 * ((k - 5) % 8) if k != 4 else 9.3
+        vao_oct(P, M, k, R_TORRE0, R_TORRE1, z(H_CORPO), z(H_TORRE), 0.95, z(h0), z(h0 + 1.25), "reta_farol")
+        h1 = 11.55 + 0.32 * ((k - 1) % 8)
+        vao_oct(P, M, k, R_TORRE0, R_TORRE1, z(H_CORPO), z(H_TORRE), 0.9, z(h1), z(h1 + 1.15), "reta_farol")
     # cornija da torre e laje da varanda
     P.juntar(bm_tronco(octogono(R_TORRE1 + 0.12), octogono(R_TORRE1 + 0.42), z(H_TORRE), z(H_TORRE + 0.3)), [B, B])
     P.juntar(bm_tronco(octogono(R_GALERIA), octogono(R_GALERIA), z(H_TORRE + 0.3), z(H_GALERIA)), [M["terraco"], B])
@@ -1024,9 +1037,7 @@ def casario(M, casas_osm, ruas, eixo_av, recinto_m):
     for pts, h, niv, wid in sorted(casas_osm, key=lambda c: math.hypot(*retangulo(c[0])[:2])):
         cx, cy, L, W, ang = retangulo(pts)
         mx, my = comprimir(cx, cy)
-        L2, W2 = max(2.4, L * 0.6), max(2.0, W * 0.6)
-        if L2 > 7.5:
-            L2 = 7.5
+        L2, W2 = min(6.0, max(2.4, L * 0.6)), min(4.8, max(2.0, W * 0.6))
         cs = cantos(mx, my, L2, W2, ang)
         if any(math.hypot(*p) > RAIO - 0.5 for p in cs):
             motivo["disco"] = motivo.get("disco", 0) + 1
@@ -1084,10 +1095,23 @@ def casario(M, casas_osm, ruas, eixo_av, recinto_m):
                     c = va + t * (s + w / 2) + nl * (lado * off)
                     tenta(c.x, c.y, w, d, ang, alt)
                     s += w + rnd.choice((0.0, 0.0, 0.05, 0.6))
-    print(f"casas: {n_osm} do OSM e {len(escolhidas) - n_osm} completando as quadras; {motivo}")
+    # miolo das quadras: casas soltas onde ainda couber, no rumo da frente mais próxima (becos de ~1 m entre elas)
+    n_fil = len(escolhidas)
+    grade = [(x * 0.8, y * 0.8) for x in range(-42, 43) for y in range(-42, 43) if 16.5 < math.hypot(x * 0.8, y * 0.8) < 33]
+    grade.sort(key=lambda p: (math.hypot(*p), p))
+    for x, y in grade:
+        if not livre(x, y, 1.0) or any(ponto_no_poligono((x, y), c["cantos"]) for c in escolhidas):
+            continue
+        melhor = min(frentes, key=lambda f: dist_poligono((x, y), [f[0], f[1], (f[1][0] + 1e-4, f[1][1] + 1e-4)]))
+        ang0 = math.degrees(math.atan2(melhor[1][1] - melhor[0][1], melhor[1][0] - melhor[0][0]))
+        alt = rnd.choice((2.6, 2.8, 3.0, 3.2, 2.7, 5.0, 2.9))
+        for w, d in ((rnd.uniform(3.0, 3.8), rnd.uniform(3.4, 4.2)), (rnd.uniform(2.4, 3.0), rnd.uniform(2.8, 3.4))):
+            if tenta(x, y, w, d, ang0 + rnd.choice((0, 0, 90)), alt):
+                break
+    print(f"casas: {n_osm} do OSM, {n_fil - n_osm} em fileiras e {len(escolhidas) - n_fil} no miolo das quadras")
     if os.environ.get("FAROL_DEPURAR"):
         with open(os.environ["FAROL_DEPURAR"], "w") as fh:
-            json.dump({"livre": [[p, f] for p, f in LIVRE], "casas": [c["cantos"] for c in escolhidas], "frentes": [[a, b] for a, b, _ in frentes]}, fh)
+            json.dump({"livre": [[p, f] for p, f in LIVRE], "casas": [c["cantos"] for c in escolhidas], "frentes": [[a, b] for a, b, _ in frentes], "ocupado": [(x, y) for x in range(-33, 34) for y in range(-33, 34) if not livre(x, y)]}, fh)
 
     P = Peca("Casario_Serviluz")
     for i, c in enumerate(escolhidas):
@@ -1095,9 +1119,10 @@ def casario(M, casas_osm, ruas, eixo_av, recinto_m):
         L, W, ang, h = c["L"], c["W"], c["ang"], c["h"]
         cor = PALETA_CASAS[rnd.randrange(len(PALETA_CASAS))]
         parede = tinta(M["parede"], cor)
-        laje = rnd.random() < 0.6 or h > 4.4
+        laje = rnd.random() < 0.5 or h > 4.4
         cs = c["cantos"]
-        P.juntar(bm_prisma(cs, Z0 - 0.02, Z0 + h, 0.0, mat_lados=1), [M["laje"] if laje else parede, parede])
+        topo = tinta(M["laje"], rnd.choice(("#ffffff", "#f0ece4", "#e2ddd3", "#d6d2ca", "#f4e9dc")))
+        P.juntar(bm_prisma(cs, Z0 - 0.02, Z0 + h, 0.0, mat_lados=1), [topo if laje else parede, parede])
         ca, sa = math.cos(math.radians(ang)), math.sin(math.radians(ang))
         if laje:
             # platibanda e caixa d'água
@@ -1200,6 +1225,8 @@ def praia(M):
         for v in bm.verts:
             v.co *= 1 + rnd.uniform(-0.18, 0.18)
         bm.transform(Matrix.Diagonal((r * rnd.uniform(1.0, 1.5), r, r * rnd.uniform(0.5, 0.75), 1)))
+        for v in bm.verts:
+            v.co.z = max(v.co.z, 0.17 - Z0)       # fundo achatado: nada abaixo de y = 0
         P.juntar(bm, M["pedra"], T(x, y, Z0 - 0.15, rnd.uniform(0, 180)))
     for s, dd, giro in ((-6.5, D_AGUA - 2.6, 8.0), (-10.2, D_AGUA - 3.4, -6.0)):
         x, y = N_MAR.x * dd + T_MAR.x * s, N_MAR.y * dd + T_MAR.y * s
@@ -1233,7 +1260,7 @@ def porto(M, eixo_av):
         if d.length < 1e-3:
             continue
         d.normalize()
-        nl = Vector((-d.y, d.x))
+        nl = Vector((d.y, -d.x))   # leste
         p0 = Vector(a) - nl * 4.5
         p1 = Vector(b) - nl * 4.5
         if math.hypot(*p0) > RAIO - 0.3 or math.hypot(*p1) > RAIO - 0.3:
@@ -1272,10 +1299,10 @@ def porto(M, eixo_av):
 def layout(eixo_av, ruas, portao, escada, casas):
     rnd = random.Random(1957)
     coqueiros = []   # (x, y, altura, giro, inclinação)
-    for s in (-14.0, -9.0, -3.5, 2.5, 8.0, 12.5, 17.0):
-        d = D_AREIA + rnd.uniform(0.3, 1.4)
+    for s in (-15.5, -3.0, 2.5, 7.5, 12.5, 17.5):
+        d = D_AREIA + rnd.uniform(0.3, 1.2)
         x, y = N_MAR.x * d + T_MAR.x * s, N_MAR.y * d + T_MAR.y * s
-        if math.hypot(x, y) < RAIO - 1.5 and livre(x, y, 0.4):
+        if math.hypot(x, y) < RAIO - 1.5:
             coqueiros.append((x, y, rnd.uniform(6.0, 7.6), rnd.uniform(0, 360), rnd.uniform(0.04, 0.14)))
     arvores = []
     tent = 0
@@ -1329,7 +1356,7 @@ def layout(eixo_av, ruas, portao, escada, casas):
         if math.hypot(x, y) < RAIO - 1 and not any(ponto_no_poligono((x, y), c["cantos"]) for c in casas):
             pessoas.append((x, y, Z0, rnd.uniform(0, 360), rnd.randrange(6)))
     carros = []   # (x, y, giro, cor) na avenida
-    for i in (1, 3, 5, 6, 8, 10):
+    for i in (1, 2, 3, 5, 6, 8, 9, 10):
         if i + 1 >= len(eixo_av):
             continue
         a, b = eixo_av[i], eixo_av[i + 1]
