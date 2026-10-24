@@ -27,7 +27,7 @@ export const ALTURA_ETIQUETA = 18;
 const BASE = "/blender/saida/";
 
 /** Cor das telhas (o exportador do Blender não leva a cor-base de material com textura): chapa metálica e barro */
-const COR_TELHA: Record<string, string> = { Mat_Telha_Metalica: "#8e9296", Mat_Telha_Barro: "#b9603c" };
+const COR_TELHA: Record<string, string> = { Mat_Telha_Metalica: "#8e9296", Mat_Telha_Barro: "#a35d43" };
 
 type Arvore = [x: number, yBase: number, z: number, r: number];
 type Palmeira = [x: number, z: number, h: number, giro: number];

@@ -42,7 +42,30 @@
 - OpenStreetMap (API 0.6, bbox de 100 m), relação do teatro e building:parts: `osm.xml`, `osm-resumo.json`, `planta.png`
 - Fotos (Wikimedia Commons): ref-1 "Teatro José de Alencar em Fortaleza.JPG", ref-2 "TJA Fortaleza 05.jpg", ref-3 "Theatro José de Alencar em Fortaleza 03.jpg"
 
-## Dúvidas
-- forma exata da cobertura da sala e da caixa cênica (sem foto aérea): simplificadas;
-- cores exatas dos vitrais da fachada de ferro;
-- desenho atual do jardim de Burle Marx (canteiros sinuosos genéricos).
+## Confirmado por texto em out/2026 (WebSearch; Wikimedia, Wikipédia, OSM e Esri bloqueados, WebFetch sem DNS)
+- A fachada da sala é de ferro fundido art nouveau com vitrais coloridos, voltada para o pátio central. Uma fonte diz
+  que parte dos vidros foi trocada por plástico colorido.
+- Cores citadas para os elementos art nouveau: verde, vermelho e azul, "que se destacam à noite com as luzes acesas".
+- Na Praça José de Alencar fica o monumento a José de Alencar: bronze, sentado com um livro, sobre base de granito
+  branco, inaugurado em 1/5/1929. Na revitalização de 2020 a praça ganhou uma fonte iluminada.
+- Os planos de manutenção citam os "vitrais coloridos da fachada principal": na miniatura, as bandeiras das portas
+  centrais ficaram com vitral.
+- Fontes:
+  - O Povo, 08/01/2025: https://www.opovo.com.br/noticias/fortaleza/2025/01/08/vandalismo-e-falta-de-manutencao-comprometem-monumento-a-jose-de-alencar-em-fortaleza.html
+  - Diário do Nordeste (Praça José de Alencar entregue após um ano de obras): https://diariodonordeste.verdesmares.com.br/metro/praca-jose-de-alencar-e-entregue-apos-um-ano-de-obras-e-comerciantes-nao-devem-retornar-ao-local-1.3028176
+  - viajenaviagem.com, guia de Fortaleza: https://www.viajenaviagem.com/destino/fortaleza/o-que-fazer/
+  - anais Even3 (análise da arquitetura eclética do TJA): https://static.even3.com/anais/86513.pdf
+
+## Dúvidas (sem confirmação)
+- forma exata da cobertura da sala, da caixa cênica e do bloco da fachada (sem foto aérea): simplificadas em quatro
+  águas de chapa;
+- desenho e cores exatas dos vitrais e do leque do coroamento da fachada de ferro: a miniatura usa uma interpretação
+  (5 vãos, 3 níveis, leque em meia-lua no alto);
+- brasão do coroamento: desenho neutro (cartela branca e escudo dourado, sem heráldica);
+- estátuas do coroamento: o atributo (coroa no braço erguido) é interpretação;
+- letreiro com o nome na fachada: não confirmado, não modelado;
+- desenho atual do jardim de Burle Marx: canteiros orgânicos genéricos em massas de cor;
+- cor e desenho do gradil do jardim e do lote vizinho;
+- posição e orientação do monumento a José de Alencar na praça; posição da fonte iluminada (não modelada);
+- aparência do prédio do IPHAN vizinho: só um volume neutro de 2 pavimentos;
+- o que há no lote a oeste do teatro: ficou com piso e gramado com árvores.

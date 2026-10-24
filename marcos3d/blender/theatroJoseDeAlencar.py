@@ -1079,7 +1079,7 @@ def chao(M):
     placa(ret(-X_PATIO, Y_FUNDO_FACHADA, X_PATIO, Y_FERRO), M["patio"], 0.02)
     grama = placa(ret(-40, Y_JARDIM + 0.2, X_JARDIM, 40), M["grama"], 0.03)
     placa(ret(X_SALA + 0.6, Y_FRENTE + 0.1, 40, 40), M["lote"], 0.015)
-    placa(ret(X_SALA + 0.9, 4.2, 40, 40), M["grama"], 0.03)
+    placa(ret(X_SALA + 0.9, 9.4, 40, 40), M["grama"], 0.03)
     # caminho sinuoso do jardim (Burle Marx: curvas largas), do portão da frente até os fundos
     eixo = catmull([(-14.6, Y_JARDIM - 0.3), (-15.6, -7.0), (-20.5, -2.0), (-17.5, 5.0), (-22.0, 11.5), (-18.0, 18.0), (-21.5, 24.5)], 7)
     eixo = [p for p in eixo if math.hypot(*p) < RAIO - 1.2]
@@ -1259,7 +1259,7 @@ def vizinha(M):
     com telhado de barro, para situar. Cor e fachada neutras (sem foto: dúvida na ficha).
     """
     P = Peca("Casa_Vizinha_IPHAN")
-    x0, y0, x1, y1, h = 17.6, -6.4, 25.0, 3.4, 6.6
+    x0, y0, x1, y1, h = 17.8, -1.0, 25.0, 8.2, 6.4
     P.juntar(bm_prisma(ret(x0, y0, x1, y1), Z0, Z0 + h, 0.04), [M["laje"], M["vizinha"]])
     cinta(P, M["soco"], x0, y0, x1, y1, 0.0, 0.5, 0.05)
     cinta(P, M["branco"], x0, y0, x1, y1, 3.25, 3.5, 0.08)
@@ -1297,7 +1297,7 @@ def layout(covas, eixo):
             arvores.append((x, y, rnd.uniform(1.6, 2.2), rnd.uniform(1.9, 2.4)))
     # oitis e pau-brasil do jardim (OSM), mais copas no fundo do jardim, no lote vizinho e atrás do palco
     zonas = [((-27.5, 9.0), 3.0, 3), ((-25.0, 24.0), 3.0, 3), ((-28.0, -6.0), 2.0, 2), ((-15.5, 27.0), 2.5, 2),
-             ((26.0, -4.0), 2.5, 2), ((19.0, 9.5), 4.0, 3), ((24.0, 15.0), 3.0, 2), ((15.5, 25.0), 3.0, 2), ((14.0, 6.5), 1.0, 1), ((4.5, 32.0), 1.0, 1), ((-8.0, 31.5), 1.0, 1),
+             ((24.0, -5.0), 3.0, 3), ((19.0, 13.5), 3.0, 2), ((24.0, 15.0), 3.0, 2), ((15.5, 25.0), 3.0, 2), ((14.0, 6.5), 1.0, 1), ((4.5, 32.0), 1.0, 1), ((-8.0, 31.5), 1.0, 1),
              ((27.0, -15.5), 1.5, 1), ((-28.0, -15.8), 1.0, 1)]
     for (cx, cy), raio, n in zonas:
         k = tent = 0
