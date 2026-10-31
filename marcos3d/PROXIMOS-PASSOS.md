@@ -9,24 +9,9 @@ Este é o resumo de passagem para a próxima sessão. Leia junto com `ESPECIALIS
 
 ### Já publicados no site (`main`)
 - **13 existentes** (melhorados): Castelão, Aeroporto, Messejana, Praia do Futuro, Praia de Iracema, Centro, Cambeba, North Shopping, RioMar Fortaleza, RioMar Kennedy e Terminal Antônio Bezerra. **Unifor** e **Iguatemi** foram refeitos do zero com Blender.
-- **Novos, com Blender:** Forte da Assunção, Dragão do Mar, Theatro José de Alencar e Passeio Público. O Centro tem 5 miniaturas.
-
-### Prontos no branch, aguardando aprovação do dono para publicar
-O `checar` passa em todos, e os renders estão em `renders/<id>/tsx-*.png`.
-
-| id | GLB (`saida/`) | etiqueta | bairro (id) | lat, lng |
-|---|---|---|---|---|
-| estadioPv | estadio-presidente-vargas.glb | 22 | Benfica (7) | −3.7459909, −38.5368948 |
-| reitoriaUfc | reitoria-ufc.glb | 16 | Benfica (7) | −3.7414294, −38.5393982 |
-| estoril | estoril.glb | 19 | Praia de Iracema (32) | −3.7190974, −38.516258 |
-| farolMucuripe | farol-do-mucuripe.glb | 25 | Cais do Porto (110) | −3.7078217, −38.4704039 |
-| palacioAbolicao | palacio-da-abolicao.glb | 14 | Meireles (24) | −3.7281783, −38.5038238 |
-| iracemaMartim | iracema-e-martim-mucuripe.glb | 19 | Mucuripe (26) | −3.7230553, −38.4843485 |
-| marcoZero | marco-zero-barra-do-ceara.glb | 18 | Barra do Ceará (6) | −3.694469, −38.5860534 |
-
-O Marco Zero foi feito em 31/10/2026 (2ª sessão). Os renders dos 7 estão juntos em `renders/aprovacao/prancha-*.jpg`
-(fora do git; refazer com `npm run render` e o recorte do relatório). No `historias.js`, o ponto do Marco Zero é o da
-estação do Bicicletar; o monumento fica ~56 m ao norte-noroeste, e o pino pode continuar onde está.
+- **Novos, com Blender:** Forte da Assunção, Dragão do Mar, Theatro José de Alencar e Passeio Público (o Centro tem 5 miniaturas).
+- **Publicados em 31/10/2026** (aprovados pelo dono, commit `c6c29be` na `main`): Marco Zero (etiqueta 18), Estádio Presidente Vargas (22), Reitoria da UFC (16), Estoril (19), Farol do Mucuripe (25), Palácio da Abolição (14) e Iracema e Martim (19). São 24 marcos no tour.
+  - O Marco Zero pousa no monumento (OSM: −3,6940003, −38,5862496), ~56 m ao norte da estação do Bicicletar.
 
 ### Faltam fazer (6)
 Fazer com o método do `ESPECIALISTA-BLENDER.md`, **2 especialistas por vez**:
@@ -44,10 +29,9 @@ Hoje esses `.tsx` têm versões simples (do commit "Modelos 3D" do dono), que se
 
 **Bloqueio (31/10/2026):** nenhum dos 6 tem `osm.xml` guardado, e a rede da sessão só deixa passar o `WebSearch`
 (OSM, Wikimedia, Wikipédia, Esri e `WebFetch` recusados). Sem a planta e sem foto, a forma desses prédios teria de ser
-inventada. Antes de continuar, o dono precisa liberar em *Network access* do ambiente: `api.openstreetmap.org`,
-`upload.wikimedia.org`, `commons.wikimedia.org`, `pt.wikipedia.org` e `server.arcgisonline.com`. A alternativa é ele
-autorizar modelos só por texto, com as formas marcadas como interpretação. Na Igreja de Fátima, a pesquisa de texto já
-está na ficha.
+inventada. O dono vai mandar outro agente fazer a pesquisa com o prompt de `PROMPT-PESQUISA-6-MARCOS.md`. A entrega
+(`osm.xml`, `ficha.md` e fotos) vem num branch próprio ou num .zip. Com ela em mãos, siga o `ESPECIALISTA-BLENDER.md`
+marco a marco. Na Igreja de Fátima, a pesquisa de texto já está na ficha.
 
 Depois deles vem a **2ª rodada (14 pontos)**, que o dono pediu "depois dos 17": são os pinos restantes de lagoas, parques, hospitais etc. em `dashboard/historias.js`. Confirmar com o dono antes de começar.
 
