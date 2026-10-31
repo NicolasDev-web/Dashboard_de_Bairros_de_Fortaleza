@@ -62,6 +62,13 @@
     dragaoDoMar: { arquivo: "centro-dragao-do-mar.glb", nome: "Centro Dragão do Mar de Arte e Cultura", rotulo: "Dragão do Mar", lat: -3.7216677, lng: -38.5201742, altura: 16 },
     passeioPublico: { arquivo: "passeio-publico.glb", nome: "Passeio Público (Praça dos Mártires)", rotulo: "Passeio Público", lat: -3.7226365, lng: -38.5263038, altura: 11 },
     theatroJoseDeAlencar: { arquivo: "theatro-jose-de-alencar.glb", nome: "Theatro José de Alencar", rotulo: "Theatro José de Alencar", lat: -3.727786, lng: -38.5317064, altura: 18 },
+    estadioPv: { arquivo: "estadio-presidente-vargas.glb", nome: "Estádio Presidente Vargas", rotulo: "Estádio Presidente Vargas", lat: -3.7459909, lng: -38.5368948, altura: 22 },
+    reitoriaUfc: { arquivo: "reitoria-ufc.glb", nome: "Reitoria da UFC (antigo palacete Gentil)", rotulo: "Reitoria da UFC", lat: -3.7414294, lng: -38.5393982, altura: 16 },
+    estoril: { arquivo: "estoril.glb", nome: "Estoril", lat: -3.7190974, lng: -38.516258, altura: 19 },
+    farolMucuripe: { arquivo: "farol-do-mucuripe.glb", nome: "Farol do Mucuripe (Farol Velho)", rotulo: "Farol do Mucuripe", lat: -3.7078217, lng: -38.4704039, altura: 25 },
+    palacioAbolicao: { arquivo: "palacio-da-abolicao.glb", nome: "Palácio da Abolição", lat: -3.7281783, lng: -38.5038238, altura: 14 },
+    iracemaMartim: { arquivo: "iracema-e-martim-mucuripe.glb", nome: "Monumento a Iracema e Martim (Mucuripe)", rotulo: "Iracema e Martim", lat: -3.7230553, lng: -38.4843485, altura: 19 },
+    marcoZero: { arquivo: "marco-zero-barra-do-ceara.glb", nome: "Marco Zero de Fortaleza (Praça do Santiago)", rotulo: "Marco Zero", lat: -3.6940003, lng: -38.5862496, altura: 18 },
   };
 
   window.HISTORIAS = {
@@ -138,7 +145,7 @@
         "A Ponte dos Ingleses começou a ser construída em 1921 e nunca foi concluída como porto; virou mirante e passeio. O piso de madeira foi refeito em concreto numa obra iniciada em 2023.",
         "A Iracema Guardiã, de Zenon Barreto, foi pensada nos anos 1960 e instalada em 1996, nos 25 anos do bairro. Ganhou o nome atual em 2002, após a morte do artista.",
       ], [OPOVO_PI100, OPOVO_GUARDIA]),
-      ponto("Estoril", -3.7190974, -38.516258, "O Estoril", [
+      marco("estoril", "O Estoril", [
         "O palacete do Estoril foi o símbolo da boemia dos anos 1940, quando abrigava um cassino. É um dos casarões mais antigos que restam no bairro.",
       ], [IP(32), OSM]),
     ] },
@@ -249,7 +256,7 @@
         "Foi na Barra do Ceará, na foz do rio, que Pero Coelho fundou o Forte de São Tiago, em 1604, e onde funcionou a primeira Câmara Municipal. Por isso o bairro é considerado o mais antigo da cidade. Há quem diga que o espanhol Vicente Pinzón desembarcou por aqui antes de Cabral chegar à Bahia.",
         "Nos anos 1930, o bairro teve um porto de hidroaviões. Um dos passageiros que desceram ali foi Antoine de Saint-Exupéry, autor de “O Pequeno Príncipe”.",
       ], IP(6)),
-      ponto("Marco Zero", -3.694469, -38.5860534, "O Marco Zero da cidade", [
+      marco("marcoZero", "O Marco Zero da cidade", [
         "Onde ficava o forte está a Praça de Santiago, com o Marco Zero de Fortaleza: um cruzeiro com imagens de São Tiago, do Cristo Crucificado, de Nossa Senhora da Assunção e de São José, presente do governo da Espanha em lembrança de Pinzón.",
       ], [IP(6), OSM]),
     ] },
@@ -258,10 +265,10 @@
         "Segundo o historiador João Nogueira, a elite de Fortaleza queria um lugar para “bem ficar”, e daí veio o nome Benfica. As chácaras cresceram em torno da igreja de Nossa Senhora dos Remédios, onde ficava o ponto final da linha de bondes.",
         "A época de ouro veio com o palacete da família Gentil, de 1918, que deu nome à Gentilândia. Hoje é o bairro universitário e boêmio da cidade, com a feira e o Carnaval da Praça da Gentilândia.",
       ], IP(7)),
-      ponto("Reitoria da UFC", -3.7414294, -38.5393982, "A Reitoria da UFC", [
+      marco("reitoriaUfc", "A Reitoria da UFC", [
         "O antigo palacete da família Gentil abriga hoje a Reitoria da Universidade Federal do Ceará, que tem no Benfica um dos seus campi.",
       ], [IP(7), OSM]),
-      ponto("Estádio Presidente Vargas", -3.7459909, -38.5368948, "Estádio Presidente Vargas", [
+      marco("estadioPv", "Estádio Presidente Vargas", [
         "O PV foi o primeiro grande estádio de futebol do Ceará, décadas antes do Castelão.",
       ], [IP(7), OSM]),
     ] },
@@ -348,7 +355,7 @@
         "O Meireles era terra de jangadeiros; a partir dos anos 1960, vieram as casas de veraneio. O nome já aparece na carta da Capitania do Ceará de 1818, mas ninguém sabe ao certo de onde vem: Meireles é um sobrenome português.",
         "A Avenida Beira-Mar empurrou os pescadores para perto do farol do Mucuripe. O Campo do América resistiu à especulação imobiliária e segue sendo o lazer dos moradores mais pobres.",
       ], IP(24)),
-      ponto("Palácio da Abolição", -3.7281783, -38.5038238, "Palácio da Abolição", [
+      marco("palacioAbolicao", "Palácio da Abolição", [
         "A sede do governo do Ceará foi projetada por Sérgio Bernardes e inaugurada em 1970. O governo se mudou para o Cambeba em 1987 e voltou para cá em 2011.",
       ], [OPOVO_ABOLICAO, OSM]),
     ] },
@@ -361,7 +368,7 @@
         "Em tupi, Mucuripe quer dizer “fazer alguém alegre”. A ponta do Mucuripe já aparece nos mapas do Ceará de 1629, e há quem diga que Vicente Pinzón desembarcou por aqui antes de Cabral.",
         "O bairro ainda vive da pesca: a igrejinha tem São Pedro como padroeiro. Nos anos 1940, foi escolhido para o porto da cidade. O cemitério de São Vicente de Paula, de 1912, é o menor de Fortaleza.",
       ], IP(26)),
-      ponto("Iracema e Martim", -3.7230553, -38.4843485, "Iracema, Martim, Moacir e Japi", [
+      marco("iracemaMartim", "Iracema, Martim, Moacir e Japi", [
         "No calçadão, o monumento homenageia Iracema, “a virgem dos lábios de mel”, com Martim Soares Moreno, o filho Moacir e o cão Japi, personagens de José de Alencar.",
       ], [IP(26), OSM]),
     ] },
@@ -690,7 +697,7 @@
         "Cercado pelo mar, o Cais do Porto também é chamado de Serviluz, por causa da antiga Companhia de Serviço de Força e Luz instalada ali.",
         "Do bairro saíram campeões de surfe, como Tita Tavares e Fábio Silva.",
       ], IP(110)),
-      ponto("Farol do Mucuripe", -3.7078217, -38.4704039, "Farol do Mucuripe", [
+      marco("farolMucuripe", "Farol do Mucuripe", [
         "Construído entre 1840 e 1846, guiou os barcos até os anos 1950 e virou o Museu do Jangadeiro. Está no brasão do Ceará e é tido como a segunda construção mais antiga da cidade.",
       ], [IP(110), IP(26), OSM]),
     ] },
