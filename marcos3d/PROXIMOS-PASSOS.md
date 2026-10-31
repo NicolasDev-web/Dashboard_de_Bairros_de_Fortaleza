@@ -2,7 +2,7 @@
 
 Este é o resumo de passagem para a próxima sessão. Leia junto com `ESPECIALISTA-BLENDER.md` (o método aprovado), `CONVENCOES.md` e `MASTERCRAFT.md`.
 
-- **Branch de trabalho:** `claude/stoic-darwin-yj7lad`.
+- **Branch de trabalho:** `claude/epic-einstein-r0ury3` (continua o `claude/stoic-darwin-yj7lad`, que ficou para trás).
 - **Site:** a Vercel publica a `main` (pasta `dashboard/`).
 
 ## Onde paramos (31/10/2026)
@@ -22,14 +22,18 @@ O `checar` passa em todos, e os renders estão em `renders/<id>/tsx-*.png`.
 | farolMucuripe | farol-do-mucuripe.glb | 25 | Cais do Porto (110) | −3.7078217, −38.4704039 |
 | palacioAbolicao | palacio-da-abolicao.glb | 14 | Meireles (24) | −3.7281783, −38.5038238 |
 | iracemaMartim | iracema-e-martim-mucuripe.glb | 19 | Mucuripe (26) | −3.7230553, −38.4843485 |
+| marcoZero | marco-zero-barra-do-ceara.glb | 18 | Barra do Ceará (6) | −3.694469, −38.5860534 |
 
-### Faltam fazer (7)
+O Marco Zero foi feito em 31/10/2026 (2ª sessão). Os renders dos 7 estão juntos em `renders/aprovacao/prancha-*.jpg`
+(fora do git; refazer com `npm run render` e o recorte do relatório). No `historias.js`, o ponto do Marco Zero é o da
+estação do Bicicletar; o monumento fica ~56 m ao norte-noroeste, e o pino pode continuar onde está.
+
+### Faltam fazer (6)
 Fazer com o método do `ESPECIALISTA-BLENDER.md`, **2 especialistas por vez**:
 
 | id | componente | GLB | lat, lng | pesquisa |
 |---|---|---|---|---|
-| marcoZero | novos/MarcoZero.tsx | marco-zero-barra-do-ceara.glb | −3.694469, −38.5860534 | `pesquisa/marcoZero/` (OSM) |
-| igrejaFatima | novos/IgrejaFatima.tsx | igreja-de-fatima.glb | −3.7524955, −38.5266562 | sem pasta |
+| igrejaFatima | novos/IgrejaFatima.tsx | igreja-de-fatima.glb | −3.7524955, −38.5266562 | `pesquisa/igrejaFatima/ficha.md` (só texto: falta planta e torre) |
 | mosteiroSaoBento | novos/MosteiroSaoBento.tsx | mosteiro-de-sao-bento.glb | −3.8510433, −38.480721 | sem pasta |
 | casaAlencar | novos/CasaAlencar.tsx | casa-de-jose-de-alencar.glb | −3.8124, −38.4774 | sem pasta |
 | mercadoAerolandia | novos/MercadoAerolandia.tsx | mercado-da-aerolandia.glb | −3.7685259, −38.5170066 | sem pasta |
@@ -37,6 +41,13 @@ Fazer com o método do `ESPECIALISTA-BLENDER.md`, **2 especialistas por vez**:
 | ccbj | novos/CentroCulturalBomJardim.tsx | centro-cultural-bom-jardim.glb | −3.7859455, −38.6097667 | sem pasta |
 
 Hoje esses `.tsx` têm versões simples (do commit "Modelos 3D" do dono), que serão substituídas.
+
+**Bloqueio (31/10/2026):** nenhum dos 6 tem `osm.xml` guardado, e a rede da sessão só deixa passar o `WebSearch`
+(OSM, Wikimedia, Wikipédia, Esri e `WebFetch` recusados). Sem a planta e sem foto, a forma desses prédios teria de ser
+inventada. Antes de continuar, o dono precisa liberar em *Network access* do ambiente: `api.openstreetmap.org`,
+`upload.wikimedia.org`, `commons.wikimedia.org`, `pt.wikipedia.org` e `server.arcgisonline.com`. A alternativa é ele
+autorizar modelos só por texto, com as formas marcadas como interpretação. Na Igreja de Fátima, a pesquisa de texto já
+está na ficha.
 
 Depois deles vem a **2ª rodada (14 pontos)**, que o dono pediu "depois dos 17": são os pinos restantes de lagoas, parques, hospitais etc. em `dashboard/historias.js`. Confirmar com o dono antes de começar.
 
@@ -73,7 +84,7 @@ Faça tudo numa **worktree da `main`**, para não atrapalhar os especialistas no
    Depois rode `git merge origin/main` no branch de trabalho. Em caso de conflito em `novos/*.tsx` ou `saida/*.glb`, fique com a versão do branch (a do Blender).
 
 ## Ambiente (container na nuvem)
-- **Blender 5.2.3 como módulo Python:** `/tmp/claude-0/-home-user-Dashboard-de-Bairros-de-Fortaleza/4b30ae7d-c759-5797-8748-71257a343420/scratchpad/blender-venv/bin/python`. Ele fica na pasta temporária da sessão antiga. **Numa sessão nova, reinstale:**
+- **Blender 5.2.3 como módulo Python:** `/tmp/claude-0/-home-user-Dashboard-de-Bairros-de-Fortaleza/4b30ae7d-c759-5797-8748-71257a343420/scratchpad/blender-venv/bin/python`. Ele fica na pasta temporária da sessão, que some com ela. **Numa sessão nova, reinstale** (em 31/10/2026 levou ~2 min com o script de 16 partes):
   1. `python3 -m venv <scratch>/blender-venv`;
   2. baixe o wheel `bpy-5.2.3-cp313-cp313-manylinux_2_28_x86_64.whl` (~400 MB) de `files.pythonhosted.org` em 16 partes paralelas com `curl -r` (o `pip` sozinho leva ~30 min). A URL sai de `https://pypi.org/pypi/bpy/5.2.3/json`;
   3. `pip install <wheel>`.
@@ -90,7 +101,7 @@ Faça tudo numa **worktree da `main`**, para não atrapalhar os especialistas no
 ## Como rodar cada especialista
 - Use `Agent` com o tipo `general-purpose`, em segundo plano, **um marco por especialista e dois por vez**.
 - O prompt usado está nos relatórios anteriores. Basta copiar o de `relatorios/especialista-palacioAbolicao.md` e o modelo do pedido, trocando o id, o componente, o GLB, a lat/lng e a **porta**.
-- As portas 5361–5380 já foram usadas; use as de 5381 em diante.
+- As portas 5361–5382 já foram usadas; use as de 5383 em diante.
 - Cada especialista escreve:
   - `blender/<id>.py`
   - `blender/saida/<id>-*`
