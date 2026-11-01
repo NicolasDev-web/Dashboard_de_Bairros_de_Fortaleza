@@ -1,0 +1,166 @@
+/* Avexado — página de trânsito. Usa os tokens e componentes de styles.css. */
+:root {
+  /* rampa laranja dos sinistros, a partir de --perda */
+  --l1: #f7d3b8; --l2: #f3b184; --l3: #ee8e53; --l4: #e8631e; --l5: #c04c12; --l6: #86330a;
+  --rua: #c3c5dc;
+  --rua-forte: #a9acd0;
+  --bairro: #f5f5f9;
+}
+
+/* ---------- abertura ---------- */
+.t-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
+.t-hero .t-sub { font-size: .38em; letter-spacing: -0.03em; margin-top: .25em; opacity: .9; }
+.t-hero-mapa { position: relative; margin: 0; align-self: stretch; min-height: 420px; display: flex; flex-direction: column; justify-content: center; }
+#hero-mapa { width: 100%; height: auto; max-height: 78vh; overflow: visible; }
+#hero-mapa .contorno { fill: rgba(255, 255, 255, .07); stroke: rgba(255, 255, 255, .28); stroke-width: 1; vector-effect: non-scaling-stroke; }
+#hero-mapa .bairro { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: .6; vector-effect: non-scaling-stroke; }
+#hero-mapa .rua { fill: none; stroke: rgba(255, 255, 255, .16); stroke-width: .7; vector-effect: non-scaling-stroke; }
+#hero-mapa .corredor {
+  fill: none; stroke: var(--branco); stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1600ms var(--curva);
+}
+.t-hero.pronto #hero-mapa .corredor { stroke-dashoffset: 0; }
+#hero-mapa .pulso { fill: var(--branco); }
+#hero-mapa .pulso-anel { fill: none; stroke: var(--branco); stroke-width: 1.2; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; animation: pulso 2.4s ease-out infinite; opacity: 0; }
+#hero-mapa .pulso-rotulo { font-family: var(--mono); font-size: 11px; fill: var(--branco); paint-order: stroke; stroke: var(--cobalto-fundo); stroke-width: 4px; }
+@keyframes pulso { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(3.2); opacity: 0; } }
+.hero-legenda { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; opacity: .8; }
+.t-leg-linha { display: inline-block; width: 26px; background: var(--branco); border-radius: 2px; margin-left: 8px; }
+.t-leg-linha.fina { height: 1.5px; margin-left: 0; }
+.t-leg-linha.grossa { height: 5px; }
+
+/* ---------- frase ---------- */
+.frase-texto strong { font-weight: inherit; }
+
+/* ---------- seções ---------- */
+.t-sec { padding: 96px var(--g) 88px; border-top: 1px solid var(--linha); }
+.t-kicker { font-family: var(--mono); font-size: 12px; color: var(--cobalto); margin-bottom: 14px; letter-spacing: .02em; }
+.t-kicker-laranja { color: var(--perda); }
+.t-sec-sinistros .secao-cabeca h2, #quando .secao-cabeca h2 { color: var(--tinta); }
+
+.t-grade { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(280px, 1fr); gap: 20px; align-items: start; }
+.t-mapa {
+  position: relative; margin: 0; background: var(--papel-claro); border: 1px solid var(--linha);
+  border-radius: var(--raio); padding: 12px 12px 10px; overflow: hidden;
+}
+.t-mapa svg { display: block; width: 100%; height: auto; touch-action: manipulation; }
+.t-mapa .bairro { fill: var(--bairro); stroke: var(--linha); stroke-width: .7; vector-effect: non-scaling-stroke; }
+.t-mapa .contorno { fill: none; stroke: var(--tinta-3); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .5; }
+.t-mapa .rua { fill: none; stroke: var(--rua); stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.t-mapa .rua.Expressa, .t-mapa .rua.Arterial-I { stroke: var(--rua-forte); stroke-width: 1.1; }
+.t-mapa .rua.Arterial-II { stroke-width: .9; }
+.t-mapa .rua.Coletora { stroke-width: .55; }
+.t-mapa .corredor {
+  fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; cursor: pointer;
+  transition: opacity var(--t-rapida), stroke var(--t-rapida);
+}
+.t-mapa .corredor-toque { fill: none; stroke: transparent; stroke-width: 14; vector-effect: non-scaling-stroke; cursor: pointer; }
+.t-mapa .radar { fill: var(--branco); stroke: var(--tinta); stroke-width: 1; vector-effect: non-scaling-stroke; pointer-events: none; }
+.t-mapa.foco .corredor:not(.ativo) { opacity: .14; }
+.t-mapa.foco .radar:not(.ativo) { opacity: .15; }
+.t-mapa .corredor.ativo { filter: drop-shadow(0 0 3px rgba(47, 55, 196, .45)); }
+.t-mapa .rotulo-via { font-family: var(--mono); font-size: 12px; fill: var(--tinta); paint-order: stroke; stroke: var(--papel-claro); stroke-width: 4px; pointer-events: none; }
+
+.t-mapa .critico { fill: var(--perda); fill-opacity: .55; stroke: var(--l5); stroke-width: 1; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill-opacity var(--t-rapida); }
+.t-mapa .critico.morte { stroke: var(--tinta); stroke-width: 1.6; }
+.t-mapa .critico:hover, .t-mapa .critico.ativo { fill-opacity: .95; }
+.t-mapa .critico { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform 700ms var(--curva), fill-opacity var(--t-rapida); }
+.t-mapa.visivel .critico { transform: scale(1); }
+
+.t-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); }
+.t-rampa { display: inline-flex; height: 8px; width: 180px; border-radius: 2px; overflow: hidden; }
+.t-rampa i { flex: 1; }
+.t-rampa-rotulos { display: inline-flex; gap: 8px; }
+.t-bola { display: inline-block; border-radius: 50%; background: var(--perda); opacity: .7; border: 1px solid var(--l5); }
+.t-bola.p { width: 7px; height: 7px; } .t-bola.m { width: 13px; height: 13px; } .t-bola.g { width: 21px; height: 21px; }
+.t-bola.morte { width: 11px; height: 11px; border: 1.6px solid var(--tinta); margin-left: 8px; }
+
+/* dica flutuante */
+.t-dica {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 180px; max-width: 260px;
+  background: var(--tinta); color: var(--branco); border-radius: var(--raio); padding: 10px 12px;
+  font-size: 13px; line-height: 1.35; box-shadow: 0 6px 24px rgba(21, 24, 79, .25);
+}
+.t-dica b { display: block; font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+.t-dica .num { font-family: var(--mono); font-size: 20px; letter-spacing: -0.02em; display: block; margin: 2px 0; }
+.t-dica small { display: block; font-family: var(--mono); font-size: 11px; opacity: .75; }
+
+/* listas */
+.t-lista { background: var(--branco); border: 1px solid var(--linha); border-radius: var(--raio); padding: 18px 18px 16px; }
+.t-lista-cabeca { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.t-lista h3 { font-size: 18px; letter-spacing: -0.02em; }
+.t-ranking { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; counter-reset: r; }
+.t-ranking li { counter-increment: r; }
+.t-ranking button {
+  width: 100%; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; grid-template-rows: auto auto;
+  column-gap: 8px; row-gap: 4px; align-items: center; text-align: left;
+  background: none; border: 0; border-radius: 2px; padding: 6px 6px; cursor: pointer;
+}
+.t-ranking button::before { content: counter(r, decimal-leading-zero); font-family: var(--mono); font-size: 11px; color: var(--tinta-3); grid-row: 1 / 3; }
+.t-ranking button:hover, .t-ranking button[aria-pressed="true"] { background: rgba(47, 55, 196, .07); }
+.t-ranking .nome { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t-ranking .nome small { color: var(--tinta-3); font-size: 12px; margin-left: 4px; }
+.t-ranking .valor { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--tinta-2); }
+.t-ranking .barra { grid-column: 2 / 4; height: 4px; background: var(--papel); border-radius: 2px; overflow: hidden; }
+.t-ranking .barra i { display: block; height: 100%; background: var(--cobalto); border-radius: 2px; width: 0; transition: width 900ms var(--curva); }
+.t-ranking-laranja .barra i { background: var(--perda); }
+.t-ranking-laranja button { cursor: default; }
+.t-ranking-laranja button:hover { background: none; }
+.t-nota { font-size: 12.5px; color: var(--tinta-3); margin-top: 12px; line-height: 1.5; }
+
+/* números dos sinistros */
+.t-numeros { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 0 0 28px; }
+.t-numeros div { border-top: 2px solid var(--perda); padding-top: 12px; display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+.t-numeros dt { font-size: 13.5px; color: var(--tinta-2); max-width: 30ch; }
+.t-numeros dd { margin: 0 0 4px; font-size: clamp(28px, 3vw, 42px); letter-spacing: -0.03em; color: var(--tinta); font-variant-numeric: tabular-nums; }
+
+/* mapa de calor */
+.t-calor-fig { position: relative; margin: 0; }
+.t-calor { display: grid; grid-template-columns: 44px repeat(24, minmax(0, 1fr)); gap: 3px; }
+.t-calor .dia, .t-calor .hora { font-family: var(--mono); font-size: 11px; color: var(--tinta-3); display: flex; align-items: center; }
+.t-calor .hora { justify-content: center; padding-top: 4px; }
+.t-calor .cel { aspect-ratio: 1.35; border-radius: 2px; background: var(--l1); cursor: default; transform: scale(.4); opacity: 0; transition: transform 500ms var(--curva), opacity 500ms; }
+.t-calor.visivel .cel { transform: none; opacity: 1; }
+.t-calor .cel:hover { outline: 2px solid var(--tinta); outline-offset: 1px; }
+.t-calor-leg { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-family: var(--mono); font-size: 11px; color: var(--tinta-2); }
+.t-dica-calor { min-width: 150px; }
+
+/* série anual */
+.t-serie-bloco { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(0, 2.4fr); gap: 32px; align-items: end; margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--linha); }
+.t-serie-bloco h3 { font-size: 22px; letter-spacing: -0.02em; }
+.t-serie { width: 100%; height: auto; overflow: visible; }
+.t-serie .bar { fill: var(--l2); }
+.t-serie .bar.ultimo { fill: var(--perda); }
+.t-serie .linha-mortes { fill: none; stroke: var(--tinta); stroke-width: 2; }
+.t-serie .pt { fill: var(--tinta); }
+.t-serie text { font-family: var(--mono); font-size: 11px; fill: var(--tinta-2); }
+.t-serie .val { fill: var(--tinta); }
+.t-serie .val-m { fill: var(--tinta); font-weight: 500; paint-order: stroke; stroke: var(--l2); stroke-width: 4px; stroke-linejoin: round; }
+
+.metodo code { font-family: var(--mono); font-size: .92em; }
+
+/* ---------- telas menores ---------- */
+@media (max-width: 960px) {
+  .t-hero { grid-template-columns: 1fr; }
+  .t-hero-mapa { min-height: 0; order: -1; }
+  #hero-mapa { max-height: 46vh; }
+  .t-grade { grid-template-columns: 1fr; }
+  .t-numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .t-serie-bloco { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (max-width: 640px) {
+  .pagina-transito .numeros { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .pagina-transito .numeros dd { font-size: 28px; }
+  .pagina-transito .numeros dt { font-size: 12px; }
+  .t-calor .cel { aspect-ratio: 1; }
+  .t-sec { padding: 72px var(--g) 64px; }
+  .t-calor { grid-template-columns: 30px repeat(24, minmax(0, 1fr)); gap: 1.5px; }
+  .t-calor .hora:nth-child(odd) { visibility: hidden; }
+  .t-rampa { width: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero-mapa .corredor { transition: none; stroke-dashoffset: 0; }
+  #hero-mapa .pulso-anel { animation: none; }
+  .t-mapa .critico, .t-calor .cel { transition: none; transform: none; opacity: 1; }
+}

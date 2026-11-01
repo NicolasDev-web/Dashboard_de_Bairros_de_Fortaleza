@@ -6,6 +6,8 @@ Dashboard que compara os 121 bairros de Fortaleza por renda, saneamento e segura
 
 **Onde morar:** `dashboard/morar.html` é uma página à parte com um questionário de 9 perguntas (renda, entrada e quartos, e o peso de segurança, saúde, lazer, infraestrutura, mobilidade, escolas, comércio e ritmo do bairro). A cidade em pixels acende conforme as respostas e, no fim, o mapa e a lista mostram os bairros mais compatíveis dentro do orçamento. O resultado fica no endereço da página, então dá para compartilhar o link.
 
+**Avexado, o trânsito (protótipo):** `dashboard/transito.html` mostra por onde passa mais carro em Fortaleza, pela média de veículos por dia dos radares da AMC (jul/2024 a jun/2025), com cada avenida desenhada sobre os trechos de logradouro da Seuma, e onde o trânsito machuca: pontos críticos, mapa de calor hora × dia e dez anos de sinistros (2015–2024). Tudo em SVG, sem biblioteca de mapa; os dados saem da etapa 14.
+
 **O bairro em 3D:** a ficha de cada bairro tem o botão "Conhecer o bairro em 3D", que abre um tour em tela cheia (`dashboard/bairro3d.js`). O contorno do bairro sobe do mapa em 3D, as miniaturas dos marcos (`dashboard/marcos/*.glb`, 13 modelos low-poly) pousam em cima e a câmera percorre os capítulos da história, com pinos nos outros pontos importantes. O texto e as fontes de cada capítulo ficam em `dashboard/historias.js`, e `#b3d=ID` no endereço abre o tour direto. O three.js vem do jsDelivr e só é baixado na primeira abertura; sem WebGL, a camada mostra só o texto. Abra a página por um servidor (`python -m http.server` dentro de `dashboard/`), porque os módulos e os GLB não carregam por `file://`. Depois de mexer nas histórias, rode `node scripts/validar_historias.js`: ele confere se todo bairro tem história com fonte e se cada pino cai dentro do próprio bairro.
 
 ## Pipeline de dados
@@ -28,6 +30,7 @@ python -m venv .venv
 .venv/Scripts/python scripts/11_pracas.py             # praças da URBIFOR (2019) por bairro -> dashboard/pracas.js
 .venv/Scripts/python scripts/12_transporte.py         # tempo e rotas de ônibus/metrô -> dashboard/transporte*.js
 .venv/Scripts/python scripts/13_linhas_bairros.py     # linhas por bairro e paradas (rede atual) -> dashboard/linhas*.js, paradas.js
+.venv/Scripts/python scripts/14_transito.py           # volume dos radares e sinistros da AMC -> dashboard/transito.js
 ```
 
 A etapa 6 lê a saída da 8: se mexer nas regionais, rode a 8 e depois a 6.

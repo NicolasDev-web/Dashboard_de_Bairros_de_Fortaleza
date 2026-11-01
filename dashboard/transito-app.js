@@ -1,0 +1,330 @@
+/* Avexado — o trânsito de Fortaleza. Lê window.TRANSITO (scripts/14_transito.py) e desenha tudo em SVG. */
+(() => {
+  "use strict";
+  const T = window.TRANSITO;
+  const REDUZIR = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NS = "http://www.w3.org/2000/svg";
+  const nf0 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
+  const nf1 = new Intl.NumberFormat("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const mil = (v) => (v >= 1000 ? nf0.format(Math.round(v / 1000)) + " mil" : nf0.format(v));
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $ = (id) => document.getElementById(id);
+
+  function el(tag, attrs = {}, filhos = []) {
+    const e = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "texto") e.textContent = v;
+      else if (k === "html") e.innerHTML = v;
+      else e.setAttribute(k, v);
+    }
+    for (const f of [].concat(filhos)) if (f != null) e.append(f);
+    return e;
+  }
+  function s(tag, attrs = {}, filhos = []) {
+    const e = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "texto") e.textContent = v;
+      else e.setAttribute(k, v);
+    }
+    for (const f of [].concat(filhos)) if (f != null) e.append(f);
+    return e;
+  }
+  const curto = (via) => via.replace(/^Av\.\s+/, "").replace(/\s*\(.*\)$/, "");
+
+  // ----------------------------------------------------------- escalas
+  const CORTES = [20000, 30000, 40000, 50000, 60000];
+  const RAMPA = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"].map(css);
+  const corVolume = (v) => RAMPA[CORTES.filter((c) => v >= c).length];
+  const larguraVolume = (v) => Math.max(1.1, Math.min(6, 1 + (v / 75000) * 5));
+  const LARANJA = ["--l1", "--l2", "--l3", "--l4", "--l5", "--l6"].map(css);
+
+  // um ponto de cada via: o radar mais movimentado
+  const melhorPorVia = new Map();
+  for (const r of T.radares) if (!melhorPorVia.has(r.via) || melhorPorVia.get(r.via).vmd < r.vmd) melhorPorVia.set(r.via, r);
+
+  function baseMapa(svg, { classesRua = ["Coletora", "Arterial II", "Arterial I", "Expressa"], bairros = true } = {}) {
+    svg.setAttribute("viewBox", T.viewBox.join(" "));
+    const g = s("g");
+    if (bairros) {
+      const gb = s("g");
+      for (const b of T.bairros) gb.append(s("path", { d: b.d, class: "bairro" }, [s("title", { texto: b.nome })]));
+      g.append(gb);
+    }
+    g.append(s("path", { d: T.contorno, class: "contorno" }));
+    for (const c of classesRua) g.append(s("path", { d: T.base[c], class: "rua " + c.replace(" ", "-") }));
+    svg.append(g);
+    return g;
+  }
+
+  // dica flutuante, presa à figura
+  function dica(fig, caixa) {
+    return {
+      mostrar(ev, html) {
+        caixa.innerHTML = html;
+        caixa.hidden = false;
+        const r = fig.getBoundingClientRect();
+        let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+        const w = caixa.offsetWidth, h = caixa.offsetHeight;
+        if (x + w > r.width - 8) x = ev.clientX - r.left - w - 14;
+        if (y + h > r.height - 8) y = ev.clientY - r.top - h - 14;
+        caixa.style.left = Math.max(6, x) + "px";
+        caixa.style.top = Math.max(6, y) + "px";
+      },
+      esconder() { caixa.hidden = true; },
+    };
+  }
+
+  // ----------------------------------------------------------- abertura
+  (function abertura() {
+    const svg = $("hero-mapa");
+    svg.setAttribute("viewBox", T.viewBox.join(" "));
+    const gb = s("g");
+    for (const b of T.bairros) gb.append(s("path", { d: b.d, class: "bairro" }));
+    svg.append(s("path", { d: T.contorno, class: "contorno" }), gb,
+      s("path", { d: T.base["Arterial I"], class: "rua" }), s("path", { d: T.base["Expressa"], class: "rua" }));
+    const gc = s("g");
+    T.corredores.forEach((c, i) => {
+      const p = s("path", { d: c.d, class: "corredor", pathLength: 1, "stroke-width": larguraVolume(c.vmd) });
+      p.style.transitionDelay = (REDUZIR ? 0 : 300 + i * 9) + "ms";
+      gc.append(p);
+    });
+    svg.append(gc);
+    T.ranking.slice(0, 3).forEach((r, i) => {
+      const pt = melhorPorVia.get(r.via);
+      if (!pt) return;
+      const [x, y] = pt.xy;
+      const anel = s("circle", { cx: x, cy: y, r: 6, class: "pulso-anel" });
+      anel.style.animationDelay = 1.6 + i * 0.5 + "s";
+      const esq = x > T.viewBox[2] * 0.62;
+      svg.append(anel, s("circle", { cx: x, cy: y, r: 3.2, class: "pulso" }),
+        s("text", { x: x + (esq ? -9 : 9), y: y + 4, class: "pulso-rotulo", "text-anchor": esq ? "end" : "start",
+          texto: `${curto(r.via)} · ${mil(r.vmd)}` }));
+    });
+    $("hero-rotulo").textContent = `${nf0.format(T.resumo.radares)} radares da AMC · ${nf0.format(T.anual.reduce((a, b) => a + b.sinistros, 0))} sinistros de 2015 a 2024`;
+    requestAnimationFrame(() => setTimeout(() => document.querySelector(".t-hero").classList.add("pronto"), 60));
+  })();
+
+  // ----------------------------------------------------------- frase
+  (function frase() {
+    const top = T.ranking[0];
+    const texto = `Num dia comum, ${mil(top.vmd)} veículos passam pela ${curto(top.via)} na altura do ${top.bairro}. ` +
+      `É mais carro do que gente morando no Jangurussu, o bairro mais populoso da cidade.`;
+    const p = $("frase-texto");
+    p.setAttribute("aria-label", texto);
+    const palavras = texto.split(/\s+/);
+    p.replaceChildren(...palavras.flatMap((w, i) => [el("span", { class: "p", "aria-hidden": "true", texto: w }), i < palavras.length - 1 ? " " : ""]));
+    const spans = [...p.querySelectorAll(".p")];
+    const sec = p.closest(".frase");
+    const vias40 = [...melhorPorVia.values()].filter((r) => r.vmd >= 40000).length;
+    $("numeros").replaceChildren(...[
+      [nf0.format(T.resumo.radares), "radares com contagem de veículos, em " + nf0.format(T.resumo.pontos) + " pontos da cidade."],
+      [nf0.format(T.resumo.vias), "avenidas e ruas medidas, de jul/2024 a jun/2025."],
+      [nf0.format(vias40), "vias com mais de 40 mil veículos por dia no ponto mais movimentado."],
+    ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
+
+    const nav = document.querySelector(".nav");
+    const hero = document.querySelector(".t-hero");
+    function rolar() {
+      nav.classList.toggle("clara", hero.getBoundingClientRect().bottom < 64);
+      const r = sec.getBoundingClientRect();
+      const prog = REDUZIR ? 1 : Math.min(1, Math.max(0, (-r.top + innerHeight * 0.35) / (r.height - innerHeight * 0.6)));
+      const n = Math.round(prog * spans.length);
+      spans.forEach((sp, i) => sp.classList.toggle("on", i < n));
+    }
+    addEventListener("scroll", rolar, { passive: true });
+    rolar();
+  })();
+
+  // ----------------------------------------------------------- 1. volume
+  (function volume() {
+    const svg = $("mapa-volume");
+    const fig = $("mapa-volume-fig");
+    const tip = dica(fig, $("dica-volume"));
+    baseMapa(svg);
+    const gC = s("g"), gT = s("g"), gR = s("g"), gL = s("g");
+    const porVia = new Map();
+    for (const c of T.corredores) {
+      const linha = s("path", { d: c.d, class: "corredor", stroke: corVolume(c.vmd), "stroke-width": larguraVolume(c.vmd) });
+      const toque = s("path", { d: c.d, class: "corredor-toque" });
+      const html = `<b>${c.via}</b><span class="num">${nf0.format(c.vmd)}</span><small>veículos por dia neste trecho</small>`;
+      toque.addEventListener("pointermove", (ev) => { tip.mostrar(ev, html); linha.style.strokeWidth = larguraVolume(c.vmd) + 2; });
+      toque.addEventListener("pointerleave", () => { tip.esconder(); linha.style.strokeWidth = ""; });
+      toque.addEventListener("click", () => focar(c.via));
+      gC.append(linha); gT.append(toque);
+      if (!porVia.has(c.via)) porVia.set(c.via, []);
+      porVia.get(c.via).push(linha);
+    }
+    const radarEl = T.radares.map((r) => {
+      const c = s("circle", { cx: r.xy[0], cy: r.xy[1], r: 1.8, class: "radar" });
+      c.dataset.via = r.via;
+      gR.append(c);
+      return c;
+    });
+    svg.append(gC, gR, gT, gL);
+
+    // legenda
+    $("rampa-volume").replaceChildren(...RAMPA.map((c) => { const i = el("i"); i.style.background = c; return i; }));
+    $("rampa-volume-rotulos").replaceChildren(el("span", { texto: "< 20 mil" }), el("span", { texto: "· 40 mil ·" }), el("span", { texto: "> 60 mil" }));
+    const [a, b] = T.janela;
+    const mes = (m) => ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"][+m.slice(5) - 1] + "/" + m.slice(0, 4);
+    $("janela-txt").textContent = `${mes(a)} a ${mes(b)}`;
+
+    // ranking
+    const lista = $("ranking-volume");
+    const maxV = T.ranking[0].vmd;
+    const botoes = new Map();
+    T.ranking.forEach((r) => {
+      const barra = el("i");
+      const bt = el("button", { type: "button", "aria-pressed": "false" }, [
+        el("span", { class: "nome", html: `${r.via}${r.bairro ? `<small>${r.bairro}</small>` : ""}` }),
+        el("span", { class: "valor", texto: nf0.format(r.vmd) }),
+        el("span", { class: "barra", "aria-hidden": "true" }, [barra]),
+      ]);
+      bt.addEventListener("click", () => focar(r.via));
+      botoes.set(r.via, bt);
+      lista.append(el("li", {}, [bt]));
+      barra.dataset.w = (r.vmd / maxV) * 100 + "%";
+    });
+    aoAparecer(lista, () => lista.querySelectorAll(".barra i").forEach((i, k) => setTimeout(() => (i.style.width = i.dataset.w), REDUZIR ? 0 : k * 40)));
+
+    let atual = null;
+    const limpar = $("limpar-volume");
+    function focar(via) {
+      atual = atual === via ? null : via;
+      fig.classList.toggle("foco", !!atual);
+      for (const [v, ls] of porVia) ls.forEach((l) => l.classList.toggle("ativo", v === atual));
+      radarEl.forEach((c) => c.classList.toggle("ativo", c.dataset.via === atual));
+      for (const [v, bt] of botoes) bt.setAttribute("aria-pressed", String(v === atual));
+      limpar.hidden = !atual;
+      gL.replaceChildren();
+      if (atual && melhorPorVia.has(atual)) {
+        const p = melhorPorVia.get(atual);
+        const esq = p.xy[0] > T.viewBox[2] * 0.6;
+        gL.append(s("text", { x: p.xy[0] + (esq ? -10 : 10), y: p.xy[1] - 8, class: "rotulo-via", "text-anchor": esq ? "end" : "start",
+          texto: `${curto(atual)} · ${nf0.format(p.vmd)}/dia` }));
+      }
+    }
+    limpar.addEventListener("click", () => focar(atual));
+  })();
+
+  // ----------------------------------------------------------- 2. sinistros
+  (function sinistros() {
+    const [a0, , a1] = T.anos_sinistros;
+    document.querySelectorAll(".anos-sin").forEach((e) => (e.textContent = e.textContent.includes(" e ") ? `${a0} e ${a1}` : `${a0} a ${a1}`));
+    const R = T.resumo;
+    const primeiro = T.anual[0], ultimo = T.anual[T.anual.length - 1];
+    const dias = T.anos_sinistros.length * 365;
+    $("numeros-sinistros").replaceChildren(...[
+      [nf0.format(R.sinistros_periodo), `sinistros registrados de ${a0} a ${a1}, uns ${nf0.format(R.sinistros_periodo / dias)} por dia.`],
+      [nf0.format(R.mortos_periodo), `mortes no trânsito no mesmo período.`],
+      [nf0.format(R.moto_pct) + "%", "dos sinistros tiveram pelo menos uma moto envolvida."],
+      [nf0.format(Math.round((1 - ultimo.mortos / primeiro.mortos) * 100)) + "% menos", `mortes em ${ultimo.ANO} do que em ${primeiro.ANO} (${primeiro.mortos} → ${ultimo.mortos}).`],
+    ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
+
+    const svg = $("mapa-sinistros");
+    const fig = svg.closest(".t-mapa");
+    const tip = dica(fig, $("dica-sinistros"));
+    baseMapa(svg, { classesRua: ["Coletora", "Arterial II", "Arterial I", "Expressa"] });
+    const g = s("g");
+    const ordem = [...T.criticos].sort((x, y) => y.n - x.n);
+    ordem.forEach((c, i) => {
+      const bola = s("circle", { cx: c.xy[0], cy: c.xy[1], r: 0.78 * Math.sqrt(c.n), class: "critico" + (c.mortos ? " morte" : "") });
+      bola.style.transitionDelay = (REDUZIR ? 0 : 200 + i * 6) + "ms";
+      const html = `<b>${c.local}</b><span class="num">${nf0.format(c.n)}</span><small>sinistros em 3 anos · ${nf0.format((c.moto / c.n) * 100)}% com moto${c.mortos ? ` · ${c.mortos} ${c.mortos > 1 ? "mortes" : "morte"}` : ""}</small>`;
+      bola.addEventListener("pointermove", (ev) => { tip.mostrar(ev, html); bola.classList.add("ativo"); });
+      bola.addEventListener("pointerleave", () => { tip.esconder(); bola.classList.remove("ativo"); });
+      g.append(bola);
+    });
+    // os maiores atrás, para não esconder os pequenos
+    svg.append(g);
+    aoAparecer(fig, () => fig.classList.add("visivel"));
+
+    const lista = $("ranking-sinistros");
+    const maxN = T.sinistros_vias[0].n;
+    T.sinistros_vias.slice(0, 10).forEach((v) => {
+      const barra = el("i");
+      barra.dataset.w = (v.n / maxN) * 100 + "%";
+      lista.append(el("li", {}, [el("button", { type: "button", tabindex: "-1" }, [
+        el("span", { class: "nome", html: `${v.via}${v.mortos ? `<small>${v.mortos} mortes</small>` : ""}` }),
+        el("span", { class: "valor", texto: nf0.format(v.n) }),
+        el("span", { class: "barra", "aria-hidden": "true" }, [barra]),
+      ])]));
+    });
+    aoAparecer(lista, () => lista.querySelectorAll(".barra i").forEach((i, k) => setTimeout(() => (i.style.width = i.dataset.w), REDUZIR ? 0 : k * 40)));
+  })();
+
+  // ----------------------------------------------------------- 3. quando
+  (function quando() {
+    const DIAS = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+    const DIAS_LONGO = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+    const sem = T.calor.semanas;
+    const m = T.calor.matriz.map((linha) => linha.map((v) => v / sem));
+    const todos = m.flat().sort((x, y) => x - y);
+    const q = (p) => todos[Math.floor(p * (todos.length - 1))];
+    const cortes = [q(0.2), q(0.4), q(0.6), q(0.8), q(0.95)];
+    const cor = (v) => LARANJA[cortes.filter((c) => v >= c).length];
+    const box = $("calor");
+    const fig = box.closest(".t-calor-fig");
+    const tip = dica(fig, $("dica-calor"));
+    let pico = { v: -1 };
+    m.forEach((linha, d) => {
+      box.append(el("span", { class: "dia", texto: DIAS[d] }));
+      linha.forEach((v, h) => {
+        const c = el("span", { class: "cel" });
+        c.style.background = cor(v);
+        c.style.transitionDelay = (REDUZIR ? 0 : (h + d * 2) * 14) + "ms";
+        const html = `<b>${DIAS_LONGO[d]}, ${h}h</b><span class="num">${nf1.format(v)}</span><small>sinistros por semana, em média</small>`;
+        c.addEventListener("pointermove", (ev) => tip.mostrar(ev, html));
+        c.addEventListener("pointerleave", () => tip.esconder());
+        box.append(c);
+        if (v > pico.v) pico = { v, d, h };
+      });
+    });
+    box.append(el("span"));
+    for (let h = 0; h < 24; h++) box.append(el("span", { class: "hora", texto: String(h) }));
+    const leg = el("div", { class: "t-calor-leg" }, [el("span", { texto: "menos" }),
+      ...LARANJA.map((c) => { const i = el("span"); i.style.cssText = `width:16px;height:12px;border-radius:2px;background:${c}`; return i; }),
+      el("span", { texto: "mais sinistros" })]);
+    fig.append(leg);
+    aoAparecer(box, () => box.classList.add("visivel"));
+
+    // fins de semana de madrugada x dias úteis
+    const madrugadaFds = (m[5].slice(0, 5).reduce((a, b) => a + b) + m[6].slice(0, 5).reduce((a, b) => a + b)) / 10;
+    const madrugadaUtil = m.slice(0, 5).reduce((a, l) => a + l.slice(0, 5).reduce((x, y) => x + y), 0) / 25;
+    $("quando-nota").textContent = `Cada quadradinho é a média de sinistros por semana naquele horário, de ${T.anos_sinistros[0]} a ${T.anos_sinistros[2]}. ` +
+      `O pior horário é ${DIAS_LONGO[pico.d].toLowerCase()} às ${pico.h}h. Na madrugada do fim de semana há ${nf1.format(madrugadaFds / madrugadaUtil)} vezes mais registros que na dos dias úteis.`;
+
+    // série anual
+    const svg = $("serie");
+    const W = Math.max(360, Math.min(720, svg.clientWidth || 720)), H = W < 500 ? 260 : 240, P = { t: 26, r: 8, b: 26, l: 8 };
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const A = T.anual;
+    const maxS = Math.max(...A.map((x) => x.sinistros)), maxM = Math.max(...A.map((x) => x.mortos));
+    const bw = (W - P.l - P.r) / A.length;
+    const yS = (v) => H - P.b - (v / maxS) * (H - P.t - P.b);
+    const yM = (v) => H - P.b - (v / maxM) * (H - P.t - P.b) * 0.55;
+    const pts = [];
+    A.forEach((x, i) => {
+      const cx = P.l + bw * i + bw / 2;
+      svg.append(s("rect", { x: P.l + bw * i + bw * 0.14, y: yS(x.sinistros), width: bw * 0.72, height: H - P.b - yS(x.sinistros), rx: 2, class: "bar" + (i === A.length - 1 ? " ultimo" : "") }),
+        s("text", { x: cx, y: yS(x.sinistros) - 6, "text-anchor": "middle", class: "val", texto: W < 500 ? nf0.format(Math.round(x.sinistros / 1000)) + "k" : mil(x.sinistros) }),
+        s("text", { x: cx, y: H - 8, "text-anchor": "middle", texto: W < 500 ? "’" + String(x.ANO).slice(2) : x.ANO }));
+      pts.push([cx, yM(x.mortos), x.mortos]);
+    });
+    svg.append(s("path", { d: "M" + pts.map((p) => p[0] + " " + p[1]).join("L"), class: "linha-mortes" }));
+    pts.forEach(([x, y, v], i) => {
+      svg.append(s("circle", { cx: x, cy: y, r: 3.5, class: "pt" }));
+      if (i === 0 || i === pts.length - 1 || i === 5) svg.append(s("text", { x, y: i === 5 ? y + 18 : y - 10, "text-anchor": "middle", class: "val-m", texto: v + (W < 500 ? "" : " mortes") }));
+    });
+    const p20 = A.find((x) => x.ANO === 2020);
+    $("serie-nota").innerHTML = `Barras: sinistros por ano. Linha: mortes. Os registros caíram até ${p20 ? "2020, ano da pandemia (" + mil(p20.sinistros) + ")" : "2020"}, e voltaram a subir; as mortes seguiram caindo, de ${A[0].mortos} em ${A[0].ANO} para ${A[A.length - 1].mortos} em ${A[A.length - 1].ANO}.`;
+  })();
+
+  function aoAparecer(alvo, fn) {
+    if (REDUZIR || !("IntersectionObserver" in window)) return fn();
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { fn(); io.disconnect(); }
+    }, { threshold: 0.25 });
+    io.observe(alvo);
+  }
+})();
