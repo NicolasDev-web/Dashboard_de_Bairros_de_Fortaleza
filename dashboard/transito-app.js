@@ -141,10 +141,21 @@
     const fig = $("mapa-volume-fig");
     const tip = dica(fig, $("dica-volume"));
     baseMapa(svg);
-    const gC = s("g"), gT = s("g"), gR = s("g"), gL = s("g");
+    const gC = s("g"), gF = s("g", { class: "fluxos" }), gT = s("g"), gR = s("g", { class: "radares" }), gL = s("g");
     const porVia = new Map();
+    const fluxoPorVia = new Map();
+    const linhas = [];
     for (const c of T.corredores) {
-      const linha = s("path", { d: c.d, class: "corredor", stroke: corVolume(c.vmd), "stroke-width": larguraVolume(c.vmd) });
+      const linha = s("path", { d: c.d, class: "corredor", stroke: corVolume(c.vmd), "stroke-width": larguraVolume(c.vmd), pathLength: 1 });
+      linhas.push([linha, c.vmd]);
+      // "carros andando": tracinhos que correm sobre a via; mais carro, tracinhos mais juntos e mais rápidos
+      const f = Math.min(1, c.vmd / 70000);
+      const fluxo = s("path", { d: c.d, class: "fluxo", "stroke-width": Math.max(0.9, larguraVolume(c.vmd) * 0.5).toFixed(1), "stroke-dasharray": `${(1.6 + f * 1.4).toFixed(1)} ${(16 - f * 11).toFixed(1)}` });
+      fluxo.style.animationDuration = (3.2 - f * 2).toFixed(2) + "s";
+      fluxo.style.animationDelay = -(Math.random() * 3).toFixed(2) + "s";
+      gF.append(fluxo);
+      if (!fluxoPorVia.has(c.via)) fluxoPorVia.set(c.via, []);
+      fluxoPorVia.get(c.via).push(fluxo);
       const toque = s("path", { d: c.d, class: "corredor-toque" });
       const html = `<b>${c.via}</b><span class="num">${nf0.format(c.vmd)}</span><small>veículos por dia neste trecho</small>`;
       toque.addEventListener("pointermove", (ev) => { tip.mostrar(ev, html); linha.style.strokeWidth = larguraVolume(c.vmd) + 2; });
@@ -160,7 +171,36 @@
       gR.append(c);
       return c;
     });
-    svg.append(gC, gR, gT, gL);
+    svg.append(gC, gF, gR, gT, gL);
+
+    // animação de entrada: as vias se desenham das mais carregadas para as menos, e aí o fluxo começa
+    const ordem = [...linhas].sort((x, y) => y[1] - x[1]);
+    function animarEntrada() {
+      if (REDUZIR) { fig.classList.add("desenhado", "fluindo"); return; }
+      ordem.forEach(([l], i) => {
+        l.style.transition = `stroke-dashoffset 1100ms var(--curva) ${120 + i * 14}ms, opacity 180ms, stroke 180ms`;
+        l.style.strokeDashoffset = "0";
+      });
+      const fim = 120 + ordem.length * 14 + 1100;
+      setTimeout(() => {
+        ordem.forEach(([l]) => { l.style.transition = ""; l.style.strokeDasharray = "none"; });
+        fig.classList.add("desenhado");
+        if (!pausado) fig.classList.add("fluindo");
+      }, fim);
+    }
+    if (!REDUZIR) ordem.forEach(([l]) => { l.style.strokeDasharray = "1"; l.style.strokeDashoffset = "1"; });
+    aoAparecer(fig, animarEntrada);
+
+    // botão de pausa do movimento (acessibilidade: nada se mexe sem parar)
+    let pausado = REDUZIR;
+    const pausa = $("pausar-fluxo");
+    pausa.hidden = REDUZIR;
+    pausa.addEventListener("click", () => {
+      pausado = !pausado;
+      fig.classList.toggle("fluindo", !pausado && fig.classList.contains("desenhado"));
+      pausa.setAttribute("aria-pressed", String(pausado));
+      pausa.textContent = pausado ? "▶ Ver o movimento" : "❚❚ Pausar o movimento";
+    });
 
     // legenda
     $("rampa-volume").replaceChildren(...RAMPA.map((c) => { const i = el("i"); i.style.background = c; return i; }));
@@ -193,6 +233,7 @@
       atual = atual === via ? null : via;
       fig.classList.toggle("foco", !!atual);
       for (const [v, ls] of porVia) ls.forEach((l) => l.classList.toggle("ativo", v === atual));
+      for (const [v, fs] of fluxoPorVia) fs.forEach((f) => f.classList.toggle("ativo", v === atual));
       radarEl.forEach((c) => c.classList.toggle("ativo", c.dataset.via === atual));
       for (const [v, bt] of botoes) bt.setAttribute("aria-pressed", String(v === atual));
       limpar.hidden = !atual;

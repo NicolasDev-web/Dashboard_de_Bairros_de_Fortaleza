@@ -56,6 +56,21 @@
   transition: opacity var(--t-rapida), stroke var(--t-rapida);
 }
 .t-mapa .corredor-toque { fill: none; stroke: transparent; stroke-width: 14; vector-effect: non-scaling-stroke; cursor: pointer; }
+.t-mapa .fluxo {
+  fill: none; stroke: var(--branco); stroke-linecap: round; vector-effect: non-scaling-stroke;
+  pointer-events: none; opacity: 0; transition: opacity 600ms;
+  animation: fluir 2s linear infinite; animation-play-state: paused;
+}
+.t-mapa.fluindo .fluxo { opacity: .85; animation-play-state: running; }
+.t-mapa.foco .fluxo:not(.ativo) { opacity: 0; }
+@keyframes fluir { to { stroke-dashoffset: -36; } }
+.t-mapa .radares { opacity: 0; transition: opacity 700ms; }
+.t-mapa.desenhado .radares { opacity: 1; }
+.t-pausa {
+  margin-left: auto; background: none; border: 1px solid var(--linha); border-radius: var(--raio);
+  font-family: var(--mono); font-size: 11px; color: var(--tinta-2); padding: 4px 8px; cursor: pointer;
+}
+.t-pausa:hover { color: var(--cobalto); border-color: var(--cobalto); }
 .t-mapa .radar { fill: var(--branco); stroke: var(--tinta); stroke-width: 1; vector-effect: non-scaling-stroke; pointer-events: none; }
 .t-mapa.foco .corredor:not(.ativo) { opacity: .14; }
 .t-mapa.foco .radar:not(.ativo) { opacity: .15; }
@@ -163,4 +178,5 @@
   #hero-mapa .corredor { transition: none; stroke-dashoffset: 0; }
   #hero-mapa .pulso-anel { animation: none; }
   .t-mapa .critico, .t-calor .cel { transition: none; transform: none; opacity: 1; }
+  .t-mapa .fluxo { animation: none; opacity: 0 !important; }
 }
