@@ -33,3 +33,6 @@ video/
 marcos-3d-fortaleza.zip
 output/
 scripts/baixar_fotos_mrv.py
+
+# PDF do Relatório Anual de Segurança Viária (46 MB); os números usados estão em data/raw/relatorio_viario_2023.json
+relatorio anual/

@@ -1,0 +1,42 @@
+{
+  "fonte": "Prefeitura de Fortaleza (SCSP/AMC), Relatório Anual de Segurança Viária de Fortaleza 2023, 1ª edição, mai/2024",
+  "mortos_ano": {
+    "_pagina": 26,
+    "_nota": "Figura 16, vítimas fatais 2002–2023 (óbitos até 1 ano após o sinistro, consolidados com SIM/IJF/PEFOCE)",
+    "2002": 381, "2003": 333, "2004": 331, "2005": 365, "2006": 341, "2007": 339, "2008": 343, "2009": 312,
+    "2010": 365, "2011": 381, "2012": 369, "2013": 358, "2014": 377, "2015": 316, "2016": 281, "2017": 256,
+    "2018": 226, "2019": 198, "2020": 193, "2021": 184, "2022": 158, "2023": 157
+  },
+  "taxa_100mil": {
+    "_pagina": 32,
+    "_nota": "Figura 21, mortes por 100 mil habitantes",
+    "2011": 15.4, "2019": 7.4, "2023": 6.4
+  },
+  "marcos": [
+    {"ano": 2011, "texto": "início da 1ª Década de Ação da ONU (meta: −50% até 2020)", "pagina": 30},
+    {"ano": 2019, "texto": "meta da ONU alcançada antes do prazo", "pagina": 32},
+    {"ano": 2022, "texto": "Lei 11.270: Plano de Segurança no Trânsito", "pagina": 46}
+  ],
+  "mortos_2023_usuario": {
+    "_pagina": 28,
+    "_nota": "Tabela 04, vítimas fatais por tipo de usuário",
+    "moto_condutor": 76, "moto_passageiro": 6, "pedestre": 60, "ciclista": 13, "carro_condutor": 2, "carro_passageiro": 0
+  },
+  "idade_2023": {
+    "_pagina": 29,
+    "_nota": "Figuras 19 e 20, % das vítimas por faixa etária",
+    "faixas": ["0 a 17", "18 a 29", "30 a 59", "60 ou mais"],
+    "mortos": [2.6, 24.0, 48.4, 24.0],
+    "feridos": [4.3, 35.3, 54.4, 5.9]
+  },
+  "homens_pct_2023": {"_pagina": 29, "mortos": 81.5, "feridos": 76.8},
+  "comparacao_100mil": {
+    "_pagina": 32,
+    "_nota": "Figura 23; fontes e anos variam (ITF, OMS, PNATRANS, DATASUS, relatórios municipais)",
+    "lugares": [
+      ["Londres", 1.3, "cidade"], ["Nova York", 2.4, "cidade"], ["Suécia", 2.8, "país"], ["Bogotá", 6.3, "cidade"],
+      ["Fortaleza", 6.4, "cidade"], ["São Paulo", 7.0, "cidade"], ["Brasília", 8.7, "cidade"],
+      ["Argentina", 14.0, "país"], ["Brasil", 17.1, "país"], ["Ceará", 20.6, "estado"], ["Guadalajara", 24.0, "cidade"]
+    ]
+  }
+}

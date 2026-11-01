@@ -205,3 +205,76 @@
   .t-mapa .fluxo, .t-mapa .carro { animation: none; opacity: 0 !important; }
   .t-mapa .alerta { animation: none; }
 }
+
+/* ---------- quem morre no trânsito (relatório anual da AMC) ---------- */
+#vitimas .secao-cabeca h2 { color: var(--tinta); }
+.v-serie-bloco { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2.4fr); gap: 32px; align-items: end; }
+.v-serie-texto h3, .v-mundo-texto h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 8px; }
+.v-serie .bar { fill: var(--l2); transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); transition: transform 900ms var(--curva); }
+.v-serie-bloco.visivel .v-serie .bar { transform: none; }
+.v-serie .bar.pico { fill: var(--l4); }
+.v-serie .bar.ultimo { fill: var(--perda); }
+.v-serie .bar.aberto { fill: none; stroke: var(--perda); stroke-width: 1.4; stroke-dasharray: 3 2; }
+.v-serie .marco { fill: var(--tinta); }
+.v-serie .marco-n { fill: var(--branco); font-size: 10px; font-weight: 500; }
+.v-serie .marco-linha { stroke: var(--tinta-3); stroke-width: 1; stroke-dasharray: 2 3; }
+.v-marcos { list-style: none; counter-reset: m; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.v-marcos li { counter-increment: m; display: flex; gap: 8px; align-items: baseline; font-size: 13px; color: var(--tinta-2); }
+.v-marcos li::before { content: counter(m); flex: none; display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: var(--tinta); color: var(--branco); font-family: var(--mono); font-size: 10px; }
+.v-marcos b { font-family: var(--mono); font-weight: 500; color: var(--tinta); }
+.v-aberto { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; }
+.v-aberto i { flex: none; width: 12px; height: 12px; border: 1.4px dashed var(--perda); border-radius: 2px; }
+
+.v-quem { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--linha); align-items: start; }
+.v-picto-fig { margin: 0; }
+.v-picto-cabeca h3, .v-perfil h3 { font-size: 18px; letter-spacing: -0.01em; }
+.v-picto-cabeca { margin-bottom: 14px; }
+.v-picto-cabeca .t-nota { margin-top: 2px; }
+.v-picto { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 4px 5px; }
+.v-picto svg { width: 100%; height: auto; display: block; opacity: 0; transition: opacity 500ms; }
+.v-picto.visivel svg { opacity: 1; }
+.v-picto-leg { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; font-size: 14px; color: var(--tinta-2); }
+.v-picto-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.v-picto-leg b { color: var(--tinta); font-weight: 500; font-variant-numeric: tabular-nums; }
+.v-picto-leg small { font-family: var(--mono); font-size: 11px; color: var(--tinta-3); margin-left: 2px; }
+
+.v-perfil h3 { margin-bottom: 12px; }
+.v-idade-leg { display: flex; gap: 16px; font-size: 12px; color: var(--tinta-2); margin-bottom: 8px; }
+.v-idade-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.v-idade-leg i.m, .v-idade-linha i.m { background: var(--perda); }
+.v-idade-leg i.f, .v-idade-linha i.f { background: var(--l2); }
+.v-idade-linha { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--linha); }
+.v-idade-linha .rot { font-size: 13px; color: var(--tinta-2); }
+.v-idade-linha.destaque .rot { color: var(--tinta); font-weight: 500; }
+.v-idade-linha .pares { display: flex; flex-direction: column; gap: 4px; }
+.v-idade-linha .par { display: grid; grid-template-columns: minmax(0, 1fr) 40px; gap: 8px; align-items: center; }
+.v-idade-linha .trilho { height: 9px; background: var(--papel); border-radius: 2px; overflow: hidden; }
+.v-idade-linha .trilho i { display: block; height: 100%; width: 0; border-radius: 2px; transition: width 900ms var(--curva); }
+.v-idade-linha b { font-family: var(--mono); font-size: 12px; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.v-perfil .t-nota { margin-top: 14px; }
+
+.v-mundo { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 2.4fr); gap: 32px; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--linha); align-items: start; }
+.v-mundo-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.v-mundo-lista li { display: grid; grid-template-columns: 150px minmax(0, 1fr) 44px; gap: 12px; align-items: center; padding: 5px 8px; border-radius: 2px; }
+.v-mundo-lista .lugar { font-size: 14px; }
+.v-mundo-lista .lugar small { font-family: var(--mono); font-size: 10.5px; color: var(--tinta-3); margin-left: 6px; }
+.v-mundo-lista .trilho { height: 10px; background: var(--papel); border-radius: 2px; overflow: hidden; }
+.v-mundo-lista .trilho i { display: block; height: 100%; background: var(--neutro); border-radius: 2px; }
+.v-mundo-lista b { font-family: var(--mono); font-size: 13px; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.v-mundo-lista li.fortaleza { background: var(--branco); box-shadow: inset 3px 0 0 var(--cobalto); }
+.v-mundo-lista li.fortaleza .lugar { font-weight: 500; color: var(--cobalto); }
+.v-mundo-lista li.fortaleza .trilho i { background: var(--cobalto); }
+.v-mundo-lista li.fortaleza b { color: var(--cobalto); }
+
+@media (max-width: 960px) {
+  .v-serie-bloco, .v-quem, .v-mundo { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 640px) {
+  .v-picto { grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; }
+  .v-mundo-lista li { grid-template-columns: 104px minmax(0, 1fr) 38px; gap: 8px; }
+  .v-mundo-lista .lugar small { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v-serie .bar { transform: none; transition: none; }
+  .v-picto svg { opacity: 1; transition: none; }
+}

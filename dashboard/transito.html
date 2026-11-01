@@ -30,6 +30,7 @@
       <a href="#volume">Mais carro</a>
       <a href="#lentidao">Mais lento</a>
       <a href="#sinistros">Sinistros</a>
+      <a href="#vitimas">Vítimas</a>
       <a href="#quando">Quando</a>
       <a href="#metodo">Método</a>
       <a href="index.html" class="nav-destaque">Painel</a>
@@ -179,11 +180,54 @@
     </div>
   </section>
 
-  <!-- 3. Quando -->
+  <!-- 4. Quem morre -->
+  <section class="t-sec" id="vitimas" aria-labelledby="vitimas-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker t-kicker-laranja">04 · Vítimas</p>
+        <h2 id="vitimas-titulo">Quem morre no trânsito</h2>
+      </div>
+      <p class="secao-nota" id="vitimas-nota"></p>
+    </div>
+
+    <div class="v-serie-bloco">
+      <div class="v-serie-texto">
+        <h3 id="serie-titulo">Mortes no trânsito por ano</h3>
+        <p class="t-nota" id="serie-nota"></p>
+      </div>
+      <svg id="serie" class="t-serie v-serie" role="img" aria-label="Mortes no trânsito em Fortaleza por ano, desde 2002"></svg>
+    </div>
+
+    <div class="v-quem">
+      <figure class="v-picto-fig">
+        <figcaption class="v-picto-cabeca">
+          <h3>As 157 pessoas que morreram em 2023</h3>
+          <p class="t-nota">Cada figura é uma pessoa.</p>
+        </figcaption>
+        <div class="v-picto" id="picto-transito" role="img"></div>
+        <div class="v-picto-leg" id="picto-transito-leg"></div>
+      </figure>
+      <div class="v-perfil">
+        <h3>Idade de quem morre e de quem se fere</h3>
+        <div class="v-idade" id="idade-transito"></div>
+        <p class="t-nota" id="idade-nota"></p>
+      </div>
+    </div>
+
+    <div class="v-mundo">
+      <div class="v-mundo-texto">
+        <h3>Fortaleza e outros lugares</h3>
+        <p class="t-nota" id="mundo-nota"></p>
+      </div>
+      <ol class="v-mundo-lista" id="mundo"></ol>
+    </div>
+  </section>
+
+  <!-- 5. Quando -->
   <section class="t-sec" id="quando" aria-labelledby="quando-titulo">
     <div class="secao-cabeca">
       <div>
-        <p class="t-kicker t-kicker-laranja">04 · Hora e dia</p>
+        <p class="t-kicker t-kicker-laranja">05 · Hora e dia</p>
         <h2 id="quando-titulo">Quando acontecem</h2>
       </div>
       <p class="secao-nota" id="quando-nota">Sinistros por hora e dia da semana. Cada quadradinho é a média de registros por semana naquele horário.</p>
@@ -194,13 +238,6 @@
       <div class="t-dica t-dica-calor" id="dica-calor" role="status" hidden></div>
     </figure>
 
-    <div class="t-serie-bloco">
-      <div>
-        <h3>Dez anos de sinistros</h3>
-        <p class="t-nota" id="serie-nota"></p>
-      </div>
-      <svg id="serie" class="t-serie" role="img" aria-label="Sinistros e mortes no trânsito por ano, de 2015 a 2024"></svg>
-    </div>
   </section>
 
   <!-- Método -->
@@ -220,7 +257,7 @@
       </div>
       <div class="bloco">
         <h3>Sinistros</h3>
-        <p>São os registros do SIAT, o sistema da AMC que junta boletins da própria AMC, da PM, dos Bombeiros, do Detran e do SAMU. Os pontos críticos são quadrículas de 150 m; a lista de vias conta os sinistros a até 35 m de cada via principal. A série anual usa todos os anos, de 2015 a 2024.</p>
+        <p>São os registros do SIST, o sistema de sinistros da AMC, hoje dentro da Plataforma VIDA. Ele junta os boletins da AMC com os da CIOPS, da Perícia Forense, do IJF, das polícias rodoviárias, do SAMU e o sistema de mortalidade da Saúde. Os pontos críticos são quadrículas de 150 m; a lista de vias conta os sinistros a até 35 m de cada via principal. As mortes por ano e o perfil das vítimas vêm do Relatório Anual de Segurança Viária 2023 da AMC, que conta os óbitos até um ano depois do sinistro. O dado aberto bate com ele de 2019 em diante, mas tem menos mortes de 2015 a 2018 (255 contra 316 em 2015), por isso a série usa o número do relatório.</p>
       </div>
       <div class="bloco">
         <h3>Limitações</h3>
@@ -231,6 +268,7 @@
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/volume-trafego-mensal" rel="noopener">AMC, Volume Tráfego Mensal</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/fiscalizacao-eletronica" rel="noopener">AMC, Fiscalização Eletrônica</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/sinistros-transito" rel="noopener">AMC, Sinistros de Trânsito</a></li>
+      <li><a href="https://vida.centralamc.com.br/" rel="noopener">AMC, Relatório Anual de Segurança Viária 2023</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/logradouros-fortaleza" rel="noopener">Seuma, Trechos de Logradouro</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">Prefeitura de Fortaleza, malha de bairros</a></li>
       <li><a href="https://docs.mapbox.com/api/navigation/directions/" rel="noopener">Mapbox Directions API (trânsito típico)</a></li>
@@ -245,6 +283,7 @@
 
   <script src="transito.js"></script>
   <script src="lentidao.js"></script>
+  <script src="relatorio_viario.js"></script>
   <script src="transito-app.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 (() => {
   "use strict";
   const T = window.TRANSITO;
+  const RV = window.RELATORIO_VIARIO;   // Relatório Anual de Segurança Viária 2023 (etapa 17)
   const REDUZIR = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const NS = "http://www.w3.org/2000/svg";
   const nf0 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
@@ -391,7 +392,9 @@
       [nf0.format(R.sinistros_periodo), `sinistros registrados de ${a0} a ${a1}, uns ${nf0.format(R.sinistros_periodo / dias)} por dia.`],
       [nf0.format(R.mortos_periodo), `mortes no trânsito no mesmo período.`],
       [nf0.format(R.moto_pct) + "%", "dos sinistros tiveram pelo menos uma moto envolvida."],
-      [nf0.format(Math.round((1 - ultimo.mortos / primeiro.mortos) * 100)) + "% menos", `mortes em ${ultimo.ANO} do que em ${primeiro.ANO} (${primeiro.mortos} → ${ultimo.mortos}).`],
+      RV ? [nf0.format(Math.round((1 - RV.mortos_ano[2023] / RV.mortos_ano[2011]) * 100)) + "% menos",
+        `mortes em 2023 do que em 2011, o pior ano recente (${RV.mortos_ano[2011]} → ${RV.mortos_ano[2023]}), segundo o relatório anual da AMC.`]
+        : [nf0.format(Math.round((1 - ultimo.mortos / primeiro.mortos) * 100)) + "% menos", `mortes em ${ultimo.ANO} do que em ${primeiro.ANO} (${primeiro.mortos} → ${ultimo.mortos}).`],
     ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
 
     const svg = $("mapa-sinistros");
@@ -466,31 +469,115 @@
     const madrugadaUtil = m.slice(0, 5).reduce((a, l) => a + l.slice(0, 5).reduce((x, y) => x + y), 0) / 25;
     $("quando-nota").textContent = `Cada quadradinho é a média de sinistros por semana naquele horário, de ${T.anos_sinistros[0]} a ${T.anos_sinistros[2]}. ` +
       `O pior horário é ${DIAS_LONGO[pico.d].toLowerCase()} às ${pico.h}h. Na madrugada do fim de semana há ${nf1.format(madrugadaFds / madrugadaUtil)} vezes mais registros que na dos dias úteis.`;
+  })();
 
-    // série anual
+  // ----------------------------------------------------------- 4. quem morre (relatório anual da AMC)
+  (function vitimas() {
+    const sec = $("vitimas");
+    if (!RV) { sec.hidden = true; return; }
+    const M = RV.mortos_ano;
+    const anos = Object.keys(M).map(Number).sort((a, b) => a - b);
+    const aberto = T.anual.filter((x) => x.ANO > anos[anos.length - 1]);   // anos que o relatório ainda não cobre
+    const serie = [...anos.map((a) => ({ ano: a, v: M[a], oficial: true })), ...aberto.map((x) => ({ ano: x.ANO, v: x.mortos, oficial: false }))];
+    const U = RV.usuario_2023;
+    const total = Object.values(U).reduce((a, b) => a + b, 0);
+    const moto = U.moto_condutor + U.moto_passageiro;
+    const vulneraveis = moto + U.pedestre + U.ciclista;
+    $("vitimas-nota").textContent = `As mortes no trânsito caíram mais da metade desde 2011. Quem ainda morre está quase sempre fora de um carro: em 2023, ${nf0.format((vulneraveis / total) * 100)}% estavam numa moto, a pé ou de bicicleta. Os números desta seção vêm do relatório anual de segurança viária da AMC.`;
+
+    // série: colunas que sobem juntas ao aparecer, com marcos numerados
     const svg = $("serie");
-    const W = Math.max(360, Math.min(720, svg.clientWidth || 720)), H = W < 500 ? 260 : 240, P = { t: 26, r: 8, b: 26, l: 8 };
+    const W = Math.max(340, Math.min(760, svg.clientWidth || 760)), H = 250, P = { t: 34, r: 6, b: 24, l: 6 };
+    const curto = W < 520;
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    const A = T.anual;
-    const maxS = Math.max(...A.map((x) => x.sinistros)), maxM = Math.max(...A.map((x) => x.mortos));
-    const bw = (W - P.l - P.r) / A.length;
-    const yS = (v) => H - P.b - (v / maxS) * (H - P.t - P.b);
-    const yM = (v) => H - P.b - (v / maxM) * (H - P.t - P.b) * 0.55;
-    const pts = [];
-    A.forEach((x, i) => {
+    const max = Math.max(...serie.map((x) => x.v));
+    const bw = (W - P.l - P.r) / serie.length;
+    const y = (v) => H - P.b - (v / max) * (H - P.t - P.b);
+    const pico = serie.filter((x) => x.oficial && x.ano >= 2010).reduce((a, b) => (b.v > a.v ? b : a));
+    const ultOf = serie.filter((x) => x.oficial).slice(-1)[0];
+    const rotulados = new Set([serie[0].ano, pico.ano, 2019, ultOf.ano, ...aberto.map((x) => x.ANO)]);
+    const g = s("g", { class: "barras" });
+    serie.forEach((x, i) => {
       const cx = P.l + bw * i + bw / 2;
-      svg.append(s("rect", { x: P.l + bw * i + bw * 0.14, y: yS(x.sinistros), width: bw * 0.72, height: H - P.b - yS(x.sinistros), rx: 2, class: "bar" + (i === A.length - 1 ? " ultimo" : "") }),
-        s("text", { x: cx, y: yS(x.sinistros) - 6, "text-anchor": "middle", class: "val", texto: W < 500 ? nf0.format(Math.round(x.sinistros / 1000)) + "k" : mil(x.sinistros) }),
-        s("text", { x: cx, y: H - 8, "text-anchor": "middle", texto: W < 500 ? "’" + String(x.ANO).slice(2) : x.ANO }));
-      pts.push([cx, yM(x.mortos), x.mortos]);
+      const cls = !x.oficial ? "bar aberto" : x.ano === ultOf.ano ? "bar ultimo" : x.ano === pico.ano ? "bar pico" : "bar";
+      const r = s("rect", { x: P.l + bw * i + bw * 0.14, y: y(x.v), width: bw * 0.72, height: H - P.b - y(x.v), rx: 2, class: cls });
+      r.style.transitionDelay = (REDUZIR ? 0 : i * 18) + "ms";
+      g.append(r);
+      if (rotulados.has(x.ano)) svg.append(s("text", { x: cx, y: y(x.v) - 6, "text-anchor": "middle", class: "val", texto: x.v }));
+      // no celular, o ano em tracejado fica só na legenda, senão encosta no ano anterior
+      if ((rotulados.has(x.ano) && (x.oficial || !curto)) || (!curto && x.ano % 4 === 2)) svg.append(s("text", { x: cx, y: H - 7, "text-anchor": "middle", texto: curto ? "’" + String(x.ano).slice(2) : x.ano }));
     });
-    svg.append(s("path", { d: "M" + pts.map((p) => p[0] + " " + p[1]).join("L"), class: "linha-mortes" }));
-    pts.forEach(([x, y, v], i) => {
-      svg.append(s("circle", { cx: x, cy: y, r: 3.5, class: "pt" }));
-      if (i === 0 || i === pts.length - 1 || i === 5) svg.append(s("text", { x, y: i === 5 ? y + 18 : y - 10, "text-anchor": "middle", class: "val-m", texto: v + (W < 500 ? "" : " mortes") }));
+    svg.prepend(g);
+    RV.marcos.forEach((m, k) => {
+      const i = serie.findIndex((x) => x.ano === m.ano);
+      if (i < 0) return;
+      const cx = P.l + bw * i + bw / 2;
+      svg.append(s("line", { x1: cx, x2: cx, y1: 18, y2: y(serie[i].v) - (rotulados.has(m.ano) ? 18 : 4), class: "marco-linha" }),
+        s("circle", { cx, cy: 9, r: 8, class: "marco" }), s("text", { x: cx, y: 13, "text-anchor": "middle", class: "marco-n", texto: k + 1 }));
     });
-    const p20 = A.find((x) => x.ANO === 2020);
-    $("serie-nota").innerHTML = `Barras: sinistros por ano. Linha: mortes. Os registros caíram até ${p20 ? "2020, ano da pandemia (" + mil(p20.sinistros) + ")" : "2020"}, e voltaram a subir; as mortes seguiram caindo, de ${A[0].mortos} em ${A[0].ANO} para ${A[A.length - 1].mortos} em ${A[A.length - 1].ANO}.`;
+    const fig = svg.closest(".v-serie-bloco");
+    aoAparecer(fig, () => fig.classList.add("visivel"));
+    const [t0, t1] = [RV.taxa_100mil[2011], RV.taxa_100mil[2023]];
+    $("serie-nota").innerHTML = `De ${M[pico.ano]} mortes em ${pico.ano} para ${M[ultOf.ano]} em ${ultOf.ano}. Por 100 mil moradores, de ${nf1.format(t0)} para ${nf1.format(t1)}.` +
+      `<ol class="v-marcos">${RV.marcos.map((m) => `<li><b>${m.ano}</b> ${m.texto}</li>`).join("")}</ol>` +
+      (aberto.length ? `<span class="v-aberto"><i></i>${aberto.map((x) => x.ANO).join(", ")}: dado aberto da AMC; o relatório deste ano ainda não saiu.</span>` : "");
+
+    // pictograma: uma figura por pessoa
+    const GRUPOS = [
+      { n: moto, rot: "numa moto", cor: "var(--perda)" },
+      { n: U.pedestre, rot: "a pé", cor: "var(--tinta)" },
+      { n: U.ciclista, rot: "de bicicleta", cor: "var(--cobalto)" },
+      { n: U.carro_condutor + U.carro_passageiro, rot: "num carro", cor: "var(--neutro)" },
+    ];
+    const picto = $("picto-transito");
+    picto.setAttribute("aria-label", GRUPOS.map((x) => `${x.n} ${x.rot}`).join(", "));
+    let n = 0;
+    for (const gr of GRUPOS) for (let i = 0; i < gr.n; i++, n++) {
+      const f = s("svg", { viewBox: "0 0 20 32", "aria-hidden": "true" }, [
+        s("circle", { cx: 10, cy: 6, r: 5 }), s("path", { d: "M3 31V18a7 7 0 0 1 14 0v13z" })]);
+      f.style.fill = gr.cor;
+      f.style.transitionDelay = (REDUZIR ? 0 : n * 7) + "ms";
+      picto.append(f);
+    }
+    $("picto-transito-leg").replaceChildren(...GRUPOS.filter((x) => x.n).map((x) =>
+      el("span", { html: `<i style="background:${x.cor}"></i><b>${x.n}</b> ${x.rot} <small>${nf0.format((x.n / total) * 100)}%</small>` })));
+    aoAparecer(picto, () => picto.classList.add("visivel"));
+
+    // idade: quem morre x quem se fere
+    const I = RV.idade_2023;
+    const maxI = Math.max(...I.mortos, ...I.feridos);
+    const box = $("idade-transito");
+    box.append(el("div", { class: "v-idade-leg" }, [el("span", { html: '<i class="m"></i>mortos' }), el("span", { html: '<i class="f"></i>feridos' })]));
+    I.faixas.forEach((fx, k) => {
+      const im = el("i", { class: "m" }), iff = el("i", { class: "f" });
+      box.append(el("div", { class: "v-idade-linha" + (k === I.faixas.length - 1 ? " destaque" : "") }, [
+        el("span", { class: "rot", texto: fx + " anos" }),
+        el("span", { class: "pares" }, [
+          el("span", { class: "par" }, [el("span", { class: "trilho" }, [im]), el("b", { texto: nf0.format(I.mortos[k]) + "%" })]),
+          el("span", { class: "par" }, [el("span", { class: "trilho" }, [iff]), el("b", { texto: nf0.format(I.feridos[k]) + "%" })]),
+        ]),
+      ]));
+      aoAparecer(box, () => { im.style.width = (I.mortos[k] / maxI) * 100 + "%"; iff.style.width = (I.feridos[k] / maxI) * 100 + "%"; });
+    });
+    const H2 = RV.homens_pct_2023;
+    const k60 = I.faixas.length - 1;
+    $("idade-nota").textContent = `Quem tem 60 anos ou mais é ${nf0.format(I.feridos[k60])}% dos feridos e ${nf0.format(I.mortos[k60])}% dos mortos: o idoso se fere menos, mas sobrevive menos. ${nf1.format(H2.mortos)}% dos mortos eram homens. Nos sinistros, ${nf0.format(T.resumo.moto_pct)}% têm uma moto envolvida; entre os mortos, ${nf0.format((moto / total) * 100)}% estavam numa moto.`;
+
+    // comparação: barras simples, sem animação
+    const lista = $("mundo");
+    const maxC = Math.max(...RV.comparacao.map((c) => c[1]));
+    for (const [lugar, v, tipo] of RV.comparacao) {
+      const barra = el("i");
+      barra.style.width = (v / maxC) * 100 + "%";
+      lista.append(el("li", { class: lugar === "Fortaleza" ? "fortaleza" : "" }, [
+        el("span", { class: "lugar", html: `${lugar}<small>${tipo}</small>` }),
+        el("span", { class: "trilho" }, [barra]),
+        el("b", { texto: nf1.format(v) }),
+      ]));
+    }
+    const fz = RV.comparacao.find((c) => c[0] === "Fortaleza")[1];
+    const br = RV.comparacao.find((c) => c[0] === "Brasil")[1];
+    $("mundo-nota").textContent = `Mortes no trânsito por 100 mil habitantes por ano. Fortaleza (${nf1.format(fz)}) está perto de Bogotá e de São Paulo, e bem abaixo do Brasil (${nf1.format(br)}), mas ainda longe de Londres ou da Suécia. As fontes e os anos variam de lugar para lugar, então vale como ordem de grandeza.`;
   })();
 
   function aoAparecer(alvo, fn) {
