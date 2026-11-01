@@ -91,6 +91,29 @@
 .t-bola.p { width: 7px; height: 7px; } .t-bola.m { width: 13px; height: 13px; } .t-bola.g { width: 21px; height: 21px; }
 .t-bola.morte { width: 11px; height: 11px; border: 1.6px solid var(--tinta); margin-left: 8px; }
 
+/* lentidão */
+.t-kicker-lento { color: #c2331b; }
+#lentidao .secao-cabeca h2 { color: var(--tinta); }
+.pagina-transito .metodo-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.t-numeros.t-numeros-lento div { border-top-color: #c2331b; }
+.t-mapa .lento {
+  fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; cursor: pointer;
+  transition: stroke 600ms var(--curva), stroke-width 600ms var(--curva), opacity var(--t-rapida);
+}
+.t-mapa .lento-toque { fill: none; stroke: transparent; stroke-width: 14; vector-effect: non-scaling-stroke; cursor: pointer; }
+.t-mapa .carro {
+  fill: none; stroke: var(--branco); stroke-linecap: round; vector-effect: non-scaling-stroke; pointer-events: none;
+  stroke-dasharray: 1.4 13; opacity: 0; transition: opacity 600ms;
+  animation: fluir 3s linear infinite; animation-play-state: paused;
+}
+.t-mapa.fluindo .carro { opacity: .9; animation-play-state: running; }
+.t-mapa.foco .lento:not(.ativo) { opacity: .15; }
+.t-mapa.foco .carro:not(.ativo) { opacity: 0; }
+.t-mapa .lento.ativo { filter: drop-shadow(0 0 3px rgba(194, 51, 27, .5)); }
+.t-mapa .alerta { fill: none; stroke: #c2331b; stroke-width: 1.5; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; animation: pulso 2.4s ease-out infinite; pointer-events: none; }
+.t-ranking.t-ranking-lento .barra i { background: #c2331b; }
+.t-ranking-lento .fator { font-family: var(--mono); font-size: 13px; color: #c2331b; font-weight: 500; }
+
 /* dica flutuante */
 .t-dica {
   position: absolute; z-index: 5; pointer-events: none; min-width: 180px; max-width: 260px;
@@ -178,5 +201,6 @@
   #hero-mapa .corredor { transition: none; stroke-dashoffset: 0; }
   #hero-mapa .pulso-anel { animation: none; }
   .t-mapa .critico, .t-calor .cel { transition: none; transform: none; opacity: 1; }
-  .t-mapa .fluxo { animation: none; opacity: 0 !important; }
+  .t-mapa .fluxo, .t-mapa .carro { animation: none; opacity: 0 !important; }
+  .t-mapa .alerta { animation: none; }
 }

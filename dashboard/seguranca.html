@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aperreio: a segurança em Fortaleza</title>
+  <meta name="description" content="Onde a violência pesa mais em Fortaleza, a que horas e quem são as vítimas, com os dados oficiais da SSPDS, por área de segurança.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Bairros de Fortaleza">
+  <meta property="og:title" content="Aperreio: a segurança em Fortaleza">
+  <meta property="og:description" content="Onde a violência pesa mais em Fortaleza, com os dados oficiais da SSPDS.">
+  <meta property="og:url" content="https://dashboardfortaleza.vercel.app/seguranca.html">
+  <meta property="og:image" content="https://dashboardfortaleza.vercel.app/og.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='2' fill='%232f37c4'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%23fff'/%3E%3Crect x='9' y='3' width='4' height='4' fill='%23fff' opacity='.6'/%3E%3Crect x='3' y='9' width='4' height='4' fill='%23fff' opacity='.35'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="transito.css">
+  <link rel="stylesheet" href="seguranca.css">
+</head>
+<body class="pagina-seguranca">
+  <a class="skip" href="#onde">Pular para o mapa</a>
+
+  <header class="nav" id="topo">
+    <a class="marca" href="index.html" aria-label="Bairros de Fortaleza, voltar ao painel">
+      <span class="marca-nome">Bairros</span>
+      <span class="marca-sub">de Fortaleza</span>
+    </a>
+    <nav class="nav-links" aria-label="Seções">
+      <a href="#onde">Onde</a>
+      <a href="#tendencia">Tendência</a>
+      <a href="#horas">Horário</a>
+      <a href="#vitimas">Vítimas</a>
+      <a href="#junto">Contexto</a>
+      <a href="index.html" class="nav-destaque">Painel</a>
+    </nav>
+    <a class="botao botao-contorno nav-cta" href="index.html"><span class="botao-icone" aria-hidden="true">←</span>Voltar ao painel</a>
+  </header>
+
+  <!-- Abertura -->
+  <section class="hero s-hero" aria-labelledby="hero-titulo">
+    <div class="hero-texto">
+      <p class="rotulo"><span class="rotulo-marca" aria-hidden="true"></span><span id="hero-rotulo">Dados oficiais da SSPDS · 10 áreas de segurança</span></p>
+      <h1 id="hero-titulo" class="hero-titulo">
+        <span class="linha"><span>Aperreio</span></span>
+        <span class="linha t-sub"><span>onde a violência pesa mais</span></span>
+      </h1>
+      <div class="hero-pe">
+        <p class="hero-lede">As mortes violentas em Fortaleza caíram muito em dez anos, mas não pesam igual em toda a cidade. Aqui estão os números oficiais, por área de segurança, sem apontar o dedo para nenhum bairro.</p>
+        <div class="hero-acoes">
+          <a class="botao botao-claro" href="#onde"><span class="botao-icone" aria-hidden="true">+</span>Ver o mapa</a>
+          <a class="botao botao-contorno-claro" href="#vitimas"><span class="botao-icone" aria-hidden="true">↳</span>Quem são as vítimas</a>
+        </div>
+      </div>
+    </div>
+    <figure class="t-hero-mapa" aria-label="Fortaleza dividida nas 10 áreas de segurança; quanto mais clara a área, maior a taxa de mortes violentas">
+      <svg id="hero-mapa" role="img" aria-hidden="true"></svg>
+      <figcaption class="hero-legenda">
+        <span class="s-leg-q baixo" aria-hidden="true"></span>taxa menor
+        <span class="s-leg-q alto" aria-hidden="true"></span>taxa maior
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- Frase -->
+  <section class="frase" aria-label="Resumo">
+    <div class="frase-fixa">
+      <p class="frase-texto" id="frase-texto"></p>
+      <dl class="numeros" id="numeros"></dl>
+    </div>
+  </section>
+
+  <!-- 1. Onde -->
+  <section class="t-sec" id="onde" aria-labelledby="onde-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker s-kicker">01 · Onde</p>
+        <h2 id="onde-titulo">Onde a violência pesa mais</h2>
+      </div>
+      <p class="secao-nota" id="onde-nota">Casos por 100 mil moradores por ano, média de 2023 a 2025. Passe o mouse numa área ou escolha na lista.</p>
+    </div>
+
+    <div class="controles">
+      <div class="segmentado" id="ctl-indicador" role="group" aria-label="Indicador">
+        <button type="button" data-v="cvli" aria-pressed="true">Mortes violentas</button>
+        <button type="button" data-v="cvp" aria-pressed="false">Roubos</button>
+      </div>
+    </div>
+
+    <div class="t-grade">
+      <figure class="t-mapa s-mapa" id="mapa-onde-fig">
+        <svg id="mapa-onde" role="img" aria-label="Mapa das 10 áreas de segurança de Fortaleza coloridas pela taxa"></svg>
+        <div class="t-dica" id="dica-onde" role="status" hidden></div>
+        <figcaption class="t-legenda">
+          <span id="leg-onde-titulo">mortes por 100 mil</span>
+          <span class="t-rampa" id="rampa-onde" aria-hidden="true"></span>
+          <span class="t-rampa-rotulos" id="rampa-onde-rotulos"></span>
+        </figcaption>
+        <p class="s-aviso"><b>Por área, não por bairro.</b> A SSPDS publica os números por AIS (Área Integrada de Segurança). Todos os bairros de uma área aparecem com a mesma cor, o que não quer dizer que o bairro inteiro seja igual.</p>
+      </figure>
+
+      <aside class="t-lista" aria-labelledby="ranking-onde-titulo">
+        <div class="t-lista-cabeca">
+          <h3 id="ranking-onde-titulo">As 10 áreas</h3>
+          <button type="button" class="link-botao" id="limpar-onde" hidden>Mostrar todas</button>
+        </div>
+        <ol class="t-ranking s-ranking" id="ranking-onde"></ol>
+        <p class="t-nota" id="ranking-onde-nota"></p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 2. Tendência -->
+  <section class="t-sec" id="tendencia" aria-labelledby="tend-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker s-kicker">02 · Tendência</p>
+        <h2 id="tend-titulo">A área melhorou ou piorou?</h2>
+      </div>
+      <p class="secao-nota" id="tend-nota"></p>
+    </div>
+    <div class="s-serie-cidade">
+      <div>
+        <h3>Fortaleza, 2009 a 2025</h3>
+        <p class="t-nota" id="serie-cidade-nota"></p>
+      </div>
+      <svg id="serie-cidade" class="t-serie s-serie" role="img" aria-label="Mortes violentas em Fortaleza por ano, de 2009 a 2025"></svg>
+    </div>
+    <div class="s-multiplos" id="multiplos"></div>
+  </section>
+
+  <!-- 3. Horário -->
+  <section class="t-sec" id="horas" aria-labelledby="horas-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker s-kicker">03 · Hora e dia</p>
+        <h2 id="horas-titulo">A que horas acontece</h2>
+      </div>
+      <p class="secao-nota" id="horas-nota"></p>
+    </div>
+    <div class="controles">
+      <div class="segmentado" id="ctl-calor" role="group" aria-label="Indicador do mapa de calor">
+        <button type="button" data-v="cvli" aria-pressed="true">Mortes violentas</button>
+        <button type="button" data-v="cvp" aria-pressed="false">Roubos</button>
+      </div>
+    </div>
+    <figure class="t-calor-fig">
+      <div class="t-calor" id="calor" role="img" aria-label="Mapa de calor por hora e dia da semana"></div>
+      <div class="t-dica t-dica-calor" id="dica-calor" role="status" hidden></div>
+      <div class="t-calor-leg" id="calor-leg"></div>
+    </figure>
+  </section>
+
+  <!-- 4. Vítimas -->
+  <section class="t-sec" id="vitimas" aria-labelledby="vit-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker s-kicker">04 · Vítimas</p>
+        <h2 id="vit-titulo">Quem são as vítimas</h2>
+      </div>
+      <p class="secao-nota" id="vit-nota"></p>
+    </div>
+    <div class="s-vitimas">
+      <figure class="s-picto-fig">
+        <div class="s-picto" id="picto" role="img"></div>
+        <figcaption class="s-picto-leg" id="picto-leg"></figcaption>
+      </figure>
+      <div class="s-barras-grade">
+        <div class="s-barras"><h3>Idade</h3><div id="b-idade"></div></div>
+        <div class="s-barras"><h3>Como morreram</h3><div id="b-meio"></div></div>
+        <div class="s-barras"><h3>Até onde estudaram</h3><div id="b-escola"></div></div>
+        <div class="s-barras"><h3>Tipo de crime</h3><div id="b-natureza"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Contexto -->
+  <section class="t-sec" id="junto" aria-labelledby="junto-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker s-kicker">05 · Contexto</p>
+        <h2 id="junto-titulo">O que aparece junto</h2>
+      </div>
+      <p class="secao-nota" id="junto-nota"></p>
+    </div>
+    <div class="controles">
+      <div class="segmentado" id="ctl-fator" role="group" aria-label="Fator">
+        <button type="button" data-v="idh" aria-pressed="true">IDH</button>
+        <button type="button" data-v="renda" aria-pressed="false">Renda</button>
+        <button type="button" data-v="saneamento" aria-pressed="false">Esgoto</button>
+      </div>
+    </div>
+    <figure class="s-disp-fig">
+      <svg id="dispersao" class="s-disp" role="img" aria-label="Cada ponto é uma área de segurança: fator no eixo horizontal e taxa de mortes no vertical"></svg>
+      <div class="t-dica" id="dica-disp" role="status" hidden></div>
+    </figure>
+  </section>
+
+  <!-- Método -->
+  <section class="metodo" id="metodo" aria-labelledby="metodo-titulo">
+    <div class="secao-cabeca">
+      <h2 id="metodo-titulo">Como lemos os dados</h2>
+      <p class="secao-nota">Os números saem de <code>scripts/03_seguranca.py</code> e <code>scripts/16_seguranca.py</code>.</p>
+    </div>
+    <div class="metodo-grade">
+      <div class="bloco">
+        <h3>O que é cada número</h3>
+        <p>Mortes violentas são os CVLI da SSPDS: homicídio doloso, feminicídio, latrocínio e lesão corporal seguida de morte, uma linha por vítima. Roubos são os CVP, crimes violentos contra o patrimônio, uma linha por ocorrência. As mortes por intervenção policial ficam fora da conta, como faz a SSPDS.</p>
+      </div>
+      <div class="bloco">
+        <h3>Taxas e áreas</h3>
+        <p>A taxa é a média de casos de 2023 a 2025 por 100 mil moradores (Censo 2022), porque áreas grandes têm mais casos só por terem mais gente. A composição de cada AIS vem da página da SSPDS; Praia de Iracema não aparece lá e foi posta na AIS 08. Renda, esgoto e IDH (de 2010, da Prefeitura) são médias dos bairros da área, pesadas pela população.</p>
+      </div>
+      <div class="bloco">
+        <h3>Limitações</h3>
+        <p>A SSPDS não publica crime por bairro. Os números contam onde o crime foi registrado, não onde a vítima mora. Roubo depende de a vítima registrar o boletim, e muita gente não registra. A raça das vítimas não foi informada em boa parte dos casos, por isso não entra no gráfico. Comparar fatores com 10 áreas mostra tendências, não causas.</p>
+      </div>
+    </div>
+    <ul class="fontes">
+      <li><a href="https://www.ce.gov.br/sspds/estatisticas/dados-detalhados/" rel="noopener">SSPDS, dados detalhados (CVLI e CVP)</a></li>
+      <li><a href="https://www.ce.gov.br/sspds/ais/" rel="noopener">SSPDS, composição das AIS</a></li>
+      <li><a href="https://www.sspds.ce.gov.br/estatisticas-2-3/" rel="noopener">SSPDS, estatísticas mensais</a></li>
+      <li><a href="https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/" rel="noopener">IBGE, Censo 2022</a></li>
+      <li><a href="https://dados.fortaleza.ce.gov.br/dataset/desenvolvimento_humano_bairro" rel="noopener">SDE Fortaleza, IDH por bairro</a></li>
+    </ul>
+  </section>
+
+  <footer class="rodape">
+    <p>Bairros de Fortaleza · Aperreio. Dados da SSPDS de 2009 a 2025.</p>
+    <a href="#topo">Voltar ao topo</a>
+  </footer>
+
+  <script src="seguranca.js"></script>
+  <script src="seguranca-app.js"></script>
+</body>
+</html>

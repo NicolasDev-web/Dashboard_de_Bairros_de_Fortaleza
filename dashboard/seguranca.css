@@ -1,0 +1,103 @@
+/* Aperreio — página de segurança. Usa styles.css e os componentes de transito.css. */
+:root {
+  /* rampa vinho das mortes violentas */
+  --v1: #f3d9da; --v2: #e6aeb1; --v3: #d27f86; --v4: #b5525f; --v5: #8c2f40; --v6: #5c1628;
+  --noite: #15184f;
+}
+
+/* abertura em azul-noite: o tema pede um tom mais sóbrio que o cobalto */
+.s-hero { background: var(--noite); }
+.s-hero::before { background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1.2px); }
+.s-hero .t-sub { font-size: .38em; letter-spacing: -0.03em; margin-top: .25em; opacity: .9; }
+#hero-mapa .area { stroke: var(--noite); stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity 900ms var(--curva); }
+.s-hero.pronto #hero-mapa .area { opacity: 1; }
+#hero-mapa .bairro-h { fill: none; stroke: rgba(21, 24, 79, .35); stroke-width: .5; vector-effect: non-scaling-stroke; pointer-events: none; }
+#hero-mapa .num-area { font-family: var(--mono); font-size: 13px; fill: var(--noite); text-anchor: middle; pointer-events: none; opacity: 0; transition: opacity 600ms 1200ms; }
+.s-hero.pronto #hero-mapa .num-area { opacity: .8; }
+.s-leg-q { display: inline-block; width: 14px; height: 10px; border-radius: 2px; margin-left: 8px; }
+.s-leg-q.baixo { background: rgba(255, 255, 255, .18); margin-left: 0; }
+.s-leg-q.alto { background: var(--branco); }
+.pagina-seguranca .nav:not(.clara) { color: var(--branco); }
+
+.s-kicker { color: var(--v5); }
+.pagina-seguranca .secao-cabeca h2 { color: var(--noite); }
+
+/* mapa das áreas */
+.s-mapa .area { stroke: var(--branco); stroke-width: 1.6; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill 500ms var(--curva), opacity var(--t-rapida); }
+.s-mapa .bairro-l { fill: none; stroke: rgba(255, 255, 255, .45); stroke-width: .5; vector-effect: non-scaling-stroke; pointer-events: none; }
+.s-mapa .rot-area { font-family: var(--mono); font-size: 18px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke-width: 3px; }
+.s-mapa .rot-area .n { font-size: 12px; opacity: .85; }
+.s-mapa.foco .area:not(.ativo) { opacity: .25; }
+.s-mapa .area.ativo { stroke: var(--noite); stroke-width: 2.4; }
+.s-aviso { margin-top: 10px; font-size: 12.5px; line-height: 1.5; color: var(--tinta-2); background: var(--branco); border-left: 3px solid var(--v4); padding: 8px 12px; border-radius: 2px; }
+.s-aviso b { font-weight: 600; color: var(--tinta); }
+.s-ranking .barra { position: relative; overflow: visible; }
+.s-ranking .barra i { background: var(--v4); }
+.s-ranking.cvp .barra i { background: var(--cobalto); }
+.s-ranking .media { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--tinta); border-radius: 1px; }
+.s-ranking .nome small { display: block; margin: 2px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-ranking button { grid-template-rows: auto auto; }
+
+/* série da cidade + pequenos múltiplos */
+.s-serie-cidade { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(0, 2.6fr); gap: 32px; align-items: end; margin-bottom: 40px; }
+.s-serie-cidade h3 { font-size: 22px; letter-spacing: -0.02em; }
+.s-serie .bar { fill: var(--v2); }
+.s-serie .bar.destaque { fill: var(--v5); }
+.s-serie .bar.ultimo { fill: var(--v4); }
+.s-multiplos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.s-mult { background: var(--branco); border: 1px solid var(--linha); border-radius: var(--raio); padding: 14px 14px 10px; }
+.s-mult h4 { margin: 0; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+.s-mult .bairros { font-size: 11.5px; color: var(--tinta-3); margin: 2px 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-mult .var { font-family: var(--mono); font-size: 20px; letter-spacing: -0.02em; }
+.s-mult .var.queda { color: var(--cobalto); }
+.s-mult .var.alta { color: var(--v5); }
+.s-mult .var small { font-size: 12px; margin-left: 4px; letter-spacing: 0; }
+.s-mult .de-para { display: block; font-family: var(--mono); font-size: 11px; color: var(--tinta-3); letter-spacing: 0; margin-top: 2px; }
+.s-mult svg { display: block; width: 100%; height: auto; margin-top: 6px; overflow: visible; }
+.s-mult .linha { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.s-mult .area-s { opacity: .12; }
+.s-mult text { font-family: var(--mono); font-size: 9px; fill: var(--tinta-3); }
+.s-mult .linha { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1200ms var(--curva); }
+.s-multiplos.visivel .linha { stroke-dashoffset: 0; }
+
+/* vítimas */
+.s-vitimas { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 1.6fr); gap: 40px; align-items: start; }
+.s-picto { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; max-width: 380px; }
+.s-picto svg { width: 100%; height: auto; display: block; opacity: 0; transform: translateY(6px); transition: opacity 400ms, transform 400ms var(--curva); }
+.s-picto.visivel svg { opacity: 1; transform: none; }
+.s-picto .h { fill: var(--noite); }
+.s-picto .m { fill: var(--v4); }
+.s-picto-leg { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 13px; color: var(--tinta-2); }
+.s-picto-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.s-barras-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
+.s-barras h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
+.s-barra { display: grid; grid-template-columns: minmax(96px, 1.1fr) 2fr 44px; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 6px; }
+.s-barra .rot { color: var(--tinta-2); }
+.s-barra .trilho { height: 10px; background: var(--papel); border-radius: 2px; overflow: hidden; }
+.s-barra .trilho i { display: block; height: 100%; width: 0; background: var(--v4); border-radius: 2px; transition: width 900ms var(--curva); }
+.s-barra.cinza .trilho i { background: var(--neutro); }
+.s-barra .pct { font-family: var(--mono); font-size: 12px; text-align: right; color: var(--tinta); font-variant-numeric: tabular-nums; }
+
+/* dispersão */
+.s-disp-fig { position: relative; margin: 0; background: var(--papel-claro); border: 1px solid var(--linha); border-radius: var(--raio); padding: 16px; }
+.s-disp { display: block; width: 100%; height: auto; overflow: visible; }
+.s-disp .eixo { stroke: var(--linha); }
+.s-disp text { font-family: var(--mono); font-size: 11px; fill: var(--tinta-3); }
+.s-disp .media-l { stroke: var(--tinta-3); stroke-dasharray: 3 3; }
+.s-disp .tend { stroke: var(--v4); stroke-width: 1.5; stroke-dasharray: 5 4; opacity: .6; }
+.s-disp .pt { fill: var(--v4); stroke: var(--branco); stroke-width: 2; cursor: pointer; transition: cx 700ms var(--curva), cy 700ms var(--curva), r var(--t-rapida); }
+.s-disp .pt:hover { fill: var(--v6); }
+.s-disp .rot-pt { font-size: 12px; fill: var(--tinta); transition: x 700ms var(--curva), y 700ms var(--curva); pointer-events: none; }
+
+@media (max-width: 960px) {
+  .s-multiplos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .s-serie-cidade { grid-template-columns: 1fr; gap: 12px; }
+  .s-vitimas { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .s-barras-grade { grid-template-columns: 1fr; }
+  .s-picto { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero-mapa .area, #hero-mapa .num-area, .s-picto svg, .s-mult .linha { transition: none; opacity: 1; transform: none; stroke-dashoffset: 0; }
+}

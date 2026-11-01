@@ -248,6 +248,137 @@
     limpar.addEventListener("click", () => focar(atual));
   })();
 
+
+  // ----------------------------------------------------------- 2. lentidão (Mapbox, trânsito típico)
+  (function lentidao() {
+    const L = window.LENTIDAO;
+    const sec = $("lentidao");
+    if (!L || !L.trechos.length) { sec.hidden = true; return; }
+    const CORES = ["#b9bce0", "#f2c14e", "#ee8e53", "#e8631e", "#c2331b", "#86202a"];
+    const CORTES = [1.15, 1.3, 1.5, 1.75, 2.0];
+    const cor = (f) => CORES[CORTES.filter((c) => f >= c).length];
+    const largura = (f) => Math.max(1.4, Math.min(6, 1.2 + (f - 1) * 4.2));
+    const ROT = { manha: "7h30", almoco: "12h", tarde: "18h" };
+    const svg = $("mapa-lento"), fig = $("mapa-lento-fig");
+    const tip = dica(fig, $("dica-lento"));
+    baseMapa(svg);
+    const gL = s("g"), gC = s("g"), gA = s("g"), gT = s("g"), gR = s("g");
+    svg.append(gL, gC, gA, gT, gR);
+    let hora = "tarde", atual = null, pausado = REDUZIR;
+    const els = L.trechos.map((t) => {
+      const linha = s("path", { d: t.d, class: "lento", pathLength: 1 });
+      const carro = s("path", { d: t.d, class: "carro" });
+      carro.style.animationDelay = -(Math.random() * 3).toFixed(2) + "s";
+      const toque = s("path", { d: t.d, class: "lento-toque" });
+      toque.addEventListener("pointermove", (ev) => {
+        const p = t.p[hora];
+        if (!p) return;
+        tip.mostrar(ev, `<b>${t.rua}</b><small>${p.de && p.para && p.de !== p.para ? `de ${p.de} para ${p.para}` : p.de || ""}</small>` +
+          `<span class="num">${nf1.format(p.f)}×</span><small>o tempo da madrugada às ${ROT[hora]}<br>${nf1.format(p.min)} min contra ${nf1.format(p.minl)} min em ${nf1.format(t.km)} km · ${p.kmh} km/h (livre: ${p.kmhl} km/h)</small>`);
+      });
+      toque.addEventListener("pointerleave", () => tip.esconder());
+      toque.addEventListener("click", () => focar(t.id));
+      gL.append(linha); gC.append(carro); gT.append(toque);
+      return { t, linha, carro };
+    });
+    $("rampa-lento").replaceChildren(...CORES.map((c) => { const i = el("i"); i.style.background = c; return i; }));
+
+    function pintar() {
+      for (const { t, linha, carro } of els) {
+        const p = t.p[hora];
+        const f = p ? p.f : 1;
+        linha.setAttribute("stroke", p ? cor(f) : "transparent");
+        linha.setAttribute("stroke-width", largura(f));
+        carro.setAttribute("stroke-width", Math.max(0.9, largura(f) * 0.45).toFixed(1));
+        // quanto mais devagar o trânsito, mais devagar os "carros" andam
+        carro.style.animationDuration = (p ? Math.max(1.2, Math.min(9, 90 / p.kmh)) : 3).toFixed(2) + "s";
+        carro.style.visibility = p ? "visible" : "hidden";
+      }
+      // pulso nos 5 mais lentos
+      const top = els.filter((e) => e.t.p[hora]).sort((a, b) => b.t.p[hora].f - a.t.p[hora].f);
+      gA.replaceChildren();
+      top.slice(0, 5).forEach(({ linha }, i) => {
+        const len = linha.getTotalLength ? linha.getTotalLength() : 0;
+        const m = linha.getPointAtLength ? linha.getPointAtLength(len / 2) : { x: 0, y: 0 };
+        const c = s("circle", { cx: m.x, cy: m.y, r: 7, class: "alerta" });
+        c.style.animationDelay = i * 0.35 + "s";
+        gA.append(c);
+      });
+      // números
+      const c = L.cidade[hora];
+      $("numeros-lento").replaceChildren(...[
+        [nf1.format(c.fator) + "×", `é quanto tempo a mais leva, em média, atravessar as avenidas às ${ROT[hora]} do que de madrugada.`],
+        [nf0.format(c.kmh) + " km/h", `é a velocidade média nas avenidas às ${ROT[hora]}. De madrugada, ${nf0.format(c.kmh_livre)} km/h.`],
+        [nf1.format(top[0].t.p[hora].f) + "×", `no trecho mais lento: ${top[0].t.rua}, de ${top[0].t.p[hora].de} para ${top[0].t.p[hora].para}.`],
+        [nf0.format(top.filter((e) => e.t.p[hora].f >= 1.5).length), `trechos de ~2 km levam pelo menos 1,5 vez o tempo da madrugada às ${ROT[hora]}.`],
+      ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
+      // ranking
+      const lista = $("ranking-lento");
+      lista.replaceChildren();
+      const maxF = top[0].t.p[hora].f;
+      top.slice(0, 12).forEach(({ t }) => {
+        const p = t.p[hora];
+        const barra = el("i");
+        const bt = el("button", { type: "button", "aria-pressed": String(t.id === atual) }, [
+          el("span", { class: "nome", html: `${t.rua}<small>${p.de}${p.para && p.para !== p.de ? " → " + p.para : ""}</small>` }),
+          el("span", { class: "fator", texto: nf1.format(p.f) + "×" }),
+          el("span", { class: "barra", "aria-hidden": "true" }, [barra]),
+        ]);
+        bt.dataset.id = t.id;
+        bt.addEventListener("click", () => focar(t.id));
+        lista.append(el("li", {}, [bt]));
+        requestAnimationFrame(() => requestAnimationFrame(() => (barra.style.width = ((p.f - 1) / (maxF - 1)) * 100 + "%")));
+      });
+    }
+    function focar(id) {
+      atual = atual === id ? null : id;
+      fig.classList.toggle("foco", atual !== null);
+      for (const { t, linha, carro } of els) { linha.classList.toggle("ativo", t.id === atual); carro.classList.toggle("ativo", t.id === atual); }
+      $("ranking-lento").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.id === atual)));
+      $("limpar-lento").hidden = atual === null;
+      gR.replaceChildren();
+      const e = els.find((x) => x.t.id === atual);
+      if (e) {
+        const m = e.linha.getPointAtLength(e.linha.getTotalLength() / 2);
+        const esq = m.x > T.viewBox[2] * 0.6;
+        gR.append(s("text", { x: m.x + (esq ? -12 : 12), y: m.y - 10, class: "rotulo-via", "text-anchor": esq ? "end" : "start", texto: `${curto(e.t.rua)} · ${nf1.format(e.t.p[hora].f)}×` }));
+      }
+    }
+    $("limpar-lento").addEventListener("click", () => focar(atual));
+
+    // entrada: as vias se pintam das mais lentas para as mais livres
+    const ordem = () => [...els].sort((a, b) => (b.t.p[hora]?.f || 0) - (a.t.p[hora]?.f || 0));
+    if (!REDUZIR) els.forEach(({ linha }) => { linha.style.strokeDasharray = "1"; linha.style.strokeDashoffset = "1"; });
+    pintar();
+    aoAparecer(fig, () => {
+      if (REDUZIR) { fig.classList.add("fluindo"); return; }
+      const o = ordem();
+      o.forEach(({ linha }, i) => { linha.style.transition = `stroke-dashoffset 900ms var(--curva) ${100 + i * 8}ms, stroke 600ms, stroke-width 600ms, opacity 180ms`; linha.style.strokeDashoffset = "0"; });
+      setTimeout(() => {
+        o.forEach(({ linha }) => { linha.style.transition = ""; linha.style.strokeDasharray = "none"; });
+        if (!pausado) fig.classList.add("fluindo");
+      }, 100 + o.length * 8 + 900);
+    });
+    const pausa = $("pausar-lento");
+    pausa.hidden = REDUZIR;
+    pausa.addEventListener("click", () => {
+      pausado = !pausado;
+      fig.classList.toggle("fluindo", !pausado);
+      pausa.setAttribute("aria-pressed", String(pausado));
+      pausa.textContent = pausado ? "▶ Ver o movimento" : "❚❚ Pausar o movimento";
+    });
+    $("ctl-hora").addEventListener("click", (ev) => {
+      const b = ev.target.closest("button[data-v]");
+      if (!b) return;
+      $("ctl-hora").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      hora = b.dataset.v;
+      pintar();
+      if (atual !== null) { const a = atual; atual = null; focar(a); }
+    });
+    const [d1, d2] = L.dias.map((d) => d.split("-").reverse().slice(0, 2).join("/"));
+    $("lent-nota").textContent = `Quanto tempo a mais a mesma viagem leva no horário escolhido, comparado com a madrugada, no trânsito típico de um dia útil (Mapbox, ${d1} e ${d2}). ${nf0.format(L.km)} km de avenidas, em pedaços de ~2 km. Os "carros" andam mais devagar onde o trânsito é mais lento.`;
+  })();
+
   // ----------------------------------------------------------- 2. sinistros
   (function sinistros() {
     const [a0, , a1] = T.anos_sinistros;

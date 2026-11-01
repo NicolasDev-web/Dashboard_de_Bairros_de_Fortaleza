@@ -63,7 +63,7 @@ ACENTOS = {  # grafia sem acento do radar → com acento
     "Saboia": "Saboia", "Antonio": "Antônio", "Luis": "Luís", "Herminio": "Hermínio",
     "Lauro": "Lauro", "Heraclito": "Heráclito", "Graca": "Graça", "Virgilio": "Virgílio",
     "Tavora": "Távora", "Expedicionarios": "Expedicionários", "Maciel": "Maciel", "Fabio": "Fábio",
-    "Sa": "Sá", "Contôrno": "Contorno", "Marinho": "Marinho", "Hipolito": "Hipólito", "Paiva": "Paiva", "Liduina": "Liduína",
+    "Sa": "Sá", "Contôrno": "Contorno", "Fre": "Frei", "Marinho": "Marinho", "Hipolito": "Hipólito", "Paiva": "Paiva", "Liduina": "Liduína",
     "Ceara": "Ceará", "Barao": "Barão", "Conceicao": "Conceição", "Uniao": "União", "Apolonio": "Apolônio",
 }
 APELIDO = {

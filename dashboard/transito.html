@@ -28,6 +28,7 @@
     </a>
     <nav class="nav-links" aria-label="Seções">
       <a href="#volume">Mais carro</a>
+      <a href="#lentidao">Mais lento</a>
       <a href="#sinistros">Sinistros</a>
       <a href="#quando">Quando</a>
       <a href="#metodo">Método</a>
@@ -45,7 +46,7 @@
         <span class="linha t-sub"><span>o trânsito de Fortaleza</span></span>
       </h1>
       <div class="hero-pe">
-        <p class="hero-lede">Por onde passa mais carro na cidade, contado pelos radares da AMC, e onde o trânsito machuca. Se avexe não: é só ir rolando.</p>
+        <p class="hero-lede">Por onde passa mais carro na cidade, onde o trânsito fica mais lento e onde ele machuca. Se avexe não: é só ir rolando.</p>
         <div class="hero-acoes">
           <a class="botao botao-claro" href="#volume"><span class="botao-icone" aria-hidden="true">+</span>Ver as avenidas</a>
           <a class="botao botao-contorno-claro" href="#sinistros"><span class="botao-icone" aria-hidden="true">↳</span>Onde o trânsito machuca</a>
@@ -102,11 +103,54 @@
     </div>
   </section>
 
-  <!-- 2. Sinistros -->
+  <!-- 2. Lentidão -->
+  <section class="t-sec" id="lentidao" aria-labelledby="lent-titulo">
+    <div class="secao-cabeca">
+      <div>
+        <p class="t-kicker t-kicker-lento">02 · Lentidão</p>
+        <h2 id="lent-titulo">Onde o trânsito é mais lento</h2>
+      </div>
+      <p class="secao-nota" id="lent-nota">Quanto tempo a mais a mesma viagem leva no horário escolhido, comparado com a madrugada, no trânsito típico de um dia útil. Escolha o horário.</p>
+    </div>
+
+    <div class="controles">
+      <div class="segmentado" id="ctl-hora" role="group" aria-label="Horário">
+        <button type="button" data-v="manha" aria-pressed="false">7h30 · manhã</button>
+        <button type="button" data-v="almoco" aria-pressed="false">12h · almoço</button>
+        <button type="button" data-v="tarde" aria-pressed="true">18h · fim da tarde</button>
+      </div>
+    </div>
+
+    <dl class="t-numeros t-numeros-lento" id="numeros-lento"></dl>
+
+    <div class="t-grade">
+      <figure class="t-mapa" id="mapa-lento-fig">
+        <svg id="mapa-lento" role="img" aria-label="Mapa das avenidas de Fortaleza coloridas pelo fator de lentidão"></svg>
+        <div class="t-dica" id="dica-lento" role="status" hidden></div>
+        <figcaption class="t-legenda">
+          <span>tempo de viagem comparado à madrugada</span>
+          <span class="t-rampa" id="rampa-lento" aria-hidden="true"></span>
+          <span class="t-rampa-rotulos"><span>livre</span><span>· 1,5× ·</span><span>2× ou mais</span></span>
+          <button type="button" class="t-pausa" id="pausar-lento" aria-pressed="false">❚❚ Pausar o movimento</button>
+        </figcaption>
+      </figure>
+
+      <aside class="t-lista" aria-labelledby="ranking-lento-titulo">
+        <div class="t-lista-cabeca">
+          <h3 id="ranking-lento-titulo">Os 12 trechos mais lentos</h3>
+          <button type="button" class="link-botao" id="limpar-lento" hidden>Mostrar todos</button>
+        </div>
+        <ol class="t-ranking t-ranking-lento" id="ranking-lento"></ol>
+        <p class="t-nota">Trechos de cerca de 2 km. O fator diz quantas vezes o tempo da madrugada a viagem leva: 2,0× é o dobro.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 3. Sinistros -->
   <section class="t-sec t-sec-sinistros" id="sinistros" aria-labelledby="sinistros-titulo">
     <div class="secao-cabeca">
       <div>
-        <p class="t-kicker t-kicker-laranja">02 · Segurança no trânsito</p>
+        <p class="t-kicker t-kicker-laranja">03 · Segurança no trânsito</p>
         <h2 id="sinistros-titulo">Onde o trânsito machuca</h2>
       </div>
       <p class="secao-nota">Cada círculo é um trecho de 150 m onde a AMC registrou pelo menos 8 sinistros entre <span class="anos-sin">2022 e 2024</span>. Quanto maior, mais registros.</p>
@@ -138,7 +182,7 @@
   <section class="t-sec" id="quando" aria-labelledby="quando-titulo">
     <div class="secao-cabeca">
       <div>
-        <p class="t-kicker t-kicker-laranja">03 · Hora e dia</p>
+        <p class="t-kicker t-kicker-laranja">04 · Hora e dia</p>
         <h2 id="quando-titulo">Quando acontecem</h2>
       </div>
       <p class="secao-nota" id="quando-nota">Sinistros por hora e dia da semana. Cada quadradinho é a média de registros por semana naquele horário.</p>
@@ -162,12 +206,16 @@
   <section class="metodo" id="metodo" aria-labelledby="metodo-titulo">
     <div class="secao-cabeca">
       <h2 id="metodo-titulo">Como lemos os dados</h2>
-      <p class="secao-nota">Tudo aqui vem do Portal de Dados Abertos da Prefeitura de Fortaleza. Os números saem de <code>scripts/14_transito.py</code>.</p>
+      <p class="secao-nota">Volume e sinistros vêm do Portal de Dados Abertos da Prefeitura de Fortaleza; a lentidão, da Mapbox. Os números saem de <code>scripts/14_transito.py</code> e <code>scripts/15_lentidao.py</code>.</p>
     </div>
     <div class="metodo-grade">
       <div class="bloco">
         <h3>Volume</h3>
         <p>A AMC publica, para cada radar com contagem, a média de veículos por dia em cada mês. Usamos os últimos 12 meses publicados, com pelo menos 6 meses de contagem. Radares da mesma avenida a até 300 m viram um ponto, com os sentidos somados. A cor de cada avenida vem do ponto de medição mais próximo, até 2 km dele; fora disso a rua fica cinza.</p>
+      </div>
+      <div class="bloco">
+        <h3>Lentidão</h3>
+        <p>As avenidas (classes Expressa e Arterial dos Trechos de Logradouro) foram cortadas em pedaços de cerca de 2 km. Para cada pedaço, nos dois sentidos, a Mapbox Directions API devolveu o tempo de viagem com o trânsito típico de dois dias úteis às 3h, 7h30, 12h e 18h. O fator é o tempo no horário dividido pelo tempo às 3h; cada pedaço mostra o sentido mais lento. Sentidos em que a rota foge da avenida (mão única) ficam de fora.</p>
       </div>
       <div class="bloco">
         <h3>Sinistros</h3>
@@ -184,15 +232,17 @@
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/sinistros-transito" rel="noopener">AMC, Sinistros de Trânsito</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/logradouros-fortaleza" rel="noopener">Seuma, Trechos de Logradouro</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/" rel="noopener">Prefeitura de Fortaleza, malha de bairros</a></li>
+      <li><a href="https://docs.mapbox.com/api/navigation/directions/" rel="noopener">Mapbox Directions API (trânsito típico)</a></li>
     </ul>
   </section>
 
   <footer class="rodape">
-    <p>Bairros de Fortaleza · Avexado. Volume de jul/2024 a jun/2025, sinistros de 2015 a 2024.</p>
+    <p>Bairros de Fortaleza · Avexado. Volume de jul/2024 a jun/2025, lentidão em trânsito típico de dia útil (Mapbox), sinistros de 2015 a 2024.</p>
     <a href="#topo">Voltar ao topo</a>
   </footer>
 
   <script src="transito.js"></script>
+  <script src="lentidao.js"></script>
   <script src="transito-app.js"></script>
 </body>
 </html>
