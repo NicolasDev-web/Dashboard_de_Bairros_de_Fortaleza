@@ -1,4 +1,4 @@
-/* Avexado — o trânsito de Fortaleza. Lê window.TRANSITO (scripts/14_transito.py) e desenha tudo em SVG. */
+/* O trânsito de Fortaleza. Lê window.TRANSITO (scripts/14_transito.py) e desenha tudo em SVG. */
 (() => {
   "use strict";
   const T = window.TRANSITO;

@@ -1,4 +1,4 @@
-/* Avexado — página de trânsito. Usa os tokens e componentes de styles.css. */
+/* O trânsito de Fortaleza — página de trânsito. Usa os tokens e componentes de styles.css. */
 :root {
   /* rampa laranja dos sinistros, a partir de --perda */
   --l1: #f7d3b8; --l2: #f3b184; --l3: #ee8e53; --l4: #e8631e; --l5: #c04c12; --l6: #86330a;
@@ -9,7 +9,8 @@
 
 /* ---------- abertura ---------- */
 .t-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
-.t-hero .t-sub { font-size: .38em; letter-spacing: -0.03em; margin-top: .25em; opacity: .9; }
+.t-hero .hero-titulo { font-size: clamp(48px, 6.2vw, 100px); }
+.t-hero .t-sub { font-size: max(.25em, 17px); line-height: 1.2; max-width: 22ch; letter-spacing: -0.03em; margin-top: .25em; opacity: .9; }
 .t-hero-mapa { position: relative; margin: 0; align-self: stretch; min-height: 420px; display: flex; flex-direction: column; justify-content: center; }
 #hero-mapa { width: 100%; height: auto; max-height: 78vh; overflow: visible; }
 #hero-mapa .contorno { fill: rgba(255, 255, 255, .07); stroke: rgba(255, 255, 255, .28); stroke-width: 1; vector-effect: non-scaling-stroke; }

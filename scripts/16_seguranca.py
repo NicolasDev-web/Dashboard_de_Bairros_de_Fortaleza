@@ -1,4 +1,4 @@
-"""Etapa 16 — Aperreio: a página de segurança (onde a violência pesa mais em Fortaleza).
+"""Etapa 16 — A violência em Fortaleza: a página de segurança (onde a violência pesa mais).
 
 Junta o que as etapas anteriores já produziram, por AIS (as 10 Áreas Integradas de Segurança de
 Fortaleza; a SSPDS não publica dado por bairro):

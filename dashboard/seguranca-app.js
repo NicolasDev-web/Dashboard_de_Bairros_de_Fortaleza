@@ -1,4 +1,4 @@
-/* Aperreio — a segurança em Fortaleza. Lê window.SEGURANCA (scripts/16_seguranca.py). */
+/* A violência em Fortaleza. Lê window.SEGURANCA (scripts/16_seguranca.py). */
 (() => {
   "use strict";
   const S = window.SEGURANCA;

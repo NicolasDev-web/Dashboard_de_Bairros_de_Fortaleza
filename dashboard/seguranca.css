@@ -1,4 +1,4 @@
-/* Aperreio — página de segurança. Usa styles.css e os componentes de transito.css. */
+/* A violência em Fortaleza — página de segurança. Usa styles.css e os componentes de transito.css. */
 :root {
   /* rampa vinho das mortes violentas */
   --v1: #f3d9da; --v2: #e6aeb1; --v3: #d27f86; --v4: #b5525f; --v5: #8c2f40; --v6: #5c1628;
@@ -8,7 +8,8 @@
 /* abertura em azul-noite: o tema pede um tom mais sóbrio que o cobalto */
 .s-hero { background: var(--noite); }
 .s-hero::before { background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1.2px); }
-.s-hero .t-sub { font-size: .38em; letter-spacing: -0.03em; margin-top: .25em; opacity: .9; }
+.s-hero .hero-titulo { font-size: clamp(48px, 6.2vw, 100px); }
+.s-hero .t-sub { font-size: max(.25em, 17px); line-height: 1.2; max-width: 22ch; letter-spacing: -0.03em; margin-top: .25em; opacity: .9; }
 #hero-mapa .area { stroke: var(--noite); stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity 900ms var(--curva); }
 .s-hero.pronto #hero-mapa .area { opacity: 1; }
 #hero-mapa .bairro-h { fill: none; stroke: rgba(21, 24, 79, .35); stroke-width: .5; vector-effect: non-scaling-stroke; pointer-events: none; }
