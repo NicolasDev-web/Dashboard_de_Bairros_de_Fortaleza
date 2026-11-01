@@ -1,125 +1,179 @@
-# Pesquisa de bases: segurança por bairro e trânsito por horário
+# Pesquisa de bases: trânsito por horário e segurança por bairro
 
-Levantamento feito em 01/11/2026 para duas análises novas do painel, separadas uma da outra:
+Duas análises novas para o painel, separadas uma da outra:
 
-1. **Segurança:** onde a violência se concentra em Fortaleza e que fatores aparecem junto, num tom de reportagem, sem rotular bairro.
-2. **Trânsito:** quais rotas ficam mais carregadas e como isso muda ao longo do dia.
+1. **Trânsito ("Avexado"):** quais rotas ficam mais carregadas e como isso muda ao longo do dia.
+2. **Segurança ("Aperreio"):** onde a violência se concentra e que fatores aparecem junto, num tom de reportagem, sem rotular bairro.
 
-> Os portais oficiais (dados.fortaleza.ce.gov.br, ce.gov.br/sspds, sspds.ce.gov.br) não abriram no ambiente da pesquisa, por causa da rede. O que está abaixo vem de buscas, das páginas dos conjuntos indexadas, de trabalhos acadêmicos e de repositórios que já baixaram esses dados. Os pontos marcados **[conferir]** precisam ser abertos no portal antes de entrar no pipeline.
+Primeira rodada em 01/11/2026, só com busca. A segunda rodada, no mesmo dia, foi com o portal liberado: lemos o catálogo inteiro do **dados.fortaleza.ce.gov.br** pela API (CKAN), baixamos e abrimos as bases de trânsito, e os números abaixo saem desses arquivos.
 
 ---
 
-## 1. Segurança
+## 1. Trânsito
 
 ### Resumo
 
-**Não existe base aberta de crimes por bairro em Fortaleza.** A SSPDS publica os microdados com município e AIS (Área Integrada de Segurança). Fortaleza tem 10 AIS, cada uma com 6 a 19 bairros. O painel já usa esses dados na etapa 3 (`scripts/03_seguranca.py`), e todo bairro de uma AIS recebe o mesmo valor.
+- **Hora a hora, por via, não existe dado aberto.** A AMC tem esse dado: 200 radares com contagem (`TemContagem = S`) e 1.231 semáforos, 591 deles inteligentes (SCOOT). Mas publica o volume só em **média mensal**.
+- **O que existe aberto é bom e já dá conteúdo:** volume mensal por radar, 130 mil sinistros com hora e coordenada, horários dos ônibus que esticam no pico e um dia inteiro de GPS dos ônibus (2015).
+- **Para o mapa "rota × horário"**, o caminho é uma **API de rotas com trânsito típico** (Mapbox, HERE ou Google) consultada para uns 30 corredores, hora a hora. Em paralelo, um **pedido pela LAI à AMC** com as contagens horárias dos radares, que seriam a versão 100% oficial.
 
-Na prática, um ranking honesto de "bairros mais perigosos" só sai com dados que a SSPDS não publica. Dá para contar a história bem com o que existe: por AIS, em taxa por 100 mil moradores, com horário, perfil das vítimas, tendência e fatores de contexto. E dá para pedir o recorte por bairro pela Lei de Acesso à Informação.
+### O que o portal tem de trânsito (conferido em 01/11/2026)
+
+O catálogo tem 22 conjuntos da AMC e 24 da ETUFOR. Os que servem:
+
+| Conjunto | Arquivo | O que tem de fato | Serve para |
+|---|---|---|---|
+| **Volume Tráfego Mensal** (AMC) | CSV, 2,4 MB, atualizado em 22/07/2025 | 26.526 linhas, **760 pontos**, **jan/2017 a jun/2025**. Colunas: `Sitio`, `DATA` (mês), `ViaSentido`, `VMD` (veículos/dia, média do mês), `Lon`, `Lat`. Uns 240 pontos ativos por mês em 2025 | **"Por onde passa mais carro"**, por sentido |
+| **Fiscalização Eletrônica** (AMC) | GeoJSON, 200 equipamentos | `Sitio`, endereço, `ViaSentido`, `Bairro`, `Regional`, nº de faixas, `TemContagem`, data de ativação | Liga o volume à via e ao bairro. Mostra quais radares contam veículos |
+| **Semáforo** (AMC/CTAFOR) | GeoJSON, 1.231 cruzamentos | Cruzamento, modo de controle (SCOOT/centralizado), bairro, regional, botoeiras, motobox | Camada de contexto ("onde o semáforo se ajusta ao trânsito") |
+| **Sinistros de Trânsito 2015–2024** (AMC) | GeoJSON, 85 MB | **130.823 sinistros** com dia/mês/ano, **HORA**, via (`LOG1`/`LOG2`), lat/lon, tipo de cruzamento, natureza, severidade, mortos/feridos e veículos (moto, carro, ônibus, bicicleta…) | **"Quando e onde acontecem os sinistros"** |
+| **GTFS 03/2026** (ETUFOR) | ZIP | Horários de ônibus. Só fim de semana tem viagens, como já anotado no README | Rede atual |
+| **GTFS dia útil 2023/24** (Mobility Database, já usado na etapa 12) | ZIP | Horário de cada viagem | **Tempo programado do ônibus por hora**, um indicador indireto do trânsito |
+| **Dados de Mobilidade de Ônibus, 11/03/2015** (ETUFOR) | CSV, 237 MB | GPS de **1.890 ônibus** num dia inteiro: `date_time`, lat/lon, `speed`, `bus_id` (mais paradas e validações) | **Um dia da cidade visto pelos ônibus**: velocidade real por hora e por trecho |
+| Binários, Vias 30/40/50, Malha cicloviária, Faixas de ônibus/BRT | GeoJSON/CSV | Intervenções e limites de velocidade | Contexto no mapa |
+| Viagens Bicicletar 2014–2025 | CSV por ano | Viagens com origem, destino e horário | Fora do escopo (dá outra análise) |
+
+**Descartados no portal:**
+- *Óbitos no trânsito:* DATASUS municipal 2010–2019, sem local nem hora.
+- *Chamadas da Polícia:* tem lat/lon, mas é de 2005–2007.
+- *Ocorrências da Guarda Municipal:* é uma tabela de eventos (Réveillon, Carnaval), não ocorrências.
+
+### O que já dá para tirar das bases abertas (números conferidos)
+
+**Volume, as vias mais carregadas** (maior ponto de cada via, média jul/2024–jun/2025, veículos por dia e por sentido):
+
+| Via | Veículos/dia | Via | Veículos/dia |
+|---|---|---|---|
+| Av. Raul Barbosa | 38.048 | Av. José Bastos | 32.460 |
+| Av. Aguanambi | 37.751 | Av. Alberto Craveiro | 32.087 |
+| Av. Pres. Castelo Branco (Leste-Oeste) | 37.375 | Av. Abolição | 31.006 |
+| Av. Farias Brito | 35.837 | Av. Santos Dumont | 30.314 |
+| Av. Pres. Costa e Silva (Perimetral) | 34.620 | Av. Bezerra de Menezes | 28.166 |
+| Av. Eng. Santana Júnior | 32.482 | | |
+
+Cuidado com a série histórica: o parque de radares foi trocado por volta de 2023 (só 3 pontos têm dado em 2019 e em 2025). Comparar anos só vale com os mesmos pontos, e assim a série firme começa em 2023. O total "da cidade" somado mês a mês engana, porque o número de radares muda.
+
+**Sinistros:**
+- Caíram de 16.831 (2015) para 9.230 (2020) e voltaram a 12.743 (2024).
+- As mortes caíram de 255 (2015) para **140 (2024)**.
+- **58% envolvem moto.**
+- Os sinistros se espalham das 7h às 18h. As mortes pesam mais **das 15h às 19h** (cerca de 6% por hora, contra uns 3% de madrugada).
+- Vias com mais registros desde 2022: BR-116, Perimetral (Costa e Silva), Washington Soares, Mister Hull, Osório de Paiva, Godofredo Maciel.
+- O nome da via vem com grafias diferentes ("Avenida Washington Soares" e "Washington Soares") e precisa ser padronizado.
+
+**Horário programado dos ônibus (GTFS dia útil):**
+- Em várias linhas a ETUFOR já põe o pico na tabela. A linha 0032 leva **49 min às 4h, 76 min às 7h e 73 min às 17h**. A 0051 vai de 33 min (4h) a 52 min (7h e 17h).
+- Outras linhas têm tempo fixo o dia todo, então só entram as linhas cujo horário varia.
+
+**GPS de 2015:** a velocidade mediana dos ônibus em movimento cai de uns 22–23 km/h no meio da manhã para **18 km/h às 17h**. É um dia só e antigo, mas é dado real e dá um retrato bonito ("um dia de março de 2015").
+
+### Como fazer o mapa "rota × horário"
+
+| Opção | Como funciona | Custo | Termos de uso | Avaliação |
+|---|---|---|---|---|
+| **Mapbox Directions** (`driving-traffic` + `depart_at`) | Tempo de viagem com trânsito **típico** (histórico) para o horário pedido | 100 mil requisições/mês grátis | Ver se pode guardar e publicar um índice derivado **[conferir]** | **Recomendada para começar:** cota folgada, dá para fazer os 7 dias da semana |
+| **HERE Routing v8** (`departureTime`) | Igual: horário no passado ou no futuro usa trânsito histórico | Cota grátis mensal (fonte de terceiros fala em ~250 mil) **[conferir]** | **[conferir]** | Alternativa forte ou validação |
+| **Google Routes API** (`TRAFFIC_AWARE`) | Trânsito previsto por horário. Um estudo da ANPET (2026) validou contra os radares em 47 trechos de Fortaleza | ~5 mil chamadas Pro/mês grátis | **Restringe cache e exibição fora do mapa do Google** | Usar só para validar |
+| **TomTom Traffic Flow** | Velocidade **atual** por trecho, então precisa coletar a cada hora por semanas | 2.500/dia grátis (preço mudou em 07/2026) | Restritivo | Só se quiser velocidade observada |
+| **Pedido pela LAI à AMC** | Contagem e velocidade **por hora** dos 200 radares com contagem (dado que a UFC já usou em dissertações) | Grátis, demora (20 + 10 dias) | Dado público, livre para publicar | **A melhor base. Vale pedir já** |
+
+**Coleta proposta (Mapbox ou HERE):**
+- **~30 corredores, nos dois sentidos**, entre pontos conhecidos. Por exemplo: Washington Soares (Iguatemi → Messejana), BR-116 (Aguanambi → Messejana), Bezerra de Menezes, Leste-Oeste, Perimetral, Santos Dumont, Dom Luís, Abolição, Beira-Mar, Mister Hull, Osório de Paiva, Godofredo Maciel, Raul Barbosa, José Bastos, Via Expressa, Sargento Hermínio, Augusto dos Anjos, Alberto Craveiro, Rogaciano Leite, Santana Júnior, Heráclito Graça, Senador Virgílio Távora, Antônio Sales, Barão de Studart, 13 de Maio, João Pessoa, Carapinima, Expedicionários, Frei Cirilo, Juscelino Kubitschek.
+- **A cada 30 min, das 5h às 23h, nos 7 dias:** 30 × 2 × 37 × 7 ≈ **15.500 consultas**. Cabe na cota grátis e dá para repetir todo mês.
+- **Indicador "fator lentidão"** = tempo com trânsito ÷ tempo com a via livre (madrugada). 1,0 = livre; 2,0 = leva o dobro.
+- **Seis viagens do dia a dia** (Messejana → Centro, Parangaba → Aldeota, Conjunto Ceará → Centro, Barra do Ceará → Iguatemi, Papicu → Unifor, Mondubim → Benfica): tempo de porta a porta por horário. Ficam ao lado do tempo de ônibus que o painel já calcula na etapa 12.
+- Salvar só o índice agregado por corredor e horário (não as rotas brutas), dentro do que os termos permitirem.
+
+**Pedido pela LAI à AMC** (Fala.BR / Ouvidoria de Fortaleza), texto sugerido: *"Solicito, em formato aberto (CSV), a contagem horária de veículos e a velocidade média horária por equipamento de fiscalização eletrônica com contagem (campo TemContagem = S do conjunto Fiscalização Eletrônica), de janeiro de 2024 até o mês mais recente disponível."*
+
+---
+
+## 2. Segurança
+
+### Resumo
+
+**Não existe base aberta de crime por bairro em Fortaleza.** A SSPDS publica os microdados por município e AIS (10 em Fortaleza). O painel já usa isso na etapa 3. A análise sai por AIS, em taxa por 100 mil, com horário, perfil das vítimas, tendência e fatores de contexto, e com a ressalva clara de que todos os bairros de uma AIS aparecem com a mesma cor. Para o recorte por bairro, pedido pela LAI à SSPDS.
 
 ### Bases
 
-| Base | O que tem | Recorte | Uso na análise | Situação |
-|---|---|---|---|---|
-| **SSPDS: CVLI, dados detalhados** (`CVLI_2009-a-2025.xlsx`) | Uma linha por vítima: Município, AIS, Natureza, Data, **Hora**, Dia da semana, Meio empregado (arma), Gênero, Idade, Escolaridade, Raça. Aba de intervenção policial à parte | AIS, 2009–2025 | Taxa por AIS, mapa de calor hora × dia da semana, perfil das vítimas, armas, série histórica | Já é baixada pela etapa 3 |
-| **SSPDS: CVP (roubos), dados detalhados** (`CVP_2009-a-2025.xlsx`) | Uma linha por ocorrência, com município, AIS e data | AIS, 2009–2025 | "Onde mais se rouba" (separado das mortes) | Já é baixada pela etapa 3. Ver se tem hora e tipo de roubo **[conferir]** |
-| **SSPDS: furtos** | Aparece nos boletins mensais (CVLI, CVP e furto) | Município/região | Talvez um terceiro indicador | Ver se existe planilha detalhada **[conferir]** |
-| **SSPDS: boletins mensais e anuais (PDF)** | Totais, turno, dia da semana | Estado, Fortaleza, RMF, interior | Números de manchete (ex.: a queda de 2025 e 2026) | Aberto |
-| **Pedido pela LAI à SSPDS/Supesp** (Ceará Transparente) | CVLI e CVP por **bairro** do fato | Bairro | O ranking por bairro de verdade | Pedido a fazer. Em 2023 a SSPDS disse que estudava publicar por bairro |
-| **Comitê Cearense pela Prevenção de Homicídios na Adolescência** ("Cada Vida Importa", ALECE + Unicef) | Relatórios com homicídios de adolescentes por bairro e território | Bairro, anos específicos | Contexto e citações (ex.: 44% das mortes em 17 bairros) | Relatórios em PDF |
-| **IBGE Censo 2022** | População, renda, faixa etária, escolaridade, saneamento | Setor → bairro | Denominador da taxa e fatores de contexto | Já está no projeto (etapas 2 e 4) |
-| **IBGE: Favelas e Comunidades Urbanas 2022** | Área e população em favelas | Setor → bairro | Fator de contexto (precariedade urbana) | Aberto |
-| **IDH por bairro (SDE Fortaleza)** | IDH-B com renda, longevidade e alfabetização | Bairro, Censo 2010 | Fator de contexto, com o aviso de que é de 2010 | Aberto (PDF/tabela) |
-| **IPECE: Informe 272 (ago/2025)** | Desigualdade de renda por bairro com o Censo 2022 | Bairro | Fator de contexto atual | Aberto |
-| **OpenStreetMap / equipamentos** | Escolas, saúde, lazer, praças | Bairro | Fator de contexto (oferta de serviços) | Já está no projeto (etapas 10 e 11) |
+| Base | O que tem | Recorte | Uso |
+|---|---|---|---|
+| **SSPDS: CVLI, dados detalhados** (`CVLI_2009-a-2025.xlsx`, já baixado na etapa 3) | Uma linha por vítima: Município, AIS, Natureza, Data, **Hora**, Dia da semana, Meio empregado, Gênero, Idade, Escolaridade, Raça | AIS, 2009–2025 | Taxa por AIS, mapa de calor hora × dia, perfil das vítimas, armas, série |
+| **SSPDS: CVP, roubos** (`CVP_2009-a-2025.xlsx`, já baixado) | Uma linha por ocorrência | AIS, 2009–2025 | Mapa "onde mais se rouba", separado das mortes. Ver se tem hora **[conferir]** |
+| **SSPDS: boletins mensais e anuais (PDF)** | Totais, turno, dia da semana | Fortaleza/RMF/interior | Números de manchete: queda de 11% em 2025 e de 62% em 2026 (até junho) |
+| **Pedido pela LAI à SSPDS/Supesp** | CVLI e CVP por bairro | Bairro | O ranking por bairro de verdade |
+| **Comitê Cearense pela Prevenção de Homicídios na Adolescência** | Relatórios por bairro e território | Bairro | Contexto e citações |
+| **Portal de Fortaleza, SDE** (conferido no catálogo) | `idh-fortaleza` (IDH por bairro), `ibeu` (Índice de Bem-Estar Urbano), `infra-urbana-fortaleza`, `rendimentos-e-domicilios-fortaleza`, `estoque-empregos-fortaleza` | Bairro | Fatores de contexto |
+| **Portal de Fortaleza, SCSP** | `pontos_iluminacao_publica` (XLSX georreferenciado, 2022) | Ponto → bairro | Fator de contexto: pontos de luz por km de rua |
+| **IBGE Censo 2022 e Favelas e Comunidades Urbanas 2022** | Renda, idade, escolaridade, saneamento, favelas | Setor → bairro | Denominador e fatores (já no projeto, etapas 2 e 4) |
+| **IPECE: Informe 272** | Renda por bairro com o Censo 2022 | Bairro | Fator atual |
 
-**Descartadas:**
-- *Fogo Cruzado:* só cobre Rio, Recife, Salvador e Belém.
-- *SIM/DATASUS:* tem município de residência, sem bairro.
-- *Listas de "bairros mais perigosos" de blogs:* não dizem de onde vêm os números.
+**Descartadas:** Fogo Cruzado (não cobre Fortaleza), SIM/DATASUS (sem bairro), "Chamadas da Polícia" do portal (2005–2007), listas de blogs.
 
 ### Como contar sem rotular o bairro
 
-- **Taxa por 100 mil moradores**, nunca só o número absoluto. AIS grande tem mais casos só porque tem mais gente.
-- **Média de 3 anos** (2023–2025), porque CVLI por AIS é número pequeno e oscila. A etapa 3 já calcula.
-- **Mortes e roubos em mapas separados.** Os dois se concentram em lugares diferentes: o roubo pesa onde há comércio e movimento, como o Centro e a Aldeota.
-- **Tendência:** mostrar se a área está melhorando. Fortaleza teve queda forte em 2025 e 2026.
-- **Fatores como contexto, não como causa.** Mostrar lado a lado (renda, jovens de 15 a 29 anos, escolaridade, favela, serviços) e dizer "aparecem juntos", não "causam".
-- **Deixar claro o recorte:** "os dados oficiais são por área (AIS), e todos os bairros de uma área aparecem com a mesma cor".
-- Não citar facção nem território de grupo. Não há base aberta para isso, e foge do tom do projeto.
-
-### Gráficos possíveis
-
-1. Mapa por AIS com a taxa de CVLI por 100 mil (média 2023–2025), com troca para roubos.
-2. Mapa de calor hora × dia da semana dos CVLI de Fortaleza (campos `Hora` e `Dia da Semana`).
-3. Linha 2009–2025(26) por AIS: a área está melhorando ou piorando?
-4. Quem são as vítimas: faixa etária, gênero e raça, em barras simples.
-5. "O que aparece junto": dispersão da taxa de CVLI contra renda ou contra % de jovens, um ponto por AIS (são só 10 pontos, então mostrar como comparação e não como modelo estatístico).
+- **Taxa por 100 mil moradores** e média de 3 anos (2023–2025).
+- **Mortes e roubos em mapas separados.** O roubo pesa onde há comércio e movimento.
+- **Mostrar a tendência:** a queda de 2025 e 2026 é a manchete.
+- **Fatores como contexto, não como causa:** "aparecem juntos".
+- **Recorte explicado na tela**, sem citar facção.
 
 ---
 
-## 2. Trânsito
+## 3. Proposta de design
 
-### Resumo
+O que já está no painel: Geist e Geist Mono, azul cobalto `#2f37c4` sobre papel lilás `#ececf2`, laranja `--perda` `#e8631e` como cor de alerta, pixels como textura. As duas análises entram como páginas próprias, no formato de `morar.html` (`transito.html` e `seguranca.html`), em **rolagem que conta uma história** (scrollytelling): um bloco de texto curto à esquerda e o gráfico fixo à direita, mudando conforme a pessoa rola. No celular, o gráfico vai para cima do texto.
 
-**Não há base aberta de congestionamento por horário em Fortaleza.** A AMC tem os dados (sensores dos radares e semáforos do CTAFOR, com leitura de placa desde 2013), mas publica o volume em **média mensal**. Para ver "rota × horário", o caminho mais viável é coletar tempos de viagem numa API de mapas (Google ou TomTom) para um conjunto fixo de corredores, hora a hora, e completar com as bases abertas da AMC.
+### "Avexado: o trânsito de Fortaleza hora a hora"
 
-### Bases
+1. **Abertura, "o relógio da cidade":** um relógio de 24h em anel, cada fatia pintada pelo fator lentidão médio da cidade. O pico da manhã e o da tarde acendem em laranja. Frase em destaque, por exemplo: "Às 18h, atravessar a cidade leva quase o dobro do tempo das 10h" (o número sai da coleta).
+2. **O mapa que respira (peça central):** os ~30 corredores desenhados como linhas grossas sobre o mapa claro, com cor e espessura pelo fator lentidão (cobalto claro = livre, laranja = travado). Embaixo, uma barra de horário de 5h a 23h com botão ▶: as vias "acendem" no pico e "apagam" depois, e o relógio do canto gira junto. Ao lado, o ranking "As 10 mais travadas agora", que se reordena com animação quando o horário muda. Seletor dia útil / sábado / domingo.
+3. **"Quanto dura a mesma viagem":** seis cartões, cada um com uma viagem do dia a dia e uma curva do tempo de carro ao longo do dia (e o de ônibus, da etapa 12, tracejado). Exemplo de texto: "Se avexe não: saindo às 9h30, você chega 20 min antes."
+4. **"Por onde passa mais carro":** o volume dos radares como círculos proporcionais no mapa, com destaque para Raul Barbosa, Aguanambi e Leste-Oeste (38 mil veículos/dia).
+5. **"Quando o trânsito machuca":** mapa de calor hora × dia da semana dos sinistros 2022–2024, com o recorte das motos (58%) e o mapa de pontos críticos. Tom de serviço público, não de alarme.
+6. **"O dia em que 1.890 ônibus contaram a cidade"** (bônus): animação com os pontos de GPS de 11/03/2015 andando pelo mapa num dia acelerado, que ficam vermelhos quando a velocidade cai.
 
-| Base | O que tem | Resolução no tempo | Uso na análise | Situação |
-|---|---|---|---|---|
-| **Google Routes API** (trânsito previsto por horário de saída) | Tempo de viagem com trânsito entre dois pontos, para qualquer horário | Hora a hora (dia útil, sábado, domingo) | **Mapa principal:** corredores coloridos pela lentidão, com um controle de horário | Pago, com cota grátis mensal (por volta de 5 mil chamadas Pro) **[conferir]**. Um estudo da ANPET de 2026 comparou com os radares em 47 trechos de Fortaleza |
-| **TomTom Traffic Flow API** | Velocidade atual × velocidade livre por trecho | Tempo real (precisa coletar por semanas) | Alternativa ou validação do Google com velocidade observada | Grátis até cerca de 2.500 chamadas/dia. Preço muda desde 01/07/2026 **[conferir]** |
-| **TomTom Traffic Index: Fortaleza** | Congestionamento da cidade por hora e dia da semana. 121 h perdidas no pico em 2025 | Hora × dia da semana | Abertura da seção: "a cidade hora a hora" | Aberto para consulta e citação |
-| **AMC: Volume Tráfego Mensal** (dados.fortaleza) | Média mensal de veículos por equipamento de fiscalização, desde jan/2017 | Mensal | "Por onde passa mais carro", e a série com a pandemia | Aberto. Ver formato e última atualização **[conferir]** |
-| **AMC: Fiscalização Eletrônica** (GeoJSON) | Posição de cada radar, com o campo `temcontagem` | – | Pôr o volume no mapa | Aberto |
-| **AMC: Sinistros de Trânsito 2015–2024** (GeoJSON, ~81 MB) | ~130 mil sinistros com data, **hora**, bairro, rua, lat/lon, severidade, mortos/feridos e tipo de veículo | Ocorrência | Complemento opcional: "onde e a que horas acontecem os acidentes" | Aberto |
-| **AMC: Vias 30/40/50** | Limite de velocidade por via | – | Contexto | Aberto |
-| **GTFS da ETUFOR** (já no projeto) | Horários programados dos ônibus | Por viagem | Cruzamento grátis: velocidade programada do ônibus por faixa horária nos corredores (a ETUFOR já embute o pico na tabela) | Já baixado (etapas 12 e 13) |
-| **GPS dos ônibus (ETUFOR)** | Posição da frota | Contínua | Velocidade real do ônibus por hora e corredor | Usado em pesquisas da UFC, sem conjunto aberto encontrado. Pedido pela LAI |
-| **Dados horários dos radares (AMC)** | Contagem e velocidade por equipamento | 15 min / hora | A melhor base, toda oficial | Usada em dissertações da UFC (Barroso, 2018). Pedido pela LAI à AMC |
+### "Aperreio: onde a violência pesa mais"
 
-**Descartadas:**
-- *Uber Movement:* encerrado em 2023.
-- *Waze for Cities:* exige parceria com a Prefeitura, e não achei parceria ativa em Fortaleza.
-
-### Atenção aos termos de uso
-
-Google e TomTom limitam guardar e republicar o que as APIs devolvem. O Google, por exemplo, restringe cache e exibição fora do mapa do Google. Antes de publicar, ver se um índice agregado e derivado (ex.: "lentidão relativa por hora, por corredor") cabe nos termos. Se não couber, o caminho todo oficial é o pedido pela LAI dos dados horários dos radares à AMC.
-
-### Desenho proposto da coleta
-
-- **Uns 30 corredores** com nome conhecido: Av. Bezerra de Menezes, Washington Soares, Santos Dumont, Aguanambi/BR-116, Augusto dos Anjos, Leste-Oeste, Beira-Mar, Dom Luís, Mister Hull, Osório de Paiva, Perimetral, Via Expressa, Abolição, José Bastos, Godofredo Maciel, Raul Barbosa, Sargento Hermínio etc. Os dois sentidos.
-- **24 horários × 2 tipos de dia** (útil e sábado): 30 × 2 × 24 × 2 = **2.880 chamadas**, dentro da cota grátis.
-- **Indicador:** tempo com trânsito ÷ tempo sem trânsito (1,0 = livre; 2,0 = leva o dobro). Fácil de explicar: "na Washington Soares às 18h você leva o dobro do tempo".
-- **Página:** mapa com os corredores coloridos e um controle de horário (6h, 7h... 22h), mais um gráfico "as 10 rotas mais travadas neste horário".
+1. **Abertura com a manchete positiva:** a queda das mortes violentas em 2025–2026 numa linha grande, que se desenha ao rolar.
+2. **Mapa por AIS:** taxa por 100 mil, com troca entre mortes e roubos e o aviso fixo "dados por área, não por bairro". Ao passar o mouse, a ficha da AIS com os bairros, a taxa, a tendência e a comparação com a cidade.
+3. **"A que horas":** mapa de calor hora × dia da semana dos CVLI.
+4. **"Quem são as vítimas":** pictograma de 100 pessoas pintado por faixa etária e gênero (mais forte que barras).
+5. **"O que aparece junto":** as 10 AIS lado a lado em colunas (taxa, renda, % de jovens, IDH, iluminação, serviços), ligadas por linhas (coordenadas paralelas). Mostra o padrão sem prometer causa.
 
 ---
 
-## 3. Domínios para liberar no ambiente
+## 4. Próximos passos
 
-Para baixar as bases neste ambiente na nuvem, liberar na configuração de rede: `dados.fortaleza.ce.gov.br`, `www.ce.gov.br`, `www.sspds.ce.gov.br`, `mapas.fortaleza.ce.gov.br` e, para a coleta de trânsito, `routes.googleapis.com` e/ou `api.tomtom.com`.
+1. **Chave de API:** criar uma conta gratuita na Mapbox (ou na HERE) e passar a chave como variável de ambiente, para rodar a coleta dos corredores. Liberar `api.mapbox.com` (ou `router.hereapi.com`) na rede.
+2. **Pedidos pela LAI:** AMC (contagem horária dos radares) e SSPDS (crimes por bairro).
+3. **Pipeline:**
+   - `14_transito_abertos.py`: volume, sinistros, GTFS por hora e GPS 2015 → `dashboard/transito*.js`.
+   - `15_transito_coleta.py`: corredores × horário via API.
+   - `16_seguranca_analise.py`: estende a etapa 3 com hora, perfil e fatores.
+4. **Protótipo visual** da página de trânsito com os dados abertos já baixados, enquanto a coleta não fica pronta.
 
-## 4. Fontes
+## 5. Fontes
 
-- SSPDS, estatísticas e indicadores: https://www.sspds.ce.gov.br/estatisticas-2-3/ e https://www.ce.gov.br/sspds/estatisticas/dados-detalhados/
-- Colunas da planilha de CVLI (repositório que usou 2009–2023): https://github.com/erivandosena/paper-cvli-models-ml-statistic-comparison
-- SSPDS, fechamento de 2025: https://www.sspds.ce.gov.br/2026/01/08/ceara-encerra-2025-com-reducao-de-77-nas-mortes-violentas-diminuicao-em-fortaleza-foi-de-11/
-- Diário do Nordeste, como os dados de segurança são divulgados no Ceará (falta de recorte por bairro): https://diariodonordeste.verdesmares.com.br/seguranca/entenda-como-os-dados-de-seguranca-sao-captados-e-divulgados-no-ceara-estado-e-referencia-no-brasil-1.3423787
-- O Povo, queda de 62% nos homicídios em 2026: https://www.opovo.com.br/noticias/seguranca-publica/2026/06/10/fortaleza-tem-queda-de-62-nos-homicidios-em-2026.html
-- Concentração de homicídios de adolescentes por bairro: https://periodicos.ufc.br/psicologiaufc/article/view/19313/30926 e https://ihu.unisinos.br/categorias/568453-o-raio-x-das-mortes-na-capital-mais-perigosa-do-brasil-para-adolescentes
-- IPECE, Informe 272: https://www.ipece.ce.gov.br/wp-content/uploads/sites/45/2025/08/ipece_informe_272_05_ago2025.pdf
-- IDH por bairro: https://diariodonordeste.verdesmares.com.br/ceara/proporcao-de-pessoas-pretas-e-maior-nos-bairros-de-fortaleza-com-menor-idh-veja-dados-por-local-1.3589524
-- Fogo Cruzado, cobertura: https://github.com/voltdatalab/crossfire
+- Portal Fortaleza Dados Abertos, API do catálogo: https://dados.fortaleza.ce.gov.br/api/3/action/package_search
+- AMC, Volume Tráfego Mensal: https://dados.fortaleza.ce.gov.br/dataset/volume-trafego-mensal
+- AMC, Fiscalização Eletrônica: https://dados.fortaleza.ce.gov.br/dataset/fiscalizacao-eletronica
+- AMC, Semáforo: https://dados.fortaleza.ce.gov.br/dataset/semaforo
 - AMC, Sinistros de Trânsito: https://dados.fortaleza.ce.gov.br/dataset/sinistros-transito
-- Colunas da base de sinistros tratada: https://github.com/AnadyCdeMesquita/Projeto_Sinistros-de-Transito-na-Cidade-de-Fortaleza-2015-2024- e https://github.com/jotap53/eda_sinistros_de_transito_fortaleza
-- AMC, Volume Tráfego Mensal: https://dados.fortaleza.ce.gov.br/dataset/activity/volume-trafego-mensal
-- AMC, Fiscalização Eletrônica: https://dados.fortaleza.ce.gov.br/dataset/fiscalizacao-eletronica e https://mapas.fortaleza.ce.gov.br/mapa/538/equipamentos-de-fiscalizacao-eletronica
-- AMC, organização no portal: https://dados.fortaleza.ce.gov.br/organization/amc
-- AMC, Plano de Dados Abertos 2023–2025: https://dados.fortaleza.ce.gov.br/dataset/e5bdf7d4-5837-41b5-ae2a-5bb346e45c99/resource/e71919d1-43d6-473f-a685-211114a56385/download/plano-de-dados-abertos-amc-2023-2025_2.0.pdf
+- ETUFOR, GPS/paradas/validação de 11/03/2015: https://dados.fortaleza.ce.gov.br/dataset/dados_mobilidade_onibus_2015_gps_paradas_validacao
+- ETUFOR, GTFS 03/2026: https://dados.fortaleza.ce.gov.br/dataset/especificacao-geral-feed-transito-gtfs-010-2025
+- GTFS ETUFOR dia útil 2023/24 (Mobility Database): https://storage.googleapis.com/mdb-latest/br-ceara-etufor-gtfs-2011.zip
+- SDE, IDH por bairro: https://dados.fortaleza.ce.gov.br/dataset/idh-fortaleza
+- SCSP, Iluminação pública: https://dados.fortaleza.ce.gov.br/dataset/pontos_iluminacao_publica
 - Variabilidade do volume a partir da fiscalização eletrônica (UFC, 2018): https://repositorio.ufc.br/handle/riufc/72782
 - Radares × Google Distance Matrix em Fortaleza (ANPET): https://transportes.anpet.org.br/anpet/article/view/3166
-- GPS dos ônibus em pesquisas: https://repositorio.ufc.br/handle/riufc/34835 e https://doaj.org/article/8e7dee4364ad4243804b1f246bfa4b4b
-- TomTom Traffic Index, Fortaleza: https://www.tomtom.com/traffic-index/fortaleza-traffic
+- Mapbox Directions API: https://docs.mapbox.com/api/navigation/directions/
+- HERE, tráfego no Routing/Matrix v8: https://docs.here.com/routing/docs/matrix-v8-traffic
 - TomTom, preços: https://docs.tomtom.com/pricing
-- Google Maps Platform, preços: https://developers.google.com/maps/billing-and-pricing/pricing
+- Google Maps Platform, termos específicos: https://cloud.google.com/terms/maps-platform/eea/maps-service-terms
+- TomTom Traffic Index, Fortaleza: https://www.tomtom.com/traffic-index/fortaleza-traffic
+- SSPDS, estatísticas: https://www.sspds.ce.gov.br/estatisticas-2-3/
+- Colunas da planilha de CVLI: https://github.com/erivandosena/paper-cvli-models-ml-statistic-comparison
+- SSPDS, fechamento de 2025: https://www.sspds.ce.gov.br/2026/01/08/ceara-encerra-2025-com-reducao-de-77-nas-mortes-violentas-diminuicao-em-fortaleza-foi-de-11/
+- O Povo, queda de 62% nos homicídios em 2026: https://www.opovo.com.br/noticias/seguranca-publica/2026/06/10/fortaleza-tem-queda-de-62-nos-homicidios-em-2026.html
+- IPECE, Informe 272: https://www.ipece.ce.gov.br/wp-content/uploads/sites/45/2025/08/ipece_informe_272_05_ago2025.pdf
