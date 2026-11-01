@@ -345,8 +345,33 @@
     barras("b-natureza", Object.fromEntries(Object.entries(P.natureza).map(([k, v]) => [NAT[k] || k, v])));
     const jovens = (P.idade["18 a 24"] || 0) + (P.idade["25 a 29"] || 0);
     const totI = Object.values(P.idade).reduce((a, b) => a + b, 0);
-    $("vit-nota").textContent = `Vítimas de mortes violentas em Fortaleza de ${S.anos_media[0]} a ${S.anos_media[2]}. ${pct(jovens, totI)}% tinham de 18 a 29 anos, e ${pct(P.escolaridade["Até o fundamental"], Object.values(P.escolaridade).reduce((a, b) => a + b, 0))}% estudaram no máximo até o ensino fundamental. A raça não foi informada em ${P.raca_nao_informada_pct}% dos casos, por isso fica fora.`;
+    $("vit-nota").textContent = `Vítimas de mortes violentas em Fortaleza de ${S.anos_media[0]} a ${S.anos_media[2]}. ${pct(jovens, totI)}% tinham de 18 a 29 anos, e ${pct(P.escolaridade["Até o fundamental"], Object.values(P.escolaridade).reduce((a, b) => a + b, 0))}% estudaram no máximo até o ensino fundamental. Na planilha da SSPDS, a raça não foi informada em ${P.raca_nao_informada_pct}% dos casos; por isso a cor da pele, logo abaixo, vem do SIM, do Ministério da Saúde.`;
+    raca();
   })();
+
+  function raca() {
+    const R = S.raca;
+    if (!R) return;
+    $("raca").hidden = false;
+    const [a0, , a2] = R.anos;
+    const nn = 100 - R.vitimas_negras_pct, nnp = 100 - R.pop_negra_pct;
+    const vezes = R.taxa_negros / R.taxa_nao_negros;
+    $("raca-lede").textContent = `De ${a0} a ${a2}, ${nf1.format(R.vitimas_negras_pct)}% das ${nf0.format(R.n)} vítimas de homicídio em Fortaleza eram negras. Os negros são ${nf1.format(R.pop_negra_pct)}% de quem mora na cidade.`;
+    $("raca-num").replaceChildren(...[
+      [nf1.format(R.taxa_negros), "homicídios por 100 mil negros ao ano"],
+      [nf1.format(R.taxa_nao_negros), "homicídios por 100 mil não negros ao ano"],
+    ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
+    const ign = Object.values(R.serie).filter((x) => !x.parcial).map((x) => x.ignorada_pct);
+    $("raca-nota").textContent = `A conta dá ${nf0.format(vezes)} vezes, mas leia com cuidado: no SIM, quem preenche a declaração de óbito costuma atribuir a cor (no Ceará, quase sempre "parda"), enquanto no Censo cada pessoa declara a sua. Isso exagera a diferença. O certo é dizer que o risco é muitas vezes maior para negros. A cor fica sem registro em menos de ${nf1.format(Math.max(...ign) + 0.1)}% dos casos. Fontes: SIM/DATASUS, mortes por agressão ocorridas em Fortaleza; IBGE, Censo 2022.`;
+    function barra(alvo, titulo, sub, neg) {
+      const iN = el("i", { class: "neg", texto: nf1.format(neg) + "%" }), iB = el("i", { class: "nn", texto: nf1.format(100 - neg) + "%" });
+      $(alvo).replaceChildren(el("div", { class: "rot" }, [el("b", { texto: titulo }), el("span", { texto: sub })]), el("div", { class: "trilho" }, [iN, iB]));
+      aoAparecer($(alvo), () => { iN.style.width = neg + "%"; iB.style.width = 100 - neg + "%"; });
+    }
+    barra("raca-vitimas", "Vítimas de homicídio", `SIM, ${a0} a ${a2}`, R.vitimas_negras_pct);
+    barra("raca-pop", "População de Fortaleza", "Censo 2022", R.pop_negra_pct);
+    void nn; void nnp;
+  }
 
   // ----------------------------------------------------------- 5. contexto
   (function contexto() {
@@ -358,6 +383,7 @@
       idh: { nome: "IDH médio da área (2010)", fmt: nf2, txt: "IDH" },
       renda: { nome: "renda média de quem sustenta a casa (R$, 2022)", fmt: nf0, txt: "renda" },
       saneamento: { nome: "% das casas com esgoto em rede (2022)", fmt: nf0, txt: "esgoto" },
+      negros: { nome: "% de moradores negros (Censo 2022)", fmt: nf0, txt: "% de negros" },
     };
     const yMax = Math.ceil(Math.max(...A.map((a) => a.cvli_taxa)) / 10) * 10;
     const Y = (v) => H - P.b - (v / yMax) * (H - P.t - P.b);

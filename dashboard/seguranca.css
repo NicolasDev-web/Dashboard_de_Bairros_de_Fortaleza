@@ -78,6 +78,26 @@
 .s-barra.cinza .trilho i { background: var(--neutro); }
 .s-barra .pct { font-family: var(--mono); font-size: 12px; text-align: right; color: var(--tinta); font-variant-numeric: tabular-nums; }
 
+/* cor da pele */
+.s-raca { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 1.6fr); gap: 40px; align-items: center; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--linha); }
+.s-raca h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 10px; }
+.s-raca-texto > p { color: var(--tinta-2); font-size: 15px; line-height: 1.55; }
+.s-raca-num { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 18px 0 0; }
+.s-raca-num div { border-top: 2px solid var(--v4); padding-top: 10px; display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+.s-raca-num dd { margin: 0 0 4px; font-size: 30px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.s-raca-num dt { font-size: 12.5px; color: var(--tinta-2); }
+.s-raca-fig { margin: 0; display: flex; flex-direction: column; gap: 22px; }
+.s-raca-barra .rot { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+.s-raca-barra .rot b { font-weight: 500; }
+.s-raca-barra .rot span { font-family: var(--mono); font-size: 12px; color: var(--tinta-3); }
+.s-raca-barra .trilho { display: flex; height: 38px; border-radius: var(--raio); overflow: hidden; background: var(--papel); }
+.s-raca-barra .trilho i { display: flex; align-items: center; padding: 0 10px; font-style: normal; font-family: var(--mono); font-size: 13px; color: var(--branco); width: 0; transition: width 1200ms var(--curva); white-space: nowrap; overflow: hidden; }
+.s-raca-barra .trilho i.neg { background: var(--noite); }
+.s-raca-barra .trilho i.nn { background: var(--neutro); color: var(--tinta); justify-content: flex-end; }
+.s-raca-leg { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--tinta-2); }
+.s-raca-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.s-raca-leg i.neg { background: var(--noite); } .s-raca-leg i.nn { background: var(--neutro); }
+
 /* dispersão */
 .s-disp-fig { position: relative; margin: 0; background: var(--papel-claro); border: 1px solid var(--linha); border-radius: var(--raio); padding: 16px; }
 .s-disp { display: block; width: 100%; height: auto; overflow: visible; }
@@ -92,7 +112,7 @@
 @media (max-width: 960px) {
   .s-multiplos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .s-serie-cidade { grid-template-columns: 1fr; gap: 12px; }
-  .s-vitimas { grid-template-columns: 1fr; }
+  .s-vitimas, .s-raca { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .s-barras-grade { grid-template-columns: 1fr; }

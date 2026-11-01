@@ -9,3 +9,5 @@ pyogrio==0.13.0
 pyproj==3.8.0
 requests==2.34.2
 shapely==2.1.2
+datasus-dbc==0.1.3
+dbfread==2.0.7

@@ -173,6 +173,20 @@
         <div class="s-barras"><h3>Tipo de crime</h3><div id="b-natureza"></div></div>
       </div>
     </div>
+
+    <div class="s-raca" id="raca" hidden>
+      <div class="s-raca-texto">
+        <h3>Cor da pele</h3>
+        <p id="raca-lede"></p>
+        <dl class="s-raca-num" id="raca-num"></dl>
+        <p class="t-nota" id="raca-nota"></p>
+      </div>
+      <figure class="s-raca-fig">
+        <div class="s-raca-barra" id="raca-vitimas"></div>
+        <div class="s-raca-barra" id="raca-pop"></div>
+        <figcaption class="s-raca-leg"><span><i class="neg"></i>negros (pretos e pardos)</span><span><i class="nn"></i>brancos, amarelos e indígenas</span></figcaption>
+      </figure>
+    </div>
   </section>
 
   <!-- 5. Contexto -->
@@ -189,6 +203,7 @@
         <button type="button" data-v="idh" aria-pressed="true">IDH</button>
         <button type="button" data-v="renda" aria-pressed="false">Renda</button>
         <button type="button" data-v="saneamento" aria-pressed="false">Esgoto</button>
+        <button type="button" data-v="negros" aria-pressed="false">% de negros</button>
       </div>
     </div>
     <figure class="s-disp-fig">
@@ -201,7 +216,7 @@
   <section class="metodo" id="metodo" aria-labelledby="metodo-titulo">
     <div class="secao-cabeca">
       <h2 id="metodo-titulo">Como lemos os dados</h2>
-      <p class="secao-nota">Os números saem de <code>scripts/03_seguranca.py</code> e <code>scripts/16_seguranca.py</code>.</p>
+      <p class="secao-nota">Os números saem de <code>scripts/03_seguranca.py</code> e <code>scripts/16_seguranca.py</code>. A cor da pele das vítimas vem do SIM/DATASUS.</p>
     </div>
     <div class="metodo-grade">
       <div class="bloco">
@@ -214,7 +229,7 @@
       </div>
       <div class="bloco">
         <h3>Limitações</h3>
-        <p>A SSPDS não publica crime por bairro. Os números contam onde o crime foi registrado, não onde a vítima mora. Roubo depende de a vítima registrar o boletim, e muita gente não registra. A raça das vítimas não foi informada em boa parte dos casos, por isso não entra no gráfico. Comparar fatores com 10 áreas mostra tendências, não causas.</p>
+        <p>A SSPDS não publica crime por bairro. Os números contam onde o crime foi registrado, não onde a vítima mora. Roubo depende de a vítima registrar o boletim, e muita gente não registra. A SSPDS não informa a raça na maioria dos casos, então a cor da pele vem do SIM, o sistema de mortalidade do Ministério da Saúde, em que quem preenche a declaração de óbito costuma atribuir a cor, enquanto no Censo cada pessoa declara a sua; isso pode exagerar a diferença entre as taxas. Comparar fatores com 10 áreas mostra tendências, não causas.</p>
       </div>
     </div>
     <ul class="fontes">
@@ -223,6 +238,8 @@
       <li><a href="https://www.sspds.ce.gov.br/estatisticas-2-3/" rel="noopener">SSPDS, estatísticas mensais</a></li>
       <li><a href="https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/" rel="noopener">IBGE, Censo 2022</a></li>
       <li><a href="https://dados.fortaleza.ce.gov.br/dataset/desenvolvimento_humano_bairro" rel="noopener">SDE Fortaleza, IDH por bairro</a></li>
+      <li><a href="https://datasus.saude.gov.br/transferencia-de-arquivos/" rel="noopener">DATASUS, SIM (declarações de óbito)</a></li>
+      <li><a href="https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/" rel="noopener">IBGE, Censo 2022, cor ou raça por setor</a></li>
     </ul>
   </section>
 

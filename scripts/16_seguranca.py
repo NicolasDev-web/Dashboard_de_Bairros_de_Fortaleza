@@ -5,6 +5,8 @@ Fortaleza; a SSPDS não publica dado por bairro):
   - data/raw/seguranca_ais_anual.csv (etapa 3): CVLI, CVP e intervenção policial por AIS, 2019–2025
   - data/processed/bairros_indicadores.csv (etapa 4): população, renda e saneamento por bairro
   - IDH por bairro (SDE/Prefeitura, Censo 2010), do Portal de Dados Abertos de Fortaleza
+  - raça das vítimas: SIM/DATASUS (declarações de óbito, DOCEaaaa.dbc em data/cache/sim/) e cor ou
+    raça do Censo 2022 por setor (IBGE)
   - série anual do Ceará, 2009–2025, transcrita dos boletins "Estatísticas Mensais" de CVLI e CVP
     da SSPDS/GEESP (dezembro de 2025)
 
@@ -118,6 +120,86 @@ def detalhes() -> dict:
     return out
 
 
+COR_URL = ("https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/"
+           "Agregados_por_Setor_csv/Agregados_por_setores_cor_ou_raca_BR.zip")
+SIM_DIR = ROOT / "data/cache/sim"
+SIM_ANOS = (2022, 2023, 2024)        # anos fechados; 2025 e 2026 ainda chegam incompletos ao DATASUS
+COR_SIM = {"1": "branca", "2": "preta", "3": "amarela", "4": "parda", "5": "indigena"}
+
+
+def cor_por_setor() -> pd.DataFrame:
+    """Censo 2022, pessoas por cor ou raça em cada setor de Fortaleza (V01317–V01321)."""
+    cache = ROOT / "data/cache/ibge/cor_raca_fortaleza.csv"
+    if not cache.exists():
+        import io, zipfile
+        z = ROOT / "data/cache/ibge/cor_raca_2022.zip"
+        if not z.exists():
+            z.parent.mkdir(parents=True, exist_ok=True)
+            z.write_bytes(requests.get(COR_URL, timeout=900).content)
+        with zipfile.ZipFile(z) as zf:
+            nome = zf.namelist()[0]
+            partes = [c[c.CD_SETOR.str.startswith("2304400")]
+                      for c in pd.read_csv(zf.open(nome), sep=";", dtype=str, chunksize=200000, encoding="latin-1")]
+        pd.concat(partes).to_csv(cache, index=False)
+    d = pd.read_csv(cache, dtype=str)
+    for col, nome in (("V01317", "branca"), ("V01318", "preta"), ("V01319", "amarela"), ("V01320", "parda"),
+                      ("V01321", "indigena")):
+        d[nome] = pd.to_numeric(d[col], errors="coerce").fillna(0)
+    d = d.rename(columns={"CD_SETOR": "cd_setor"})[["cd_setor", "branca", "preta", "amarela", "parda", "indigena"]]
+    setores = gpd.read_file(ROOT / "data/geo/setores_2022_fortaleza.gpkg")
+    bairros = gpd.read_file(ROOT / "data/geo/bairros_fortaleza.geojson").to_crs(setores.crs)
+    pts = setores.assign(geometry=setores.representative_point())
+    j = gpd.sjoin(pts, bairros[["bairro_id", "geometry"]], predicate="within").drop_duplicates("cd_setor")
+    return d.merge(j[["cd_setor", "bairro_id"]], on="cd_setor", how="left")
+
+
+def raca_sim(pop_cor: dict) -> dict | None:
+    """Homicídios (agressões, CID X85–Y09) ocorridos em Fortaleza no SIM/DATASUS, por raça/cor.
+
+    Arquivos DOCEaaaa.dbc (DATASUS, Transferência de Arquivos > SIM > DO) em data/cache/sim/.
+    """
+    arqs = sorted(SIM_DIR.glob("DOCE20*.dbc"))
+    if not arqs:
+        print("sem arquivos do SIM em data/cache/sim/ — a raça das vítimas fica de fora")
+        return None
+    import datasus_dbc
+    from dbfread import DBF
+    serie, base = {}, []
+    for a in arqs:
+        ano = int(a.stem[-4:])
+        dbf = a.with_suffix(".dbf")
+        if not dbf.exists():
+            datasus_dbc.decompress(str(a), str(dbf))
+        t = pd.DataFrame(iter(DBF(dbf, encoding="latin-1", char_decode_errors="ignore")))
+        t = t[t.CAUSABAS.astype(str).str.match(r"^(X8[5-9]|X9\d|Y0\d)") & t.CODMUNOCOR.astype(str).str.startswith("230440")]
+        cor = t.RACACOR.astype(str).map(COR_SIM).fillna("ignorada")
+        n = len(t)
+        serie[ano] = {"n": n, "negros_pct": round(float(cor.isin(["preta", "parda"]).mean() * 100), 1),
+                      "ignorada_pct": round(float((cor == "ignorada").mean() * 100), 1),
+                      "parcial": ano not in SIM_ANOS and ano > max(SIM_ANOS)}
+        if ano in SIM_ANOS:
+            base.append(pd.DataFrame({"cor": cor, "sexo": t.SEXO.astype(str)}))
+    b = pd.concat(base)
+    neg = b.cor.isin(["preta", "parda"])
+    nn = b.cor.isin(["branca", "amarela", "indigena"])
+    pop_neg = pop_cor["preta"] + pop_cor["parda"]
+    pop_nn = pop_cor["branca"] + pop_cor["amarela"] + pop_cor["indigena"]
+    anos = len(SIM_ANOS)
+    mulheres = b[b.sexo == "2"]
+    return {
+        "anos": list(SIM_ANOS),
+        "serie": serie,
+        "n": int(len(b)),
+        "contagem": {k: int(v) for k, v in b.cor.value_counts().items()},
+        "vitimas_negras_pct": round(float(neg.mean() * 100), 1),
+        "mulheres_negras_pct": round(float(mulheres.cor.isin(["preta", "parda"]).mean() * 100), 1),
+        "pop_negra_pct": round(pop_neg / (pop_neg + pop_nn) * 100, 1),
+        "pop": {k: int(v) for k, v in pop_cor.items()},
+        "taxa_negros": round(neg.sum() / anos / pop_neg * 1e5, 1),
+        "taxa_nao_negros": round(nn.sum() / anos / pop_nn * 1e5, 1),
+    }
+
+
 def main() -> None:
     ind = pd.read_csv(ROOT / "data/processed/bairros_indicadores.csv")
     ind = ind.merge(idh(), on="bairro_slug", how="left")
@@ -129,6 +211,10 @@ def main() -> None:
     malha = gpd.read_file(ROOT / "data/geo/bairros_fortaleza.geojson").to_crs(UTM)
     malha = malha.merge(ind[["bairro_id", "ais"]], on="bairro_id")
     tela = t14.Tela(malha.total_bounds)
+    cores = cor_por_setor().merge(ind[["bairro_id", "ais"]], on="bairro_id", how="left")
+    COLS_COR = ["branca", "preta", "amarela", "parda", "indigena"]
+    negros_ais = (cores.groupby("ais")[COLS_COR].sum()
+                  .pipe(lambda g: (g.preta + g.parda) / g.sum(axis=1) * 100).round(1))
 
     def media_pond(g, col):
         ok = g[col].notna() & g.pop_2022.notna()
@@ -154,6 +240,7 @@ def main() -> None:
             "cvli": serie["cvli"], "cvp": serie["cvp"], "intervencao": serie["intervencao_policial"],
             "renda": round(media_pond(g, "renda_2022")), "saneamento": round(media_pond(g, "saneamento_2022"), 1),
             "idh": round(media_pond(g, "idh"), 3), "densidade": round(pop / g.area_km2.sum()),
+            "negros": float(negros_ais.get(ais, np.nan)),
             "d": tela.caminho(geom.simplify(25)), "centro": list(tela.xy(cx, cy)),
         })
     areas.sort(key=lambda a: -a["cvli_taxa"])
@@ -172,7 +259,8 @@ def main() -> None:
     cidade["serie"] = {"cvli": det.pop("serie_cvli"), "cvp": det.pop("serie_cvp")}
     # correlação simples entre renda/IDH e taxa de CVLI nas 10 áreas (para o texto, não para modelo)
     df = pd.DataFrame(areas)
-    corr = {c: round(float(np.corrcoef(df[c], df.cvli_taxa)[0, 1]), 2) for c in ("renda", "idh", "saneamento")}
+    corr = {c: round(float(np.corrcoef(df[c], df.cvli_taxa)[0, 1]), 2) for c in ("renda", "idh", "saneamento", "negros")}
+    raca = raca_sim({c: float(cores[c].sum()) for c in COLS_COR})
 
     dados = {
         "viewBox": [0, 0, tela.w, tela.h],
@@ -185,11 +273,14 @@ def main() -> None:
         "ceara": {"cvli": CEARA_CVLI, "cvp": CEARA_CVP},
         "correlacao": corr,
         "dias": DIAS,
+        "raca": raca,
         **det,
     }
     SAIDA.write_text("window.SEGURANCA = " + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n",
                      encoding="utf-8")
-    print(df[["ais", "pop", "cvli_taxa", "cvp_taxa", "renda", "idh", "saneamento"]].to_string(index=False))
+    print(df[["ais", "pop", "cvli_taxa", "cvp_taxa", "renda", "idh", "saneamento", "negros"]].to_string(index=False))
+    if raca:
+        print("raça (SIM):", {k: v for k, v in raca.items() if k not in ("serie", "pop")})
     print("cidade:", {k: v for k, v in cidade.items() if k != "serie"}, "correlação com a taxa de CVLI:", corr)
     print(f"-> {SAIDA.relative_to(ROOT)} ({SAIDA.stat().st_size / 1024:.0f} KB)")
 
