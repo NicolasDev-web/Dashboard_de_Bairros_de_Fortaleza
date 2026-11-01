@@ -69,6 +69,12 @@
     palacioAbolicao: { arquivo: "palacio-da-abolicao.glb", nome: "Palácio da Abolição", lat: -3.7281783, lng: -38.5038238, altura: 14 },
     iracemaMartim: { arquivo: "iracema-e-martim-mucuripe.glb", nome: "Monumento a Iracema e Martim (Mucuripe)", rotulo: "Iracema e Martim", lat: -3.7230553, lng: -38.4843485, altura: 19 },
     marcoZero: { arquivo: "marco-zero-barra-do-ceara.glb", nome: "Marco Zero de Fortaleza (Praça do Santiago)", rotulo: "Marco Zero", lat: -3.6940003, lng: -38.5862496, altura: 18 },
+    igrejaFatima: { arquivo: "igreja-de-fatima.glb", nome: "Santuário de Nossa Senhora de Fátima", rotulo: "Igreja de Fátima", lat: -3.7524955, lng: -38.5266562, altura: 20 },
+    mosteiroSaoBento: { arquivo: "mosteiro-de-sao-bento.glb", nome: "Mosteiro de São Bento", lat: -3.8510433, lng: -38.480721, altura: 18 },
+    casaAlencar: { arquivo: "casa-de-jose-de-alencar.glb", nome: "Casa de José de Alencar", lat: -3.8124, lng: -38.4774, altura: 11 },
+    mercadoAerolandia: { arquivo: "mercado-da-aerolandia.glb", nome: "Mercado da Aerolândia", lat: -3.7685259, lng: -38.5170066, altura: 13 },
+    centroEventos: { arquivo: "centro-de-eventos-do-ceara.glb", nome: "Centro de Eventos do Ceará", rotulo: "Centro de Eventos", lat: -3.764532, lng: -38.4804211, altura: 13 },
+    ccbj: { arquivo: "centro-cultural-bom-jardim.glb", nome: "Centro Cultural Bom Jardim", lat: -3.7859455, lng: -38.6097667, altura: 10 },
   };
 
   window.HISTORIAS = {
@@ -205,7 +211,7 @@
       marco("unifor", "Universidade de Fortaleza", [
         "A Unifor foi inaugurada em 21 de março de 1973, com aula inaugural de Edson Queiroz, mantida pela fundação que leva o nome dele. O bairro cresceu em volta do campus, entre moradias populares, condomínios e áreas de preservação.",
       ], UNIFOR),
-      ponto("Centro de Eventos", -3.764532, -38.4804211, "Centro de Eventos do Ceará", [
+      marco("centroEventos", "Centro de Eventos do Ceará", [
         "Na mesma avenida, o Centro de Eventos do Ceará recebe as grandes feiras e congressos da cidade.",
       ], [IP(57), OSM]),
     ] },
@@ -315,7 +321,7 @@
         "O bairro foi fundado em 1956 com o nome de Redenção. A avenida principal se chama Treze de Maio, a data da abolição da escravatura.",
         "Em 1952, a imagem peregrina de Nossa Senhora de Fátima chegou à cidade com uma recepção nunca vista. Comovido, Pergentino Ferreira doou o terreno da igreja e de um colégio, e o bairro passou a se chamar Fátima.",
       ], IP(16)),
-      ponto("Igreja de Fátima", -3.7524955, -38.5266562, "A igreja de Fátima", [
+      marco("igrejaFatima", "A igreja de Fátima", [
         "O bairro cresceu em volta desta igreja, na Avenida Treze de Maio, que continua sendo o seu símbolo.",
       ], [IP(16), OSM]),
     ] },
@@ -453,7 +459,7 @@
       bairro("Onde nasceu José de Alencar", [
         "O bairro se chamava Alagadiço Novo, como o sítio do antigo município de Messejana onde nasceu José de Alencar, autor de “O Guarani”, “Iracema” e “Senhora”.",
       ], IP(49)),
-      ponto("Casa de José de Alencar", -3.8124, -38.4774, "Casa de José de Alencar", [
+      marco("casaAlencar", "Casa de José de Alencar", [
         "A casa onde o escritor nasceu pertence hoje à Universidade Federal do Ceará e é aberta à visitação.",
       ], [IP(49), OSM]),
     ] },
@@ -563,7 +569,7 @@
         "Em 1963, a viúva Maria Alves Carioca e os filhos lotearam parte da fazenda da família, vendendo terrenos financiados a quem chegava à cidade. O loteamento ficou conhecido como Terras dos Cariocas.",
         "A população construiu junta a igreja de Santa Cecília.",
       ], IP(78)),
-      ponto("Centro Cultural Bom Jardim", -3.7859455, -38.6097667, "Centro Cultural Bom Jardim", [
+      marco("ccbj", "Centro Cultural Bom Jardim", [
         "O CCBJ, do Governo do Estado, é um centro cultural de base comunitária e uma referência na formação artística e digital dos jovens do Grande Bom Jardim.",
       ], [IP(78), OSM]),
     ] },
@@ -626,7 +632,7 @@
         "O bairro nasceu com os trabalhadores da obra do campo de aviação do Alto da Balança, que foram morar perto. O nome, reconhecido em 1961, vem de uma grande balança da BR-116 que pesava as cargas vindas do Interior.",
         "Parte dos moradores gostaria que o bairro fosse incorporado à Aerolândia.",
       ], IP(93)),
-      ponto("Mercado da Aerolândia", -3.7685259, -38.5170066, "Mercado da Aerolândia", [
+      marco("mercadoAerolandia", "Mercado da Aerolândia", [
         "Construído nos anos 1940 com metade da estrutura de ferro do antigo Mercado da Carne, importada da França. Leva o nome do bairro vizinho, mas pela malha oficial fica aqui.",
       ], [IP(91), OSM]),
     ] },
@@ -725,7 +731,7 @@
       bairro("O mosteiro no alto", [
         "O bairro leva o nome do Mosteiro de São Bento, que chegou a Fortaleza em 1993, vindo de Olinda.",
       ], IP(118)),
-      ponto("Mosteiro de São Bento", -3.8510433, -38.480721, "Mosteiro de São Bento", [
+      marco("mosteiroSaoBento", "Mosteiro de São Bento", [
         "No alto do terreno, os monges beneditinos celebram a única missa com canto gregoriano e orações em latim da capital. No Ano-Novo, os moradores sobem até lá para ver os fogos da cidade inteira.",
       ], [IP(118), OSM]),
     ] },
