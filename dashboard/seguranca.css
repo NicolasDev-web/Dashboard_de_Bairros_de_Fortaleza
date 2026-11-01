@@ -91,6 +91,21 @@
 .s-barra.cinza .trilho i { background: var(--neutro); }
 .s-barra .pct { font-family: var(--mono); font-size: 12px; text-align: right; color: var(--tinta); font-variant-numeric: tabular-nums; }
 
+/* mulheres */
+.s-mulheres { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 1.6fr); gap: 40px; align-items: start; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--linha); }
+.s-mulheres h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 10px; }
+.s-mulheres > div > p { color: var(--tinta-2); font-size: 15px; line-height: 1.55; }
+.s-mulheres-ano { display: grid; grid-template-columns: 44px minmax(0, 1fr) 190px; gap: 12px; align-items: center; margin-bottom: 10px; }
+.s-mulheres-ano .a { font-family: var(--mono); font-size: 12px; color: var(--tinta-3); }
+.s-mulheres-ano .t { display: flex; height: 26px; border-radius: 2px; overflow: hidden; background: var(--papel); }
+.s-mulheres-ano .t i, .s-mulheres-leg i { display: block; }
+.s-mulheres-ano .t i.fem, .s-mulheres-leg i.fem { background: var(--v6); }
+.s-mulheres-ano .t i.outro, .s-mulheres-leg i.outro { background: var(--v3); }
+.s-mulheres-ano .n { font-size: 13px; color: var(--tinta-2); }
+.s-mulheres-ano .n b { font-weight: 600; color: var(--tinta); }
+.s-mulheres-leg { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--tinta-2); margin: 4px 0 0; }
+.s-mulheres-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
 /* cor da pele */
 .s-raca { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 1.6fr); gap: 40px; align-items: center; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--linha); }
 .s-raca h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 10px; }
@@ -158,7 +173,9 @@
   .s-serie-cidade { grid-template-columns: 1fr; gap: 12px; }
   .s-agora { grid-template-columns: 1fr 1fr; }
   .s-agora > div:first-child { grid-column: 1 / -1; }
-  .s-vitimas, .s-raca { grid-template-columns: 1fr; }
+  .s-vitimas, .s-raca, .s-mulheres { grid-template-columns: 1fr; }
+  .s-mulheres-ano { grid-template-columns: 40px minmax(0, 1fr); }
+  .s-mulheres-ano .n { grid-column: 2; }
   .s-comp { grid-template-columns: 1fr; gap: 8px; }
   .s-comp-meio { flex-direction: row; gap: 10px; padding: 6px 0; }
   .s-escada li { grid-template-columns: 1fr auto; row-gap: 6px; }

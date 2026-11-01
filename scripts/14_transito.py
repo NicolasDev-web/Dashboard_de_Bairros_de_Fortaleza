@@ -308,9 +308,14 @@ def main() -> None:
             "radares": int(len(rad)),
             "pontos": int(len(pontos)),
             "vias": int(pontos.via.nunique()),
-            "sinistros_periodo": int(n_rec),
+            # total do período com todos os registros (os sem localização ficam só fora do mapa)
+            "sinistros_periodo": int(sin.ANO.isin(ANOS_SIN).sum()),
+            "sinistros_no_mapa": int(n_rec),
             "moto_pct": round(float((rec.MOTOCICLETA > 0).mean() * 100), 1),
-            "mortos_periodo": int(rec.MORTOS.sum()),
+            "mortos_periodo": int(sin.loc[sin.ANO.isin(ANOS_SIN), "MORTOS"].sum()),
+            # maior volume num sentido só (o ranking soma os dois sentidos)
+            "maior_sentido": max(({"via": p.via, "sentido": k, "vmd": v} for p in pontos.itertuples()
+                                  for k, v in p.sentidos.items()), key=lambda x: x["vmd"]),
         },
         "anual": anual.to_dict(orient="records"),
         "calor": {"semanas": round(semanas, 1), "matriz": calor.values.tolist()},

@@ -209,6 +209,8 @@
     const [a, b] = T.janela;
     const mes = (m) => ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"][+m.slice(5) - 1] + "/" + m.slice(0, 4);
     $("janela-txt").textContent = `${mes(a)} a ${mes(b)}`;
+    const MS = T.resumo.maior_sentido;
+    if (MS) $("maior-sentido").textContent = `Contando um sentido só, a mais carregada é a ${MS.via.replace(/^Av\. /, "Av. ")}, com ${nf0.format(MS.vmd)} veículos por dia.`;
 
     // ranking
     const lista = $("ranking-volume");
@@ -389,7 +391,7 @@
     const primeiro = T.anual[0], ultimo = T.anual[T.anual.length - 1];
     const dias = T.anos_sinistros.length * 365;
     $("numeros-sinistros").replaceChildren(...[
-      [nf0.format(R.sinistros_periodo), `sinistros registrados de ${a0} a ${a1}, uns ${nf0.format(R.sinistros_periodo / dias)} por dia.`],
+      [nf0.format(R.sinistros_periodo), `sinistros registrados de ${a0} a ${a1}, uns ${nf0.format(R.sinistros_periodo / dias)} por dia (${nf0.format(R.sinistros_periodo - R.sinistros_no_mapa)} sem localização ficam fora do mapa).`],
       [nf0.format(R.mortos_periodo), `mortes no trânsito no mesmo período.`],
       [nf0.format(R.moto_pct) + "%", "dos sinistros tiveram pelo menos uma moto envolvida."],
       RV ? [nf0.format(Math.round((1 - RV.mortos_ano[2023] / RV.mortos_ano[2011]) * 100)) + "% menos",

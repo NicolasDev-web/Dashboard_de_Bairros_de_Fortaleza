@@ -98,7 +98,8 @@
     const maisAlta = A[0], maisBaixa = A[A.length - 1];
     const razao = maisAlta.cvli_taxa / maisBaixa.cvli_taxa;
     const texto = `Em ${ult}, Fortaleza teve ${nf0.format(serie[ult])} mortes violentas, ${pct(serie[pior] - serie[ult], serie[pior])}% menos que em ${pior}, o pior ano da série. ` +
-      `Mas a violência não pesa igual: na área mais atingida, a taxa é ${nf1.format(razao)} vezes a da menos atingida.`;
+      `Nos três últimos anos o número ficou parecido: ${anos.slice(-3).map((y) => nf0.format(serie[y])).join(", ")}. ` +
+      `E a violência não pesa igual: na área mais atingida, a taxa é ${nf1.format(razao)} vezes a da menos atingida.`;
     const p = $("frase-texto");
     p.setAttribute("aria-label", texto);
     const palavras = texto.split(/\s+/);
@@ -221,7 +222,7 @@
     };
     const n = [
       el("div", {}, [el("h3", { texto: `${AG.ano} até agora` }),
-        el("p", { texto: `De janeiro a ${ateMes} de ${AG.ano}, pelos dados mais recentes da SSPDS. Comparar com o mesmo período do ano anterior evita confundir o ano incompleto com uma queda.` })]),
+        el("p", { texto: `De janeiro a ${ateMes} de ${AG.ano}, pelos dados mais recentes da SSPDS, ainda preliminares (a secretaria revisa os meses depois). Comparar com o mesmo período do ano anterior evita confundir o ano incompleto com uma queda.` })]),
       item("mortes violentas", AG.cvli.atual, AG.cvli.anterior),
       item("roubos", AG.cvp.atual, AG.cvp.anterior),
     ];
@@ -373,8 +374,30 @@
     const jovens = (P.idade["18 a 24"] || 0) + (P.idade["25 a 29"] || 0);
     const totI = Object.values(P.idade).reduce((a, b) => a + b, 0);
     $("vit-nota").textContent = `Vítimas de mortes violentas em Fortaleza de ${S.anos_media[0]} a ${S.anos_media[2]}. ${pct(jovens, totI)}% tinham de 18 a 29 anos, e ${pct(P.escolaridade["Até o fundamental"], Object.values(P.escolaridade).reduce((a, b) => a + b, 0))}% estudaram no máximo até o ensino fundamental. Na planilha da SSPDS, a raça não foi informada em ${P.raca_nao_informada_pct}% dos casos; por isso a cor da pele, logo abaixo, vem do SIM, do Ministério da Saúde.`;
+    mulheres();
     raca();
   })();
+
+  function mulheres() {
+    const M = S.mulheres;
+    if (!M) return;
+    const box = $("mulheres");
+    box.hidden = false;
+    const anos = Object.keys(M.por_ano);
+    const pctFem = Math.round((M.feminicidio / M.mortas) * 100);
+    $("mulheres-lede").textContent = `De ${anos[0]} a ${anos[anos.length - 1]}, ${nf0.format(M.mortas)} mulheres foram vítimas de mortes violentas em Fortaleza, ${pct(M.mortas, S.n_cvli)}% do total. A polícia registrou ${nf0.format(M.feminicidio)} delas como feminicídio (${pctFem}%); as outras entraram como homicídio, ${nf0.format(M.arma_fogo)} delas mortas a tiro.`;
+    $("mulheres-anos").replaceChildren(...anos.map((a) => {
+      const x = M.por_ano[a];
+      const iF = el("i", { class: "fem" }), iO = el("i", { class: "outro" });
+      iF.style.width = (x.feminicidio / x.mortas) * 100 + "%"; iO.style.width = 100 - (x.feminicidio / x.mortas) * 100 + "%";
+      return el("div", { class: "s-mulheres-ano" }, [
+        el("span", { class: "a", texto: a }),
+        el("span", { class: "t" }, [iF, iO]),
+        el("span", { class: "n", html: `<b>${x.mortas}</b> mortas · ${x.feminicidio} feminicídios` }),
+      ]);
+    }));
+    $("mulheres-nota").textContent = `Por que tão poucos feminicídios? A lei só usa esse nome quando o crime tem motivação de gênero ou acontece em violência doméstica, e a imprensa cearense aponta falhas nesse registro. No Ceará todo, de ${nf0.format(M.ceara_mortas)} mulheres mortas no período, ${nf0.format(M.ceara_feminicidio)} (${Math.round((M.ceara_feminicidio / M.ceara_mortas) * 100)}%) foram registradas como feminicídio. Fonte: SSPDS, dados detalhados de CVLI.`;
+  }
 
   function raca() {
     const R = S.raca;
@@ -389,7 +412,7 @@
       [nf1.format(R.taxa_nao_negros), "homicídios por 100 mil não negros ao ano"],
     ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
     const ign = Object.values(R.serie).filter((x) => !x.parcial).map((x) => x.ignorada_pct);
-    $("raca-nota").textContent = `A conta dá ${nf0.format(vezes)} vezes, mas leia com cuidado: no SIM, quem preenche a declaração de óbito costuma atribuir a cor (no Ceará, quase sempre "parda"), enquanto no Censo cada pessoa declara a sua. Isso exagera a diferença. O certo é dizer que o risco é muitas vezes maior para negros. A cor fica sem registro em menos de ${nf1.format(Math.max(...ign) + 0.1)}% dos casos. Fontes: SIM/DATASUS, mortes por agressão ocorridas em Fortaleza (2025 ainda é preliminar: entram também as mortes por arma de fogo que esperam laudo para ter a intenção definida; somadas, dão quase o mesmo total da SSPDS); IBGE, Censo 2022.`;
+    $("raca-nota").textContent = `No Ceará todo, as vítimas negras são ${nf1.format(R.ceara_vitimas_negras_pct)}%. A conta da taxa dá ${nf0.format(vezes)} vezes, mas leia com cuidado: no SIM, quem preenche a declaração de óbito costuma atribuir a cor (no Ceará, quase sempre "parda"), enquanto no Censo cada pessoa declara a sua. Isso exagera a diferença. O certo é dizer que o risco é muitas vezes maior para negros. A cor fica sem registro em menos de ${nf1.format(Math.max(...ign) + 0.1)}% dos casos. Fontes: SIM/DATASUS, mortes por agressão ocorridas em Fortaleza (2025 ainda é preliminar: entram também as mortes por arma de fogo que esperam laudo para ter a intenção definida; somadas, dão quase o mesmo total da SSPDS); IBGE, Censo 2022.`;
     function barra(alvo, titulo, sub, neg) {
       const iN = el("i", { class: "neg", texto: nf1.format(neg) + "%" }), iB = el("i", { class: "nn", texto: nf1.format(100 - neg) + "%" });
       $(alvo).replaceChildren(el("div", { class: "rot" }, [el("b", { texto: titulo }), el("span", { texto: sub })]), el("div", { class: "trilho" }, [iN, iB]));
@@ -465,7 +488,7 @@
       });
       // a área que mais foge do padrão, dita em português
       const fogeAlta = (maiorNoBaixo ? alto : baixo).sort((x, y) => y.cvli_taxa - x.cvli_taxa)[0];
-      $("junto-nota").textContent = `Como ler: ${F[f].ajuda}. A linha preta em cada barra é a média da cidade (${nf0.format(C.cvli_taxa)}). Nem toda área segue o padrão: ${fogeAlta.regiao} está no grupo de ${maiorNoBaixo ? F[f].maior : F[f].menor} e ainda assim tem ${nf0.format(fogeAlta.cvli_taxa)} mortes por 100 mil. Aparecer junto não prova que uma coisa causa a outra: mostra onde os problemas se acumulam.`;
+      $("junto-nota").textContent = `Como ler: ${F[f].ajuda}. A linha preta em cada barra é a média da cidade (${nf0.format(C.cvli_taxa)}). Nem toda área segue o padrão: ${fogeAlta.regiao} está no grupo de ${maiorNoBaixo ? F[f].maior : F[f].menor} e ainda assim tem ${nf0.format(fogeAlta.cvli_taxa)} mortes por 100 mil. São só 10 áreas, então isso mostra uma tendência, não uma regra. Aparecer junto não prova que uma coisa causa a outra: mostra onde os problemas se acumulam.`;
     }
     segmentado("ctl-fator", desenhar);
     desenhar("renda");

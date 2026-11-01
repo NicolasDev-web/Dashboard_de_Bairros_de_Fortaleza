@@ -91,6 +91,19 @@ def detalhes() -> dict:
     cvli = pd.read_excel(cache / "CVLI_2009-a-2025.xlsx", sheet_name="CVLI")
     cvp = pd.read_excel(cache / "CVP_2009-a-2025.xlsx", sheet_name=0)
     out = {}
+    # mulheres mortas e quantas a polícia tipificou como feminicídio (Fortaleza e Ceará)
+    cv = cvli.copy()
+    cv["ano"] = pd.to_datetime(cv.Data, errors="coerce").dt.year
+    cv = cv[cv.ano.isin(ANOS_MEDIA) & (cv["Gênero"] == "Feminino")]
+    fem = cv.Natureza.astype(str).str.upper().str.contains("FEMINIC")
+    forta = cv["Município"].astype(str).str.strip().str.lower() == "fortaleza"
+    out["mulheres"] = {
+        "por_ano": {int(a): {"mortas": int(((cv.ano == a) & forta).sum()), "feminicidio": int(((cv.ano == a) & forta & fem).sum())}
+                    for a in ANOS_MEDIA},
+        "mortas": int(forta.sum()), "feminicidio": int((forta & fem).sum()),
+        "arma_fogo": int((forta & ~fem & (cv["Meio Empregado"] == "Arma de fogo")).sum()),
+        "ceara_mortas": int(len(cv)), "ceara_feminicidio": int(fem.sum()),
+    }
     for nome, df in (("cvli", cvli), ("cvp", cvp)):
         df = df[df["Município"].astype(str).str.strip().str.lower() == "fortaleza"].copy()
         df["data"] = pd.to_datetime(df.Data, errors="coerce")
@@ -169,14 +182,17 @@ def raca_sim(pop_cor: dict) -> dict | None:
         return None
     import datasus_dbc
     from dbfread import DBF
-    serie, base = {}, []
+    serie, base, ceara = {}, [], []
     for a in arqs:
         ano = int(a.stem[-4:])
         dbf = a.with_suffix(".dbf")
         if not dbf.exists():
             datasus_dbc.decompress(str(a), str(dbf))
         t = pd.DataFrame(iter(DBF(dbf, encoding="latin-1", char_decode_errors="ignore")))
-        t = t[t.CAUSABAS.astype(str).str.match(CID_HOMICIDIO) & t.CODMUNOCOR.astype(str).str.startswith("230440")]
+        t = t[t.CAUSABAS.astype(str).str.match(CID_HOMICIDIO)]
+        if ano in SIM_ANOS:
+            ceara.append(t.RACACOR.astype(str).map(COR_SIM).fillna("ignorada"))
+        t = t[t.CODMUNOCOR.astype(str).str.startswith("230440")]
         cor = t.RACACOR.astype(str).map(COR_SIM).fillna("ignorada")
         n = len(t)
         serie[ano] = {"n": n, "fogo_indeterminada": int(t.CAUSABAS.astype(str).str.match(r"^Y2[2-4]").sum()),
@@ -203,6 +219,7 @@ def raca_sim(pop_cor: dict) -> dict | None:
         "pop": {k: int(v) for k, v in pop_cor.items()},
         "taxa_negros": round(neg.sum() / anos / pop_neg * 1e5, 1),
         "taxa_nao_negros": round(nn.sum() / anos / pop_nn * 1e5, 1),
+        "ceara_vitimas_negras_pct": round(float(pd.concat(ceara).isin(["preta", "parda"]).mean() * 100), 1),
     }
 
 
