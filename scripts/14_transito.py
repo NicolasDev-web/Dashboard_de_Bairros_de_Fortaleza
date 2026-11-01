@@ -159,7 +159,13 @@ def main() -> None:
 
     # ------------------------------------------------------------ radares
     vol = pd.read_csv(baixar("volume.csv"), dtype={"Sitio": str})
-    jan = vol[vol.DATA.between(*JANELA)]
+    jan = vol[vol.DATA.between(*JANELA)].copy()
+    # limpeza: mês com contagem abaixo de 30% da mediana do próprio radar é sensor parado ou com defeito
+    mediana = jan.groupby("Sitio").VMD.transform("median")
+    ruins = jan.VMD < 0.3 * mediana
+    if ruins.any():
+        print(f"limpeza do volume: {int(ruins.sum())} meses de radar descartados (contagem < 30% da mediana do radar)")
+    jan = jan[~ruins]
     rad = (jan.groupby(["Sitio", "ViaSentido"])
               .agg(vmd=("VMD", "mean"), meses=("VMD", "size"), lon=("Lon", "median"), lat=("Lat", "median"))
               .reset_index())
@@ -232,6 +238,10 @@ def main() -> None:
     # ------------------------------------------------------------ sinistros
     sj = json.load(open(baixar("sinistros.geojson"), encoding="utf-8"))
     sin = pd.DataFrame([f["properties"] for f in sj["features"]])
+    antes = len(sin)
+    sin = sin.drop_duplicates("COD_ACIDENTE").drop_duplicates(["DIA", "MES", "ANO", "HORA", "LATITUDE", "LONGITUDE", "NATUREZA"])
+    if len(sin) < antes:
+        print(f"limpeza dos sinistros: {antes - len(sin)} registros duplicados descartados")
     sin["data"] = pd.to_datetime(dict(year=sin.ANO, month=sin.MES, day=sin.DIA), errors="coerce")
     sin["hora"] = pd.to_numeric(sin.HORA.str[:2], errors="coerce")
     anual = (sin.groupby("ANO").agg(sinistros=("COD_ACIDENTE", "size"), mortos=("MORTOS", "sum"),

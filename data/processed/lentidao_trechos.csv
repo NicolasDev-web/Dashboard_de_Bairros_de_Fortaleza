@@ -708,20 +708,20 @@ id,rua_bonita,periodo,hora,sentido,de,para,fator,extra,kmh,kmh_livre,dist,livre,
 204,BR-116,almoco,12:00,volta,Cajazeiras,Aerolândia,1.007,0.008,52.762,53.124,2153.0,145.9,146.9
 199,Av. Washington Soares,almoco,12:00,volta,Parque Manibura,Engenheiro Luciano Cavalcante,1.001,0.001,35.232,35.255,1490.0,152.15,152.25
 115,Av. Manoel Mavignier,almoco,12:00,ida,Sabiaguaba,,1.001,0.001,45.4,45.427,2113.0,167.45,167.55
-173,Av. Santos Dumont,manha,07:30,volta,Praia do Futuro I,Papicu,0.993,-0.011,38.979,38.701,1956.0,181.95,180.65
-236,R. Bar de Aratanha,manha,07:30,ida,José Bonifácio,Fátima,0.992,-0.019,27.489,27.258,1124.0,148.45,147.2
-176,Av. Senador Carlos Jereissati,manha,07:30,volta,Aeroporto,Aeroporto,0.989,-0.014,47.524,47.02,1231.0,94.25,93.25
-173,Av. Santos Dumont,almoco,12:00,volta,Praia do Futuro I,Papicu,0.982,-0.028,39.416,38.701,1956.0,181.95,178.65
-213,BR-116,almoco,12:00,ida,Parque Santa Maria,Ancuri,0.981,-0.03,38.897,38.147,2034.0,191.95,188.25
-176,Av. Senador Carlos Jereissati,almoco,12:00,volta,Aeroporto,Aeroporto,0.978,-0.028,48.091,47.02,1231.0,94.25,92.15
-144,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,ida,Centro,Moura Brasil,0.974,-0.037,42.024,40.95,1758.0,154.55,150.6
-223,BR-116,almoco,12:00,ida,Pedras,Parque Santa Maria,0.973,-0.028,57.858,56.319,2823.0,180.45,175.65
-226,Rodovia Doutor Mendel Steinbruch,almoco,12:00,volta,Planalto Ayrton Senna,Mondubim,0.972,-0.045,39.076,37.973,1588.0,150.55,146.3
-220,BR-116,almoco,12:00,volta,Ancuri,Pedras,0.969,-0.033,57.506,55.752,1472.0,95.05,92.15
-175,Av. Senador Carlos Jereissati,tarde,18:00,volta,Aeroporto,Aeroporto,0.965,-0.044,49.326,47.592,1166.0,88.2,85.1
-221,BR-116,almoco,12:00,volta,Parque Santa Maria,Ancuri,0.964,-0.041,55.22,53.222,1471.0,99.5,95.9
-224,Rodovia Doutor Mendel Steinbruch,manha,07:30,ida,Mondubim,Mondubim,0.955,-0.071,39.925,38.113,1587.0,149.9,143.1
-175,Av. Senador Carlos Jereissati,almoco,12:00,volta,Aeroporto,Aeroporto,0.937,-0.079,50.788,47.592,1166.0,88.2,82.65
-206,BR-116,almoco,12:00,ida,Aeroporto,Aerolândia,0.926,-0.129,37.476,34.689,1879.0,195.0,180.5
-224,Rodovia Doutor Mendel Steinbruch,almoco,12:00,ida,Mondubim,Mondubim,0.911,-0.141,41.855,38.113,1587.0,149.9,136.5
-206,BR-116,manha,07:30,ida,Aeroporto,Aerolândia,0.887,-0.196,39.112,34.689,1879.0,195.0,172.95
+224,Rodovia Doutor Mendel Steinbruch,almoco,12:00,ida,Mondubim,Mondubim,1.0,-0.141,41.855,38.113,1587.0,149.9,136.5
+226,Rodovia Doutor Mendel Steinbruch,almoco,12:00,volta,Planalto Ayrton Senna,Mondubim,1.0,-0.045,39.076,37.973,1588.0,150.55,146.3
+144,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,ida,Centro,Moura Brasil,1.0,-0.037,42.024,40.95,1758.0,154.55,150.6
+173,Av. Santos Dumont,manha,07:30,volta,Praia do Futuro I,Papicu,1.0,-0.011,38.979,38.701,1956.0,181.95,180.65
+176,Av. Senador Carlos Jereissati,almoco,12:00,volta,Aeroporto,Aeroporto,1.0,-0.028,48.091,47.02,1231.0,94.25,92.15
+176,Av. Senador Carlos Jereissati,manha,07:30,volta,Aeroporto,Aeroporto,1.0,-0.014,47.524,47.02,1231.0,94.25,93.25
+173,Av. Santos Dumont,almoco,12:00,volta,Praia do Futuro I,Papicu,1.0,-0.028,39.416,38.701,1956.0,181.95,178.65
+175,Av. Senador Carlos Jereissati,almoco,12:00,volta,Aeroporto,Aeroporto,1.0,-0.079,50.788,47.592,1166.0,88.2,82.65
+175,Av. Senador Carlos Jereissati,tarde,18:00,volta,Aeroporto,Aeroporto,1.0,-0.044,49.326,47.592,1166.0,88.2,85.1
+224,Rodovia Doutor Mendel Steinbruch,manha,07:30,ida,Mondubim,Mondubim,1.0,-0.071,39.925,38.113,1587.0,149.9,143.1
+223,BR-116,almoco,12:00,ida,Pedras,Parque Santa Maria,1.0,-0.028,57.858,56.319,2823.0,180.45,175.65
+206,BR-116,almoco,12:00,ida,Aeroporto,Aerolândia,1.0,-0.129,37.476,34.689,1879.0,195.0,180.5
+206,BR-116,manha,07:30,ida,Aeroporto,Aerolândia,1.0,-0.196,39.112,34.689,1879.0,195.0,172.95
+213,BR-116,almoco,12:00,ida,Parque Santa Maria,Ancuri,1.0,-0.03,38.897,38.147,2034.0,191.95,188.25
+236,R. Bar de Aratanha,manha,07:30,ida,José Bonifácio,Fátima,1.0,-0.019,27.489,27.258,1124.0,148.45,147.2
+221,BR-116,almoco,12:00,volta,Parque Santa Maria,Ancuri,1.0,-0.041,55.22,53.222,1471.0,99.5,95.9
+220,BR-116,almoco,12:00,volta,Ancuri,Pedras,1.0,-0.033,57.506,55.752,1472.0,95.05,92.15

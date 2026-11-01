@@ -145,7 +145,8 @@ def resumir(p: gpd.GeoDataFrame) -> pd.DataFrame:
     livre = c[c.hora == "03:00"].groupby(["id", "sentido", "dia"]).agg(livre=("duracao_s", "mean"), dist=("distancia_m", "mean"))
     pico = c[c.hora != "03:00"].set_index(["id", "sentido", "dia"]).join(livre, how="inner")
     pico = pico[pico.dist <= pico.comp_m * DESVIO]          # rota fugiu da avenida: fora
-    pico["fator"] = pico.duracao_s / pico.livre
+    # tempo no pico menor que o da madrugada é ruído do trânsito típico: conta como via livre (1,0)
+    pico["fator"] = (pico.duracao_s / pico.livre).clip(lower=1.0)
     pico["extra_min_km"] = (pico.duracao_s - pico.livre) / 60 / (pico.dist / 1000)
     pico["kmh"] = pico.dist / pico.duracao_s * 3.6
     pico["kmh_livre"] = pico.dist / pico.livre * 3.6
