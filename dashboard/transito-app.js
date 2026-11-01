@@ -259,6 +259,7 @@
     const cor = (f) => CORES[CORTES.filter((c) => f >= c).length];
     const largura = (f) => Math.max(1.4, Math.min(6, 1.2 + (f - 1) * 4.2));
     const ROT = { manha: "7h30", almoco: "12h", tarde: "18h" };
+    const trajeto = (p) => (p.de && p.para && p.de !== p.para ? `de ${p.de} para ${p.para}` : p.de ? `no ${p.de}` : p.para ? `chegando ao ${p.para}` : "");
     const svg = $("mapa-lento"), fig = $("mapa-lento-fig");
     const tip = dica(fig, $("dica-lento"));
     baseMapa(svg);
@@ -273,7 +274,7 @@
       toque.addEventListener("pointermove", (ev) => {
         const p = t.p[hora];
         if (!p) return;
-        tip.mostrar(ev, `<b>${t.rua}</b><small>${p.de && p.para && p.de !== p.para ? `de ${p.de} para ${p.para}` : p.de || ""}</small>` +
+        tip.mostrar(ev, `<b>${t.rua}</b><small>${trajeto(p)}</small>` +
           `<span class="num">${nf1.format(p.f)}×</span><small>o tempo da madrugada às ${ROT[hora]}<br>${nf1.format(p.min)} min contra ${nf1.format(p.minl)} min em ${nf1.format(t.km)} km · ${p.kmh} km/h (livre: ${p.kmhl} km/h)</small>`);
       });
       toque.addEventListener("pointerleave", () => tip.esconder());
@@ -309,7 +310,7 @@
       $("numeros-lento").replaceChildren(...[
         [nf1.format(c.fator) + "×", `é quanto tempo a mais leva, em média, atravessar as avenidas às ${ROT[hora]} do que de madrugada.`],
         [nf0.format(c.kmh) + " km/h", `é a velocidade média nas avenidas às ${ROT[hora]}. De madrugada, ${nf0.format(c.kmh_livre)} km/h.`],
-        [nf1.format(top[0].t.p[hora].f) + "×", `no trecho mais lento: ${top[0].t.rua}, de ${top[0].t.p[hora].de} para ${top[0].t.p[hora].para}.`],
+        [nf1.format(top[0].t.p[hora].f) + "×", `no trecho mais lento: ${top[0].t.rua}, ${trajeto(top[0].t.p[hora])}.`],
         [nf0.format(top.filter((e) => e.t.p[hora].f >= 1.5).length), `trechos de ~2 km levam pelo menos 1,5 vez o tempo da madrugada às ${ROT[hora]}.`],
       ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
       // ranking
@@ -320,7 +321,7 @@
         const p = t.p[hora];
         const barra = el("i");
         const bt = el("button", { type: "button", "aria-pressed": String(t.id === atual) }, [
-          el("span", { class: "nome", html: `${t.rua}<small>${p.de}${p.para && p.para !== p.de ? " → " + p.para : ""}</small>` }),
+          el("span", { class: "nome", html: `${t.rua}<small>${p.de && p.para && p.de !== p.para ? p.de + " → " + p.para : trajeto(p)}</small>` }),
           el("span", { class: "fator", texto: nf1.format(p.f) + "×" }),
           el("span", { class: "barra", "aria-hidden": "true" }, [barra]),
         ]);

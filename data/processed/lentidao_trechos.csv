@@ -1,0 +1,727 @@
+id,rua_bonita,periodo,hora,sentido,de,para,fator,extra,kmh,kmh_livre,dist,livre,dur
+62,Av. Raul Barbosa,tarde,18:00,ida,Alto da Balança,Aerolândia,2.535,2.148,16.912,42.869,1866.0,156.7,397.2
+29,Av. Bezerra de Menezes,tarde,18:00,ida,São Gerardo,Presidente Kennedy,2.136,1.914,16.676,35.625,1568.0,158.45,338.5
+46,Av. Deputado Paulino Rocha,manha,07:30,volta,Passaré,Cajazeiras,2.075,1.636,18.996,39.408,1717.0,156.85,325.4
+15,Av. Augusto dos Anjos,manha,07:30,volta,Vila Peri,Jóquei Clube,2.057,1.956,15.767,32.441,1928.0,213.95,440.2
+231,4º Anel Viário,tarde,18:00,volta,,Pedras,1.985,1.066,27.944,55.472,2383.0,154.65,307.0
+65,Av. Doutor Silas Munguba,tarde,18:00,volta,Serrinha,Parangaba,1.944,1.479,19.699,38.302,1464.0,137.6,267.55
+141,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,volta,Álvaro Weyne,Jacarecanga,1.917,1.53,18.759,35.955,1612.0,161.4,309.35
+210,BR-116,manha,07:30,volta,Cidade dos Funcionários,Aerolândia,1.913,1.293,22.149,42.374,1918.0,162.95,311.75
+181,Av. Senador Virgílio Távora,manha,07:30,volta,Dionísio Torres,Aldeota,1.906,1.714,16.639,31.714,1073.0,121.8,232.15
+181,Av. Senador Virgílio Távora,almoco,12:00,volta,Dionísio Torres,Aldeota,1.902,1.706,16.675,31.714,1073.0,121.8,231.65
+30,Av. Bezerra de Menezes,manha,07:30,volta,São Gerardo,Farias Brito,1.9,1.502,18.928,35.965,1556.0,155.75,295.95
+85,Av. General Murilo Borges,tarde,18:00,ida,Alto da Balança,Salinas,1.9,1.337,21.244,40.354,1534.0,136.85,259.95
+242,R. Eduardo Garcia,tarde,18:00,ida,Aldeota,Aldeota,1.89,1.508,18.729,35.394,1664.0,169.25,319.85
+166,Av. Rogaciano Leite,tarde,18:00,volta,Salinas,Engenheiro Luciano Cavalcante,1.845,1.31,20.984,38.719,1730.0,160.85,296.8
+108,Av. João Pessoa,manha,07:30,ida,Parangaba,Bela Vista,1.845,1.456,18.872,34.818,1797.0,185.8,342.8
+231,4º Anel Viário,manha,07:30,volta,,Pedras,1.838,0.906,30.18,55.472,2383.0,154.65,284.25
+47,Av. Deputado Paulino Rocha,tarde,18:00,ida,Cajazeiras,Boa Vista-Castelão,1.837,1.267,21.575,39.622,1865.0,169.45,311.2
+203,BR-116,manha,07:30,volta,Aerolândia,Fátima,1.836,1.01,27.055,49.677,2152.0,155.95,286.35
+242,R. Eduardo Garcia,almoco,12:00,ida,Aldeota,Aldeota,1.83,1.407,19.339,35.394,1664.0,169.25,309.75
+85,Av. General Murilo Borges,manha,07:30,ida,Alto da Balança,Salinas,1.83,1.234,22.05,40.354,1534.0,136.85,250.45
+1,Av. 13 de Maio,tarde,18:00,ida,Fátima,Benfica,1.8,1.471,18.122,32.611,2160.0,238.45,429.1
+4,Av. Alberto Craveiro,tarde,18:00,ida,Aeroporto,Boa Vista-Castelão,1.781,1.065,24.709,43.998,1510.0,123.55,220.0
+156,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,ida,Jangurussu,Barroso,1.764,1.181,22.007,38.818,1288.0,119.45,210.7
+70,Av. Doutor Theberge,tarde,18:00,ida,Álvaro Weyne,Álvaro Weyne,1.761,1.452,17.854,31.441,1224.0,140.15,246.8
+29,Av. Bezerra de Menezes,almoco,12:00,ida,São Gerardo,Presidente Kennedy,1.755,1.272,20.298,35.625,1568.0,158.45,278.1
+242,R. Eduardo Garcia,manha,07:30,ida,Aldeota,Aldeota,1.751,1.273,20.217,35.394,1664.0,169.25,296.3
+121,Av. Mister Hull,tarde,18:00,volta,Antônio Bezerra,Antônio Bezerra,1.748,0.988,25.99,45.425,1123.0,89.0,155.55
+229,4º Anel Viário,manha,07:30,ida,Ancuri,Conjunto Palmeiras,1.738,0.798,31.911,55.466,1674.0,108.65,188.85
+64,Av. Raul Barbosa,tarde,18:00,ida,Tauape,Alto da Balança,1.733,1.086,23.37,40.5,1422.0,126.4,219.05
+20,Av. Beira Mar,tarde,18:00,ida,Meireles,Mucuripe,1.725,1.439,17.526,30.233,2692.0,320.55,552.95
+145,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,ida,Moura Brasil,Pirambu,1.717,1.071,23.392,40.17,1758.0,157.55,270.55
+65,Av. Doutor Silas Munguba,manha,07:30,volta,Serrinha,Parangaba,1.705,1.105,22.461,38.302,1464.0,137.6,234.65
+31,Av. Bezerra de Menezes,tarde,18:00,volta,Parquelândia,São Gerardo,1.701,1.17,21.138,35.965,1551.0,155.25,264.15
+110,Av. Lineu Machado,tarde,18:00,ida,Jóquei Clube,Jóquei Clube,1.7,1.318,18.751,31.877,1148.0,129.65,220.4
+84,Av. Frei Cirilo,tarde,18:00,ida,Cajazeiras,Messejana,1.688,1.129,21.668,36.579,1926.0,189.55,320.0
+49,Av. Desembargador Gonzaga,tarde,18:00,ida,Cidade dos Funcionários,Cidade dos Funcionários,1.673,1.113,21.678,36.263,3106.0,308.35,515.8
+133,Av. Oliveira Paiva,tarde,18:00,ida,Cidade dos Funcionários,Cambeba,1.665,1.101,21.764,36.243,2164.0,214.95,357.95
+134,Av. Padre Antônio Tomás,tarde,18:00,volta,Aldeota,Aldeota,1.664,1.226,19.531,32.5,1142.0,126.5,210.5
+109,Av. João Pessoa,manha,07:30,ida,Bela Vista,Benfica,1.653,1.115,21.261,35.147,1793.0,183.65,303.6
+70,Av. Doutor Theberge,manha,07:30,ida,Álvaro Weyne,Álvaro Weyne,1.65,1.24,19.055,31.441,1224.0,140.15,231.25
+180,Av. Senador Virgílio Távora,tarde,18:00,ida,Aldeota,Dionísio Torres,1.649,1.211,19.5,32.148,1014.0,113.55,187.2
+181,Av. Senador Virgílio Távora,tarde,18:00,volta,Dionísio Torres,Aldeota,1.647,1.224,19.256,31.714,1073.0,121.8,200.6
+106,Av. João de Araujo Lima,tarde,18:00,ida,Prefeito José Walter,Prefeito José Walter,1.646,1.199,19.631,32.313,2500.0,278.55,458.45
+214,BR-116,manha,07:30,ida,Ancuri,Pedras,1.646,0.741,31.774,52.293,2030.0,139.75,230.0
+155,Av. Perimetral (Pres. Costa e Silva),manha,07:30,volta,Jangurussu,Jangurussu,1.645,0.989,23.781,39.113,1338.0,123.15,202.55
+180,Av. Senador Virgílio Távora,manha,07:30,ida,Aldeota,Dionísio Torres,1.644,1.202,19.557,32.148,1014.0,113.55,186.65
+69,Av. Doutor Silas Munguba,manha,07:30,ida,Itaperi,Passaré,1.642,0.927,25.299,41.543,1915.0,165.95,272.5
+31,Av. Bezerra de Menezes,almoco,12:00,volta,Parquelândia,São Gerardo,1.642,1.07,21.909,35.965,1551.0,155.25,254.85
+233,R. 15 de Novembro,tarde,18:00,ida,Montese,Montese,1.637,1.193,19.571,32.037,1059.0,119.0,194.8
+204,BR-116,manha,07:30,volta,Cajazeiras,Aerolândia,1.637,0.719,32.457,53.124,2153.0,145.9,238.8
+246,R. Padre Valdevino,tarde,18:00,volta,Joaquim Távora,Centro,1.631,1.211,19.179,31.29,1684.0,193.75,316.1
+15,Av. Augusto dos Anjos,tarde,18:00,volta,Vila Peri,Jóquei Clube,1.631,1.168,19.885,32.441,1928.0,213.95,349.05
+134,Av. Padre Antônio Tomás,manha,07:30,volta,Aldeota,Aldeota,1.616,1.138,20.109,32.5,1142.0,126.5,204.45
+31,Av. Bezerra de Menezes,manha,07:30,volta,Parquelândia,São Gerardo,1.614,1.025,22.276,35.965,1551.0,155.25,250.65
+84,Av. Frei Cirilo,manha,07:30,volta,Messejana,Cajazeiras,1.614,1.096,20.826,33.615,2452.0,262.6,423.85
+106,Av. João de Araujo Lima,almoco,12:00,ida,Prefeito José Walter,Prefeito José Walter,1.611,1.134,20.06,32.313,2500.0,278.55,448.65
+67,Av. Doutor Silas Munguba,tarde,18:00,volta,Itaperi,Serrinha,1.61,1.025,22.195,35.744,1676.0,168.8,271.85
+55,Av. do Imperador,almoco,12:00,volta,Centro,Farias Brito,1.609,1.16,19.576,31.497,1469.0,167.9,270.15
+132,Av. Oliveira Paiva,tarde,18:00,volta,Parque Manibura,Cidade dos Funcionários,1.608,1.019,22.26,35.794,2170.0,218.25,350.95
+51,Av. Desembargador Moreira,tarde,18:00,volta,Meireles,Meireles,1.608,1.393,16.282,26.174,1585.0,218.0,350.45
+40,Av. Coronel Miguel Dias,tarde,18:00,ida,Guararapes,Guararapes,1.607,1.13,20.054,32.23,1013.0,113.15,181.85
+0,Av. 13 de Maio,manha,07:30,volta,Benfica,Fátima,1.603,1.093,20.661,33.128,2174.0,236.25,378.8
+83,Av. Frei Cirilo,manha,07:30,volta,Messejana,Parque Iracema,1.602,0.992,22.735,36.426,2096.0,207.15,331.9
+107,Av. João de Araujo Lima,tarde,18:00,ida,Mondubim,Prefeito José Walter,1.599,0.976,23.048,36.863,2243.0,219.05,350.35
+83,Av. Frei Cirilo,tarde,18:00,volta,Messejana,Parque Iracema,1.599,0.987,22.779,36.426,2096.0,207.15,331.25
+170,Av. Santos Dumont,tarde,18:00,ida,Papicu,Papicu,1.595,0.975,22.969,36.643,1967.0,193.25,308.3
+28,Av. Bezerra de Menezes,tarde,18:00,ida,Farias Brito,São Gerardo,1.593,0.981,22.777,36.289,1571.0,155.85,248.3
+119,Av. Ministro José Américo,tarde,18:00,volta,Cambeba,Parque Iracema,1.589,0.801,27.773,44.128,2169.0,176.95,281.15
+92,Av. General Osório de Paiva,manha,07:30,volta,Parangaba,Parangaba,1.588,1.184,18.77,29.812,1279.0,154.45,245.3
+233,R. 15 de Novembro,manha,07:30,ida,Montese,Montese,1.582,1.089,20.257,32.037,1059.0,119.0,188.2
+197,Av. Washington Soares,manha,07:30,volta,Cambeba,Sapiranga-Coité,1.58,0.865,25.456,40.209,1667.0,149.25,235.75
+203,BR-116,tarde,18:00,volta,Aerolândia,Fátima,1.579,0.7,31.454,49.677,2152.0,155.95,246.3
+180,Av. Senador Virgílio Távora,almoco,12:00,ida,Aldeota,Dionísio Torres,1.576,1.076,20.393,32.148,1014.0,113.55,179.0
+43,Av. da Abolição,tarde,18:00,volta,Meireles,Mucuripe,1.574,1.143,19.151,30.148,3439.0,410.65,646.45
+30,Av. Bezerra de Menezes,almoco,12:00,volta,São Gerardo,Farias Brito,1.573,0.957,22.859,35.965,1556.0,155.75,245.05
+106,Av. João de Araujo Lima,manha,07:30,ida,Prefeito José Walter,Prefeito José Walter,1.568,1.055,20.607,32.313,2500.0,278.55,436.75
+55,Av. do Imperador,manha,07:30,volta,Centro,Farias Brito,1.567,1.08,20.1,31.497,1469.0,167.9,263.1
+107,Av. João de Araujo Lima,almoco,12:00,ida,Mondubim,Prefeito José Walter,1.567,0.922,23.528,36.863,2243.0,219.05,343.2
+210,BR-116,tarde,18:00,volta,Cidade dos Funcionários,Aerolândia,1.56,0.793,27.163,42.374,1918.0,162.95,254.2
+58,Av. Domingos Olímpio,manha,07:30,volta,Farias Brito,José Bonifácio,1.559,1.129,19.049,29.688,2093.0,253.8,395.55
+205,BR-116,manha,07:30,volta,Cajazeiras,Cajazeiras,1.557,0.653,32.861,51.155,2162.0,152.15,236.85
+55,Av. do Imperador,tarde,18:00,volta,Centro,Farias Brito,1.557,1.06,20.235,31.497,1469.0,167.9,261.35
+230,4º Anel Viário,manha,07:30,ida,Conjunto Palmeiras,,1.555,0.6,35.712,55.525,1675.0,108.6,168.85
+169,Av. Santos Dumont,tarde,18:00,ida,Centro,Aldeota,1.554,1.257,17.026,26.46,1900.0,258.5,401.75
+119,Av. Ministro José Américo,manha,07:30,volta,Cambeba,Parque Iracema,1.553,0.751,28.42,44.128,2169.0,176.95,274.75
+28,Av. Bezerra de Menezes,almoco,12:00,ida,Farias Brito,São Gerardo,1.55,0.909,23.414,36.289,1571.0,155.85,241.55
+200,BR-116,tarde,18:00,ida,Fátima,Aerolândia,1.548,0.644,32.99,51.083,2154.0,151.8,235.05
+209,BR-116,manha,07:30,volta,Aerolândia,Alto da Balança,1.543,0.875,24.151,37.274,1917.0,185.15,285.75
+34,Av. Coronel Carvalho,tarde,18:00,ida,Vila Velha,Vila Velha,1.541,0.901,23.368,36.0,1307.0,130.7,201.35
+233,R. 15 de Novembro,almoco,12:00,ida,Montese,Montese,1.54,1.012,20.799,32.037,1059.0,119.0,183.3
+18,Av. Bar de Studart,tarde,18:00,ida,Aldeota,Meireles,1.538,1.088,19.309,29.706,1593.0,193.05,297.0
+99,Av. José Bastos,tarde,18:00,ida,Rodolfo Teófilo,Bela Vista,1.538,0.873,24.042,36.985,2083.0,202.75,311.9
+97,Av. Heráclito Graça,tarde,18:00,volta,Aldeota,Centro,1.536,1.019,20.555,31.58,1436.0,163.7,251.5
+198,Av. Washington Soares,manha,07:30,volta,Messejana,Cambeba,1.536,0.763,27.444,42.161,1663.0,142.0,218.15
+138,Av. Pro Eduardo Girão,manha,07:30,volta,Fátima,Fátima,1.535,0.938,22.318,34.268,1128.0,118.5,181.95
+191,Av. Washington Soares,manha,07:30,volta,Coaçu,Messejana,1.535,0.714,29.289,44.954,1604.0,128.45,197.15
+199,Av. Washington Soares,manha,07:30,volta,Parque Manibura,Engenheiro Luciano Cavalcante,1.53,0.903,23.036,35.255,1490.0,152.15,232.85
+229,4º Anel Viário,tarde,18:00,ida,Ancuri,Conjunto Palmeiras,1.528,0.571,36.293,55.466,1674.0,108.65,166.05
+107,Av. João de Araujo Lima,manha,07:30,ida,Mondubim,Prefeito José Walter,1.526,0.856,24.158,36.863,2243.0,219.05,334.25
+13,Av. Antônio Sales,tarde,18:00,ida,Joaquim Távora,Dionísio Torres,1.525,1.043,19.811,30.215,2486.0,296.2,451.75
+169,Av. Santos Dumont,almoco,12:00,ida,Centro,Aldeota,1.523,1.186,17.376,26.46,1900.0,258.5,393.65
+77,Av. Engenheiro Santana Júnior,manha,07:30,volta,Papicu,Papicu,1.521,1.026,20.034,30.467,1586.0,187.4,285.0
+100,Av. José Bastos,manha,07:30,volta,Bela Vista,Rodolfo Teófilo,1.52,1.144,17.948,27.28,2700.0,356.3,541.55
+26,Av. Bernardo Manuel,manha,07:30,volta,Parque Dois Irmãos,Itaperi,1.518,0.827,24.755,37.572,1016.0,97.35,147.75
+92,Av. General Osório de Paiva,tarde,18:00,ida,Parangaba,Parangaba,1.516,0.963,21.211,32.159,1009.0,112.95,171.25
+77,Av. Engenheiro Santana Júnior,tarde,18:00,volta,Papicu,Papicu,1.514,1.013,20.118,30.467,1586.0,187.4,283.8
+208,BR-116,manha,07:30,ida,Cajazeiras,Cajazeiras,1.513,0.737,27.597,41.742,1872.0,161.45,244.2
+54,Av. do Imperador,almoco,12:00,ida,Centro,Farias Brito,1.508,1.032,19.582,29.531,1915.0,233.45,352.05
+15,Av. Augusto dos Anjos,almoco,12:00,volta,Vila Peri,Jóquei Clube,1.508,0.939,21.515,32.441,1928.0,213.95,322.6
+81,Av. Francisco Sá,manha,07:30,volta,Barra do Ceará,Carlito Pamplona,1.507,0.961,21.019,31.68,1925.0,218.75,329.7
+33,Av. Borges de Melo,manha,07:30,volta,Fátima,Aeroporto,1.504,0.865,23.227,34.926,1512.0,155.85,234.35
+59,Av. Domingos Olímpio,tarde,18:00,ida,José Bonifácio,Farias Brito,1.5,0.898,22.271,33.407,1224.0,131.9,197.85
+66,Av. Doutor Silas Munguba,manha,07:30,ida,Itaperi,Itaperi,1.5,0.785,25.482,38.218,1370.0,129.05,193.55
+169,Av. Santos Dumont,manha,07:30,ida,Centro,Aldeota,1.496,1.125,17.686,26.46,1900.0,258.5,386.75
+152,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,ida,Parque Dois Irmãos,Mondubim,1.496,0.78,25.507,38.161,2455.0,231.6,346.5
+4,Av. Alberto Craveiro,manha,07:30,ida,Aeroporto,Boa Vista-Castelão,1.492,0.671,29.487,43.998,1510.0,123.55,184.35
+13,Av. Antônio Sales,manha,07:30,ida,Joaquim Távora,Dionísio Torres,1.487,0.967,20.317,30.215,2486.0,296.2,440.5
+84,Av. Frei Cirilo,almoco,12:00,ida,Cajazeiras,Messejana,1.486,0.797,24.618,36.579,1926.0,189.55,281.65
+66,Av. Doutor Silas Munguba,tarde,18:00,ida,Itaperi,Itaperi,1.485,0.761,25.741,38.218,1370.0,129.05,191.6
+111,Av. Luciano Carneiro,manha,07:30,volta,Vila União,Parreão,1.485,0.833,23.504,34.895,1737.0,179.2,266.05
+68,Av. Doutor Silas Munguba,tarde,18:00,volta,Passaré,Serrinha,1.484,0.737,26.573,39.439,1680.0,153.35,227.6
+133,Av. Oliveira Paiva,manha,07:30,ida,Cidade dos Funcionários,Cambeba,1.48,0.795,24.483,36.243,2164.0,214.95,318.2
+68,Av. Doutor Silas Munguba,manha,07:30,volta,Passaré,Serrinha,1.48,0.73,26.649,39.439,1680.0,153.35,226.95
+231,4º Anel Viário,almoco,12:00,volta,,Pedras,1.48,0.519,37.487,55.472,2383.0,154.65,228.85
+134,Av. Padre Antônio Tomás,almoco,12:00,volta,Aldeota,Aldeota,1.479,0.885,21.967,32.5,1142.0,126.5,187.15
+30,Av. Bezerra de Menezes,tarde,18:00,volta,São Gerardo,Farias Brito,1.479,0.799,24.323,35.965,1556.0,155.75,230.3
+208,BR-116,tarde,18:00,ida,Cajazeiras,Cajazeiras,1.477,0.686,28.257,41.742,1872.0,161.45,238.5
+69,Av. Doutor Silas Munguba,tarde,18:00,ida,Itaperi,Passaré,1.476,0.687,28.15,41.543,1915.0,165.95,244.9
+110,Av. Lineu Machado,manha,07:30,ida,Jóquei Clube,Jóquei Clube,1.475,0.894,21.609,31.877,1148.0,129.65,191.25
+0,Av. 13 de Maio,tarde,18:00,volta,Benfica,Fátima,1.474,0.859,22.47,33.128,2174.0,236.25,348.3
+182,Av. Sargento Hermínio Sampaio,tarde,18:00,volta,Padre Andrade,Presidente Kennedy,1.474,0.892,21.63,31.881,1308.0,147.7,217.7
+146,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,ida,Pirambu,Barra do Ceará,1.468,0.798,23.982,35.208,1757.0,179.65,263.75
+54,Av. do Imperador,manha,07:30,ida,Centro,Farias Brito,1.466,0.948,20.137,29.531,1915.0,233.45,342.35
+51,Av. Desembargador Moreira,almoco,12:00,volta,Meireles,Meireles,1.464,1.064,17.879,26.174,1585.0,218.0,319.15
+6,Av. Alberto Craveiro,manha,07:30,volta,Boa Vista-Castelão,Dias Macêdo,1.464,0.647,29.375,42.994,2840.0,237.8,348.05
+136,Av. Pontes Vieira,tarde,18:00,ida,Dionísio Torres,Joaquim Távora,1.463,0.915,20.771,30.396,2449.0,290.05,424.45
+54,Av. do Imperador,tarde,18:00,ida,Centro,Farias Brito,1.461,0.937,20.208,29.531,1915.0,233.45,341.15
+110,Av. Lineu Machado,almoco,12:00,ida,Jóquei Clube,Jóquei Clube,1.46,0.867,21.826,31.877,1148.0,129.65,189.35
+139,Av. Pro Eduardo Girão,tarde,18:00,ida,Fátima,Fátima,1.459,0.801,23.587,34.423,1124.0,117.55,171.55
+67,Av. Doutor Silas Munguba,manha,07:30,volta,Itaperi,Serrinha,1.458,0.768,24.522,35.744,1676.0,168.8,246.05
+73,Av. Engenheiro Agrônomo José Guimarães Duque,tarde,18:00,ida,Parque Iracema,Parque Iracema,1.454,0.849,22.08,32.11,2212.0,248.0,360.65
+133,Av. Oliveira Paiva,almoco,12:00,ida,Cidade dos Funcionários,Cambeba,1.452,0.748,24.961,36.243,2164.0,214.95,312.1
+188,Av. Washington Soares,tarde,18:00,ida,Guararapes,Engenheiro Luciano Cavalcante,1.452,0.657,28.397,41.222,2226.0,194.4,282.2
+170,Av. Santos Dumont,almoco,12:00,ida,Papicu,Papicu,1.451,0.739,25.245,36.643,1967.0,193.25,280.5
+49,Av. Desembargador Gonzaga,manha,07:30,ida,Cidade dos Funcionários,Cidade dos Funcionários,1.451,0.747,24.987,36.263,3106.0,308.35,447.5
+102,Av. José Torres,tarde,18:00,volta,Granja Portugal,Granja Lisboa,1.451,0.903,20.633,29.929,2206.0,265.35,384.9
+61,Av. dos Expedicionários,manha,07:30,ida,Vila União,Parreão,1.45,0.775,24.016,34.819,1961.0,202.75,293.95
+32,Av. Borges de Melo,manha,07:30,volta,Fátima,Aeroporto,1.45,0.857,21.718,31.485,2329.0,266.3,386.05
+187,Av. Waldir Diogo,manha,07:30,volta,Novo Mondubim,Novo Mondubim,1.449,0.776,23.958,34.721,1154.0,119.65,173.4
+80,Av. Francisco Sá,manha,07:30,volta,Carlito Pamplona,Jacarecanga,1.449,0.944,19.69,28.533,2287.0,288.55,418.15
+23,Av. Bernardo Manuel,tarde,18:00,ida,Mondubim,Mondubim,1.447,0.723,25.656,37.133,1229.0,119.15,172.45
+172,Av. Santos Dumont,tarde,18:00,ida,Papicu,Papicu,1.447,0.737,25.139,36.372,2738.0,271.0,392.1
+131,Av. Mozart Pinheiro de Lucena,tarde,18:00,volta,Vila Velha,Vila Velha,1.445,0.939,19.683,28.447,2094.0,265.0,383.0
+215,BR-116,manha,07:30,volta,Pedras,Paupina,1.445,0.471,39.17,56.585,1149.0,73.1,105.6
+211,BR-116,manha,07:30,volta,Cajazeiras,Cidade dos Funcionários,1.443,0.663,27.814,40.144,1918.0,172.0,248.25
+74,Av. Engenheiro Alberto Sá,tarde,18:00,ida,Papicu,Papicu,1.443,0.832,22.141,31.953,2199.0,247.75,357.55
+21,Av. Bernardo Manuel,tarde,18:00,ida,Prefeito José Walter,Prefeito José Walter,1.443,0.817,22.546,32.532,1923.0,212.8,307.05
+50,Av. Desembargador Moreira,tarde,18:00,ida,Aldeota,Aldeota,1.443,0.905,20.339,29.344,2826.0,346.7,500.2
+108,Av. João Pessoa,tarde,18:00,ida,Parangaba,Bela Vista,1.443,0.763,24.134,34.818,1797.0,185.8,268.05
+18,Av. Bar de Studart,almoco,12:00,ida,Aldeota,Meireles,1.439,0.886,20.647,29.706,1593.0,193.05,277.75
+1,Av. 13 de Maio,manha,07:30,ida,Fátima,Benfica,1.439,0.807,22.667,32.611,2160.0,238.45,343.05
+13,Av. Antônio Sales,almoco,12:00,ida,Joaquim Távora,Dionísio Torres,1.439,0.871,21.004,30.215,2486.0,296.2,426.1
+159,Av. Presidente Juscelino Kubitschek,manha,07:30,volta,Passaré,Passaré,1.437,0.657,27.767,39.891,1307.0,117.95,169.45
+34,Av. Coronel Carvalho,manha,07:30,ida,Vila Velha,Vila Velha,1.436,0.727,25.061,36.0,1307.0,130.7,187.75
+105,Av. Jovita Feitosa,manha,07:30,volta,Amadeu Furtado,Rodolfo Teófilo,1.436,0.728,25.045,35.976,1478.0,147.9,212.45
+77,Av. Engenheiro Santana Júnior,almoco,12:00,volta,Papicu,Papicu,1.436,0.858,21.221,30.467,1586.0,187.4,269.05
+124,Av. Mister Hull,manha,07:30,ida,Antônio Bezerra,Antônio Bezerra,1.432,0.572,31.662,45.35,1135.0,90.1,129.05
+48,Av. Deputado Paulino Rocha,tarde,18:00,ida,Cajazeiras,Cajazeiras,1.431,0.638,28.327,40.529,1065.0,94.6,135.35
+130,Av. Mozart Pinheiro de Lucena,tarde,18:00,ida,Vila Velha,Vila Velha,1.43,0.941,19.172,27.412,2646.0,347.5,496.85
+60,Av. dos Expedicionários,tarde,18:00,ida,Jardim América,Montese,1.427,0.738,24.31,34.681,1959.0,203.35,290.1
+28,Av. Bezerra de Menezes,manha,07:30,ida,Farias Brito,São Gerardo,1.426,0.705,25.441,36.289,1571.0,155.85,222.3
+165,Av. Rogaciano Leite,tarde,18:00,volta,Engenheiro Luciano Cavalcante,Jardim das Oliveiras,1.426,0.628,28.526,40.672,1332.0,117.9,168.1
+2,Av. Aguanambi,tarde,18:00,ida,Fátima,Fátima,1.426,0.692,25.891,36.915,1150.0,112.15,159.9
+3,Av. Aguanambi,tarde,18:00,volta,Fátima,Fátima,1.424,0.69,25.883,36.849,1150.0,112.35,159.95
+42,Av. da Abolição,tarde,18:00,ida,Mucuripe,Meireles,1.423,0.905,19.716,28.06,4029.0,516.9,735.65
+19,Av. Bar de Studart,tarde,18:00,ida,Meireles,Aldeota,1.42,0.845,20.987,29.799,1593.0,192.45,273.25
+49,Av. Desembargador Gonzaga,almoco,12:00,ida,Cidade dos Funcionários,Cidade dos Funcionários,1.42,0.695,25.54,36.263,3106.0,308.35,437.8
+61,Av. dos Expedicionários,tarde,18:00,ida,Vila União,Parreão,1.418,0.72,24.555,34.819,1961.0,202.75,287.5
+34,Av. Coronel Carvalho,almoco,12:00,ida,Vila Velha,Vila Velha,1.416,0.694,25.42,36.0,1307.0,130.7,185.1
+81,Av. Francisco Sá,tarde,18:00,ida,Carlito Pamplona,Barra do Ceará,1.415,0.791,22.247,31.479,1925.0,220.15,311.5
+85,Av. General Murilo Borges,almoco,12:00,ida,Alto da Balança,Salinas,1.415,0.617,28.525,40.354,1534.0,136.85,193.6
+1,Av. 13 de Maio,almoco,12:00,ida,Fátima,Benfica,1.413,0.76,23.081,32.611,2160.0,238.45,336.9
+66,Av. Doutor Silas Munguba,almoco,12:00,ida,Itaperi,Itaperi,1.413,0.648,27.054,38.218,1370.0,129.05,182.3
+51,Av. Desembargador Moreira,manha,07:30,volta,Meireles,Meireles,1.412,0.945,18.535,26.174,1585.0,218.0,307.85
+166,Av. Rogaciano Leite,almoco,12:00,volta,Salinas,Engenheiro Luciano Cavalcante,1.408,0.632,27.503,38.719,1730.0,160.85,226.45
+65,Av. Doutor Silas Munguba,almoco,12:00,volta,Serrinha,Parangaba,1.408,0.639,27.209,38.302,1464.0,137.6,193.7
+246,R. Padre Valdevino,manha,07:30,volta,Joaquim Távora,Centro,1.407,0.781,22.231,31.29,1684.0,193.75,272.7
+155,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,volta,Jangurussu,Jangurussu,1.406,0.623,27.811,39.113,1338.0,123.15,173.2
+61,Av. dos Expedicionários,almoco,12:00,ida,Vila União,Parreão,1.406,0.7,24.762,34.819,1961.0,202.75,285.1
+19,Av. Bar de Studart,almoco,12:00,ida,Meireles,Aldeota,1.406,0.818,21.193,29.799,1593.0,192.45,270.6
+19,Av. Bar de Studart,manha,07:30,ida,Meireles,Aldeota,1.405,0.815,21.213,29.799,1593.0,192.45,270.35
+166,Av. Rogaciano Leite,manha,07:30,volta,Salinas,Engenheiro Luciano Cavalcante,1.405,0.627,27.564,38.719,1730.0,160.85,225.95
+214,BR-116,tarde,18:00,ida,Ancuri,Pedras,1.405,0.464,37.229,52.293,2030.0,139.75,196.3
+137,Av. Pontes Vieira,tarde,18:00,volta,Tauape,Dionísio Torres,1.403,0.788,21.882,30.703,2452.0,287.5,403.4
+137,Av. Pontes Vieira,manha,07:30,volta,Tauape,Dionísio Torres,1.4,0.782,21.925,30.703,2452.0,287.5,402.6
+182,Av. Sargento Hermínio Sampaio,manha,07:30,volta,Padre Andrade,Presidente Kennedy,1.4,0.752,22.775,31.881,1308.0,147.7,206.75
+47,Av. Deputado Paulino Rocha,manha,07:30,ida,Cajazeiras,Boa Vista-Castelão,1.4,0.605,28.311,39.622,1865.0,169.45,237.15
+29,Av. Bezerra de Menezes,manha,07:30,ida,São Gerardo,Presidente Kennedy,1.399,0.673,25.456,35.625,1568.0,158.45,221.75
+164,Av. Rogaciano Leite,manha,07:30,volta,Jardim das Oliveiras,Engenheiro Luciano Cavalcante,1.398,0.594,28.76,40.22,1730.0,154.85,216.55
+105,Av. Jovita Feitosa,almoco,12:00,volta,Amadeu Furtado,Rodolfo Teófilo,1.398,0.663,25.742,35.976,1478.0,147.9,206.7
+142,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,volta,Barra do Ceará,Álvaro Weyne,1.397,0.704,24.21,33.81,1613.0,171.75,239.85
+170,Av. Santos Dumont,manha,07:30,ida,Papicu,Papicu,1.396,0.648,26.251,36.643,1967.0,193.25,269.75
+75,Av. Engenheiro Humberto Monte,tarde,18:00,ida,Amadeu Furtado,Parquelândia,1.396,0.671,25.36,35.395,1579.0,160.6,224.15
+70,Av. Doutor Theberge,almoco,12:00,ida,Álvaro Weyne,Álvaro Weyne,1.39,0.745,22.614,31.441,1224.0,140.15,194.85
+189,Av. Washington Soares,tarde,18:00,ida,Engenheiro Luciano Cavalcante,Parque Manibura,1.39,0.66,25.534,35.497,2225.0,225.65,313.7
+103,Av. Jovita Feitosa,tarde,18:00,ida,Parquelândia,Amadeu Furtado,1.389,0.788,21.335,29.641,1529.0,185.7,258.0
+73,Av. Engenheiro Agrônomo José Guimarães Duque,manha,07:30,ida,Parque Iracema,Parque Iracema,1.388,0.724,23.139,32.11,2212.0,248.0,344.15
+21,Av. Bernardo Manuel,manha,07:30,ida,Prefeito José Walter,Prefeito José Walter,1.388,0.715,23.443,32.532,1923.0,212.8,295.3
+88,Av. General Osório de Paiva,tarde,18:00,ida,Parangaba,Bonsucesso,1.387,0.703,23.809,33.021,2078.0,226.55,314.2
+21,Av. Bernardo Manuel,almoco,12:00,ida,Prefeito José Walter,Prefeito José Walter,1.386,0.712,23.475,32.532,1923.0,212.8,294.9
+219,BR-116,manha,07:30,volta,Messejana,Barroso,1.384,0.413,40.272,55.729,1579.0,102.0,141.15
+74,Av. Engenheiro Alberto Sá,manha,07:30,ida,Papicu,Papicu,1.384,0.72,23.093,31.953,2199.0,247.75,342.8
+206,BR-116,tarde,18:00,ida,Aeroporto,Aerolândia,1.382,0.661,25.095,34.689,1879.0,195.0,269.55
+60,Av. dos Expedicionários,manha,07:30,ida,Jardim América,Montese,1.38,0.658,25.129,34.681,1959.0,203.35,280.65
+119,Av. Ministro José Américo,almoco,12:00,volta,Cambeba,Parque Iracema,1.38,0.516,31.982,44.128,2169.0,176.95,244.15
+145,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,ida,Moura Brasil,Pirambu,1.38,0.567,29.118,40.17,1758.0,157.55,217.35
+243,R. Francisco José Albuquerque Pereira,tarde,18:00,volta,Cajazeiras,Cajazeiras,1.378,0.766,21.49,29.613,976.0,118.65,163.5
+120,Av. Ministro José Américo,tarde,18:00,ida,Parque Iracema,Cambeba,1.377,0.519,31.627,43.543,2358.0,194.95,268.4
+97,Av. Heráclito Graça,manha,07:30,volta,Aldeota,Centro,1.375,0.713,22.961,31.58,1436.0,163.7,225.15
+245,R. Júlio Braga,tarde,18:00,ida,Parangaba,Bonsucesso,1.375,0.799,20.494,28.187,2356.0,300.9,413.85
+58,Av. Domingos Olímpio,almoco,12:00,volta,Farias Brito,José Bonifácio,1.375,0.758,21.59,29.688,2093.0,253.8,349.0
+11,Av. Américo Barreira,tarde,18:00,volta,Bela Vista,Jóquei Clube,1.375,0.621,26.359,36.246,2138.0,212.35,292.0
+71,Av. Duq de Caxias,almoco,12:00,volta,Centro,Centro,1.375,0.845,19.357,26.611,3088.0,417.75,574.3
+18,Av. Bar de Studart,manha,07:30,ida,Aldeota,Meireles,1.373,0.753,21.637,29.706,1593.0,193.05,265.05
+164,Av. Rogaciano Leite,tarde,18:00,volta,Jardim das Oliveiras,Engenheiro Luciano Cavalcante,1.372,0.554,29.322,40.22,1730.0,154.85,212.4
+140,Av. Pro José Arthur de Carvalho,tarde,18:00,volta,Lagoa Redonda,Lagoa Redonda,1.37,0.585,27.699,37.947,1705.0,161.75,221.6
+168,Av. Rui Barbosa,almoco,12:00,ida,Meireles,Aldeota,1.37,0.841,19.254,26.376,1558.0,212.65,291.3
+108,Av. João Pessoa,almoco,12:00,ida,Parangaba,Bela Vista,1.37,0.637,25.419,34.818,1797.0,185.8,254.5
+128,Av. Mister Hull,manha,07:30,volta,Padre Andrade,Pici,1.369,0.629,25.688,35.159,1735.0,177.65,243.15
+72,Av. Duq de Caxias,tarde,18:00,ida,Jacarecanga,Farias Brito,1.367,0.742,21.708,29.669,3126.0,379.3,518.4
+140,Av. Pro José Arthur de Carvalho,manha,07:30,volta,Lagoa Redonda,Lagoa Redonda,1.367,0.58,27.767,37.947,1705.0,161.75,221.05
+151,Av. Perimetral (Pres. Costa e Silva),manha,07:30,volta,Mondubim,Mondubim,1.366,0.582,27.624,37.727,2043.0,194.95,266.25
+27,Av. Bernardo Manuel,manha,07:30,volta,Serrinha,Serrinha,1.363,0.668,23.947,32.644,2106.0,232.25,316.6
+83,Av. Frei Cirilo,almoco,12:00,volta,Messejana,Parque Iracema,1.362,0.596,26.748,36.426,2096.0,207.15,282.1
+132,Av. Oliveira Paiva,almoco,12:00,volta,Parque Manibura,Cidade dos Funcionários,1.361,0.605,26.303,35.794,2170.0,218.25,297.0
+6,Av. Alberto Craveiro,tarde,18:00,volta,Boa Vista-Castelão,Dias Macêdo,1.361,0.504,31.595,42.994,2840.0,237.8,323.6
+71,Av. Duq de Caxias,tarde,18:00,volta,Centro,Centro,1.36,0.813,19.562,26.611,3088.0,417.75,568.3
+183,Av. Sargento Hermínio Sampaio,tarde,18:00,ida,Jacarecanga,Presidente Kennedy,1.36,0.709,22.368,30.41,3710.0,439.2,597.1
+50,Av. Desembargador Moreira,almoco,12:00,ida,Aldeota,Aldeota,1.359,0.734,21.595,29.344,2826.0,346.7,471.1
+58,Av. Domingos Olímpio,tarde,18:00,ida,José Bonifácio,Farias Brito,1.357,0.73,21.623,29.343,3436.0,421.55,572.05
+67,Av. Doutor Silas Munguba,almoco,12:00,volta,Itaperi,Serrinha,1.357,0.599,26.342,35.744,1676.0,168.8,229.05
+25,Av. Bernardo Manuel,tarde,18:00,ida,Itaperi,Mondubim,1.354,0.551,28.477,38.55,2502.0,233.65,316.3
+20,Av. Beira Mar,almoco,12:00,ida,Meireles,Mucuripe,1.353,0.701,22.34,30.233,2692.0,320.55,433.8
+238,R. Coronel Virgílio Nogueira Paes,tarde,18:00,volta,Granja Lisboa,Granja Portugal,1.353,0.748,20.918,28.298,1701.0,216.4,292.75
+16,Av. Bar de Studart,almoco,12:00,ida,Aldeota,Dionísio Torres,1.352,0.836,18.692,25.277,2270.0,323.3,437.2
+158,Av. Presidente Juscelino Kubitschek,tarde,18:00,ida,Passaré,Passaré,1.352,0.541,28.893,39.07,2488.0,229.25,310.0
+17,Av. Bar de Studart,manha,07:30,volta,Aldeota,Joaquim Távora,1.352,0.695,22.48,30.396,1508.0,178.6,241.5
+60,Av. dos Expedicionários,almoco,12:00,ida,Jardim América,Montese,1.352,0.609,25.654,34.681,1959.0,203.35,274.9
+230,4º Anel Viário,tarde,18:00,ida,Conjunto Palmeiras,,1.351,0.38,41.09,55.525,1675.0,108.6,146.75
+27,Av. Bernardo Manuel,tarde,18:00,volta,Serrinha,Serrinha,1.348,0.639,24.222,32.644,2106.0,232.25,313.0
+50,Av. Desembargador Moreira,manha,07:30,ida,Aldeota,Aldeota,1.348,0.711,21.776,29.344,2826.0,346.7,467.2
+40,Av. Coronel Miguel Dias,almoco,12:00,ida,Guararapes,Guararapes,1.345,0.642,23.961,32.23,1013.0,113.15,152.2
+46,Av. Deputado Paulino Rocha,tarde,18:00,volta,Passaré,Cajazeiras,1.343,0.523,29.337,39.408,1717.0,156.85,210.7
+123,Av. Mister Hull,manha,07:30,volta,Antônio Bezerra,Antônio Bezerra,1.34,0.667,22.802,30.551,1085.0,127.85,171.3
+105,Av. Jovita Feitosa,tarde,18:00,volta,Amadeu Furtado,Rodolfo Teófilo,1.339,0.566,26.859,35.976,1478.0,147.9,198.1
+168,Av. Rui Barbosa,tarde,18:00,ida,Meireles,Aldeota,1.339,0.771,19.701,26.376,1558.0,212.65,284.7
+132,Av. Oliveira Paiva,manha,07:30,volta,Parque Manibura,Cidade dos Funcionários,1.338,0.567,26.749,35.794,2170.0,218.25,292.05
+139,Av. Pro Eduardo Girão,manha,07:30,ida,Fátima,Fátima,1.338,0.589,25.732,34.423,1124.0,117.55,157.25
+124,Av. Mister Hull,tarde,18:00,ida,Antônio Bezerra,Antônio Bezerra,1.337,0.446,33.909,45.35,1135.0,90.1,120.5
+80,Av. Francisco Sá,tarde,18:00,ida,Jacarecanga,Carlito Pamplona,1.337,0.726,20.826,27.837,1925.0,248.95,332.75
+4,Av. Alberto Craveiro,almoco,12:00,ida,Aeroporto,Boa Vista-Castelão,1.336,0.459,32.926,43.998,1510.0,123.55,165.1
+104,Av. Jovita Feitosa,almoco,12:00,ida,Parque Araxá,Parquelândia,1.335,0.56,26.88,35.891,1478.0,148.25,197.95
+57,Av. Dom Manuel,tarde,18:00,ida,Centro,Centro,1.335,0.708,21.246,28.361,2276.0,288.9,385.65
+72,Av. Duq de Caxias,almoco,12:00,volta,Farias Brito,Jacarecanga,1.335,0.662,22.739,30.352,2921.0,346.45,462.45
+111,Av. Luciano Carneiro,tarde,18:00,volta,Vila União,Parreão,1.335,0.575,26.148,34.895,1737.0,179.2,239.15
+131,Av. Mozart Pinheiro de Lucena,almoco,12:00,ida,Vila Velha,Vila Velha,1.334,0.737,20.383,27.194,2645.0,350.15,467.15
+111,Av. Luciano Carneiro,almoco,12:00,volta,Vila União,Parreão,1.333,0.573,26.175,34.895,1737.0,179.2,238.9
+172,Av. Santos Dumont,almoco,12:00,ida,Papicu,Papicu,1.333,0.549,27.293,36.372,2738.0,271.0,361.15
+141,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,volta,Álvaro Weyne,Jacarecanga,1.331,0.552,27.017,35.955,1612.0,161.4,214.8
+26,Av. Bernardo Manuel,tarde,18:00,volta,Parque Dois Irmãos,Itaperi,1.331,0.528,28.233,37.572,1016.0,97.35,129.55
+74,Av. Engenheiro Alberto Sá,almoco,12:00,ida,Papicu,Papicu,1.33,0.62,24.022,31.953,2199.0,247.75,329.55
+62,Av. Raul Barbosa,manha,07:30,ida,Alto da Balança,Aerolândia,1.328,0.46,32.273,42.869,1866.0,156.7,208.15
+17,Av. Bar de Studart,tarde,18:00,volta,Aldeota,Joaquim Távora,1.328,0.647,22.892,30.396,1508.0,178.6,237.15
+69,Av. Doutor Silas Munguba,almoco,12:00,ida,Itaperi,Passaré,1.327,0.472,31.315,41.543,1915.0,165.95,220.15
+0,Av. 13 de Maio,almoco,12:00,volta,Benfica,Fátima,1.325,0.589,24.996,33.128,2174.0,236.25,313.1
+43,Av. da Abolição,almoco,12:00,volta,Meireles,Mucuripe,1.324,0.644,22.779,30.148,3439.0,410.65,543.5
+72,Av. Duq de Caxias,manha,07:30,ida,Jacarecanga,Farias Brito,1.323,0.653,22.431,29.669,3126.0,379.3,501.7
+130,Av. Mozart Pinheiro de Lucena,almoco,12:00,volta,Vila Velha,Vila Velha,1.321,0.679,21.488,28.396,2093.0,265.35,350.65
+187,Av. Waldir Diogo,tarde,18:00,volta,Novo Mondubim,Novo Mondubim,1.321,0.555,26.277,34.721,1154.0,119.65,158.1
+24,Av. Bernardo Manuel,manha,07:30,volta,Mondubim,Rachel de Queiroz,1.319,0.517,28.084,37.055,2723.0,264.55,349.05
+25,Av. Bernardo Manuel,manha,07:30,ida,Itaperi,Mondubim,1.319,0.496,29.23,38.55,2502.0,233.65,308.15
+165,Av. Rogaciano Leite,manha,07:30,ida,Jardim das Oliveiras,Engenheiro Luciano Cavalcante,1.319,0.546,26.55,35.011,2124.0,218.4,288.0
+179,Av. Senador Fernandes Távora,tarde,18:00,volta,Autran Nunes,Henrique Jorge,1.319,0.59,24.558,32.382,1526.0,169.65,223.7
+79,Av. Filomeno Gomes,manha,07:30,ida,Moura Brasil,Centro,1.318,0.649,22.328,29.438,1384.0,169.25,223.15
+40,Av. Coronel Miguel Dias,manha,07:30,ida,Guararapes,Guararapes,1.317,0.59,24.475,32.23,1013.0,113.15,149.0
+35,Av. Coronel Carvalho,tarde,18:00,volta,Jardim Iracema,Barra do Ceará,1.316,0.546,26.389,34.727,1609.0,166.8,219.5
+102,Av. José Torres,almoco,12:00,volta,Granja Portugal,Granja Lisboa,1.315,0.631,22.765,29.929,2206.0,265.35,348.85
+16,Av. Bar de Studart,manha,07:30,volta,Dionísio Torres,Aldeota,1.313,0.619,23.136,30.388,1508.0,178.65,234.65
+102,Av. José Torres,manha,07:30,volta,Granja Portugal,Granja Lisboa,1.312,0.626,22.804,29.929,2206.0,265.35,348.25
+120,Av. Ministro José Américo,manha,07:30,ida,Parque Iracema,Cambeba,1.312,0.43,33.179,43.543,2358.0,194.95,255.85
+90,Av. General Osório de Paiva,tarde,18:00,ida,Siqueira,Siqueira,1.312,0.446,31.986,41.973,2080.0,178.4,234.1
+79,Av. Filomeno Gomes,tarde,18:00,ida,Moura Brasil,Centro,1.311,0.635,22.448,29.438,1384.0,169.25,221.95
+92,Av. General Osório de Paiva,almoco,12:00,ida,Parangaba,Parangaba,1.311,0.581,24.527,32.159,1009.0,112.95,148.1
+103,Av. Jovita Feitosa,almoco,12:00,ida,Parquelândia,Amadeu Furtado,1.311,0.629,22.61,29.641,1529.0,185.7,243.45
+164,Av. Rogaciano Leite,almoco,12:00,volta,Jardim das Oliveiras,Engenheiro Luciano Cavalcante,1.311,0.463,30.687,40.22,1730.0,154.85,202.95
+16,Av. Bar de Studart,tarde,18:00,volta,Dionísio Torres,Aldeota,1.31,0.612,23.195,30.388,1508.0,178.65,234.05
+59,Av. Domingos Olímpio,manha,07:30,ida,José Bonifácio,Farias Brito,1.31,0.556,25.507,33.407,1224.0,131.9,172.75
+35,Av. Coronel Carvalho,manha,07:30,volta,Jardim Iracema,Barra do Ceará,1.31,0.535,26.516,34.727,1609.0,166.8,218.45
+127,Av. Mister Hull,manha,07:30,ida,Padre Andrade,Presidente Kennedy,1.309,0.405,34.972,45.795,1412.0,111.0,145.35
+88,Av. General Osório de Paiva,manha,07:30,ida,Parangaba,Bonsucesso,1.308,0.56,25.239,33.021,2078.0,226.55,296.4
+59,Av. Domingos Olímpio,almoco,12:00,ida,José Bonifácio,Farias Brito,1.307,0.552,25.552,33.407,1224.0,131.9,172.45
+124,Av. Mister Hull,almoco,12:00,ida,Antônio Bezerra,Antônio Bezerra,1.306,0.405,34.73,45.35,1135.0,90.1,117.65
+32,Av. Borges de Melo,tarde,18:00,volta,Fátima,Aeroporto,1.305,0.582,24.121,31.485,2329.0,266.3,347.6
+154,Av. Perimetral (Pres. Costa e Silva),manha,07:30,ida,Jangurussu,Prefeito José Walter,1.305,0.451,31.099,40.587,2557.0,226.8,296.0
+20,Av. Beira Mar,manha,07:30,volta,Mucuripe,Meireles,1.305,0.593,23.605,30.793,3625.0,423.8,552.85
+191,Av. Washington Soares,tarde,18:00,volta,Coaçu,Messejana,1.301,0.401,34.567,44.954,1604.0,128.45,167.05
+117,Av. Miguel Aragão,tarde,18:00,volta,Aracapé,Aracapé,1.3,0.644,21.501,27.952,1299.0,167.3,217.5
+168,Av. Rui Barbosa,manha,07:30,ida,Meireles,Aldeota,1.3,0.682,20.289,26.376,1558.0,212.65,276.45
+89,Av. General Osório de Paiva,tarde,18:00,ida,Bonsucesso,Siqueira,1.3,0.43,32.172,41.821,2080.0,179.05,232.75
+17,Av. Bar de Studart,almoco,12:00,volta,Aldeota,Joaquim Távora,1.3,0.592,23.385,30.396,1508.0,178.6,232.15
+12,Av. Américo Barreira,manha,07:30,ida,Parangaba,Bela Vista,1.3,0.498,27.761,36.076,2133.0,212.85,276.6
+122,Av. Mister Hull,tarde,18:00,ida,Antônio Bezerra,Antônio Bezerra,1.299,0.582,23.727,30.825,1099.0,128.35,166.75
+121,Av. Mister Hull,manha,07:30,volta,Antônio Bezerra,Antônio Bezerra,1.298,0.394,34.987,45.425,1123.0,89.0,115.55
+118,Av. Miguel Aragão,tarde,18:00,ida,Aracapé,Aracapé,1.297,0.636,21.604,28.02,1034.0,132.85,172.3
+172,Av. Santos Dumont,manha,07:30,ida,Papicu,Papicu,1.296,0.489,28.054,36.372,2738.0,271.0,351.35
+90,Av. General Osório de Paiva,manha,07:30,ida,Siqueira,Siqueira,1.296,0.423,32.381,41.973,2080.0,178.4,231.25
+75,Av. Engenheiro Humberto Monte,almoco,12:00,ida,Amadeu Furtado,Parquelândia,1.295,0.501,27.322,35.395,1579.0,160.6,208.05
+44,Av. Deputado Castelo de Castro,tarde,18:00,volta,Conjunto Palmeiras,Jangurussu,1.295,0.54,25.297,32.758,1177.0,129.35,167.5
+142,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,volta,Barra do Ceará,Álvaro Weyne,1.295,0.523,26.11,33.81,1613.0,171.75,222.4
+24,Av. Bernardo Manuel,tarde,18:00,volta,Mondubim,Rachel de Queiroz,1.295,0.477,28.621,37.055,2723.0,264.55,342.5
+100,Av. José Bastos,almoco,12:00,volta,Bela Vista,Rodolfo Teófilo,1.294,0.647,21.08,27.28,2700.0,356.3,461.1
+152,Av. Perimetral (Pres. Costa e Silva),manha,07:30,ida,Parque Dois Irmãos,Mondubim,1.294,0.462,29.499,38.161,2455.0,231.6,299.6
+104,Av. Jovita Feitosa,tarde,18:00,ida,Parque Araxá,Parquelândia,1.293,0.49,27.756,35.891,1478.0,148.25,191.7
+245,R. Júlio Braga,manha,07:30,ida,Parangaba,Bonsucesso,1.293,0.623,21.806,28.187,2356.0,300.9,388.95
+226,Rodovia Doutor Mendel Steinbruch,manha,07:30,volta,Planalto Ayrton Senna,Mondubim,1.292,0.461,29.392,37.973,1588.0,150.55,194.5
+79,Av. Filomeno Gomes,almoco,12:00,ida,Moura Brasil,Centro,1.291,0.594,22.798,29.438,1384.0,169.25,218.55
+120,Av. Ministro José Américo,almoco,12:00,ida,Parque Iracema,Cambeba,1.29,0.4,33.746,43.543,2358.0,194.95,251.55
+114,Av. Mae Lisboa,manha,07:30,volta,Sabiaguaba,José de Alencar,1.29,0.437,30.868,39.808,2054.0,185.75,239.55
+121,Av. Mister Hull,almoco,12:00,volta,Antônio Bezerra,Antônio Bezerra,1.289,0.381,35.247,45.425,1123.0,89.0,114.7
+91,Av. General Osório de Paiva,manha,07:30,volta,Vila Peri,Parangaba,1.288,0.52,25.812,33.257,1643.0,177.85,229.15
+109,Av. João Pessoa,tarde,18:00,ida,Bela Vista,Benfica,1.288,0.492,27.282,35.147,1793.0,183.65,236.6
+137,Av. Pontes Vieira,almoco,12:00,volta,Tauape,Dionísio Torres,1.288,0.562,23.841,30.703,2452.0,287.5,370.25
+38,Av. Coronel Matos Dourado,tarde,18:00,ida,Antônio Bezerra,Dom Lustosa,1.288,0.4,33.564,43.223,1481.0,123.35,158.85
+130,Av. Mozart Pinheiro de Lucena,manha,07:30,ida,Vila Velha,Vila Velha,1.286,0.626,21.315,27.412,2646.0,347.5,446.9
+136,Av. Pontes Vieira,manha,07:30,ida,Dionísio Torres,Joaquim Távora,1.286,0.564,23.643,30.396,2449.0,290.05,372.9
+216,BR-116,tarde,18:00,ida,Cajazeiras,Jangurussu,1.285,0.292,45.498,58.459,2206.0,135.85,174.55
+179,Av. Senador Fernandes Távora,manha,07:30,volta,Autran Nunes,Henrique Jorge,1.283,0.524,25.241,32.382,1526.0,169.65,217.65
+125,Av. Mister Hull,tarde,18:00,volta,Presidente Kennedy,Padre Andrade,1.282,0.367,36.01,46.183,1737.0,135.4,173.65
+103,Av. Jovita Feitosa,manha,07:30,ida,Parquelândia,Amadeu Furtado,1.282,0.571,23.118,29.641,1529.0,185.7,238.1
+73,Av. Engenheiro Agrônomo José Guimarães Duque,almoco,12:00,ida,Parque Iracema,Parque Iracema,1.282,0.527,25.045,32.11,2212.0,248.0,317.95
+131,Av. Mozart Pinheiro de Lucena,manha,07:30,ida,Vila Velha,Vila Velha,1.281,0.62,21.231,27.194,2645.0,350.15,448.5
+99,Av. José Bastos,almoco,12:00,ida,Rodolfo Teófilo,Bela Vista,1.28,0.454,28.897,36.985,2083.0,202.75,259.5
+57,Av. Dom Manuel,manha,07:30,ida,Centro,Centro,1.28,0.592,22.163,28.361,2276.0,288.9,369.7
+234,R. Anselmo Nogueira,manha,07:30,volta,Bonsucesso,Bonsucesso,1.279,0.455,28.743,36.757,1408.0,137.9,176.35
+145,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,ida,Moura Brasil,Pirambu,1.279,0.416,31.416,40.17,1758.0,157.55,201.45
+43,Av. da Abolição,manha,07:30,volta,Meireles,Mucuripe,1.277,0.552,23.602,30.148,3439.0,410.65,524.55
+129,Av. Mozart Pinheiro de Lucena,tarde,18:00,volta,Quintino Cunha,Quintino Cunha,1.275,0.601,21.524,27.446,1078.0,141.4,180.3
+246,R. Padre Valdevino,almoco,12:00,volta,Joaquim Távora,Centro,1.275,0.528,24.539,31.29,1684.0,193.75,247.05
+2,Av. Aguanambi,almoco,12:00,ida,Fátima,Fátima,1.274,0.446,28.971,36.915,1150.0,112.15,142.9
+23,Av. Bernardo Manuel,manha,07:30,ida,Mondubim,Mondubim,1.274,0.442,29.156,37.133,1229.0,119.15,151.75
+100,Av. José Bastos,tarde,18:00,volta,Bela Vista,Rodolfo Teófilo,1.273,0.601,21.429,27.28,2700.0,356.3,453.6
+75,Av. Engenheiro Humberto Monte,manha,07:30,ida,Amadeu Furtado,Parquelândia,1.273,0.463,27.803,35.395,1579.0,160.6,204.45
+238,R. Coronel Virgílio Nogueira Paes,almoco,12:00,volta,Granja Lisboa,Granja Portugal,1.273,0.579,22.231,28.298,1701.0,216.4,275.45
+165,Av. Rogaciano Leite,almoco,12:00,volta,Engenheiro Luciano Cavalcante,Jardim das Oliveiras,1.272,0.402,31.968,40.672,1332.0,117.9,150.0
+3,Av. Aguanambi,almoco,12:00,volta,Fátima,Fátima,1.27,0.439,29.022,36.849,1150.0,112.35,142.65
+78,Av. Evilasio Almeida Miranda,tarde,18:00,ida,Sapiranga-Coité,Sapiranga-Coité,1.269,0.6,21.218,26.936,1795.0,239.9,304.55
+36,Av. Coronel Carvalho,tarde,18:00,ida,Jardim Guanabara,Antônio Bezerra,1.269,0.548,23.213,29.458,1101.0,134.55,170.75
+62,Av. Raul Barbosa,almoco,12:00,ida,Alto da Balança,Aerolândia,1.267,0.374,33.825,42.869,1866.0,156.7,198.6
+243,R. Francisco José Albuquerque Pereira,manha,07:30,ida,Cajazeiras,Cajazeiras,1.267,0.544,23.23,29.427,976.0,119.4,151.25
+81,Av. Francisco Sá,almoco,12:00,volta,Barra do Ceará,Carlito Pamplona,1.267,0.505,25.014,31.68,1925.0,218.75,277.05
+201,BR-116,tarde,18:00,ida,Aerolândia,Cajazeiras,1.264,0.283,44.256,55.934,2155.0,138.7,175.3
+138,Av. Pro Eduardo Girão,tarde,18:00,volta,Fátima,Fátima,1.263,0.46,27.135,34.268,1128.0,118.5,149.65
+57,Av. Dom Manuel,almoco,12:00,ida,Centro,Centro,1.262,0.555,22.467,28.361,2276.0,288.9,364.7
+46,Av. Deputado Paulino Rocha,almoco,12:00,volta,Passaré,Cajazeiras,1.262,0.399,31.218,39.408,1717.0,156.85,198.0
+230,4º Anel Viário,almoco,12:00,ida,Conjunto Palmeiras,,1.261,0.282,44.047,55.525,1675.0,108.6,136.9
+232,4º Anel Viário,tarde,18:00,volta,,,1.261,0.268,46.297,58.359,2383.0,147.0,185.3
+7,Av. Almirante Henrique Sabóia,tarde,18:00,volta,Tauape,Cocó,1.26,0.331,37.398,47.137,1511.0,115.4,145.45
+178,Av. Senador Fernandes Távora,tarde,18:00,ida,Henrique Jorge,Autran Nunes,1.26,0.484,25.573,32.225,1528.0,170.7,215.1
+7,Av. Almirante Henrique Sabóia,manha,07:30,volta,Tauape,Cocó,1.26,0.331,37.411,47.137,1511.0,115.4,145.4
+135,Av. Plácido Castelo,manha,07:30,volta,Jardim das Oliveiras,Jardim das Oliveiras,1.259,0.54,22.855,28.777,2036.0,254.7,320.7
+153,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,ida,Prefeito José Walter,Prefeito José Walter,1.258,0.403,30.495,38.354,1108.0,104.0,130.8
+193,Av. Washington Soares,tarde,18:00,ida,Messejana,Coaçu,1.257,0.347,35.377,44.479,1676.0,135.65,170.55
+179,Av. Senador Fernandes Távora,almoco,12:00,volta,Autran Nunes,Henrique Jorge,1.257,0.476,25.761,32.382,1526.0,169.65,213.25
+71,Av. Duq de Caxias,manha,07:30,volta,Centro,Centro,1.256,0.577,21.189,26.611,3088.0,417.75,524.65
+126,Av. Mister Hull,tarde,18:00,ida,Presidente Kennedy,Padre Andrade,1.256,0.439,27.814,34.925,1738.0,179.15,224.95
+23,Av. Bernardo Manuel,almoco,12:00,ida,Mondubim,Mondubim,1.255,0.412,29.595,37.133,1229.0,119.15,149.5
+38,Av. Coronel Matos Dourado,manha,07:30,ida,Antônio Bezerra,Dom Lustosa,1.254,0.353,34.464,43.223,1481.0,123.35,154.7
+68,Av. Doutor Silas Munguba,almoco,12:00,volta,Passaré,Serrinha,1.254,0.386,31.451,39.439,1680.0,153.35,192.3
+76,Av. Engenheiro Humberto Monte,tarde,18:00,volta,Parquelândia,Bela Vista,1.248,0.416,28.665,35.785,2243.0,225.65,281.7
+44,Av. Deputado Castelo de Castro,manha,07:30,volta,Conjunto Palmeiras,Jangurussu,1.248,0.455,26.245,32.758,1177.0,129.35,161.45
+64,Av. Raul Barbosa,manha,07:30,ida,Tauape,Alto da Balança,1.248,0.367,32.451,40.5,1422.0,126.4,157.75
+159,Av. Presidente Juscelino Kubitschek,tarde,18:00,volta,Passaré,Passaré,1.248,0.372,31.976,39.891,1307.0,117.95,147.15
+150,Av. Perimetral (Pres. Costa e Silva),manha,07:30,volta,Prefeito José Walter,Prefeito José Walter,1.247,0.395,30.103,37.544,2042.0,195.8,244.2
+154,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,ida,Jangurussu,Prefeito José Walter,1.247,0.365,32.55,40.587,2557.0,226.8,282.8
+39,Av. Coronel Matos Dourado,tarde,18:00,volta,Pici,Padre Andrade,1.247,0.344,34.528,43.049,1536.0,128.45,160.15
+196,Av. Washington Soares,tarde,18:00,ida,Cambeba,Messejana,1.247,0.35,33.949,42.32,1721.0,146.4,182.5
+148,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,volta,Jacarecanga,Moura Brasil,1.246,0.384,30.785,38.343,1939.0,182.05,226.75
+112,Av. Luciano Carneiro,tarde,18:00,volta,Parreão,Vila União,1.245,0.421,28.104,35.003,1737.0,178.65,222.5
+213,BR-116,manha,07:30,ida,Parque Santa Maria,Ancuri,1.244,0.384,30.657,38.147,2034.0,191.95,238.85
+240,R. Desembargador Praxedes,manha,07:30,ida,Damas,Montese,1.244,0.562,20.898,25.988,1817.0,251.7,313.0
+202,BR-116,tarde,18:00,ida,Cajazeiras,Cajazeiras,1.243,0.256,45.96,57.149,2155.0,135.75,168.8
+26,Av. Bernardo Manuel,almoco,12:00,volta,Parque Dois Irmãos,Itaperi,1.243,0.389,30.216,37.572,1016.0,97.35,121.05
+93,Av. Godofredo Maciel,tarde,18:00,ida,Parangaba,Maraponga,1.243,0.428,27.438,34.111,2700.0,284.95,354.25
+42,Av. da Abolição,almoco,12:00,volta,Meireles,Mucuripe,1.242,0.469,24.978,31.032,2783.0,322.85,401.1
+167,Av. Rui Barbosa,tarde,18:00,ida,Aldeota,Joaquim Távora,1.242,0.491,23.85,29.627,1376.0,167.2,207.7
+97,Av. Heráclito Graça,almoco,12:00,volta,Aldeota,Centro,1.242,0.46,25.428,31.58,1436.0,163.7,203.3
+99,Av. José Bastos,manha,07:30,ida,Rodolfo Teófilo,Bela Vista,1.242,0.392,29.787,36.985,2083.0,202.75,251.75
+218,BR-116,manha,07:30,volta,Barroso,Cajazeiras,1.242,0.25,46.67,57.945,1579.0,98.1,121.8
+109,Av. João Pessoa,almoco,12:00,ida,Bela Vista,Benfica,1.241,0.412,28.317,35.147,1793.0,183.65,227.95
+147,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,ida,Barra do Ceará,Barra do Ceará,1.241,0.427,27.272,33.847,1753.0,186.45,231.4
+98,Av. His Raimundo Girão,tarde,18:00,volta,Meireles,Praia de Iracema,1.241,0.486,23.955,29.73,1970.0,238.55,296.05
+158,Av. Presidente Juscelino Kubitschek,manha,07:30,ida,Passaré,Passaré,1.24,0.369,31.505,39.07,2488.0,229.25,284.3
+240,R. Desembargador Praxedes,tarde,18:00,ida,Damas,Montese,1.24,0.553,20.965,25.988,1817.0,251.7,312.0
+139,Av. Pro Eduardo Girão,almoco,12:00,ida,Fátima,Fátima,1.239,0.417,27.772,34.423,1124.0,117.55,145.7
+183,Av. Sargento Hermínio Sampaio,almoco,12:00,ida,Jacarecanga,Presidente Kennedy,1.239,0.472,24.536,30.41,3710.0,439.2,544.35
+214,BR-116,almoco,12:00,ida,Ancuri,Pedras,1.239,0.274,42.218,52.293,2030.0,139.75,173.1
+42,Av. da Abolição,manha,07:30,ida,Mucuripe,Meireles,1.239,0.51,22.656,28.06,4029.0,516.9,640.2
+151,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,volta,Mondubim,Mondubim,1.239,0.379,30.461,37.727,2043.0,194.95,241.45
+98,Av. His Raimundo Girão,manha,07:30,volta,Meireles,Praia de Iracema,1.238,0.481,24.012,29.73,1970.0,238.55,295.35
+215,BR-116,tarde,18:00,volta,Pedras,Paupina,1.237,0.251,45.757,56.585,1149.0,73.1,90.4
+209,BR-116,tarde,18:00,volta,Aerolândia,Alto da Balança,1.237,0.381,30.143,37.274,1917.0,185.15,228.95
+78,Av. Evilasio Almeida Miranda,manha,07:30,volta,Sapiranga-Coité,Sapiranga-Coité,1.236,0.506,22.621,27.956,1908.0,245.7,303.65
+2,Av. Aguanambi,manha,07:30,ida,Fátima,Fátima,1.235,0.383,29.881,36.915,1150.0,112.15,138.55
+156,Av. Perimetral (Pres. Costa e Silva),manha,07:30,ida,Jangurussu,Barroso,1.235,0.364,31.425,38.818,1288.0,119.45,147.55
+240,R. Desembargador Praxedes,almoco,12:00,ida,Damas,Montese,1.235,0.542,21.046,25.988,1817.0,251.7,310.8
+140,Av. Pro José Arthur de Carvalho,almoco,12:00,volta,Lagoa Redonda,Lagoa Redonda,1.235,0.371,30.736,37.947,1705.0,161.75,199.7
+3,Av. Aguanambi,manha,07:30,volta,Fátima,Fátima,1.234,0.381,29.859,36.849,1150.0,112.35,138.65
+96,Av. Heráclito Graça,tarde,18:00,ida,Centro,Aldeota,1.234,0.529,21.495,26.525,2059.0,279.45,344.85
+217,BR-116,tarde,18:00,ida,Jangurussu,Parque Santa Maria,1.234,0.245,46.495,57.371,2204.0,138.3,170.65
+14,Av. Atilano de Moura,tarde,18:00,ida,Guararapes,Guararapes,1.232,0.442,25.619,31.575,1909.0,217.65,268.25
+87,Av. General Osório de Paiva,manha,07:30,volta,Siqueira,Siqueira,1.232,0.329,34.44,42.445,1844.0,156.4,192.75
+141,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,volta,Álvaro Weyne,Jacarecanga,1.232,0.388,29.176,35.955,1612.0,161.4,198.9
+190,Av. Washington Soares,manha,07:30,volta,Edson Queiroz,Guararapes,1.232,0.356,31.692,39.03,2196.0,202.55,249.45
+87,Av. General Osório de Paiva,tarde,18:00,volta,Siqueira,Siqueira,1.231,0.327,34.467,42.445,1844.0,156.4,192.6
+182,Av. Sargento Hermínio Sampaio,almoco,12:00,volta,Padre Andrade,Presidente Kennedy,1.23,0.433,25.922,31.881,1308.0,147.7,181.65
+117,Av. Miguel Aragão,manha,07:30,volta,Aracapé,Aracapé,1.23,0.493,22.734,27.952,1299.0,167.3,205.7
+118,Av. Miguel Aragão,manha,07:30,ida,Aracapé,Aracapé,1.228,0.488,22.823,28.02,1034.0,132.85,163.1
+129,Av. Mozart Pinheiro de Lucena,almoco,12:00,volta,Quintino Cunha,Quintino Cunha,1.226,0.495,22.381,27.446,1078.0,141.4,173.4
+91,Av. General Osório de Paiva,tarde,18:00,volta,Vila Peri,Parangaba,1.226,0.407,27.132,33.257,1643.0,177.85,218.0
+104,Av. Jovita Feitosa,manha,07:30,ida,Parque Araxá,Parquelândia,1.225,0.377,29.291,35.891,1478.0,148.25,181.65
+76,Av. Engenheiro Humberto Monte,manha,07:30,volta,Parquelândia,Bela Vista,1.225,0.377,29.219,35.785,2243.0,225.65,276.35
+238,R. Coronel Virgílio Nogueira Paes,manha,07:30,volta,Granja Lisboa,Granja Portugal,1.223,0.472,23.143,28.298,1701.0,216.4,264.6
+114,Av. Mae Lisboa,tarde,18:00,volta,Sabiaguaba,José de Alencar,1.222,0.335,32.574,39.808,2054.0,185.75,227.0
+88,Av. General Osório de Paiva,almoco,12:00,ida,Parangaba,Bonsucesso,1.221,0.402,27.036,33.021,2078.0,226.55,276.7
+76,Av. Engenheiro Humberto Monte,almoco,12:00,volta,Parquelândia,Bela Vista,1.221,0.371,29.299,35.785,2243.0,225.65,275.6
+96,Av. Heráclito Graça,almoco,12:00,ida,Centro,Aldeota,1.221,0.5,21.721,26.525,2059.0,279.45,341.25
+239,R. Costa Barros,tarde,18:00,volta,Aldeota,Centro,1.221,0.514,21.11,25.775,1670.0,233.25,284.8
+196,Av. Washington Soares,manha,07:30,ida,Cambeba,Messejana,1.22,0.312,34.68,42.32,1721.0,146.4,178.65
+159,Av. Presidente Juscelino Kubitschek,almoco,12:00,volta,Passaré,Passaré,1.219,0.33,32.72,39.891,1307.0,117.95,143.8
+123,Av. Mister Hull,tarde,18:00,volta,Antônio Bezerra,Antônio Bezerra,1.219,0.43,25.063,30.551,1085.0,127.85,155.85
+5,Av. Alberto Craveiro,tarde,18:00,ida,Boa Vista-Castelão,Boa Vista-Castelão,1.219,0.339,31.808,38.767,1506.0,139.85,170.45
+135,Av. Plácido Castelo,tarde,18:00,volta,Jardim das Oliveiras,Jardim das Oliveiras,1.218,0.454,23.632,28.777,2036.0,254.7,310.15
+44,Av. Deputado Castelo de Castro,almoco,12:00,volta,Conjunto Palmeiras,Jangurussu,1.218,0.399,26.903,32.758,1177.0,129.35,157.5
+96,Av. Heráclito Graça,manha,07:30,ida,Centro,Aldeota,1.217,0.492,21.788,26.525,2059.0,279.45,340.2
+237,R. Coronel Virgílio Nogueira Paes,tarde,18:00,ida,Granja Portugal,Bom Jardim,1.215,0.463,22.969,27.913,1774.0,228.8,278.05
+245,R. Júlio Braga,almoco,12:00,volta,Bonsucesso,Parangaba,1.215,0.439,24.145,29.326,1995.0,244.9,297.45
+152,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,ida,Parque Dois Irmãos,Mondubim,1.214,0.336,31.446,38.161,2455.0,231.6,281.05
+117,Av. Miguel Aragão,almoco,12:00,volta,Aracapé,Aracapé,1.213,0.458,23.036,27.952,1299.0,167.3,203.0
+143,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,volta,Barra do Ceará,Barra do Ceará,1.213,0.368,28.609,34.689,1614.0,167.5,203.1
+150,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,volta,Prefeito José Walter,Prefeito José Walter,1.212,0.34,30.965,37.544,2042.0,195.8,237.4
+118,Av. Miguel Aragão,almoco,12:00,ida,Aracapé,Aracapé,1.212,0.453,23.128,28.02,1034.0,132.85,160.95
+138,Av. Pro Eduardo Girão,almoco,12:00,volta,Fátima,Fátima,1.211,0.369,28.298,34.268,1128.0,118.5,143.5
+228,4º Anel Viário,tarde,18:00,ida,Ancuri,Ancuri,1.211,0.226,46.128,55.841,1676.0,108.05,130.8
+192,Av. Washington Soares,manha,07:30,volta,Coaçu,Coaçu,1.21,0.252,41.268,49.932,1602.0,115.5,139.75
+129,Av. Mozart Pinheiro de Lucena,manha,07:30,volta,Quintino Cunha,Quintino Cunha,1.209,0.458,22.695,27.446,1078.0,141.4,171.0
+228,4º Anel Viário,manha,07:30,ida,Ancuri,Ancuri,1.209,0.224,46.199,55.841,1676.0,108.05,130.6
+243,R. Francisco José Albuquerque Pereira,almoco,12:00,volta,Cajazeiras,Cajazeiras,1.209,0.423,24.502,29.613,976.0,118.65,143.4
+27,Av. Bernardo Manuel,almoco,12:00,volta,Serrinha,Serrinha,1.208,0.381,27.034,32.644,2106.0,232.25,280.45
+178,Av. Senador Fernandes Távora,manha,07:30,ida,Henrique Jorge,Autran Nunes,1.206,0.383,26.722,32.225,1528.0,170.7,205.85
+234,R. Anselmo Nogueira,tarde,18:00,volta,Bonsucesso,Bonsucesso,1.206,0.336,30.489,36.757,1408.0,137.9,166.25
+142,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,volta,Barra do Ceará,Álvaro Weyne,1.205,0.364,28.059,33.81,1613.0,171.75,206.95
+162,Av. Recreio,tarde,18:00,ida,Lagoa Redonda,Lagoa Redonda,1.204,0.329,30.89,37.183,943.0,91.3,109.9
+39,Av. Coronel Matos Dourado,manha,07:30,volta,Pici,Padre Andrade,1.203,0.283,35.79,43.049,1536.0,128.45,154.5
+187,Av. Waldir Diogo,almoco,12:00,volta,Novo Mondubim,Novo Mondubim,1.202,0.35,28.88,34.721,1154.0,119.65,143.85
+12,Av. Américo Barreira,tarde,18:00,ida,Parangaba,Bela Vista,1.202,0.336,30.013,36.076,2133.0,212.85,255.85
+185,Av. Vicente de Castro,tarde,18:00,ida,Cais do Porto,Cais do Porto,1.202,0.433,23.286,27.989,1988.0,255.7,307.35
+95,Av. Gurgel do Amaral,tarde,18:00,ida,Messejana,Guajeru,1.201,0.382,26.234,31.495,1178.0,134.65,161.65
+160,Av. Presidente Juscelino Kubitschek,manha,07:30,volta,Passaré,Passaré,1.2,0.349,28.656,34.389,1313.0,137.45,164.95
+112,Av. Luciano Carneiro,almoco,12:00,volta,Parreão,Vila União,1.199,0.342,29.186,35.003,1737.0,178.65,214.25
+78,Av. Evilasio Almeida Miranda,almoco,12:00,ida,Sapiranga-Coité,Sapiranga-Coité,1.198,0.441,22.488,26.936,1795.0,239.9,287.35
+48,Av. Deputado Paulino Rocha,manha,07:30,ida,Cajazeiras,Cajazeiras,1.198,0.293,33.839,40.529,1065.0,94.6,113.3
+10,Av. Almirante Henrique Sabóia,almoco,12:00,volta,Varjota,Mucuripe,1.197,0.271,36.443,43.632,1152.0,95.05,113.8
+6,Av. Alberto Craveiro,almoco,12:00,volta,Boa Vista-Castelão,Dias Macêdo,1.197,0.274,35.93,42.994,2840.0,237.8,284.55
+89,Av. General Osório de Paiva,manha,07:30,ida,Bonsucesso,Siqueira,1.195,0.28,34.982,41.821,2080.0,179.05,214.05
+45,Av. Deputado Castelo de Castro,tarde,18:00,ida,Conjunto Palmeiras,Conjunto Palmeiras,1.195,0.434,22.592,27.004,1588.0,211.7,253.05
+247,R. Pinto Madeira,tarde,18:00,ida,Centro,Aldeota,1.194,0.435,22.344,26.668,1196.0,161.45,192.7
+47,Av. Deputado Paulino Rocha,almoco,12:00,ida,Cajazeiras,Boa Vista-Castelão,1.193,0.292,33.213,39.622,1865.0,169.45,202.15
+86,Av. General Osório de Paiva,tarde,18:00,volta,Siqueira,Canindezinho,1.193,0.286,33.956,40.503,1844.0,163.9,195.5
+14,Av. Atilano de Moura,manha,07:30,ida,Guararapes,Guararapes,1.192,0.365,26.483,31.575,1909.0,217.65,259.5
+91,Av. General Osório de Paiva,almoco,12:00,volta,Vila Peri,Parangaba,1.19,0.343,27.946,33.257,1643.0,177.85,211.65
+64,Av. Raul Barbosa,almoco,12:00,ida,Tauape,Alto da Balança,1.189,0.28,34.06,40.5,1422.0,126.4,150.3
+112,Av. Luciano Carneiro,manha,07:30,volta,Parreão,Vila União,1.189,0.323,29.448,35.003,1737.0,178.65,212.35
+32,Av. Borges de Melo,almoco,12:00,volta,Fátima,Aeroporto,1.188,0.359,26.499,31.485,2329.0,266.3,316.4
+24,Av. Bernardo Manuel,almoco,12:00,volta,Mondubim,Rachel de Queiroz,1.187,0.303,31.214,37.055,2723.0,264.55,314.05
+94,Av. Godofredo Maciel,tarde,18:00,volta,Maraponga,Parangaba,1.187,0.339,27.865,33.073,2701.0,294.0,348.95
+204,BR-116,tarde,18:00,volta,Cajazeiras,Aerolândia,1.186,0.21,44.802,53.124,2153.0,145.9,173.0
+45,Av. Deputado Castelo de Castro,manha,07:30,ida,Conjunto Palmeiras,Conjunto Palmeiras,1.184,0.41,22.799,27.004,1588.0,211.7,250.75
+219,BR-116,tarde,18:00,volta,Messejana,Barroso,1.184,0.198,47.056,55.729,1579.0,102.0,120.8
+207,BR-116,tarde,18:00,ida,Aeroporto,Cajazeiras,1.184,0.263,35.525,42.071,1871.0,160.1,189.6
+38,Av. Coronel Matos Dourado,almoco,12:00,ida,Antônio Bezerra,Dom Lustosa,1.183,0.254,36.543,43.223,1481.0,123.35,145.9
+101,Av. José Jatahy,manha,07:30,volta,Farias Brito,Jacarecanga,1.182,0.452,20.44,24.162,1290.0,192.2,227.2
+160,Av. Presidente Juscelino Kubitschek,tarde,18:00,volta,Passaré,Passaré,1.182,0.317,29.106,34.389,1313.0,137.45,162.4
+35,Av. Coronel Carvalho,almoco,12:00,volta,Jardim Iracema,Barra do Ceará,1.181,0.313,29.396,34.727,1609.0,166.8,197.05
+36,Av. Coronel Carvalho,manha,07:30,ida,Jardim Guanabara,Antônio Bezerra,1.181,0.369,24.936,29.458,1101.0,134.55,158.95
+14,Av. Atilano de Moura,almoco,12:00,ida,Guararapes,Guararapes,1.18,0.342,26.756,31.575,1909.0,217.65,256.85
+25,Av. Bernardo Manuel,almoco,12:00,ida,Itaperi,Mondubim,1.18,0.279,32.682,38.55,2502.0,233.65,275.6
+198,Av. Washington Soares,tarde,18:00,volta,Messejana,Cambeba,1.179,0.254,35.774,42.161,1663.0,142.0,167.35
+33,Av. Borges de Melo,tarde,18:00,volta,Fátima,Aeroporto,1.177,0.305,29.663,34.926,1512.0,155.85,183.5
+101,Av. José Jatahy,tarde,18:00,volta,Farias Brito,Jacarecanga,1.177,0.44,20.526,24.162,1290.0,192.2,226.25
+146,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,ida,Pirambu,Barra do Ceará,1.176,0.3,29.942,35.208,1757.0,179.65,211.25
+94,Av. Godofredo Maciel,manha,07:30,volta,Maraponga,Parangaba,1.173,0.314,28.188,33.073,2701.0,294.0,344.95
+197,Av. Washington Soares,tarde,18:00,volta,Cambeba,Sapiranga-Coité,1.173,0.258,34.283,40.209,1667.0,149.25,175.05
+82,Av. Francisco Sá,manha,07:30,ida,Floresta,Barra do Ceará,1.172,0.345,25.576,29.983,1926.0,231.25,271.1
+136,Av. Pontes Vieira,almoco,12:00,ida,Dionísio Torres,Joaquim Távora,1.171,0.338,25.95,30.396,2449.0,290.05,339.75
+7,Av. Almirante Henrique Sabóia,almoco,12:00,volta,Tauape,Cocó,1.17,0.216,40.293,47.137,1511.0,115.4,135.0
+90,Av. General Osório de Paiva,almoco,12:00,ida,Siqueira,Siqueira,1.169,0.242,35.905,41.973,2080.0,178.4,208.55
+10,Av. Almirante Henrique Sabóia,tarde,18:00,volta,Varjota,Mucuripe,1.169,0.232,37.329,43.632,1152.0,95.05,111.1
+225,Rodovia Doutor Mendel Steinbruch,tarde,18:00,ida,Mondubim,Aracapé,1.168,0.24,35.921,41.958,1595.0,136.85,159.85
+192,Av. Washington Soares,tarde,18:00,volta,Coaçu,Coaçu,1.168,0.201,42.768,49.932,1602.0,115.5,134.85
+212,BR-116,manha,07:30,volta,Cajazeiras,Barroso,1.167,0.274,31.366,36.599,1496.0,147.15,171.7
+247,R. Pinto Madeira,manha,07:30,ida,Centro,Aldeota,1.166,0.374,22.866,26.668,1196.0,161.45,188.3
+217,BR-116,manha,07:30,ida,Jangurussu,Parque Santa Maria,1.166,0.174,49.19,57.371,2204.0,138.3,161.3
+149,Av. Perimetral (Pres. Costa e Silva),manha,07:30,volta,Prefeito José Walter,Jangurussu,1.165,0.244,34.865,40.626,2042.0,180.95,210.85
+158,Av. Presidente Juscelino Kubitschek,almoco,12:00,ida,Passaré,Passaré,1.165,0.254,33.534,39.07,2488.0,229.25,267.1
+189,Av. Washington Soares,almoco,12:00,ida,Engenheiro Luciano Cavalcante,Parque Manibura,1.164,0.277,30.503,35.497,2225.0,225.65,262.6
+216,BR-116,manha,07:30,ida,Cajazeiras,Jangurussu,1.163,0.168,50.247,58.459,2206.0,135.85,158.05
+191,Av. Washington Soares,almoco,12:00,volta,Coaçu,Messejana,1.162,0.217,38.677,44.954,1604.0,128.45,149.3
+222,BR-116,manha,07:30,ida,Paupina,Paupina,1.162,0.226,36.924,42.897,2777.0,233.05,270.75
+247,R. Pinto Madeira,almoco,12:00,ida,Centro,Aldeota,1.162,0.364,22.957,26.668,1196.0,161.45,187.55
+162,Av. Recreio,almoco,12:00,ida,Lagoa Redonda,Lagoa Redonda,1.161,0.26,32.026,37.183,943.0,91.3,106.0
+9,Av. Almirante Henrique Sabóia,tarde,18:00,ida,Mucuripe,Varjota,1.161,0.242,34.319,39.833,1460.0,131.95,153.15
+198,Av. Washington Soares,almoco,12:00,volta,Messejana,Cambeba,1.161,0.229,36.328,42.161,1663.0,142.0,164.8
+208,BR-116,almoco,12:00,ida,Cajazeiras,Cajazeiras,1.16,0.231,35.971,41.742,1872.0,161.45,187.35
+212,BR-116,tarde,18:00,volta,Cajazeiras,Barroso,1.16,0.263,31.541,36.599,1496.0,147.15,170.75
+237,R. Coronel Virgílio Nogueira Paes,manha,07:30,ida,Granja Portugal,Bom Jardim,1.16,0.344,24.063,27.913,1774.0,228.8,265.4
+86,Av. General Osório de Paiva,manha,07:30,volta,Siqueira,Canindezinho,1.158,0.234,34.985,40.503,1844.0,163.9,189.75
+188,Av. Washington Soares,manha,07:30,ida,Guararapes,Engenheiro Luciano Cavalcante,1.158,0.229,35.608,41.222,2226.0,194.4,225.05
+82,Av. Francisco Sá,tarde,18:00,volta,Barra do Ceará,Floresta,1.157,0.316,25.848,29.918,1926.0,231.75,268.25
+146,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,ida,Pirambu,Barra do Ceará,1.157,0.268,30.432,35.208,1757.0,179.65,207.85
+52,Av. Dioguinho,manha,07:30,volta,Praia do Futuro Ii,Praia do Futuro I,1.156,0.263,30.841,35.656,2230.0,225.15,260.3
+216,BR-116,almoco,12:00,ida,Cajazeiras,Jangurussu,1.156,0.16,50.583,58.459,2206.0,135.85,157.0
+220,BR-116,manha,07:30,volta,Ancuri,Pedras,1.155,0.167,48.262,55.752,1472.0,95.05,109.8
+9,Av. Almirante Henrique Sabóia,almoco,12:00,ida,Mucuripe,Varjota,1.153,0.231,34.534,39.833,1460.0,131.95,152.2
+225,Rodovia Doutor Mendel Steinbruch,manha,07:30,ida,Mondubim,Aracapé,1.153,0.218,36.399,41.958,1595.0,136.85,157.75
+93,Av. Godofredo Maciel,almoco,12:00,ida,Parangaba,Maraponga,1.152,0.267,29.616,34.111,2700.0,284.95,328.2
+89,Av. General Osório de Paiva,almoco,12:00,ida,Bonsucesso,Siqueira,1.151,0.216,36.341,41.821,2080.0,179.05,206.05
+11,Av. Américo Barreira,almoco,12:00,volta,Bela Vista,Jóquei Clube,1.15,0.249,31.512,36.246,2138.0,212.35,244.25
+37,Av. Coronel Carvalho,tarde,18:00,volta,Padre Andrade,Jardim Iracema,1.149,0.312,24.945,28.658,1091.0,137.05,157.45
+161,Av. Rad João Ramos,manha,07:30,volta,Planalto Ayrton Senna,Planalto Ayrton Senna,1.147,0.28,27.548,31.607,2306.0,262.65,301.35
+95,Av. Gurgel do Amaral,almoco,12:00,ida,Messejana,Guajeru,1.146,0.278,27.484,31.495,1178.0,134.65,154.3
+183,Av. Sargento Hermínio Sampaio,manha,07:30,ida,Jacarecanga,Presidente Kennedy,1.146,0.288,26.542,30.41,3710.0,439.2,503.2
+98,Av. His Raimundo Girão,almoco,12:00,volta,Meireles,Praia de Iracema,1.145,0.293,25.959,29.73,1970.0,238.55,273.2
+178,Av. Senador Fernandes Távora,almoco,12:00,ida,Henrique Jorge,Autran Nunes,1.145,0.27,28.144,32.225,1528.0,170.7,195.45
+80,Av. Francisco Sá,almoco,12:00,volta,Carlito Pamplona,Jacarecanga,1.145,0.304,24.926,28.533,2287.0,288.55,330.3
+237,R. Coronel Virgílio Nogueira Paes,almoco,12:00,ida,Granja Portugal,Bom Jardim,1.144,0.31,24.394,27.913,1774.0,228.8,261.8
+167,Av. Rui Barbosa,almoco,12:00,volta,Joaquim Távora,Aldeota,1.142,0.328,22.826,26.079,2120.0,292.65,334.35
+143,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,volta,Barra do Ceará,Barra do Ceará,1.142,0.246,30.365,34.689,1614.0,167.5,191.35
+162,Av. Recreio,manha,07:30,ida,Lagoa Redonda,Lagoa Redonda,1.142,0.23,32.548,37.183,943.0,91.3,104.3
+184,Av. Tab Carloto Maia,tarde,18:00,volta,Edson Queiroz,Edson Queiroz,1.141,0.255,29.032,33.119,1052.0,114.35,130.45
+227,Rodovia Doutor Mendel Steinbruch,tarde,18:00,volta,Aracapé,Planalto Ayrton Senna,1.14,0.195,37.892,43.205,1592.0,132.65,151.25
+194,Av. Washington Soares,tarde,18:00,ida,Coaçu,São Bento,1.14,0.174,42.31,48.24,1673.0,124.85,142.35
+151,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,volta,Mondubim,Mondubim,1.14,0.223,33.092,37.727,2043.0,194.95,222.25
+161,Av. Rad João Ramos,tarde,18:00,volta,Planalto Ayrton Senna,Planalto Ayrton Senna,1.139,0.264,27.746,31.607,2306.0,262.65,299.2
+196,Av. Washington Soares,almoco,12:00,ida,Cambeba,Messejana,1.139,0.197,37.166,42.32,1721.0,146.4,166.7
+195,Av. Washington Soares,tarde,18:00,ida,Cambeba,Cambeba,1.138,0.223,32.772,37.308,1726.0,166.55,189.6
+114,Av. Mae Lisboa,almoco,12:00,volta,Sabiaguaba,José de Alencar,1.137,0.207,35.003,39.808,2054.0,185.75,211.25
+9,Av. Almirante Henrique Sabóia,manha,07:30,ida,Mucuripe,Varjota,1.136,0.204,35.075,39.833,1460.0,131.95,149.85
+113,Av. Mae Lisboa,tarde,18:00,ida,José de Alencar,José de Alencar,1.136,0.259,27.608,31.351,1760.0,202.1,229.5
+197,Av. Washington Soares,almoco,12:00,volta,Cambeba,Sapiranga-Coité,1.133,0.199,35.479,40.209,1667.0,149.25,169.15
+11,Av. Américo Barreira,manha,07:30,volta,Bela Vista,Jóquei Clube,1.133,0.221,31.983,36.246,2138.0,212.35,240.65
+167,Av. Rui Barbosa,manha,07:30,ida,Aldeota,Joaquim Távora,1.132,0.268,26.161,29.627,1376.0,167.2,189.35
+135,Av. Plácido Castelo,almoco,12:00,volta,Jardim das Oliveiras,Jardim das Oliveiras,1.132,0.276,25.415,28.777,2036.0,254.7,288.4
+239,R. Costa Barros,manha,07:30,volta,Aldeota,Centro,1.13,0.303,22.803,25.775,1670.0,233.25,263.65
+171,Av. Santos Dumont,tarde,18:00,volta,Praia do Futuro I,Cocó,1.13,0.222,31.12,35.175,2538.0,259.75,293.6
+10,Av. Almirante Henrique Sabóia,manha,07:30,volta,Varjota,Mucuripe,1.128,0.177,38.669,43.632,1152.0,95.05,107.25
+41,Av. Cesar Cals,tarde,18:00,ida,Cais do Porto,Praia do Futuro I,1.128,0.231,29.522,33.306,1848.0,199.75,225.35
+193,Av. Washington Soares,manha,07:30,ida,Messejana,Coaçu,1.127,0.171,39.474,44.479,1676.0,135.65,152.85
+219,BR-116,almoco,12:00,volta,Messejana,Barroso,1.126,0.136,49.473,55.729,1579.0,102.0,114.9
+127,Av. Mister Hull,almoco,12:00,ida,Padre Andrade,Presidente Kennedy,1.126,0.165,40.682,45.795,1412.0,111.0,124.95
+202,BR-116,manha,07:30,ida,Cajazeiras,Cajazeiras,1.126,0.132,50.772,57.149,2155.0,135.75,152.8
+195,Av. Washington Soares,manha,07:30,ida,Cambeba,Cambeba,1.125,0.201,33.166,37.308,1726.0,166.55,187.35
+229,4º Anel Viário,almoco,12:00,ida,Ancuri,Conjunto Palmeiras,1.125,0.135,49.316,55.466,1674.0,108.65,122.2
+93,Av. Godofredo Maciel,manha,07:30,ida,Parangaba,Maraponga,1.125,0.219,30.332,34.111,2700.0,284.95,320.45
+194,Av. Washington Soares,manha,07:30,ida,Coaçu,São Bento,1.125,0.155,42.897,48.24,1673.0,124.85,140.4
+52,Av. Dioguinho,tarde,18:00,volta,Praia do Futuro Ii,Praia do Futuro I,1.123,0.207,31.744,35.656,2230.0,225.15,252.9
+123,Av. Mister Hull,almoco,12:00,volta,Antônio Bezerra,Antônio Bezerra,1.123,0.242,27.201,30.551,1085.0,127.85,143.6
+218,BR-116,tarde,18:00,volta,Barroso,Cajazeiras,1.123,0.127,51.606,57.945,1579.0,98.1,110.15
+22,Av. Bernardo Manuel,tarde,18:00,volta,Mondubim,Planalto Ayrton Senna,1.122,0.241,27.054,30.359,1515.0,179.65,201.6
+45,Av. Deputado Castelo de Castro,almoco,12:00,ida,Conjunto Palmeiras,Conjunto Palmeiras,1.122,0.271,24.066,27.004,1588.0,211.7,237.55
+149,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,volta,Prefeito José Walter,Jangurussu,1.122,0.18,36.213,40.626,2042.0,180.95,203.0
+125,Av. Mister Hull,almoco,12:00,volta,Presidente Kennedy,Padre Andrade,1.121,0.157,41.194,46.183,1737.0,135.4,151.8
+12,Av. Américo Barreira,almoco,12:00,ida,Parangaba,Bela Vista,1.121,0.201,32.189,36.076,2133.0,212.85,238.55
+147,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,ida,Barra do Ceará,Barra do Ceará,1.12,0.213,30.217,33.847,1753.0,186.45,208.85
+95,Av. Gurgel do Amaral,manha,07:30,ida,Messejana,Guajeru,1.12,0.228,28.122,31.495,1178.0,134.65,150.8
+127,Av. Mister Hull,tarde,18:00,ida,Padre Andrade,Presidente Kennedy,1.12,0.157,40.895,45.795,1412.0,111.0,124.3
+249,R. Urucutuba,tarde,18:00,ida,Bom Jardim,Siqueira,1.118,0.226,28.026,31.34,2021.0,232.15,259.6
+160,Av. Presidente Juscelino Kubitschek,almoco,12:00,volta,Passaré,Passaré,1.118,0.206,30.753,34.389,1313.0,137.45,153.7
+188,Av. Washington Soares,almoco,12:00,ida,Guararapes,Engenheiro Luciano Cavalcante,1.118,0.171,36.887,41.222,2226.0,194.4,217.25
+41,Av. Cesar Cals,manha,07:30,volta,Praia do Futuro I,Cais do Porto,1.117,0.261,24.137,26.967,2533.0,338.15,377.8
+205,BR-116,tarde,18:00,volta,Cajazeiras,Cajazeiras,1.117,0.137,45.811,51.155,2162.0,152.15,169.9
+143,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,volta,Barra do Ceará,Barra do Ceará,1.114,0.198,31.13,34.689,1614.0,167.5,186.65
+122,Av. Mister Hull,manha,07:30,ida,Antônio Bezerra,Antônio Bezerra,1.114,0.221,27.677,30.825,1099.0,128.35,142.95
+144,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,ida,Centro,Moura Brasil,1.11,0.162,36.881,40.95,1758.0,154.55,171.6
+5,Av. Alberto Craveiro,manha,07:30,ida,Boa Vista-Castelão,Boa Vista-Castelão,1.11,0.17,34.922,38.767,1506.0,139.85,155.25
+113,Av. Mae Lisboa,manha,07:30,ida,José de Alencar,José de Alencar,1.11,0.211,28.242,31.351,1760.0,202.1,224.35
+125,Av. Mister Hull,manha,07:30,volta,Presidente Kennedy,Padre Andrade,1.11,0.143,41.605,46.183,1737.0,135.4,150.3
+48,Av. Deputado Paulino Rocha,almoco,12:00,ida,Cajazeiras,Cajazeiras,1.109,0.162,36.532,40.529,1065.0,94.6,104.95
+227,Rodovia Doutor Mendel Steinbruch,manha,07:30,volta,Aracapé,Planalto Ayrton Senna,1.108,0.15,39.001,43.205,1592.0,132.65,146.95
+87,Av. General Osório de Paiva,almoco,12:00,volta,Siqueira,Siqueira,1.107,0.152,38.328,42.445,1844.0,156.4,173.2
+249,R. Urucutuba,almoco,12:00,volta,Siqueira,Bom Jardim,1.107,0.208,27.856,30.832,2998.0,350.05,387.45
+207,BR-116,manha,07:30,ida,Aeroporto,Cajazeiras,1.107,0.152,38.011,42.071,1871.0,160.1,177.2
+36,Av. Coronel Carvalho,almoco,12:00,ida,Jardim Guanabara,Antônio Bezerra,1.103,0.21,26.709,29.458,1101.0,134.55,148.4
+248,R. Urucutuba,tarde,18:00,volta,Siqueira,Siqueira,1.102,0.185,30.092,33.163,1467.0,159.25,175.5
+161,Av. Rad João Ramos,almoco,12:00,volta,Planalto Ayrton Senna,Planalto Ayrton Senna,1.102,0.193,28.691,31.607,2306.0,262.65,289.35
+154,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,ida,Jangurussu,Prefeito José Walter,1.1,0.148,36.902,40.587,2557.0,226.8,249.45
+41,Av. Cesar Cals,almoco,12:00,ida,Cais do Porto,Praia do Futuro I,1.1,0.179,30.288,33.306,1848.0,199.75,219.65
+193,Av. Washington Soares,almoco,12:00,ida,Messejana,Coaçu,1.099,0.134,40.467,44.479,1676.0,135.65,149.1
+192,Av. Washington Soares,almoco,12:00,volta,Coaçu,Coaçu,1.099,0.119,45.447,49.932,1602.0,115.5,126.9
+94,Av. Godofredo Maciel,almoco,12:00,volta,Maraponga,Parangaba,1.098,0.178,30.113,33.073,2701.0,294.0,322.9
+185,Av. Vicente de Castro,manha,07:30,ida,Cais do Porto,Cais do Porto,1.098,0.209,25.501,27.989,1988.0,255.7,280.65
+211,BR-116,tarde,18:00,volta,Cajazeiras,Cidade dos Funcionários,1.097,0.145,36.591,40.144,1918.0,172.0,188.7
+190,Av. Washington Soares,tarde,18:00,volta,Edson Queiroz,Guararapes,1.096,0.148,35.603,39.03,2196.0,202.55,222.05
+82,Av. Francisco Sá,almoco,12:00,volta,Barra do Ceará,Floresta,1.096,0.192,27.308,29.918,1926.0,231.75,253.9
+101,Av. José Jatahy,almoco,12:00,volta,Farias Brito,Jacarecanga,1.095,0.236,22.062,24.162,1290.0,192.2,210.5
+234,R. Anselmo Nogueira,almoco,12:00,volta,Bonsucesso,Bonsucesso,1.095,0.155,33.568,36.757,1408.0,137.9,151.0
+207,BR-116,almoco,12:00,ida,Aeroporto,Cajazeiras,1.095,0.135,38.434,42.071,1871.0,160.1,175.25
+156,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,ida,Jangurussu,Barroso,1.095,0.146,35.463,38.818,1288.0,119.45,130.75
+155,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,volta,Jangurussu,Jangurussu,1.095,0.145,35.733,39.113,1338.0,123.15,134.8
+244,R. Jaime Benévolo,tarde,18:00,volta,Fátima,José Bonifácio,1.094,0.208,24.942,27.298,1156.0,152.45,166.85
+222,BR-116,tarde,18:00,ida,Paupina,Paupina,1.091,0.128,39.305,42.897,2777.0,233.05,254.35
+249,R. Urucutuba,manha,07:30,volta,Siqueira,Bom Jardim,1.09,0.176,28.276,30.832,2998.0,350.05,381.7
+203,BR-116,almoco,12:00,volta,Aerolândia,Fátima,1.09,0.109,45.572,49.677,2152.0,155.95,170.0
+213,BR-116,tarde,18:00,ida,Parque Santa Maria,Ancuri,1.09,0.141,35.002,38.147,2034.0,191.95,209.2
+22,Av. Bernardo Manuel,manha,07:30,volta,Mondubim,Planalto Ayrton Senna,1.088,0.174,27.905,30.359,1515.0,179.65,195.45
+232,4º Anel Viário,almoco,12:00,volta,,,1.087,0.09,53.685,58.359,2383.0,147.0,159.8
+184,Av. Tab Carloto Maia,almoco,12:00,volta,Edson Queiroz,Edson Queiroz,1.087,0.157,30.48,33.119,1052.0,114.35,124.25
+39,Av. Coronel Matos Dourado,almoco,12:00,volta,Pici,Padre Andrade,1.085,0.118,39.681,43.049,1536.0,128.45,139.35
+52,Av. Dioguinho,almoco,12:00,volta,Praia do Futuro Ii,Praia do Futuro I,1.084,0.141,32.902,35.656,2230.0,225.15,244.0
+209,BR-116,almoco,12:00,volta,Aerolândia,Alto da Balança,1.084,0.135,34.394,37.274,1917.0,185.15,200.65
+218,BR-116,almoco,12:00,volta,Barroso,Cajazeiras,1.084,0.087,53.475,57.945,1579.0,98.1,106.3
+86,Av. General Osório de Paiva,almoco,12:00,volta,Siqueira,Canindezinho,1.084,0.124,37.378,40.503,1844.0,163.9,177.6
+185,Av. Vicente de Castro,almoco,12:00,ida,Cais do Porto,Cais do Porto,1.083,0.178,25.841,27.989,1988.0,255.7,276.95
+236,R. Bar de Aratanha,tarde,18:00,ida,José Bonifácio,Fátima,1.081,0.178,25.219,27.258,1124.0,148.45,160.45
+202,BR-116,almoco,12:00,ida,Cajazeiras,Cajazeiras,1.081,0.085,52.883,57.149,2155.0,135.75,146.7
+228,4º Anel Viário,almoco,12:00,ida,Ancuri,Ancuri,1.081,0.087,51.68,55.841,1676.0,108.05,116.75
+175,Av. Senador Carlos Jereissati,manha,07:30,volta,Aeroporto,Aeroporto,1.08,0.101,44.046,47.592,1166.0,88.2,95.3
+220,BR-116,tarde,18:00,volta,Ancuri,Pedras,1.079,0.085,51.649,55.752,1472.0,95.05,102.6
+174,Av. Senador Carlos Jereissati,tarde,18:00,ida,Aeroporto,Aeroporto,1.078,0.112,38.562,41.557,1219.0,105.6,113.8
+128,Av. Mister Hull,almoco,12:00,volta,Padre Andrade,Pici,1.075,0.128,32.71,35.159,1735.0,177.65,190.95
+232,4º Anel Viário,manha,07:30,volta,,,1.074,0.077,54.313,58.359,2383.0,147.0,157.95
+186,Av. Vicente de Castro,tarde,18:00,volta,Cais do Porto,Cais do Porto,1.074,0.157,26.364,28.321,1881.0,239.1,256.85
+149,Av. Perimetral (Pres. Costa e Silva),tarde,18:00,volta,Prefeito José Walter,Jangurussu,1.072,0.106,37.903,40.626,2042.0,180.95,193.95
+201,BR-116,almoco,12:00,ida,Aerolândia,Cajazeiras,1.071,0.077,52.207,55.934,2155.0,138.7,148.6
+115,Av. Manoel Mavignier,tarde,18:00,ida,Sabiaguaba,,1.071,0.093,42.425,45.427,2113.0,167.45,179.3
+126,Av. Mister Hull,manha,07:30,ida,Presidente Kennedy,Padre Andrade,1.069,0.119,32.664,34.925,1738.0,179.15,191.55
+223,BR-116,manha,07:30,ida,Pedras,Parque Santa Maria,1.068,0.073,52.712,56.319,2823.0,180.45,192.8
+210,BR-116,almoco,12:00,volta,Cidade dos Funcionários,Aerolândia,1.068,0.097,39.66,42.374,1918.0,162.95,174.1
+128,Av. Mister Hull,tarde,18:00,volta,Padre Andrade,Pici,1.068,0.116,32.926,35.159,1735.0,177.65,189.7
+150,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,volta,Prefeito José Walter,Prefeito José Walter,1.067,0.108,35.173,37.544,2042.0,195.8,209.0
+113,Av. Mae Lisboa,almoco,12:00,ida,José de Alencar,José de Alencar,1.067,0.128,29.381,31.351,1760.0,202.1,215.65
+212,BR-116,almoco,12:00,volta,Cajazeiras,Barroso,1.066,0.109,34.325,36.599,1496.0,147.15,156.9
+239,R. Costa Barros,almoco,12:00,volta,Aldeota,Centro,1.066,0.154,24.174,25.775,1670.0,233.25,248.7
+147,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,ida,Barra do Ceará,Barra do Ceará,1.066,0.116,31.76,33.847,1753.0,186.45,198.7
+153,Av. Perimetral (Pres. Costa e Silva),manha,07:30,ida,Prefeito José Walter,Prefeito José Walter,1.064,0.1,36.049,38.354,1108.0,104.0,110.65
+126,Av. Mister Hull,almoco,12:00,ida,Presidente Kennedy,Padre Andrade,1.063,0.109,32.844,34.925,1738.0,179.15,190.5
+244,R. Jaime Benévolo,manha,07:30,volta,Fátima,José Bonifácio,1.063,0.139,25.673,27.298,1156.0,152.45,162.1
+241,R. Duarte Coelho,tarde,18:00,ida,Paupina,,1.063,0.16,22.344,23.758,1372.0,207.9,221.05
+241,R. Duarte Coelho,manha,07:30,ida,Paupina,,1.063,0.16,22.344,23.758,1372.0,207.9,221.05
+194,Av. Washington Soares,almoco,12:00,ida,Coaçu,São Bento,1.061,0.076,45.455,48.24,1673.0,124.85,132.5
+122,Av. Mister Hull,almoco,12:00,ida,Antônio Bezerra,Antônio Bezerra,1.061,0.119,29.048,30.825,1099.0,128.35,136.2
+201,BR-116,manha,07:30,ida,Aerolândia,Cajazeiras,1.061,0.065,52.722,55.934,2155.0,138.7,147.15
+171,Av. Santos Dumont,almoco,12:00,volta,Praia do Futuro I,Cocó,1.061,0.103,33.164,35.175,2538.0,259.75,275.5
+215,BR-116,almoco,12:00,volta,Pedras,Paupina,1.055,0.059,53.615,56.585,1149.0,73.1,77.15
+173,Av. Santos Dumont,tarde,18:00,volta,Praia do Futuro I,Papicu,1.055,0.086,36.675,38.701,1956.0,181.95,192.0
+226,Rodovia Doutor Mendel Steinbruch,tarde,18:00,volta,Planalto Ayrton Senna,Mondubim,1.055,0.087,35.989,37.973,1588.0,150.55,158.85
+174,Av. Senador Carlos Jereissati,manha,07:30,ida,Aeroporto,Aeroporto,1.054,0.077,39.446,41.557,1219.0,105.6,111.25
+148,Av. Leste-Oeste (Pres. Castelo Branco),tarde,18:00,volta,Jacarecanga,Moura Brasil,1.053,0.083,36.413,38.343,1939.0,182.05,191.7
+22,Av. Bernardo Manuel,almoco,12:00,volta,Mondubim,Planalto Ayrton Senna,1.053,0.105,28.834,30.359,1515.0,179.65,189.15
+171,Av. Santos Dumont,manha,07:30,volta,Praia do Futuro I,Cocó,1.052,0.089,33.438,35.175,2538.0,259.75,273.25
+176,Av. Senador Carlos Jereissati,tarde,18:00,volta,Aeroporto,Aeroporto,1.051,0.065,44.741,47.02,1231.0,94.25,99.05
+37,Av. Coronel Carvalho,manha,07:30,volta,Padre Andrade,Jardim Iracema,1.049,0.102,27.332,28.658,1091.0,137.05,143.7
+217,BR-116,almoco,12:00,ida,Jangurussu,Parque Santa Maria,1.048,0.051,54.72,57.371,2204.0,138.3,145.0
+33,Av. Borges de Melo,almoco,12:00,volta,Fátima,Aeroporto,1.048,0.083,33.322,34.926,1512.0,155.85,163.35
+205,BR-116,almoco,12:00,volta,Cajazeiras,Cajazeiras,1.046,0.054,48.92,51.155,2162.0,152.15,159.1
+221,BR-116,tarde,18:00,volta,Parque Santa Maria,Ancuri,1.045,0.051,50.919,53.222,1471.0,99.5,104.0
+5,Av. Alberto Craveiro,almoco,12:00,ida,Boa Vista-Castelão,Boa Vista-Castelão,1.044,0.069,37.122,38.767,1506.0,139.85,146.05
+186,Av. Vicente de Castro,manha,07:30,volta,Cais do Porto,Cais do Porto,1.044,0.093,27.135,28.321,1881.0,239.1,249.55
+236,R. Bar de Aratanha,almoco,12:00,ida,José Bonifácio,Fátima,1.041,0.09,26.19,27.258,1124.0,148.45,154.5
+221,BR-116,manha,07:30,volta,Parque Santa Maria,Ancuri,1.041,0.046,51.141,53.222,1471.0,99.5,103.55
+225,Rodovia Doutor Mendel Steinbruch,almoco,12:00,ida,Mondubim,Aracapé,1.041,0.058,40.323,41.958,1595.0,136.85,142.4
+37,Av. Coronel Carvalho,almoco,12:00,volta,Padre Andrade,Jardim Iracema,1.04,0.085,27.543,28.658,1091.0,137.05,142.6
+184,Av. Tab Carloto Maia,manha,07:30,volta,Edson Queiroz,Edson Queiroz,1.04,0.073,31.839,33.119,1052.0,114.35,118.95
+227,Rodovia Doutor Mendel Steinbruch,almoco,12:00,volta,Aracapé,Planalto Ayrton Senna,1.04,0.055,41.561,43.205,1592.0,132.65,137.9
+244,R. Jaime Benévolo,almoco,12:00,volta,Fátima,José Bonifácio,1.037,0.081,26.323,27.298,1156.0,152.45,158.1
+174,Av. Senador Carlos Jereissati,almoco,12:00,ida,Aeroporto,Aeroporto,1.035,0.051,40.15,41.557,1219.0,105.6,109.3
+144,Av. Leste-Oeste (Pres. Castelo Branco),manha,07:30,ida,Centro,Moura Brasil,1.034,0.05,39.592,40.95,1758.0,154.55,159.85
+199,Av. Washington Soares,tarde,18:00,volta,Parque Manibura,Engenheiro Luciano Cavalcante,1.033,0.056,34.133,35.255,1490.0,152.15,157.15
+248,R. Urucutuba,manha,07:30,volta,Siqueira,Siqueira,1.033,0.059,32.114,33.163,1467.0,159.25,164.45
+200,BR-116,manha,07:30,ida,Fátima,Aerolândia,1.033,0.038,49.47,51.083,2154.0,151.8,156.75
+115,Av. Manoel Mavignier,manha,07:30,ida,Sabiaguaba,,1.029,0.038,44.149,45.427,2113.0,167.45,172.3
+224,Rodovia Doutor Mendel Steinbruch,tarde,18:00,ida,Mondubim,Mondubim,1.028,0.044,37.087,38.113,1587.0,149.9,154.05
+241,R. Duarte Coelho,almoco,12:00,ida,Paupina,,1.026,0.065,23.162,23.758,1372.0,207.9,213.25
+223,BR-116,tarde,18:00,ida,Pedras,Parque Santa Maria,1.025,0.027,54.919,56.319,2823.0,180.45,185.05
+195,Av. Washington Soares,almoco,12:00,ida,Cambeba,Cambeba,1.024,0.038,36.443,37.308,1726.0,166.55,170.5
+211,BR-116,almoco,12:00,volta,Cajazeiras,Cidade dos Funcionários,1.022,0.033,39.276,40.144,1918.0,172.0,175.8
+200,BR-116,almoco,12:00,ida,Fátima,Aerolândia,1.022,0.026,49.996,51.083,2154.0,151.8,155.1
+153,Av. Perimetral (Pres. Costa e Silva),almoco,12:00,ida,Prefeito José Walter,Prefeito José Walter,1.021,0.032,37.577,38.354,1108.0,104.0,106.15
+148,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,volta,Jacarecanga,Moura Brasil,1.021,0.032,37.569,38.343,1939.0,182.05,185.8
+189,Av. Washington Soares,manha,07:30,ida,Engenheiro Luciano Cavalcante,Parque Manibura,1.019,0.033,34.819,35.497,2225.0,225.65,230.05
+177,Av. Senador Carlos Jereissati,manha,07:30,ida,Aeroporto,Serrinha,1.019,0.026,43.12,43.95,1078.0,88.3,90.0
+177,Av. Senador Carlos Jereissati,tarde,18:00,ida,Aeroporto,Serrinha,1.018,0.025,43.168,43.95,1078.0,88.3,89.9
+222,BR-116,almoco,12:00,ida,Paupina,Paupina,1.015,0.022,42.245,42.897,2777.0,233.05,236.65
+177,Av. Senador Carlos Jereissati,almoco,12:00,ida,Aeroporto,Serrinha,1.013,0.018,43.385,43.95,1078.0,88.3,89.45
+248,R. Urucutuba,almoco,12:00,volta,Siqueira,Siqueira,1.012,0.022,32.762,33.163,1467.0,159.25,161.2
+190,Av. Washington Soares,almoco,12:00,volta,Edson Queiroz,Guararapes,1.011,0.016,38.62,39.03,2196.0,202.55,204.7
+186,Av. Vicente de Castro,almoco,12:00,volta,Cais do Porto,Cais do Porto,1.009,0.019,28.063,28.321,1881.0,239.1,241.3
+204,BR-116,almoco,12:00,volta,Cajazeiras,Aerolândia,1.007,0.008,52.762,53.124,2153.0,145.9,146.9
+199,Av. Washington Soares,almoco,12:00,volta,Parque Manibura,Engenheiro Luciano Cavalcante,1.001,0.001,35.232,35.255,1490.0,152.15,152.25
+115,Av. Manoel Mavignier,almoco,12:00,ida,Sabiaguaba,,1.001,0.001,45.4,45.427,2113.0,167.45,167.55
+173,Av. Santos Dumont,manha,07:30,volta,Praia do Futuro I,Papicu,0.993,-0.011,38.979,38.701,1956.0,181.95,180.65
+236,R. Bar de Aratanha,manha,07:30,ida,José Bonifácio,Fátima,0.992,-0.019,27.489,27.258,1124.0,148.45,147.2
+176,Av. Senador Carlos Jereissati,manha,07:30,volta,Aeroporto,Aeroporto,0.989,-0.014,47.524,47.02,1231.0,94.25,93.25
+173,Av. Santos Dumont,almoco,12:00,volta,Praia do Futuro I,Papicu,0.982,-0.028,39.416,38.701,1956.0,181.95,178.65
+213,BR-116,almoco,12:00,ida,Parque Santa Maria,Ancuri,0.981,-0.03,38.897,38.147,2034.0,191.95,188.25
+176,Av. Senador Carlos Jereissati,almoco,12:00,volta,Aeroporto,Aeroporto,0.978,-0.028,48.091,47.02,1231.0,94.25,92.15
+144,Av. Leste-Oeste (Pres. Castelo Branco),almoco,12:00,ida,Centro,Moura Brasil,0.974,-0.037,42.024,40.95,1758.0,154.55,150.6
+223,BR-116,almoco,12:00,ida,Pedras,Parque Santa Maria,0.973,-0.028,57.858,56.319,2823.0,180.45,175.65
+226,Rodovia Doutor Mendel Steinbruch,almoco,12:00,volta,Planalto Ayrton Senna,Mondubim,0.972,-0.045,39.076,37.973,1588.0,150.55,146.3
+220,BR-116,almoco,12:00,volta,Ancuri,Pedras,0.969,-0.033,57.506,55.752,1472.0,95.05,92.15
+175,Av. Senador Carlos Jereissati,tarde,18:00,volta,Aeroporto,Aeroporto,0.965,-0.044,49.326,47.592,1166.0,88.2,85.1
+221,BR-116,almoco,12:00,volta,Parque Santa Maria,Ancuri,0.964,-0.041,55.22,53.222,1471.0,99.5,95.9
+224,Rodovia Doutor Mendel Steinbruch,manha,07:30,ida,Mondubim,Mondubim,0.955,-0.071,39.925,38.113,1587.0,149.9,143.1
+175,Av. Senador Carlos Jereissati,almoco,12:00,volta,Aeroporto,Aeroporto,0.937,-0.079,50.788,47.592,1166.0,88.2,82.65
+206,BR-116,almoco,12:00,ida,Aeroporto,Aerolândia,0.926,-0.129,37.476,34.689,1879.0,195.0,180.5
+224,Rodovia Doutor Mendel Steinbruch,almoco,12:00,ida,Mondubim,Mondubim,0.911,-0.141,41.855,38.113,1587.0,149.9,136.5
+206,BR-116,manha,07:30,ida,Aeroporto,Aerolândia,0.887,-0.196,39.112,34.689,1879.0,195.0,172.95

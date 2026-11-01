@@ -69,7 +69,7 @@ ACENTOS = {  # grafia sem acento do radar → com acento
 APELIDO = {
     "Av. Presidente Castelo Branco": "Av. Leste-Oeste (Pres. Castelo Branco)",
     "Av. Presidente Costa e Silva": "Av. Perimetral (Pres. Costa e Silva)",
-    "Rodovia BR 116": "BR-116", "Av. Doutor Raul Barbosa": "Av. Raul Barbosa", "Rodovia Br 116": "BR-116",
+    "Rodovia BR 116": "BR-116", "Rodovia Quarto Anel Viário": "4º Anel Viário", "Av. Doutor Raul Barbosa": "Av. Raul Barbosa", "Rodovia Br 116": "BR-116",
 }
 
 
