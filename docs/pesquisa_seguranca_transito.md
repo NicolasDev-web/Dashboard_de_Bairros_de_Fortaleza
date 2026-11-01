@@ -177,3 +177,35 @@ O que já está no painel: Geist e Geist Mono, azul cobalto `#2f37c4` sobre pape
 - SSPDS, fechamento de 2025: https://www.sspds.ce.gov.br/2026/01/08/ceara-encerra-2025-com-reducao-de-77-nas-mortes-violentas-diminuicao-em-fortaleza-foi-de-11/
 - O Povo, queda de 62% nos homicídios em 2026: https://www.opovo.com.br/noticias/seguranca-publica/2026/06/10/fortaleza-tem-queda-de-62-nos-homicidios-em-2026.html
 - IPECE, Informe 272: https://www.ipece.ce.gov.br/wp-content/uploads/sites/45/2025/08/ipece_informe_272_05_ago2025.pdf
+
+---
+
+## 6. Raça das vítimas (pesquisa de 01/11/2026)
+
+**O problema na SSPDS.** Na planilha de CVLI, a raça da vítima em Fortaleza vem como "Não Informada" na maior parte dos casos. O preenchimento era de 0 a 2% até 2011, ficou perto de 17 a 20% de 2013 a 2022 e subiu para 30% (2023), 39% (2024) e 38% (2025). Um estudo da UFC (preprint SciELO, 2015–2025) mostra que a divergência entre a SSPDS e a Perícia Forense (PEFOCE) se concentra justamente na cor/raça. Entre os casos de 2023–2025 que têm raça informada (828 de 2.315), 91% das vítimas eram negras (pretas ou pardas).
+
+**A fonte que resolve: SIM/DATASUS.** No Sistema de Informações sobre Mortalidade, a raça vem da declaração de óbito e está quase sempre preenchida. Em 2020, o último ano com arquivo aberto alcançável deste ambiente (`diaad.s3…/sim/Mortalidade_Geral_2020.csv`):
+- 1.318 mortes por agressão (CID X85–Y09) ocorridas em Fortaleza, com raça ignorada em só 0,5%;
+- 95,8% das vítimas eram negras (95,6% pardas e 0,2% pretas) e 3,7% brancas;
+- na mesma conta, a SSPDS tinha raça informada em só 19% dos 1.250 CVLI de 2020.
+
+**A população (Censo 2022, cor ou raça por setor, IBGE).** Fortaleza tem 60,1% de pardos, 7,0% de pretos e 32,7% de brancos, ou seja, 67,1% de negros. Por AIS, os negros vão de 53% (AIS 22 e AIS 08) a 75% (AIS 17). A correlação entre a % de negros da área e a taxa de CVLI nas 10 AIS é de +0,70.
+
+**Taxa por raça (aproximada).** São os óbitos de 2020 sobre a população de 2022: negros 77,6 por 100 mil; não negros 6,1 por 100 mil, cerca de 12 vezes. Duas ressalvas:
+- na declaração de óbito, a raça costuma ser atribuída por quem preenche (no Ceará, muitas vezes "parda"), enquanto o Censo é autodeclarado. Isso tende a inflar a razão, e o número de pretos no SIM (0,2%) é baixo demais para ser real;
+- 2020 foi ano atípico (motim da PM em fevereiro).
+
+O Atlas da Violência 2026 (dados de 2024) dá para o Ceará uma taxa de homicídio de negros de 34,3 por 100 mil, com alta de 24,3% de 2019 a 2024.
+
+**Para atualizar (2021–2024).** Os arquivos mais novos do SIM estão no FTP do DATASUS (`ftp.datasus.gov.br`, formato .dbc) e no TabNet (`tabnet.datasus.gov.br`). Os dois estão fora da rede deste ambiente: o FTP não passa pelo proxy HTTPS e o TabNet não resolve. Os arquivos do OpenDataSUS no S3 depois de 2020 respondem 403. Caminhos possíveis:
+- liberar `tabnet.datasus.gov.br`;
+- baixar os .dbc fora daqui e enviar;
+- usar a base do SIM na Base dos Dados (BigQuery), com uma credencial do Google Cloud.
+
+Fontes:
+- [SIM/OpenDataSUS, estrutura dos dados](https://diaad.s3.sa-east-1.amazonaws.com/sim/Mortalidade_Geral+-+Estrutura.pdf)
+- [IBGE, agregados por setor, cor ou raça (2022)](https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/)
+- [Preprint UFC sobre homicídios no Ceará](https://preprints.scielo.org/index.php/scielo/preprint/view/17780)
+- [O Povo, 58,6% sem raça em 2024](https://mais.opovo.com.br/jornal/cidades/2024/12/01/ce-tem-a-8-maior-taxa-de-negros-mortos-por-arma-de-fogo-no-pais.html)
+- [Alma Preta, Atlas da Violência 2026](https://almapreta.com.br/sessao/cotidiano/homicidios-negros-atlas-da-violencia-2026/)
+- [Cedeca Ceará](https://cedecaceara.org.br/2025/05/26/atlas-da-violencia-e-o-recorte-do-cedeca-ceara/)
