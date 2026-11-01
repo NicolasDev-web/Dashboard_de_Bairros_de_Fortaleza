@@ -209,3 +209,7 @@ Fontes:
 - [O Povo, 58,6% sem raça em 2024](https://mais.opovo.com.br/jornal/cidades/2024/12/01/ce-tem-a-8-maior-taxa-de-negros-mortos-por-arma-de-fogo-no-pais.html)
 - [Alma Preta, Atlas da Violência 2026](https://almapreta.com.br/sessao/cotidiano/homicidios-negros-atlas-da-violencia-2026/)
 - [Cedeca Ceará](https://cedecaceara.org.br/2025/05/26/atlas-da-violencia-e-o-recorte-do-cedeca-ceara/)
+
+### 6.1 SIM 2021–2026 e o "buraco" de 2025 (01/11/2026)
+
+Com os DOCE2021 a DOCE2026 do DATASUS: em 2025 o SIM tinha só 537 agressões ocorridas em Fortaleza, contra 743 CVLI da SSPDS. A diferença está nas mortes de "intenção indeterminada", que dobraram (629 em 2024 → 1.289 em 2025), sobretudo nas por arma de fogo (Y22–Y24: 41 → 221). São homicídios que ainda esperam o laudo. Agressões + arma de fogo com intenção indeterminada = 758, quase igual à SSPDS. Por isso a página usa 2023–2025 com esses códigos incluídos: 97,1% das 2.563 vítimas eram negras. 2026 ainda vai só até julho/agosto e fica de fora. A AMC não atualizou volume nem sinistros desde 22/07/2025 (conferido no portal).

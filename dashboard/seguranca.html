@@ -196,20 +196,26 @@
         <p class="t-kicker s-kicker">05 · Contexto</p>
         <h2 id="junto-titulo">O que aparece junto</h2>
       </div>
-      <p class="secao-nota" id="junto-nota"></p>
+      <p class="secao-nota">Dividimos a cidade nas suas 10 áreas de segurança. Escolha uma característica e compare as mortes violentas nas áreas onde ela é mais baixa com as áreas onde é mais alta.</p>
     </div>
     <div class="controles">
-      <div class="segmentado" id="ctl-fator" role="group" aria-label="Fator">
-        <button type="button" data-v="idh" aria-pressed="true">IDH</button>
-        <button type="button" data-v="renda" aria-pressed="false">Renda</button>
+      <div class="segmentado" id="ctl-fator" role="group" aria-label="Característica">
+        <button type="button" data-v="renda" aria-pressed="true">Renda</button>
+        <button type="button" data-v="idh" aria-pressed="false">Desenvolvimento (IDH)</button>
         <button type="button" data-v="saneamento" aria-pressed="false">Esgoto</button>
-        <button type="button" data-v="negros" aria-pressed="false">% de negros</button>
+        <button type="button" data-v="negros" aria-pressed="false">Moradores negros</button>
       </div>
     </div>
-    <figure class="s-disp-fig">
-      <svg id="dispersao" class="s-disp" role="img" aria-label="Cada ponto é uma área de segurança: fator no eixo horizontal e taxa de mortes no vertical"></svg>
-      <div class="t-dica" id="dica-disp" role="status" hidden></div>
-    </figure>
+
+    <div class="s-comp" id="comparacao" aria-live="polite"></div>
+    <p class="s-comp-frase" id="comp-frase"></p>
+
+    <div class="s-escada-cabeca">
+      <h3 id="escada-titulo">As 10 áreas, da menor para a maior renda</h3>
+      <span class="s-escada-leg">mortes violentas por 100 mil moradores, por ano · barra escura: acima da média da cidade</span>
+    </div>
+    <ol class="s-escada" id="escada"></ol>
+    <p class="t-nota" id="junto-nota"></p>
   </section>
 
   <!-- Método -->

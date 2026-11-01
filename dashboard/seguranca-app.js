@@ -362,7 +362,7 @@
       [nf1.format(R.taxa_nao_negros), "homicídios por 100 mil não negros ao ano"],
     ].map(([v, t]) => el("div", {}, [el("dt", { texto: t }), el("dd", { texto: v })])));
     const ign = Object.values(R.serie).filter((x) => !x.parcial).map((x) => x.ignorada_pct);
-    $("raca-nota").textContent = `A conta dá ${nf0.format(vezes)} vezes, mas leia com cuidado: no SIM, quem preenche a declaração de óbito costuma atribuir a cor (no Ceará, quase sempre "parda"), enquanto no Censo cada pessoa declara a sua. Isso exagera a diferença. O certo é dizer que o risco é muitas vezes maior para negros. A cor fica sem registro em menos de ${nf1.format(Math.max(...ign) + 0.1)}% dos casos. Fontes: SIM/DATASUS, mortes por agressão ocorridas em Fortaleza; IBGE, Censo 2022.`;
+    $("raca-nota").textContent = `A conta dá ${nf0.format(vezes)} vezes, mas leia com cuidado: no SIM, quem preenche a declaração de óbito costuma atribuir a cor (no Ceará, quase sempre "parda"), enquanto no Censo cada pessoa declara a sua. Isso exagera a diferença. O certo é dizer que o risco é muitas vezes maior para negros. A cor fica sem registro em menos de ${nf1.format(Math.max(...ign) + 0.1)}% dos casos. Fontes: SIM/DATASUS, mortes por agressão ocorridas em Fortaleza (2025 ainda é preliminar: entram também as mortes por arma de fogo que esperam laudo para ter a intenção definida; somadas, dão quase o mesmo total da SSPDS); IBGE, Censo 2022.`;
     function barra(alvo, titulo, sub, neg) {
       const iN = el("i", { class: "neg", texto: nf1.format(neg) + "%" }), iB = el("i", { class: "nn", texto: nf1.format(100 - neg) + "%" });
       $(alvo).replaceChildren(el("div", { class: "rot" }, [el("b", { texto: titulo }), el("span", { texto: sub })]), el("div", { class: "trilho" }, [iN, iB]));
@@ -373,77 +373,74 @@
     void nn; void nnp;
   }
 
-  // ----------------------------------------------------------- 5. contexto
+  // ----------------------------------------------------------- 5. contexto (linguagem simples)
   (function contexto() {
-    const svg = $("dispersao"), fig = svg.closest(".s-disp-fig");
-    const tip = dica(fig, $("dica-disp"));
-    const W = Math.max(360, Math.min(900, svg.clientWidth || 900)), H = W < 520 ? 360 : 380, P = { t: 20, r: 24, b: 44, l: 52 };
-    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const F = {
-      idh: { nome: "IDH médio da área (2010)", fmt: nf2, txt: "IDH" },
-      renda: { nome: "renda média de quem sustenta a casa (R$, 2022)", fmt: nf0, txt: "renda" },
-      saneamento: { nome: "% das casas com esgoto em rede (2022)", fmt: nf0, txt: "esgoto" },
-      negros: { nome: "% de moradores negros (Censo 2022)", fmt: nf0, txt: "% de negros" },
+      renda: { nome: "renda", menor: "menor renda", maior: "maior renda", fmt: (v) => "R$ " + nf0.format(v) + "/mês",
+               ajuda: "renda média de quem sustenta a casa (Censo 2022)" },
+      idh: { nome: "desenvolvimento", menor: "menor desenvolvimento (IDH)", maior: "maior desenvolvimento (IDH)", fmt: (v) => "IDH " + nf2.format(v),
+             ajuda: "IDH junta renda, escolaridade e expectativa de vida; vai de 0 a 1 (Prefeitura, 2010)" },
+      saneamento: { nome: "esgoto", menor: "menos casas com esgoto", maior: "mais casas com esgoto", fmt: (v) => nf0.format(v) + "% com esgoto",
+                    ajuda: "parte das casas ligadas à rede de esgoto (Censo 2022)" },
+      negros: { nome: "moradores negros", menor: "menos moradores negros", maior: "mais moradores negros", fmt: (v) => nf0.format(v) + "% negros",
+                ajuda: "parte dos moradores que se declaram pretos ou pardos (Censo 2022)" },
     };
-    const yMax = Math.ceil(Math.max(...A.map((a) => a.cvli_taxa)) / 10) * 10;
-    const Y = (v) => H - P.b - (v / yMax) * (H - P.t - P.b);
-    const eixo = s("g"), gT = s("g"), gP = s("g");
-    for (let v = 0; v <= yMax; v += 10) {
-      eixo.append(s("line", { x1: P.l, x2: W - P.r, y1: Y(v), y2: Y(v), class: "eixo" }), s("text", { x: P.l - 8, y: Y(v) + 4, "text-anchor": "end", texto: v }));
-    }
-    eixo.append(s("text", { x: P.l, y: P.t - 6, texto: "mortes por 100 mil ↑" }));
-    const rotX = s("text", { x: W - P.r, y: H - 8, "text-anchor": "end" });
-    const media = s("line", { x1: P.l, x2: W - P.r, y1: Y(C.cvli_taxa), y2: Y(C.cvli_taxa), class: "media-l" });
-    const mediaT = s("text", { x: W - P.r, y: Y(C.cvli_taxa) - 6, "text-anchor": "end", texto: `média da cidade: ${nf1.format(C.cvli_taxa)}` });
-    const tend = s("line", { class: "tend" });
-    const tickX = s("g");
-    svg.append(eixo, tickX, media, mediaT, tend, rotX, gT, gP);
-    const pts = A.map((a) => {
-      const c = s("circle", { r: 7, class: "pt" });
-      const t = s("text", { class: "rot-pt", texto: a.num });
-      gP.append(c); gT.append(t);
-      return { a, c, t };
-    });
+    const casos = (a) => (a.cvli_taxa * a.pop) / 1e5;
+    const taxaGrupo = (g) => (g.reduce((x, a) => x + casos(a), 0) / g.reduce((x, a) => x + a.pop, 0)) * 1e5;
+    const escada = $("escada");
     function desenhar(f) {
-      const vals = A.map((a) => a[f]);
-      const lo = Math.min(...vals), hi = Math.max(...vals), pad = (hi - lo) * 0.08;
-      const X = (v) => P.l + ((v - (lo - pad)) / (hi - lo + 2 * pad)) * (W - P.l - P.r);
-      tickX.replaceChildren();
-      for (let k = 0; k <= 4; k++) {
-        const v = lo - pad + ((hi - lo + 2 * pad) * k) / 4;
-        tickX.append(s("text", { x: X(v), y: H - P.b + 18, "text-anchor": "middle", texto: F[f].fmt.format(v) }));
-      }
-      rotX.textContent = F[f].nome + " →";
-      const postos = [];
-      for (const { a, c, t } of [...pts].sort((p, q) => p.a[f] - q.a[f])) {
-        const px = X(a[f]), py = Y(a.cvli_taxa);
-        c.setAttribute("cx", px); c.setAttribute("cy", py);
-        // rótulo à direita; se bater em outro já posto, vai para a esquerda
-        // rótulo à direita; se bater em outro ponto ou rótulo, vai para baixo do ponto
-        const outros = pts.filter((q) => q.a !== a).map((q) => [X(q.a[f]), Y(q.a.cvli_taxa)]);
-        const livre = (x0, x1) => !outros.some(([ox, oy]) => ox > x0 && ox < x1 && Math.abs(oy - py) < 16) &&
-          !postos.some((q) => q.x1 > x0 && q.x0 < x1 && Math.abs(q.y - py) < 16);
-        let lado = "dir";
-        if (!livre(px + 4, px + 85)) lado = livre(px - 85, px - 4) ? "esq" : "baixo";
-        const lx = lado === "dir" ? px + 11 : lado === "esq" ? px - 11 : px;
-        t.setAttribute("x", lx); t.setAttribute("y", lado === "baixo" ? py + 24 : py + 4);
-        t.setAttribute("text-anchor", lado === "dir" ? "start" : lado === "esq" ? "end" : "middle");
-        postos.push(lado === "dir" ? { x0: lx, x1: lx + 62, y: py } : lado === "esq" ? { x0: lx - 62, x1: lx, y: py } : { x0: px - 31, x1: px + 31, y: py + 20 });
-        t.textContent = "AIS " + a.num;
-        c.onpointermove = (ev) => tip.mostrar(ev, `<b>AIS ${a.num}</b><small>${resumoBairros(a, 4)}</small><span class="num">${nf1.format(a.cvli_taxa)}</span><small>mortes por 100 mil · ${F[f].txt}: ${F[f].fmt.format(a[f])}</small>`);
-        c.onpointerleave = () => tip.esconder();
-      }
-      // reta de tendência (mínimos quadrados), só como guia visual
-      const n = A.length, mx = vals.reduce((x, y) => x + y) / n, my = A.reduce((x, a) => x + a.cvli_taxa, 0) / n;
-      const b = A.reduce((acc, a) => acc + (a[f] - mx) * (a.cvli_taxa - my), 0) / A.reduce((acc, a) => acc + (a[f] - mx) ** 2, 0);
-      const y0 = my + b * (lo - mx), y1 = my + b * (hi - mx);
-      tend.setAttribute("x1", X(lo)); tend.setAttribute("y1", Y(y0)); tend.setAttribute("x2", X(hi)); tend.setAttribute("y2", Y(y1));
-      const r = S.correlacao[f];
-      const forca = Math.abs(r) >= 0.6 ? "forte" : Math.abs(r) >= 0.4 ? "moderada" : "fraca";
-      const excecao = [...A].sort((x, y) => Math.abs(y.cvli_taxa - (my + b * (y[f] - mx))) - Math.abs(x.cvli_taxa - (my + b * (x[f] - mx))))[0];
-      $("junto-nota").textContent = `Cada ponto é uma área de segurança. Nas 10 áreas, quanto ${r < 0 ? "menor" : "maior"} o ${F[f].txt}, maior tende a ser a taxa de mortes violentas (relação ${forca}, correlação de ${nf2.format(r)}). Não é regra: a AIS ${excecao.num} (${resumoBairros(excecao, 2)}) foge da linha. Aparecer junto não quer dizer que um causa o outro.`;
+      const ord = [...A].filter((a) => a[f] != null).sort((x, y) => x[f] - y[f]);
+      const metade = Math.floor(ord.length / 2);
+      const baixo = ord.slice(0, metade), alto = ord.slice(metade);
+      const tb = taxaGrupo(baixo), ta = taxaGrupo(alto);
+      const maiorNoBaixo = tb >= ta;
+      const razao = maiorNoBaixo ? tb / ta : ta / tb;
+      const lista = (g) => g.map((a) => a.regiao).join(" · ");
+      $("comparacao").replaceChildren(
+        el("div", { class: "s-comp-card baixo" }, [
+          el("span", { class: "quem", texto: `As ${baixo.length} áreas com ${F[f].menor}` }),
+          el("span", { class: "valor", texto: nf0.format(tb) }),
+          el("span", { class: "unid", texto: "mortes violentas por 100 mil moradores, por ano" }),
+          el("span", { class: "lista", texto: lista(baixo) }),
+        ]),
+        el("div", { class: "s-comp-meio" }, [
+          el("span", { class: "x", texto: nf1.format(razao) + "×" }),
+          el("small", { texto: `mais mortes onde há ${maiorNoBaixo ? F[f].menor : F[f].maior}` }),
+        ]),
+        el("div", { class: "s-comp-card alto" }, [
+          el("span", { class: "quem", texto: `As ${alto.length} áreas com ${F[f].maior}` }),
+          el("span", { class: "valor", texto: nf0.format(ta) }),
+          el("span", { class: "unid", texto: "mortes violentas por 100 mil moradores, por ano" }),
+          el("span", { class: "lista", texto: lista(alto) }),
+        ]),
+      );
+      const fraseFator = {
+        renda: maiorNoBaixo ? "Onde a renda é menor, morre-se mais" : "Onde a renda é maior, morre-se mais",
+        idh: maiorNoBaixo ? "Onde o desenvolvimento é menor, morre-se mais" : "Onde o desenvolvimento é maior, morre-se mais",
+        saneamento: maiorNoBaixo ? "Onde falta esgoto, morre-se mais" : "Onde há mais esgoto, morre-se mais",
+        negros: maiorNoBaixo ? "Onde há menos moradores negros, morre-se mais" : "Onde há mais moradores negros, morre-se mais",
+      }[f];
+      $("comp-frase").innerHTML = `${fraseFator}: <b>${nf0.format(Math.max(tb, ta))}</b> contra <b>${nf0.format(Math.min(tb, ta))}</b> mortes violentas por 100 mil moradores por ano, ${nf1.format(razao)} vez${razao >= 2 ? "es" : ""} mais.`;
+      $("escada-titulo").textContent = `As 10 áreas, da que tem ${F[f].menor} para a que tem ${F[f].maior}`;
+      const max = Math.max(...A.map((a) => a.cvli_taxa));
+      escada.replaceChildren();
+      ord.forEach((a, k) => {
+        const i = el("i");
+        const li = el("li", { class: a.cvli_taxa > C.cvli_taxa ? "alta" : "" }, [
+          el("span", { class: "reg", html: `<b>${a.regiao}</b><small>AIS ${a.num} · ${a.bairros.length} bairros</small>` }),
+          el("span", { class: "fat", texto: F[f].fmt(a[f]) }),
+          el("span", { class: "bar" }, [el("span", { class: "t" }, [i, el("em", { style: `left:${(C.cvli_taxa / max) * 100}%`, title: "média da cidade" })]), el("b", { texto: nf0.format(a.cvli_taxa) })]),
+        ]);
+        if (k === 0) escada.append(el("li", { class: "sep", texto: `As ${baixo.length} áreas com ${F[f].menor}` }));
+        if (k === metade) escada.append(el("li", { class: "sep", texto: `As ${alto.length} áreas com ${F[f].maior}` }));
+        escada.append(li);
+        requestAnimationFrame(() => requestAnimationFrame(() => (i.style.width = (a.cvli_taxa / max) * 100 + "%")));
+      });
+      // a área que mais foge do padrão, dita em português
+      const fogeAlta = (maiorNoBaixo ? alto : baixo).sort((x, y) => y.cvli_taxa - x.cvli_taxa)[0];
+      $("junto-nota").textContent = `Como ler: ${F[f].ajuda}. A linha preta em cada barra é a média da cidade (${nf0.format(C.cvli_taxa)}). Nem toda área segue o padrão: ${fogeAlta.regiao} está no grupo de ${maiorNoBaixo ? F[f].maior : F[f].menor} e ainda assim tem ${nf0.format(fogeAlta.cvli_taxa)} mortes por 100 mil. Aparecer junto não prova que uma coisa causa a outra: mostra onde os problemas se acumulam.`;
     }
     segmentado("ctl-fator", desenhar);
-    desenhar("idh");
+    desenhar("renda");
   })();
 })();

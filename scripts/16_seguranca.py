@@ -123,7 +123,12 @@ def detalhes() -> dict:
 COR_URL = ("https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/"
            "Agregados_por_Setor_csv/Agregados_por_setores_cor_ou_raca_BR.zip")
 SIM_DIR = ROOT / "data/cache/sim"
-SIM_ANOS = (2022, 2023, 2024)        # anos fechados; 2025 e 2026 ainda chegam incompletos ao DATASUS
+SIM_ANOS = (2023, 2024, 2025)        # mesma janela das taxas da SSPDS; 2026 ainda está pela metade
+# Em 2025 o SIM ainda é preliminar: muitas mortes violentas esperam o laudo e ficam como "intenção
+# indeterminada". As por arma de fogo (Y22–Y24) entram na conta: em 2025, agressões (537) + arma de
+# fogo com intenção indeterminada (221) = 758, perto dos 743 CVLI da SSPDS. Nos anos fechados elas
+# são poucas (9 a 41 por ano).
+CID_HOMICIDIO = r"^(X8[5-9]|X9\d|Y0\d|Y2[2-4])"
 COR_SIM = {"1": "branca", "2": "preta", "3": "amarela", "4": "parda", "5": "indigena"}
 
 
@@ -154,7 +159,7 @@ def cor_por_setor() -> pd.DataFrame:
 
 
 def raca_sim(pop_cor: dict) -> dict | None:
-    """Homicídios (agressões, CID X85–Y09) ocorridos em Fortaleza no SIM/DATASUS, por raça/cor.
+    """Homicídios (agressões, CID X85–Y09, mais arma de fogo com intenção indeterminada, Y22–Y24) ocorridos em Fortaleza no SIM/DATASUS, por raça/cor.
 
     Arquivos DOCEaaaa.dbc (DATASUS, Transferência de Arquivos > SIM > DO) em data/cache/sim/.
     """
@@ -171,12 +176,13 @@ def raca_sim(pop_cor: dict) -> dict | None:
         if not dbf.exists():
             datasus_dbc.decompress(str(a), str(dbf))
         t = pd.DataFrame(iter(DBF(dbf, encoding="latin-1", char_decode_errors="ignore")))
-        t = t[t.CAUSABAS.astype(str).str.match(r"^(X8[5-9]|X9\d|Y0\d)") & t.CODMUNOCOR.astype(str).str.startswith("230440")]
+        t = t[t.CAUSABAS.astype(str).str.match(CID_HOMICIDIO) & t.CODMUNOCOR.astype(str).str.startswith("230440")]
         cor = t.RACACOR.astype(str).map(COR_SIM).fillna("ignorada")
         n = len(t)
-        serie[ano] = {"n": n, "negros_pct": round(float(cor.isin(["preta", "parda"]).mean() * 100), 1),
+        serie[ano] = {"n": n, "fogo_indeterminada": int(t.CAUSABAS.astype(str).str.match(r"^Y2[2-4]").sum()),
+                      "negros_pct": round(float(cor.isin(["preta", "parda"]).mean() * 100), 1),
                       "ignorada_pct": round(float((cor == "ignorada").mean() * 100), 1),
-                      "parcial": ano not in SIM_ANOS and ano > max(SIM_ANOS)}
+                      "parcial": ano > max(SIM_ANOS)}
         if ano in SIM_ANOS:
             base.append(pd.DataFrame({"cor": cor, "sexo": t.SEXO.astype(str)}))
     b = pd.concat(base)
@@ -235,6 +241,8 @@ def main() -> None:
         areas.append({
             "ais": ais, "num": ais.replace("AIS ", ""),
             "bairros": sorted(titulo(b) for b in g.bairro),
+            # nome para leigo: os dois bairros mais populosos da área
+            "regiao": " e ".join(titulo(b) for b in g.sort_values("pop_2022", ascending=False).bairro.head(2)),
             "pop": int(pop),
             "cvli_taxa": taxa("cvli"), "cvp_taxa": taxa("cvp"),
             "cvli": serie["cvli"], "cvp": serie["cvp"], "intervencao": serie["intervencao_policial"],
