@@ -39,6 +39,18 @@
 .s-ranking .nome small { display: block; margin: 2px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .s-ranking button { grid-template-rows: auto auto; }
 
+/* ano em curso */
+.s-agora { background: var(--noite); color: var(--branco); border-radius: var(--raio); padding: 24px 26px; margin-bottom: 40px;
+  display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); gap: 20px 28px; align-items: start; }
+.s-agora h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 6px; }
+.s-agora p { font-size: 14px; line-height: 1.5; opacity: .85; }
+.s-agora .n { border-top: 1px solid rgba(255, 255, 255, .25); padding-top: 10px; }
+.s-agora .n b { display: block; font-size: clamp(30px, 3.4vw, 46px); font-weight: 420; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.s-agora .n .var { font-family: var(--mono); font-size: 13px; }
+.s-agora .n .var.queda { color: #a9b4ff; } .s-agora .n .var.alta { color: #f2a2a8; }
+.s-agora .n small { display: block; font-size: 12.5px; opacity: .75; margin-top: 4px; }
+.s-mult .agora { font-family: var(--mono); font-size: 11px; color: var(--tinta-2); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--linha); }
+
 /* série da cidade + pequenos múltiplos */
 .s-serie-cidade { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(0, 2.6fr); gap: 32px; align-items: end; margin-bottom: 40px; }
 .s-serie-cidade h3 { font-size: 22px; letter-spacing: -0.02em; }
@@ -144,6 +156,8 @@
 @media (max-width: 960px) {
   .s-multiplos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .s-serie-cidade { grid-template-columns: 1fr; gap: 12px; }
+  .s-agora { grid-template-columns: 1fr 1fr; }
+  .s-agora > div:first-child { grid-column: 1 / -1; }
   .s-vitimas, .s-raca { grid-template-columns: 1fr; }
   .s-comp { grid-template-columns: 1fr; gap: 8px; }
   .s-comp-meio { flex-direction: row; gap: 10px; padding: 6px 0; }

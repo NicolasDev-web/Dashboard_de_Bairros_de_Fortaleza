@@ -206,6 +206,36 @@ def raca_sim(pop_cor: dict) -> dict | None:
     }
 
 
+def ano_corrente() -> dict | None:
+    """Ano em curso (planilhas CVLI_aaaa.xlsx e CVP_aaaa.xlsx da SSPDS) contra o mesmo período do ano anterior."""
+    cache = ROOT / "data/cache/sspds"
+    arqs = sorted(cache.glob("CVLI_20[0-9][0-9].xlsx"))
+    if not arqs:
+        return None
+    ano = int(arqs[-1].stem[-4:])
+    hist = {"cvli": pd.read_excel(cache / "CVLI_2009-a-2025.xlsx", sheet_name="CVLI"),
+            "cvp": pd.read_excel(cache / "CVP_2009-a-2025.xlsx", sheet_name=0)}
+    novo = {"cvli": pd.read_excel(cache / f"CVLI_{ano}.xlsx", sheet_name="CVLI"),
+            "cvp": pd.read_excel(cache / f"CVP_{ano}.xlsx", sheet_name=0)}
+    out = {"ano": ano}
+    for k in ("cvli", "cvp"):
+        n = novo[k][novo[k]["Município"].astype(str).str.strip().str.lower() == "fortaleza"].copy()
+        h = hist[k][hist[k]["Município"].astype(str).str.strip().str.lower() == "fortaleza"].copy()
+        n["d"], h["d"] = pd.to_datetime(n.Data), pd.to_datetime(h.Data)
+        fim = n.d.max()
+        out["ate"] = fim.strftime("%Y-%m-%d")
+        ant = h[(h.d.dt.year == ano - 1) & (h.d.dt.strftime("%m-%d") <= fim.strftime("%m-%d"))]
+        n["AIS"], ant = n.AIS.str.strip(), ant.assign(AIS=ant.AIS.str.strip())
+        out[k] = {"atual": int(len(n)), "anterior": int(len(ant)),
+                  "ais": {a: {"atual": int((n.AIS == a).sum()), "anterior": int((ant.AIS == a).sum())}
+                          for a in sorted(set(n.AIS) | set(ant.AIS)) if a.startswith("AIS ") and "Não" not in a}}
+    furto = cache / f"Furto_{ano}.xlsx"
+    if furto.exists():
+        f = pd.read_excel(furto, sheet_name=0)
+        out["furto"] = int((f["Município"].astype(str).str.strip().str.lower() == "fortaleza").sum())
+    return out
+
+
 def main() -> None:
     ind = pd.read_csv(ROOT / "data/processed/bairros_indicadores.csv")
     ind = ind.merge(idh(), on="bairro_slug", how="left")
@@ -282,6 +312,7 @@ def main() -> None:
         "correlacao": corr,
         "dias": DIAS,
         "raca": raca,
+        "corrente": ano_corrente(),
         **det,
     }
     SAIDA.write_text("window.SEGURANCA = " + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n",

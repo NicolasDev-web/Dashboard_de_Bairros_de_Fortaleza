@@ -203,6 +203,32 @@
   })();
 
   // ----------------------------------------------------------- 2. tendência
+  const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+  const AG = S.corrente;
+  const ateMes = AG ? MESES[+AG.ate.slice(5, 7) - 1] : "";
+  (function agora() {
+    if (!AG) return;
+    const box = $("agora");
+    box.hidden = false;
+    const v = (a, b) => Math.round(((a - b) / b) * 100);
+    const item = (rot, atual, ant, extra) => {
+      const p = v(atual, ant);
+      return el("div", { class: "n" }, [
+        el("b", { texto: nf0.format(atual) }),
+        el("span", { class: "var " + (p <= 0 ? "queda" : "alta"), texto: `${p > 0 ? "+" : "−"}${Math.abs(p)}% ` }),
+        el("small", { texto: `${rot}; eram ${nf0.format(ant)} no mesmo período de ${AG.ano - 1}${extra || ""}` }),
+      ]);
+    };
+    const n = [
+      el("div", {}, [el("h3", { texto: `${AG.ano} até agora` }),
+        el("p", { texto: `De janeiro a ${ateMes} de ${AG.ano}, pelos dados mais recentes da SSPDS. Comparar com o mesmo período do ano anterior evita confundir o ano incompleto com uma queda.` })]),
+      item("mortes violentas", AG.cvli.atual, AG.cvli.anterior),
+      item("roubos", AG.cvp.atual, AG.cvp.anterior),
+    ];
+    if (AG.furto) n.push(el("div", { class: "n" }, [el("b", { texto: nf0.format(AG.furto) }), el("small", { texto: `furtos registrados no mesmo período (a SSPDS só publica furtos detalhados de ${AG.ano}, então não há comparação)` })]));
+    box.replaceChildren(...n);
+  })();
+
   (function tendencia() {
     // série da cidade
     const serie = C.serie.cvli;
@@ -250,10 +276,11 @@
         s("text", { x: x(6), y: y(v[6]) - 7, "text-anchor": "end", texto: fim }),
       ]);
       box.append(el("div", { class: "s-mult" }, [
-        el("h4", { texto: nomeArea(a) }),
-        el("p", { class: "bairros", texto: resumoBairros(a, 2) }),
+        el("h4", { texto: a.regiao }),
+        el("p", { class: "bairros", texto: `${nomeArea(a)} · ${a.bairros.length} bairros` }),
         el("p", { class: "var " + (varp <= 0 ? "queda" : "alta"), html: `${varp > 0 ? "+" : varp < 0 ? "−" : ""}${Math.abs(varp)}<small>${Math.abs(varp) === 1 ? "morte" : "mortes"}</small><span class="de-para">${base} em 2022 → ${fim} em 2025</span>` }),
         g,
+        AG && AG.cvli.ais[a.ais] ? el("p", { class: "agora", texto: `jan–${ateMes.slice(0, 3)} ${AG.ano}: ${AG.cvli.ais[a.ais].atual} (${AG.cvli.ais[a.ais].anterior} em ${AG.ano - 1})` }) : null,
       ]));
     }
     aoAparecer(box, () => box.classList.add("visivel"));
