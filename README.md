@@ -1,16 +1,67 @@
+<div align="center">
+
+<img src="dashboard/og.jpg" alt="Bairros de Fortaleza: os 121 bairros comparados com dados públicos" width="100%">
+
 # Bairros de Fortaleza
 
-Dashboard que compara os 121 bairros de Fortaleza por renda, saneamento e segurança, com a evolução entre os Censos de 2010 e 2022, e o preço do m² dos imóveis em cada uma das 12 regionais, coletado com o [PriceRadar](https://github.com/NicolasDev-web/priceradar).
+**Fortaleza inteira na palma da sua mão.**
+Compare os 121 bairros por renda, saneamento, segurança, trânsito, tempo de ônibus e preço do m², e descubra onde morar.
 
-**Ver o dashboard:** abra `dashboard/index.html` no navegador (precisa de internet para a fonte, o Leaflet e a camada do Strava).
+### [dashboardfortaleza.vercel.app](https://dashboardfortaleza.vercel.app)
 
-**Onde morar:** `dashboard/morar.html` é uma página à parte com um questionário de 9 perguntas (renda, entrada e quartos, e o peso de segurança, saúde, lazer, infraestrutura, mobilidade, escolas, comércio e ritmo do bairro). A cidade em pixels acende conforme as respostas e, no fim, o mapa e a lista mostram os bairros mais compatíveis dentro do orçamento. O resultado fica no endereço da página, então dá para compartilhar o link.
+![Python](https://img.shields.io/badge/Python-pipeline_de_dados-3776AB?logo=python&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-sem_framework-F7DF1E?logo=javascript&logoColor=black)
+![three.js](https://img.shields.io/badge/three.js-tour_3D-000000?logo=threedotjs&logoColor=white)
+![Dados](https://img.shields.io/badge/dados-p%C3%BAblicos-2A2FBB)
 
-**O trânsito de Fortaleza:** `dashboard/transito.html` mostra por onde passa mais carro em Fortaleza, pela média de veículos por dia dos radares da AMC (jul/2024 a jun/2025), com cada avenida desenhada sobre os trechos de logradouro da Seuma; onde o trânsito é mais lento, pelo tempo de viagem com trânsito típico de dia útil às 7h30, 12h e 18h comparado com a madrugada (Mapbox Directions, etapa 15); e onde o trânsito machuca: pontos críticos, quem morre no trânsito (série oficial de mortes desde 2002, tipo de usuário, idade e a comparação com outras cidades, do Relatório Anual de Segurança Viária 2023 da AMC, etapa 17) e o mapa de calor hora × dia. Tudo em SVG, sem biblioteca de mapa.
+<img src="docs/img/cartaz.jpg" alt="Cartaz do app: Onde morar em Fortaleza, no celular" width="480">
 
-**A violência em Fortaleza:** `dashboard/seguranca.html` mostra onde a violência pesa mais, por AIS (a SSPDS não publica por bairro), em taxa por 100 mil moradores, com a tendência de cada área, o horário das mortes e dos roubos, o perfil das vítimas e o que aparece junto (IDH, renda, esgoto). Os dados saem da etapa 16, que lê as planilhas de dados detalhados da SSPDS (as mesmas da etapa 3, em `data/cache/sspds/`). A cor da pele das vítimas vem do SIM/DATASUS, porque a SSPDS deixa a raça sem informação na maioria dos casos. Baixe as declarações de óbito do Ceará em [datasus.saude.gov.br/transferencia-de-arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) (SIM > DO > Dados > CE), salve os `DOCEaaaa.dbc` em `data/cache/sim/` e rode a etapa 16. A página usa 2023 a 2025 (em 2025, ainda preliminar no DATASUS, entram também as mortes por arma de fogo à espera de laudo, CID Y22–Y24). Se houver planilhas do ano em curso da SSPDS (`CVLI_aaaa.xlsx`, `CVP_aaaa.xlsx`, `Furto_aaaa.xlsx`) em `data/cache/sspds/`, a página mostra o ano até o último mês publicado contra o mesmo período do ano anterior. A cor ou raça da população vem do Censo 2022 por setor, que a etapa 16 baixa do IBGE.
+</div>
 
-**O bairro em 3D:** a ficha de cada bairro tem o botão "Conhecer o bairro em 3D", que abre um tour em tela cheia (`dashboard/bairro3d.js`). O contorno do bairro sobe do mapa em 3D, as miniaturas dos marcos (`dashboard/marcos/*.glb`, 30 modelos low-poly) pousam em cima e a câmera percorre os capítulos da história, com pinos nos outros pontos importantes. O texto e as fontes de cada capítulo ficam em `dashboard/historias.js`, e `#b3d=ID` no endereço abre o tour direto. O three.js vem do jsDelivr e só é baixado na primeira abertura; sem WebGL, a camada mostra só o texto. Abra a página por um servidor (`python -m http.server` dentro de `dashboard/`), porque os módulos e os GLB não carregam por `file://`. Depois de mexer nas histórias, rode `node scripts/validar_historias.js`: ele confere se todo bairro tem história com fonte e se cada pino cai dentro do próprio bairro.
+## O que é
+
+Um dashboard que compara os 121 bairros de Fortaleza por renda, saneamento e segurança, com a evolução entre os Censos de 2010 e 2022, e o preço do m² dos imóveis em cada uma das 12 regionais, coletado com o [PriceRadar](https://github.com/NicolasDev-web/priceradar). Tudo roda no navegador, sem build: o Python só prepara os dados.
+
+| Página | O que mostra |
+|---|---|
+| Mapa dos bairros (`index.html`) | índice, evolução 2010–2022, preço do m², rotas do Strava, ônibus |
+| Onde morar (`morar.html`) | questionário de 9 perguntas e os bairros mais compatíveis |
+| Trânsito (`transito.html`) | volume, lentidão e sinistros nas avenidas |
+| Segurança (`seguranca.html`) | violência por AIS, horário e perfil das vítimas |
+| Tour 3D | cada bairro em 3D, com marcos e história |
+
+## Como rodar
+
+```sh
+git clone https://github.com/NicolasDev-web/Dashboard_de_Bairros_de_Fortaleza.git
+cd Dashboard_de_Bairros_de_Fortaleza/dashboard
+python -m http.server 8000   # depois abra http://localhost:8000
+```
+
+Os dados já vêm prontos em `dashboard/*.js`. Para refazê-los a partir das fontes, veja o [pipeline](#pipeline-de-dados).
+
+## Páginas
+
+### O mapa dos bairros
+
+`dashboard/index.html`: o painel principal, com o índice, a evolução 2010–2022 e o preço do m². Precisa de internet para a fonte, o Leaflet e a camada do Strava.
+
+### Onde morar
+
+`dashboard/morar.html` é uma página à parte com um questionário de 9 perguntas (renda, entrada e quartos, e o peso de segurança, saúde, lazer, infraestrutura, mobilidade, escolas, comércio e ritmo do bairro). A cidade em pixels acende conforme as respostas e, no fim, o mapa e a lista mostram os bairros mais compatíveis dentro do orçamento. O resultado fica no endereço da página, então dá para compartilhar o link.
+
+### O trânsito de Fortaleza
+
+`dashboard/transito.html` mostra por onde passa mais carro em Fortaleza, pela média de veículos por dia dos radares da AMC (jul/2024 a jun/2025), com cada avenida desenhada sobre os trechos de logradouro da Seuma; onde o trânsito é mais lento, pelo tempo de viagem com trânsito típico de dia útil às 7h30, 12h e 18h comparado com a madrugada (Mapbox Directions, etapa 15); e onde o trânsito machuca: pontos críticos, quem morre no trânsito (série oficial de mortes desde 2002, tipo de usuário, idade e a comparação com outras cidades, do Relatório Anual de Segurança Viária 2023 da AMC, etapa 17) e o mapa de calor hora × dia. Tudo em SVG, sem biblioteca de mapa.
+
+### A violência em Fortaleza
+
+`dashboard/seguranca.html` mostra onde a violência pesa mais, por AIS (a SSPDS não publica por bairro), em taxa por 100 mil moradores, com a tendência de cada área, o horário das mortes e dos roubos, o perfil das vítimas e o que aparece junto (IDH, renda, esgoto). Os dados saem da etapa 16, que lê as planilhas de dados detalhados da SSPDS (as mesmas da etapa 3, em `data/cache/sspds/`). A cor da pele das vítimas vem do SIM/DATASUS, porque a SSPDS deixa a raça sem informação na maioria dos casos. Baixe as declarações de óbito do Ceará em [datasus.saude.gov.br/transferencia-de-arquivos](https://datasus.saude.gov.br/transferencia-de-arquivos/) (SIM > DO > Dados > CE), salve os `DOCEaaaa.dbc` em `data/cache/sim/` e rode a etapa 16. A página usa 2023 a 2025 (em 2025, ainda preliminar no DATASUS, entram também as mortes por arma de fogo à espera de laudo, CID Y22–Y24). Se houver planilhas do ano em curso da SSPDS (`CVLI_aaaa.xlsx`, `CVP_aaaa.xlsx`, `Furto_aaaa.xlsx`) em `data/cache/sspds/`, a página mostra o ano até o último mês publicado contra o mesmo período do ano anterior. A cor ou raça da população vem do Censo 2022 por setor, que a etapa 16 baixa do IBGE.
+
+### O bairro em 3D
+
+A ficha de cada bairro tem o botão "Conhecer o bairro em 3D", que abre um tour em tela cheia (`dashboard/bairro3d.js`). O contorno do bairro sobe do mapa em 3D, as miniaturas dos marcos (`dashboard/marcos/*.glb`, 30 modelos low-poly) pousam em cima e a câmera percorre os capítulos da história, com pinos nos outros pontos importantes. O texto e as fontes de cada capítulo ficam em `dashboard/historias.js`, e `#b3d=ID` no endereço abre o tour direto. O three.js vem do jsDelivr e só é baixado na primeira abertura; sem WebGL, a camada mostra só o texto. Abra a página por um servidor (`python -m http.server` dentro de `dashboard/`), porque os módulos e os GLB não carregam por `file://`. Depois de mexer nas histórias, rode `node scripts/validar_historias.js`: ele confere se todo bairro tem história com fonte e se cada pino cai dentro do próprio bairro.
+
 
 ## Pipeline de dados
 
